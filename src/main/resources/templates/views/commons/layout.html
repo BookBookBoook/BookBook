@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(pHead,pMain)">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/css/header.css"/>
-	<link rel="stylesheet" href="/css/footer.css"/>
-	<link rel="stylesheet" href="/css/bot.css"/>
-	<link rel="stylesheet" href="/css/main_content.css"/>
+	<link rel="stylesheet" href="/css/common/header.css"/>
+	<link rel="stylesheet" href="/css/common/footer.css"/>
+	<link rel="stylesheet" href="/css/mainContent/main_content.css"/>
+	<link rel="stylesheet" href="/css/mainContent/bookList.css"/>
 	<script src="https://kit.fontawesome.com/bcc4a0fa81.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script src="/js/bannerCartMore.js"></script>
+	<script src="/js/mainContent/bannerCartMore.js"></script>
+	<script src="/js/mainContent/menuButton.js"></script>
+	<script src="/js/mainContent/bookList.js"></script>
+	<link rel="stylesheet" href="/css/bot.css"/>
 	<!--각 html 마다 적용-->
 	<th:block th:insert="${pHead}"/>
 </head>
