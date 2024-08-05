@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookbook Dashboard</title>
+	<link rel ="stylesheet" href="/css/admin/sidebar.css">
+	<link rel ="stylesheet" href="/css/admin/index.css">
+</head>
+<body>
+	<div class="index">
+		<div style="display: flex;">
+		        <th:block th:insert="~{views/admin/sidebar}"/>
+		        <div class="content">
+		            <div class="grid-container">
+						<div class="grid-item"></div>
+						<div class="grid-item"></div>
+						<div class="grid-item"></div>
+						<div class="grid-item"></div>
+					</div>
+		        </div>
+		    </div>
+	</div>
+    
+</body>
+</html>

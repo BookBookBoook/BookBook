@@ -1,0 +1,166 @@
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container{
+	margin: 20px 0;
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin: 0 auto;
+    width: 40%;
+    position: relative;
+}
+.circle {
+    width: 100px;
+    height: 100px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.active {
+    background-color: #ffa500;
+}
+.label {
+    position: absolute;
+    bottom: -30px;
+    width: 100px;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.line {
+    flex: 1;
+    height: 2px;
+    background-color: #e0e0e0;
+}
+
+
+
+.cart-table {
+    
+    margin-top: 60px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.cart-table > thead > tr:nth-child(1){
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+.cart-table th, .cart-table td {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-info {
+    display: flex;
+}
+
+.book-cover-img{
+    width: 150px;
+    height: 200px;
+    background-color: #ddd;
+}
+
+.book-info {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.book-info p {
+    margin: 20px;
+}
+.book-info p:nth-child(1) {
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.buy-buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #ffa500;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-active {
+	background-color: #ffa500 !important;
+    color: white !important;
+}
+
+.summary-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 20px;
+}
+.summary-left > p {
+	font-size: 22px;
+	font-weight: 500;
+}
+.summary-right {
+    width: 450px;
+}
+
+.summary-details p {
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.final-summary {
+    margin-top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.final-summary > p{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.final-amount {
+    font-size: 1.5em;
+    color: #ff7b00;
+    font-weight: bold;
+}
+
+.amount {
+    margin-left: 10px;
+}
+
+.buttons {
+    text-align: center;
+}
+
+.buttons .btn {
+    margin: 0 10px;
+}
