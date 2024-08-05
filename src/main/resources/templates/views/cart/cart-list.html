@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+	<link rel="stylesheet" href="/css/cart/cart-list.css">
+</head>
+<main>
+	<div class="container">
+        <h1>장바구니</h1>
+        <div class="progress-bar">
+            <div class="circle active">
+                <div class="label">장바구니</div>
+            </div>
+            <div class="line"></div>
+            <div class="circle">
+                <div class="label">주문/결제</div>
+            </div>
+            <div class="line"></div>
+            <div class="circle">
+                <div class="label">주문완료</div>
+            </div>
+        </div>
+        <table class="cart-table">
+            <thead>
+                <tr>
+                	<th><input type="checkbox"></th>
+                    <th>제품정보</th>
+                    <th>수량</th>
+                    <th>결제금액</th>
+                    <th>주문</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                	<td><input type="checkbox"></td>
+                    <td class="product-info">
+                        <img src="book1.jpg" class="book-cover-img">
+                        <div class="book-info">
+                            <p>해리포터와 마법사의 돌 1</p>
+                            <p>J.K 롤링 저 / 강동혁 역</p>
+                        </div>
+                    </td>
+                    <td>1개</td>
+                    <td>17,000원</td>
+                    <td>
+                        <form action="/" class="buy-buttons">
+                            <button class="btn btn-active">바로 구매</button>
+                            <button class="btn">수량 변경</button>
+                            <button class="btn delete">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                	<td><input type="checkbox"></td>
+                    <td class="product-info">
+                        <img src="book2.jpg" class="book-cover-img">
+                        <div class="book-info">
+                            <p>해리포터와 마법사의 돌 2</p>
+                            <p>J.K 롤링 저 / 강동혁 역</p>
+                        </div>
+                    </td>
+                    <td>1개</td>
+                    <td>17,000원</td>
+                    <td>
+                        <form action="/" class="buy-buttons">
+                            <button class="btn btn-active">바로 구매</button>
+                            <button class="btn">수량 변경</button>
+                            <button class="btn">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="summary-container">
+            <div class="summary-left">
+                <p>총 주문금액</p>
+            </div>
+            <div class="summary-right">
+                <div class="summary-details">
+                    <p>
+                    	<span>상품금액</span> 
+                    	<span class="amount">36,000원</span>
+                    </p>
+                    <p>
+                    	<span>할인금액</span> 
+                    	<span class="amount">-2,000원</span>
+                    </p>
+                    <p>
+                    	<span>배송비</span> 
+                    	<span class="amount">3,000원</span>
+                    </p>
+                    <p>
+                    	<span>적립예정 포인트</span> 
+                    	<span class="amount">34원</span>
+                    </p>
+                </div>
+                <div class="final-summary">
+                    <p><span>최종결제금액</span> <span class="final-amount">37,000원</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="btn">쇼핑하러가기</button>
+            <button class="btn btn-active">선택상품 구매</button>
+            <button class="btn">전체상품 구매</button>
+        </div>
+    </div>
+</main>
+</html>
