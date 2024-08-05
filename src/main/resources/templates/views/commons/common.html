@@ -1,0 +1,106 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:fragment="top">
+	<div id="header-box">
+		<div class="header-top">
+			<ul>
+				<li><a href="#">회원가입</a></li>
+				<li><a href="#">로그인</a></li>
+				<li><a href="#">주문배송</a></li>
+				<li><a href="#">고객센터</a></li>
+			</ul>
+		</div>
+		<div class="containers">
+			<div>
+				<a href="/"><img src="/img/Untitled_removebg_preview.png" class="logo"></a>
+			</div>
+			<div class="search-container">
+				<div class="search-tull">
+					<div class="section">
+						<select title="검색유형선택">
+							<option>통합검색</option>
+							<option>베스트셀러</option>
+							<option>교보문고</option>
+							<option>이벤트</option>
+						</select>
+					</div>
+				</div>
+				<div>
+					<input title="통합검색어 입력" placeholder="왜 세계는 10대의 SNS를 금지하나">
+				</div>
+				<div>
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</div>
+			</div>
+			<div class="header-middle-right">
+				<ul>
+					<li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+					<li><a href="#"><i class="fa-regular fa-heart"></i></a></li>
+					<li><a href="#"><i class="fa-regular fa-user"></i></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="header-bottom">
+			<div class="dropdown">
+				<button id="categoryButton">
+					<i class="fa-solid fa-bars"></i>
+				</button>
+				<div id="categoryDropdown" class="dropdown-content">
+					<div class="category-container">
+						<div class="category-column main-categories">
+							<div class="category-box" data-category="novel">소설</div>
+							<div class="category-box" data-category="economy">경제/경영</div>
+							<div class="category-box" data-category="humanities">인문</div>
+							<!-- 추가 대분류 -->
+						</div>
+						<div class="category-column" id="subCategories">
+							<!-- 중분류와 소분류가 여기에 동적으로 로드됩니다 -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul>
+				<li>베스트</li>
+				<li>신상품</li>
+				<li>이벤트</li>
+			</ul>
+		</div>
+	</div>
+</header>
+<!-- 여기까지 헤더 영역 -->
+
+<footer th:fragment="bottom" class="footer">
+	<div class="container">
+		<div>
+			<h3>회사 정보</h3>
+			<ul>
+				<li><a href="#">회사 소개</a></li>
+				<li><a href="#">채용 정보</a></li>
+				<li><a href="#">이용 약관</a></li>
+				<li><a href="#">개인정보 처리방침</a></li>
+			</ul>
+		</div>
+		<div>
+			<h3>고객 서비스</h3>
+			<ul>
+				<li><a href="#">자주 묻는 질문</a></li>
+				<li><a href="#">배송 정보</a></li>
+				<li><a href="#">반품 정책</a></li>
+				<li><a href="#">문의하기</a></li>
+			</ul>
+		</div>
+		<div>
+			<h3>소셜 미디어</h3>
+			<div class="social-icons">
+				<a href="#"><i class="fab fa-facebook-f"></i></a> <a href="#"><i
+					class="fab fa-twitter"></i></a> <a href="#"><i
+					class="fab fa-instagram"></i></a> <a href="#"><i
+					class="fab fa-youtube"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">&copy; 2024 쇼핑몰 북북. All rights reserved.</div>
+</footer>
+
+</footer>
+</html>

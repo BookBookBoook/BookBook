@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{views/commons/layout::layout(~{::head} ,~{::main} ) }">
+<head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<main>
+		<!--메인 자동 슬라이더 배너  -->
+		<div class="slider-container">
+			
+			<div class="slider" aria-live="polite">
+				<div class="slide" aria-hidden="true" data-src="img/banner1.jpg"></div>
+				<div class="slide" aria-hidden="true" data-src="img/banner2.jpg"></div>
+				<div class="slide" aria-hidden="true" data-src="img/banner3.jpg"></div>
+				<div class="slide" aria-hidden="true" data-src="img/banner4.jpg"></div>
+				<div class="slide" aria-hidden="true" data-src="img/banner5.jpg"></div>
+			</div>
+			<button class="prev" aria-label="Previous slide">&lt;</button>
+			<button class="next" aria-label="Next slide">&gt;</button>
+			<div class="indicators"></div>
+		</div>
+		<div th:replace="~{views/index/bookSlider.html}"></div>
+	</main>
+</body>
+</html>
