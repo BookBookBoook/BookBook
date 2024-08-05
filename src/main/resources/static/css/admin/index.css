@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+
+html,body {
+	height: 100%;
+	width:100%;
+}
+
+.content{
+	width: 100%;
+}
+.grid-container {
+	display:grid;
+	grid-template-columns:1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	height: 100%;
+	width: 100%;
+	/* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+	position:relative;
+	grid-gap: 20px;
+}
+
+.grid-item {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto;
+}
