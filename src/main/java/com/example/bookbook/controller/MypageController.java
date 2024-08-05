@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class MypageController {
 	
-	@GetMapping("/mypage/order")
+	@GetMapping("/mypage/orders")
 	public String mypage() {
 		return "views/mypage/order";
 	}
