@@ -5,8 +5,58 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<main>
-		
+	<main class="main-container">
+		<aside class="category-sidebar">
+			<h2 class="sidebar-title">베스트셀러</h2>
+			<nav>
+				<ul class="category-list">
+					<li><a href="#" class="category-item" data-category="all">종합</a></li>
+					<li><a href="#" class="category-item" data-category="fiction">소설</a></li>
+					<li><a href="#" class="category-item" data-category="essay">시/에세이</a></li>
+					<li><a href="#" class="category-item" data-category="business">경제/경영</a></li>
+					<li><a href="#" class="category-item"
+						data-category="self-help">자기계발</a></li>
+					<li><a href="#" class="category-item"
+						data-category="humanities">인문</a></li>
+					<li><a href="#" class="category-item" data-category="history">역사/문화</a></li>
+					<li><a href="#" class="category-item" data-category="language">국어/외국어</a></li>
+					<li><a href="#" class="category-item" data-category="science">과학</a></li>
+					<li><a href="#" class="category-item" data-category="art">예술/대중문화</a></li>
+				</ul>
+			</nav>
+		</aside>
+		<div class="content">
+			<h1 class="content-title">베스트셀러</h1>
+			<nav>
+				<div class="selectAll">
+					<input type="checkbox" id="selectAllCheckbox"> <label
+						for="selectAllCheckbox">전체 선택</label>
+				</div>
+			</nav>
+			<section id="book-list" class="book-list">
+				<div class="bookInformation">
+					<ol>
+						<li>
+							<div>
+								<input type="checkbox" class="bookCheckbox">
+							</div>
+							<div class="bookImg">
+								<img alt="Book" src="img/book1.jpg">
+								<span><a href="#">새창보기</a></span><span><a href="#">미리보기</a></span>
+							</div>
+							<div>
+								<div>당신이 누군가를 죽였다</div>
+								<div>히가시노 게이고</div>
+								<div>2000원</div>
+								<div>설명</div>
+							</div>
+							<div>당일배송</div>
+							<div>장바구니/바로구매</div>
+						</li>
+					</ol>
+				</div>
+			</section>
+		</div>
 	</main>
 </body>
 </html>
