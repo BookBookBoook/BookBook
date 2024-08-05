@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+	<link rel="stylesheet" href="/css/mypage/sidebar.css">
+	<link rel="stylesheet" href="/css/mypage/order.css">
+</head>
+<main>
+	<div class="container">
+        <th:block  th:insert="~{views/mypage/sidebar}"/>
+        <div class="main-content">
+            <h2>주문/배송목록</h2>
+            <div class="nav-tabs">
+                <div>주문내역</div>
+                <div>준비중 <span>0</span></div>
+                <div>배송중 <span>0</span></div>
+                <div>배송완료 <span>0</span></div>
+                <div>취소 <span>0</span></div>
+                <div>교환/반품 <span>0</span></div>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="상품명/판매자명 입력">
+            </div>
+            <div class="order-list">
+                <div class="order-date">2024.08.04 주문</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>제품정보</th>
+                            <th>수량</th>
+                            <th>결제금액</th>
+                            <th>주문 현황</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    <img src="book1.jpg" class="book-cover-img">
+                                    <div class="order-info">
+                                        <div>해리포터와 마법사의 돌 1</div>
+                                        <div>J.K 롤링 저 / 강동혁 역</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1개</td>
+                            <td>17,000원</td>
+                            <td>
+                                <div class="order-actions">
+                                	<div>상품 준비중</div>
+                                    <button class="check">배송 조회</button>
+                                    <button class="cancel">주문 취소</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center;">
+                                    <img src="book2.jpg" class="book-cover-img">
+                                    <div class="order-info">
+                                        <div>해리포터와 마법사의 돌 2</div>
+                                        <div>J.K 롤링 저 / 강동혁 역</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>1개</td>
+                            <td>17,000원</td>
+                            <td>
+                                <div class="order-actions">
+                                	<div>구매 완료</div>
+                                    <button class="review">리뷰 작성</button>
+                                    <button class="delete">내역 삭제</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</html>
