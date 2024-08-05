@@ -27,14 +27,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation 'com.github.mwiede:jsch:0.2.18'
-	
-	/* mybatis 08.05추가 */
-	implementation 'org.springframework.boot:spring-boot-starter-data-mybatis' // Spring Boot와 MyBatis 통합
-  	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter' // MyBatis와 Spring Boot 통합
- 	implementation 'org.apache.ibatis:mybatis' // MyBatis 핵심 라이브러리 
-    
-	/* 형태소 분석 08.02추가 */
-	implementation 'com.koala:koala-nlp:1.0.0' 
+ 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'kr.bydelta:koalanlp-core:2.1.4' //형태소 분석기
 	
 	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	//implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
@@ -50,6 +44,7 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
+ 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -64,4 +59,3 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
