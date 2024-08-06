@@ -1,13 +1,14 @@
 var client;
 var key;
 let flag = false;
+let lastDate = null; // 마지막으로 표시된 날짜
+let lastOpenedDate = localStorage.getItem('lastOpenedDate'); // 로컬 스토리지에서 마지막 열었던 날짜 가져오기
 
-// 브라우저가 WebSocket을 지원하는지 확인하는 함수
+// WebSocket 지원 여부를 출력
 function isWebSocketSupported() {
     return 'WebSocket' in window;
 }
 
-// WebSocket 지원 여부를 출력
 if (isWebSocketSupported()) {
     console.log("이 브라우저는 WebSocket을 지원합니다.");
 } else {
@@ -32,14 +33,41 @@ function formatDate(now) {
     return `${year}년 ${month}월 ${date}일 ${days[dayOfWeek]}`;
 }
 
-// 대화 내용 추가
 function showMessage(tag) {
-    document.getElementById("chat-content").innerHTML += tag;
-    // 스크롤을 제일 아래로
-    document.getElementById("chat-content").scrollTop = document.getElementById("chat-content").scrollHeight;
+    var chatContent = document.getElementById("chat-content");
+    chatContent.innerHTML += tag;
+    // 스크롤을 최하단으로 이동
+    chatContent.scrollTop = chatContent.scrollHeight;
 }
 
-// 웹소켓 연결 후 인사말 출력
+function showDateIfNew() {
+    var now = new Date();
+    var today = formatDate(now);
+    if (lastDate !== today) {
+        var dateTag = `<div class="flex center date">${today}</div>`;
+        showMessage(dateTag);
+        lastDate = today;
+    }
+}
+
+function showWelcomeMessage() {
+    const now = new Date();
+    const today = formatDate(now);
+
+    const welcomeMessage = `<div class="msg bot flex">
+                                <div class="icon">
+                                    <img src="/img/bot/bot-img.png">
+                                </div>
+                                <div class="message">
+                                    <div class="part">
+                                        <p>안녕하세요! 무엇을 도와드릴까요?</p>
+                                    </div>
+                                </div>
+                            </div>`;
+    showMessage(welcomeMessage);
+    localStorage.setItem('lastOpenedDate', today); // 현재 날짜를 로컬 스토리지에 저장
+}
+
 function connect() {
     client = Stomp.over(new SockJS('/ws-green-bot'));
     client.connect({}, (frame) => {
@@ -48,19 +76,18 @@ function connect() {
             var msgObj = answer.body;
             var now = new Date();
             var time = formatTime(now);
-            var date = formatDate(now);
-            var tag = `<div class="flex center date">${date}</div>
-                        <div class="msg bot flex">
-                            <div class="icon">
-                                <img src="/images/icon/robot-solid.svg">
+            var tag = `<div class="msg bot flex">
+                        <div class="icon">
+                            <img src="/images/icon/robot-solid.svg">
+                        </div>
+                        <div class="message">
+                            <div class="part">
+                                <p>${msgObj}</p>
                             </div>
-                            <div class="message">
-                                <div class="part">
-                                    <p>${msgObj}</p>
-                                </div>
-                                <div class="time">${time}</div>
-                            </div>
-                        </div>`;
+                            <div class="time">${time}</div>
+                        </div>
+                    </div>`;
+            showDateIfNew();
             showMessage(tag);
         });
 
@@ -73,57 +100,74 @@ function connect() {
     });
 }
 
-// 웹소켓 종료
 function disconnect() {
-    client.disconnect(() => {
-        console.log("Disconnected...");
-    });
+    if (client) {
+        client.disconnect(() => {
+            console.log("Disconnected...");
+        });
+    }
 }
 
-// 종료(X) 버튼 클릭 시 이벤트
 function btnCloseClicked() {
-    document.getElementById("bot-container").style.display = 'none';
-    // 대화창 리셋
-    document.getElementById("chat-content").innerHTML = "";
-    disconnect();
+    document.getElementById("bot-container").style.display = 'none'; // 챗봇 창 숨기기
+    document.getElementById("chat-content").innerHTML = ""; // 대화 내용 초기화
+    disconnect(); // 웹소켓 연결 종료
     flag = false;
 }
 
-// 챗봇 시작 시 버튼 이벤트
 function btnBotClicked() {
-    if (flag) return; // 챗봇을 한 번만 켜주기 위해서
-    document.getElementById("bot-container").style.display = 'block';
-    connect();
+    if (flag) return; // 이미 챗봇이 켜져 있다면 클릭 무시
+    document.getElementById("bot-container").style.display = 'block'; // 챗봇 창 보이기
+    connect(); // 웹소켓 연결
     flag = true;
+    showWelcomeMessage(); // 챗봇이 열릴 때마다 안내문 표시
 }
 
-function clearQuestion() {
-    document.getElementById("question").value = ""; // setter처럼 사용
-}
-
-// 메시지 전송
-// 사용자가 채팅 메시지를 입력했을 때
 function btnMsgSendClicked() {
+    if (!client) {
+        console.error("WebSocket client is not initialized.");
+        return;
+    }
+
     var question = document.getElementById("question").value.trim();
     if (question.length < 2) {
         alert("질문은 최소 2글자 이상으로 부탁드립니다.");
         return;
     }
+    
+    var now = new Date();
+    var time = formatTime(now);
+    var tag = `<div class="msg user flex">
+                <div class="message">
+                    <div class="part">
+                        <p>${question}</p>
+                    </div>
+                    <div class="time">${time}</div>
+                </div>
+            </div>`;
+    
+    showDateIfNew();
+    showMessage(tag);
+
     var data = {
         key: key,
         content: question,
         name: "guest"
     };
     client.send("/bot/question", {}, JSON.stringify(data));
-    clearQuestion();
+    
+    clearQuestion(); // 입력창 초기화
 }
 
-// 초기화 및 이벤트 바인딩
-document.getElementById("chat-icon").addEventListener('click', btnBotClicked);
-document.getElementById("close-button").addEventListener('click', btnCloseClicked);
-document.getElementById("send-button").addEventListener('click', btnMsgSendClicked);
+function clearQuestion() {
+    document.getElementById("question").value = ""; // 입력창을 빈 문자열로 설정
+}
 
-// 페이지 로드 시 챗봇 아이콘 클릭 시 챗봇 열리기
 document.addEventListener('DOMContentLoaded', (event) => {
+    // 초기 상태 설정
+    document.getElementById("bot-container").style.display = 'none';
+
     document.getElementById("chat-icon").addEventListener('click', btnBotClicked);
+    document.getElementById("close-button").addEventListener('click', btnCloseClicked);
+    document.getElementById("send-button").addEventListener('click', btnMsgSendClicked);
 });

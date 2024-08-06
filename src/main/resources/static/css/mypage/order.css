@@ -142,3 +142,38 @@ th {
 	background-color: #f1f1f1;
 	font-weight: bold;
 }
+
+
+.notice-section {
+    padding: 20px 0;
+}
+
+.no-orders {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.notice-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.notice-box h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.notice-box ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.notice-box ul li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+}
