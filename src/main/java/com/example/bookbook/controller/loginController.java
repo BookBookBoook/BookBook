@@ -20,4 +20,34 @@ public class loginController {
 	public String signup() {
 		return "views/login/signup";
 	}
+	
+	@GetMapping("/admin-login")
+	public String adminlogin() {
+		return "views/login/admin-login";
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "views/login/test";
+	}
+	
+	@GetMapping("/seller")
+	public String seller() {
+		return "views/login/seller";
+	}
+	
+	@GetMapping("/admin1")
+	public String admin() {
+		return "views/login/admin";
+	}
+	
+	@GetMapping("/refund")
+	public String refund() {
+		return "views/login/refund";
+	}
+
+	@GetMapping("/review")
+	public String review() {
+		return "views/login/review";
+	}
 }
