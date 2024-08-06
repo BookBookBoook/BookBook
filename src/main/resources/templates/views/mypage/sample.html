@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+	<link rel="stylesheet" href="/css/mypage/sidebar.css">
+</head>
+<main>
+	<div class="container">
+        <th:block  th:insert="~{views/mypage/sidebar}"/>
+        <div class="main-content">
+            
+        </div>
+    </div>
+</main>
+</html>

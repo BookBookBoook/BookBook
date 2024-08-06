@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminController {
 
 	@GetMapping("/admin")
-	public String getMethodName() {
+	public String admin() {
 		return "views/admin/index";
+	}
+	
+	@GetMapping("/admin/inventory")
+	public String adminInventory() {
+		return "views/admin/inventory";
 	}
 	
 	
