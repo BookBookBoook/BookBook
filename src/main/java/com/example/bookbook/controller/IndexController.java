@@ -18,6 +18,10 @@ public class IndexController {
 	public String list() {
 		return "views/index/bookList.html";
 	}
+	@GetMapping("/detail")
+	public String detail() {
+		return "views/index/detail.html";
+	}
 	
 	
 }
