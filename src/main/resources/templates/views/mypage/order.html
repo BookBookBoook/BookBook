@@ -6,7 +6,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	<link rel="stylesheet" href="/css/mypage/order.css">
 </head>
 <main>
-	<div class="container">
+	<div class="flex">
         <th:block  th:insert="~{views/mypage/sidebar}"/>
         <div class="main-content">
             <h2>주문/배송목록</h2>
@@ -36,7 +36,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                         <tr>
                             <td>
                                 <div style="display: flex; align-items: center;">
-                                    <img src="book1.jpg" class="book-cover-img">
+                                    <img src="/img/book-cover.png" class="book-cover-img">
                                     <div class="order-info">
                                         <div>해리포터와 마법사의 돌 1</div>
                                         <div>J.K 롤링 저 / 강동혁 역</div>
@@ -56,7 +56,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                         <tr>
                             <td>
                                 <div style="display: flex; align-items: center;">
-                                    <img src="book2.jpg" class="book-cover-img">
+                                    <img src="/img/book-cover.png" class="book-cover-img">
                                     <div class="order-info">
                                         <div>해리포터와 마법사의 돌 2</div>
                                         <div>J.K 롤링 저 / 강동혁 역</div>
