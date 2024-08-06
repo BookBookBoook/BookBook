@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객 관리 - 관리자 페이지</title>
+    <link rel="stylesheet" href="/css/login/admin.css">
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="sidebar">
+            <h2>관리자 메뉴</h2>
+            <ul>
+                <li><a href="/seller">상품 관리</a></li>
+                <li><a href="/admin1" class="active">고객 관리</a></li>
+                <li><a href="#">판매자 관리</a></li>
+                <li><a href="/refund">상품 관리</a></li>
+                <li><a href="/review">리뷰 관리</a></li>
+                <li><a href="#">프로모션 및 쿠폰</a></li>
+                <li><a href="#">클라우드(가이드)</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <h1>고객 관리</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="고객 검색 (이름, 이메일, 전화번호)">
+                <button id="searchButton">검색</button>
+            </div>
+            <table id="customerTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>전화번호</th>
+                        <th>가입일</th>
+                        <th>수정,삭제</th>
+                        <th>리뷰</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 여기에 JavaScript로 동적으로 고객 데이터를 추가할 것입니다 -->
+                </tbody>
+            </table>
+            
+            
+        </main>
+    </div>
+    <script src="/js/login/admin.js"></script>
+</body>
+</html>
