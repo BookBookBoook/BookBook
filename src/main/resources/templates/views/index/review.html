@@ -1,0 +1,40 @@
+<div class="review-container">
+	<h1 class="review-title">리뷰 시스템</h1>
+
+	<div class="review-section">
+		<button id="openReviewForm" class="review-button">리뷰 작성</button>
+		<div class="review-form" style="display: none;">
+			<h2 class="review-subtitle">리뷰 작성</h2>
+			<form id="reviewForm" class="review-form-inner">
+				<input type="text" id="reviewTitle" class="review-input"
+					placeholder="제목" required>
+				<textarea id="reviewContent" class="review-textarea"
+					placeholder="리뷰 내용" required></textarea>
+				<div class="review-rating">
+					<div class="star-rating">
+						<span>별점 : </span> <input type="radio" id="star5" name="rating"
+							value="5" class="star" /> <label for="star5" title="5점">&#9733;</label>
+						<input type="radio" id="star4" name="rating" value="4"
+							class="star" /> <label for="star4" title="4점">&#9733;</label> <input
+							type="radio" id="star3" name="rating" value="3" class="star" />
+						<label for="star3" title="3점">&#9733;</label> <input type="radio"
+							id="star2" name="rating" value="2" class="star" /> <label
+							for="star2" title="2점">&#9733;</label> <input type="radio"
+							id="star1" name="rating" value="1" class="star" /> <label
+							for="star1" title="1점">&#9733;</label>
+					</div>
+				</div>
+				<button type="submit" class="review-button">리뷰 제출</button>
+			</form>
+		</div>
+	</div>
+
+	<div class="review-list">
+		<h2 class="review-subtitle">리뷰 목록</h2>
+		<div class="review-tabs">
+			<button class="review-tab active" data-tab="all">전체리뷰</button>
+			<button class="review-tab" data-tab="purchased">구매리뷰</button>
+		</div>
+		<div id="reviewsContainer"></div>
+	</div>
+</div>
