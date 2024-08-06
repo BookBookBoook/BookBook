@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{views/commons/layout::layout(~{::head} ,~{::main} ) }">
+<head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<main class="container">
+		<div class="book-details">
+			<div class="book-image">
+				<img src="img/book.png" alt="축구의 시대 - 정몽규 축구 30년">
+			</div>
+			<div class="book-info">
+				<ul class="book-categories">
+					<li>이벤트</li>
+					<li>무료배송</li>
+					<li>베스트셀러</li>
+				</ul>
+				<h1 class="book-title">축구의 시대 - 정몽규 축구 30년</h1>
+				<p class="book-author">정몽규 저</p>
+				<p class="book-publisher">브레인스토어</p>
+				<p class="book-date">2024년 07월 26일</p>
+				<div class="book-rating">
+					<span class="stars">★★★☆☆</span> <span class="review-count">리뷰
+						2개</span>
+				</div>
+				<p class="book-price">
+					<span class="price">26,100원</span> <span class="original-price">29,000원</span>
+					<span class="discount">(10% 할인)</span>
+				</p>
+				<div class="delivery-info">
+					<h3>배송 정보</h3>
+					<p>
+						<strong>배송비</strong> 무료 (해외배송 일부 지역에 따라 상이)
+					</p>
+					<p>
+						<strong>배송안내</strong> 서울 종로구 새문안로 배송보고
+					</p>
+				</div>
+				<div class="quantity-selector">
+					<button class="decrease">-</button>
+					<input type="text" value="1" readonly>
+					<button class="increase">+</button>
+					<span class="total-price">26,100원</span>
+				</div>
+				<div class="action-buttons">
+					<button class="add-to-cart">장바구니</button>
+					<button class="buy-now">바로구매</button>
+					<button class="add-to-wishlist">알림신청</button>
+				</div>
+			</div>
+		</div>
+		<div class="plus"><img alt="상세 이미지" src="img/plusdetail.jpg"></div>
+		<div>
+			<div>책 소개</div>
+			<div>책 소개</div>
+		</div>
+		<div th:replace="~{views/index/review.html}"></div>
+	</main>
+</body>
+</html>

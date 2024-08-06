@@ -1,3 +1,4 @@
+a{text-decoration-line: none;}
 .main-container {
 	display: flex;
 	max-width: 1200px;
@@ -77,7 +78,7 @@
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
-	border: 2px solid #333;
+	border: 2px solid #ddd;
 	outline: none;
 	cursor: pointer;
 	vertical-align: middle;
@@ -115,34 +116,124 @@ label[for="selectAllCheckbox"] {
 	display: flex;
 	width: 1000px;
 	height: 300px;
-	border: 1px solid #000;
+	border-top: 2px solid #ddd;
+	border-bottom: 2px solid #ddd;
 }
 
 .bookInformation ol li div:first-child {
-	width: 40px;
-	border: 1px solid #000;
 	justify-content: center;
+	margin-top: 10px;
 }
 
 .bookInformation ol li div:nth-child(2) {
 	width: 200px;
-	border: 1px solid #000;
 }
 
 .bookInformation ol li div:nth-child(3) {
+	margin-left: 20px;
 	width: 500px;
-	border: 1px solid #000;
 }
 
 .bookInformation ol li div:nth-child(4) {
-	width: 100px;
-	border: 1px solid #000;
+	width: 180px;
+	margin-left: 40px;
+	text-align: center;
+	position: relative;
+	padding: 100px 0; /* 상하 여백 추가 */
+}
+
+.bookInformation ol li div:nth-child(4) p {
+	background-color: #ededf7;
+	border-radius: 5px;
+	margin: 0 10px;
+	padding: 2px 0;
+}
+
+.bookInformation ol li div:nth-child(4) h5 {
+	margin: 15px 0 0 0;
 }
 
 .bookInformation ol li div:nth-child(5) {
 	width: 190px;
-	border: 1px solid #000;
 }
 
-.bookImg {padding: 10px 0 10px 10px;}
-.bookImg img {width: 90%; height: 90%;}
+.bookImg {
+	padding: 10px 0 10px 0;
+	text-align: center;
+}
+
+.bookImg img {
+	width: 90%;
+	height: 90%;
+}
+
+.chang {
+	margin-left: 8px;
+}
+
+.button-container {
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	text-align: right;
+	margin-left: 50px;
+}
+
+.cart-button, .buy-button {
+	padding: 10px 20px;
+	font-size: 14px;
+	width: 150px;
+	margin-top: 20px;
+	font-weight: bold;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: all 0.3s ease;
+}
+
+.cart-button {
+	background-color: #ff9040;
+	color: #fff;
+	border: 1px solid #fff;
+}
+
+.buy-button {
+	background-color: #f0f0f0;
+	border: 1px solid #fff;
+}
+
+.cart-button:hover {
+	background-color: #ff7a1f; /* 더 진한 주황색 */
+	border-color: #ff7a1f;
+}
+
+.buy-button:hover {
+	background-color: #e0e0e0; /* 더 진한 회색 */
+	border-color: #e0e0e0;
+}
+
+.cart-button:hover, .buy-button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.heart-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #ccc;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.heart-button.active {
+  color: #ff0000;
+}
+
+.heart-button.active .far.fa-heart::before {
+  content: "\f004";
+  font-weight: 900;
+}
