@@ -6,7 +6,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	<link rel="stylesheet" href="/css/mypage/order-detail.css">
 </head>
 <main>
-	<div class="container">
+	<div class="flex">
         <th:block  th:insert="~{views/mypage/sidebar}"/>
         <div class="main-content">
             <div class="container-main">
@@ -16,9 +16,9 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		
 		            <div class="shipping-status">
 		                <h2>배송중 - 오늘 도착 예정</h2>
-		                <div class="flex space-between">
+		                <div class="flex between">
 			                <div class="product-info">
-			                    <img src="book_image.jpg" alt="해리포터와 마법사의 돌 1">
+			                    <img src="/img/book-cover.png" alt="해리포터와 마법사의 돌 1">
 			                    <div class="product-details">
 			                    	<div class="product-text">
 				                        <p class="product-title">해리포터와 마법사의 돌 1</p>
