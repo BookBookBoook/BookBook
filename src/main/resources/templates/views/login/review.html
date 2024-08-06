@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 관리 - 관리자 페이지</title>
+    <link rel="stylesheet" href="/css/login/admin.css">
+    <link rel="stylesheet" href="/css/login/review.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <nav class="sidebar">
+            <h2>관리자 메뉴</h2>
+            <ul>
+                <li><a href="/seller">상품 관리</a></li>
+                <li><a href="/admin1">고객 관리</a></li>
+                <li><a href="#">판매자 관리</a></li>
+                <li><a href="#">상품 관리</a></li>
+                <li><a href="#" class="active">리뷰 관리</a></li>
+                <li><a href="#">프로모션 및 쿠폰</a></li>
+                <li><a href="#">클라우드(가이드)</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <h1>리뷰 관리</h1>
+            <div class="search-bar">
+                <select>
+                    <option>고객 ID</option>
+                </select>
+                <input type="text" placeholder="검색어를 입력하세요">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="filter-btn">리뷰 작성일 <i class="fas fa-caret-down"></i></button>
+                <button class="filter-btn">전체기간 <i class="fas fa-caret-down"></i></button>
+                <button class="search-option-btn">상세검색</button>
+            </div>
+            <div class="result-info">
+                <span>63개의 결과</span>
+                <div class="action-buttons">
+                    <button><i class="far fa-file-excel"></i> 엑셀파일 이용</button>
+                    <button><i class="fas fa-print"></i> 새로고침</button>
+                    <button><i class="fas fa-cog"></i> 항목 편집</button>
+                </div>
+            </div>
+            <table class="review-table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>작성일</th>
+                        <th>고객정보</th>
+                        <th>상품</th>
+                        <th>리뷰 상세 내용</th>
+                        <th>상태</th>
+                        <th>태그</th>
+                        <th>적립금 지급/제외 및 처리완료</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>2020. 01. 27.<br>상세보기</td>
+                        <td>
+                            <span class="customer-info">고객명</span><br>
+                            <span class="customer-info">아이디</span><br>
+                            <span class="customer-info">연락처</span><br>
+                            <span class="customer-info">회원등급</span>
+                        </td>
+                        <td>
+                            <span class="product-info">대표이미지</span><br>
+                            <span class="product-info">상품명</span><br>
+                            <span class="product-info">구매 옵션명</span><br>
+                            <span class="product-info">판매가</span>
+                        </td>
+                        <td>
+                            만족 굿굿<br>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>도움: 0</span>
+                            </div>
+                        </td>
+                        <td><button class="status-btn">게시대기</button></td>
+                        <td><button class="tag-btn">+태그 추가</button></td>
+                        <td>
+                            <select class="action-select">
+                                <option>적립 지급완료 - 일</option>
+                            </select>
+                            <button class="action-btn">관리</button>
+                        </td>
+                    </tr>
+                    <!-- 추가 리뷰 행들... -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>

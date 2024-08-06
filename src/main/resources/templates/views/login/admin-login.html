@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>북북 로그인</title>
+	<link rel="stylesheet" href="/css/login/login.css">
+</head>
+<body>
+
+	<div class="main">
+	
+		<header>
+		 <a href="/">
+			<div class="logo">
+			<img src="/img/Untitled_removebg_preview.png" class="image">			
+			</div>
+			</a>
+		</header>
+
+		<!--로그인 버튼 부분-->
+		<section class="login-buttons-wrap">
+			<button class="login-btn" onclick="window.location.href='/login'">회원 로그인</button>
+			<button class="login-btn admin-login-btn" onclick="window.location.href='/admin-login'">판매자 로그인</button>
+		</section>
+
+		<!--일반 사용자 로그인 부분-->
+		<section class="login-wrap">
+			<div class="login-id-wrap">
+				<input id="input-id" placeholder="사업자아이디" type="text">
+			</div>
+			<div class="login-pw-wrap">
+				<input id="input-pw" placeholder="비밀번호" type="password">
+			</div>
+			<div class="login-btn-wrap">
+				<button id="login-btn">로그인</button>
+			</div>
+			<div class="under-login"></div>
+		</section>
+
+
+		<!--아이디, 비밀번호 찾기 및 회원가입 부분-->
+		<section class="find-signup-wrap-admin">
+			<div id="find-signup-wrap-ko">
+				<span class="find-id">아이디찾기</span>
+				<span class="find-pw">비밀번호 찾기</span>
+				<span class="sign-up">
+					<a href="./signup">회원가입</a>
+				</span>
+			</div>
+		</section>
+	</div>
+
+</body>
+</html>
