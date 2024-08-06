@@ -1,0 +1,79 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f0f0;
+	
+	
+}
+
+.container {
+	width:100%;
+	background-color: #f0f0f0;
+	border-radius: 5px;
+	padding: 20px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.container>div {
+	padding: 20px;
+}
+
+
+.sub-name {
+	padding: 20px;
+	font-size: 20px;
+	background-color: white;
+}
+
+.search-box {
+	background-color: white;
+	border: 1px solid #888;
+}
+
+.search-section, .filter-section {
+	margin-bottom: 20px;
+}
+
+input, select, button {
+	padding: 5px;
+	margin: 5px;
+}
+
+
+button {
+	background-color: white;
+	border: 1px solid #a9a9a9;
+}
+
+.btns {
+	display: flex;
+	
+	justify-content: center;
+}
+
+.search-btn {
+	background-color: #ff9040;
+	color: white;
+}
+
+.inven-box {
+	background-color: white;
+	border: 1px solid #888;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.action-buttons button {
+	margin: 5px;
+}
