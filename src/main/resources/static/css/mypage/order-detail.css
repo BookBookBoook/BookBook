@@ -2,19 +2,6 @@ button{
 	white-space: nowrap;
 }
 
-.main-content {
-    flex: 1;
-    background-color: #fff;
-    padding: 20px;
-}
-
-.container-main {
-    margin: auto;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .order-details-section {
     padding: 20px 0;
 }

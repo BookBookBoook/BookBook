@@ -30,5 +30,10 @@ public class MypageController {
 	public String accountDel() {
 		return "views/mypage/account-delete";
 	}
+	
+	@GetMapping("/mypage/questions")
+	public String question() {
+		return "views/mypage/question";
+	}
 
 }
