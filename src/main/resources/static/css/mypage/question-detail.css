@@ -1,0 +1,7 @@
+.list-btn{
+	border: 1px solid var(--grey);
+    color: var(--black);
+    background-color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}

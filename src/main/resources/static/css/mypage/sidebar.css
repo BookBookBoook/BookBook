@@ -15,7 +15,7 @@ h1 {
     margin: auto;
     background-color: white;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .head {
@@ -23,10 +23,16 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
+    /* border-bottom: 1px solid #ddd; */
     margin-left : 5px;
 }
-
+.head-btn{
+	border: 1px solid var(--grey);
+    color: var(--black);
+    background-color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+}
 
 /* 사이드바 */
 .sidebar {
@@ -38,7 +44,9 @@ h1 {
 	text-align: center;
 	margin-bottom: 20px;
 	background-color: var(--light-grey);
-	padding: 10px;
+	padding: 30px;
+	border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .profile-pic {
@@ -58,14 +66,24 @@ h1 {
 	margin-bottom: 5px;
 }
 
+.wish{
+	border-right : 1px solid var(--grey);
+	padding-right: 10px;
+	margin-right: 10px;
+	height: 80%
+}
+.favorite-find{
+	font-weight: 500;
+}
+
 .menu {
-	padding: 5px;
-	/* border: 1.5px solid var(--grey); */
+	padding: 10px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
 }
 
 .menu li {
-	margin: 10px;
+	padding: 12px;
 }
 
 .menu-main {
@@ -74,13 +92,13 @@ h1 {
 }
 
 .menu a {
-	text-decoration: none;
-	color: #333;
 	display: block;
-	padding: 10px;
-	/* background-color: #e9e9e9; */
 }
 
-.menu a:hover {
-	background-color: #ccc;
+.menu li:hover {
+	background-color: var(--light-grey);
+}
+
+.menu > li:nth-child(7){
+	margin-top: 30px;
 }

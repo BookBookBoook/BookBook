@@ -1,40 +1,11 @@
-.question-container {
-	margin: auto;
-	background-color: #fff;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	padding: 20px;
-	margin-top: 50px;
-}
-
-.head {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border-bottom: 1px solid #ddd;
-	padding-bottom: 10px;
-}
-
-.head h1 {
-	margin: 0;
-}
-
-.btn {
-	background-color: #f1f1f1;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	padding: 10px 20px;
-	cursor: pointer;
-}
-
 .tabs {
 	display: flex;
-	margin-top: 20px;
+	margin-top: 35px;
 }
 
 .tab {
-	background-color: #f1f1f1;
-	border: 1px solid #ddd;
+	background-color: var(--light-grey);
+	border: 1px solid var(--grey);
 	padding: 10px 20px;
 	cursor: pointer;
 	flex: 1;
@@ -65,8 +36,8 @@ table {
 }
 
 th {
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	border-top: 1px solid var(--grey);
+	border-bottom: 1px solid var(--grey);
 }
 
 th, td {

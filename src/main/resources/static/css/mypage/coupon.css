@@ -1,0 +1,138 @@
+.selected {
+    color: red;
+}
+
+
+.tabs {
+	display: flex;
+	margin-top: 35px;
+	margin-bottom: 20px;
+}
+
+.tab {
+	background-color: var(--light-grey);
+	border: 1px solid var(--grey);
+	padding: 10px 20px;
+	cursor: pointer;
+	flex: 1;
+	text-align: center;
+}
+
+.active {
+	background-color: #fff;
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #fff;
+}
+
+.coupon-summary {
+    display: flex;
+    justify-content: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.coupon-summary div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.available-coupons{
+	border-right: 1px solid var(--grey);
+}
+
+.coupon-summary .count {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.coupon-filters {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px;
+}
+
+.coupon-filters-all{
+	display: block;
+	padding: 10px;
+}
+
+.delete-button{
+	background-color: white;
+	color: var(--black);
+	border: 1px solid var(--grey);
+	cursor: pointer;
+	border-radius: 4px;
+	padding: 10px 20px;
+}
+
+/* 쿠폰 부분 */
+.coupon-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.coupon {
+    background-color: #fff;
+    border: 1px solid var(--grey);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: left;
+    position: relative;
+}
+
+.discount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
+
+.description {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #666;
+}
+
+.dates {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #999;
+}
+
+.days-left {
+    font-weight: bold;
+    color: #ff5722;
+    margin-left: 10px;
+}
+
+.details {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.details:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+    .coupon-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 items per row on smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .coupon-container {
+        grid-template-columns: repeat(1, 1fr); /* 1 item per row on very small screens */
+    }
+}
