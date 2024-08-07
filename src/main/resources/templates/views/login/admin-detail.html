@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고객 상세 정보</title>
+    <link rel="stylesheet" href="/css/login/admin-common.css">
+    <link rel="stylesheet" href="/css/login/admin-detail.css">
+</head>
+<body>
+    <div class="wrapper">
+		<div th:replace="~{/views/login/sidebaradmin(activeMenu='admin1')}"></div>
+        <main class="content">
+            <h1>고객 상세 정보</h1>
+            <div class="customer-detail">
+                <div class="customer-info">
+                    <h2>기본 정보</h2>
+                    <p><strong>이름:</strong> <span id="customerName">홍길동</span></p>
+                    <p><strong>이메일:</strong> <span id="customerEmail">hong@example.com</span></p>
+                    <p><strong>전화번호:</strong> <span id="customerPhone">010-1234-5678</span></p>
+                    <p><strong>가입일:</strong> <span id="customerJoinDate">2023-01-15</span></p>
+                </div>
+                <div class="customer-stats">
+                    <h2>활동 통계</h2>
+                    <p><strong>총 주문 수:</strong> <span id="totalOrders">15</span></p>
+                    <p><strong>총 구매 금액:</strong> <span id="totalPurchase">1,500,000원</span></p>
+                    <p><strong>작성 리뷰 수:</strong> <span id="totalReviews">7</span></p>
+                    <p><strong>최근 로그인:</strong> <span id="lastLogin">2024-08-05</span></p>
+                </div>
+            </div>
+            <div class="customer-actions">
+                <button id="deleteCustomer">고객 삭제</button>
+                <a href="/review"><button id="viewReviews">리뷰 보기</button></a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

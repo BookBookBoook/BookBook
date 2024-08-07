@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>출판사 회원 승인</title>
+    <link rel="stylesheet" href="/css/login/admin-common.css">
+    <link rel="stylesheet" href="/css/login/admin-sign.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div th:replace="~{/views/login/sidebaradmin(activeMenu='publisher')}"></div>
+        <main class="content">
+            <h1>출판사 회원 승인</h1>
+            <table class="publisher-table">
+                <thead>
+                    <tr>
+                        <th>출판사 이름</th>
+                        <th>출판사 번호</th>
+                        <th>사업자 번호</th>
+                        <th>등록증</th>
+                        <th>계좌 정보</th>
+                        <th>승인 상태</th>
+                        <th>작업</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>예시 출판사</td>
+                        <td>123-456-7890</td>
+                        <td>000-00-00000</td>
+                        <td><a href="#" class="view-doc">보기</a></td>
+                        <td>국민은행 123-456-789012</td>
+                        <td>대기 중</td>
+                        <td>
+                            <button class="approve-btn">승인</button>
+                            <button class="reject-btn">거부</button>
+                        </td>
+                    </tr>
+                    <!-- 더 많은 출판사 항목들... -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>

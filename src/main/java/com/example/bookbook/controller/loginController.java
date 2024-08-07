@@ -21,10 +21,21 @@ public class loginController {
 		return "views/login/signup";
 	}
 	
+	@GetMapping("/admin-signup")
+	public String signupadmin() {
+		return "views/login/admin-signup";
+	}
+	
 	@GetMapping("/admin-login")
 	public String adminlogin() {
 		return "views/login/admin-login";
 	}
+	
+	@GetMapping("/admin-sign")
+	public String adminsign() {
+		return "views/login/admin-sign";
+	}
+	
 	
 	@GetMapping("/test")
 	public String test() {
@@ -39,6 +50,11 @@ public class loginController {
 	@GetMapping("/admin1")
 	public String admin() {
 		return "views/login/admin";
+	}
+	
+	@GetMapping("/admin/detail")
+	public String deatil() {
+		return "views/login/admin-detail";
 	}
 	
 	@GetMapping("/refund")
