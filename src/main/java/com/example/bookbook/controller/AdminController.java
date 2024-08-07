@@ -17,9 +17,18 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/inventory")
-	public String adminInventory() {
+	public String inventory() {
 		return "views/admin/inventory";
 	}
 	
+	@GetMapping("/admin/order")
+	public String order() {
+		return "views/admin/order";
+	}
+	
+	@GetMapping("/admin/order/refund")
+	public String orderRefund() {
+		return "views/admin/refund";
+	}
 	
 }
