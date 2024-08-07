@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+	<link rel="stylesheet" href="/css/mypage/sidebar.css">
+	<link rel="stylesheet" href="/css/mypage/coupon.css">
+</head>
+<main>
+	<div class="flex">
+        <th:block  th:insert="~{views/mypage/sidebar}"/>
+        <div class="main-content">
+            <div class="container-main">
+		        <div class="head">
+		            <h1>쿠폰 / 적립금</h1>
+		            <button class="head-btn">교환번호 등록</button>
+		        </div>
+		        <div class="tabs">
+		            <button class="tab active" onclick="openTab(event, 'coupon')">쿠폰</button>
+		            <button class="tab" onclick="openTab(event, 'point')">적립금</button>
+		        </div>
+		
+		        <div class="coupon-summary">
+		            <div class="available-coupons">
+		                <span>사용 가능한 쿠폰</span>
+		                <span class="count">0장</span>
+		            </div>
+		            <div class="scheduled-coupons">
+		                <span>이번 달 소멸예정 쿠폰</span>
+		                <span class="count">0장</span>
+		            </div>
+		        </div>
+		
+		        <div class="coupon-filters">
+		        	<i id="all-btn" class="fa-regular fa-circle-check"></i>
+		            <span class="coupon-filters-all">전체</span>
+		            <button class="delete-button">삭제</button>
+		        </div>
+		        
+		        <div id="coupon" class="tabcontent">
+		        	<div class="coupon-container">
+				        <div class="coupon">
+				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 1,000원 할인</div>
+				            <div class="description">어린이 과학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
+				            <div class="dates">2024.07.22 ~ 2024.08.31 <span class="days-left">D-25</span></div>
+				            <div class="details">상세보기</div>
+				        </div>
+				        <div class="coupon">
+				            <div class="discount">1,000원 할인</div>
+				            <div class="description">어린이 수학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
+				            <div class="dates">2024.07.22 ~ 2024.08.31 <span class="days-left">D-25</span></div>
+				            <div class="details">상세보기</div>
+				        </div>
+				        <div class="coupon">
+				            <div class="discount">1,000원 할인</div>
+				            <div class="description">미스터리아(2024년 제 52호) 1000원 할인쿠폰</div>
+				            <div class="dates">2024.07.30 ~ 2024.08.31 <span class="days-left">D-25</span></div>
+				            <div class="details">상세보기</div>
+				        </div>
+				        <div class="coupon">
+				            <div class="discount">10,000원 할인</div>
+				            <div class="description">sam 7.8 2nd 필립커버 케이스 (Black) 10000원 할인쿠폰</div>
+				            <div class="dates">2024.08.01 ~ 2024.08.31 <span class="days-left">D-25</span></div>
+				            <div class="details">상세보기</div>
+				        </div>
+				        <div class="coupon">
+				            <div class="discount">10,000원 할인</div>
+				            <div class="description">sam 7.8 2nd 필립커버 케이스 (White) 10000원 할인쿠폰</div>
+				            <div class="dates">2024.08.01 ~ 2024.08.31 <span class="days-left">D-25</span></div>
+				            <div class="details">상세보기</div>
+				        </div>
+				        <div class="coupon">
+				            <div class="discount">7,000원 할인</div>
+				            <div class="description">sam Stylus Pen(sam 전자책 단말기) 7000원 할인쿠폰</div>
+				            <div class="dates">2024.08.01 ~ 2024.08.31 <span class="days-left">D-25</span></div>
+				            <div class="details">상세보기</div>
+				        </div>
+				        <div class="coupon">
+				            <div class="discount">5%할인</div>
+				            <div class="description">[교보문고x취다이닝] 흐르는 강물처럼 특별할인</div>
+				            <div class="dates">2024.06.14 ~ 2024.09.30</div>
+				            <div class="details">상세보기</div>
+				        </div>
+				    </div>
+		        </div>
+		        
+		        <div id="point" class="tabcontent">
+		        	
+		        </div>
+		    </div>
+        </div>
+    </div>
+    <script src="/js/mypage/coupon.js"></script>
+</main>
+</html>

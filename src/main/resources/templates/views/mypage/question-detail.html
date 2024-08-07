@@ -3,6 +3,7 @@
 th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
+	<link rel="stylesheet" href="/css/mypage/question-detail.css">
 </head>
 <main>
 	<div class="flex">
@@ -11,10 +12,15 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
             <div class="container-main">
 		        <div class="head">
 		            <h1>1:1 문의내역</h1>
-		            <button class="head-btn">1:1 문의하기</button>
+		            <button class="list-btn">목록</button>
 		        </div>
-		        <div>
-		        	
+		        <div class="question">
+		            <p>배송완료가 떴는데 배송이 안왔어요.</p>
+		        </div>
+		        <div class="details">
+		            <p>이름: 이유진</p>
+		            <p>연락 이메일: yujin2232@naver.com</p>
+		            <p class="date">2013-04-25 10:34</p>
 		        </div>
 		    </div>
         </div>

@@ -1,3 +1,20 @@
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+	text-align: center;
+}
+
+th {
+	background-color: #f1f1f1;
+	font-weight: bold;
+}
+
+
 .main-content h2 {
 	margin-top: 0;
 }
@@ -111,22 +128,6 @@
 	border: 1px solid var(--grey);
 	background-color: white;
 	color: var(--black);
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 10px;
-	border-bottom: 1px solid #ccc;
-	text-align: center;
-}
-
-th {
-	background-color: #f1f1f1;
-	font-weight: bold;
 }
 
 

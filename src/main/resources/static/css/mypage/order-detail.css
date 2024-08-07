@@ -2,23 +2,23 @@ button{
 	white-space: nowrap;
 }
 
-.order-details-section {
-    padding: 20px 0;
-}
-
 h1 {
     font-size: 24px;
     margin-bottom: 20px;
 }
 
+.head{
+	padding:0;
+}
 .order-date {
     font-size: 14px;
-    color: #555;
     margin-bottom: 20px;
+    margin-right: 10px;
 }
 
 .order-number {
     font-weight: bold;
+    font-size: 14px;
 }
 
 .shipping-status {
@@ -48,7 +48,7 @@ h1 {
 .product-details {
     display: flex;
     width: 100%;
-    padding: 20px;
+    padding: 17px;
 }
 
 .product-text {
@@ -68,14 +68,14 @@ h1 {
     margin-bottom: 10px;
 }
 
-.review-button {
-    background-color: #2196F3;
+.cart-btn {
+    background-color: var(--main-orange);
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     align-self: flex-end;
-    margin-bottom: 3px;
+    margin-top: 3px;
 }
 
 .shipping-actions {
@@ -88,9 +88,9 @@ h1 {
 .track-button,
 .cancel-button,
 .print-button {
-    background-color: #555;
-    color: white;
-    border: none;
+    background-color: white;
+    color: var(--black);
+    border: 1px solid var(--grey);
     padding: 10px 20px;
     cursor: pointer;
 }
@@ -106,7 +106,7 @@ h1 {
 .payment-info h3 {
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-top: 0;
 }
 
 .receiver-info p,

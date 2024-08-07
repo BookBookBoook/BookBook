@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+    <link rel="stylesheet" href="/css/mypage/sidebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+</head>
+<main>
+    <div class="flex">
+        <th:block  th:insert="~{views/mypage/sidebar}"/>
+        <div class="main-content">
+            <div class="container-main">
+                <div class="head">
+                    <h1>나의 취향</h1>
+                </div>
+                <!-- ECharts 예시 -->
+                <div id="chart1" style="width: 600px; height: 400px; border: 1px solid var(--grey);"></div>
+                <div id="chart2" style="width: 600px; height: 400px; border: 1px solid var(--grey);"></div>
+
+                <script type="text/javascript">
+                    // 첫 번째 차트 초기화 및 옵션 설정
+                    var chartDom1 = document.getElementById('chart1');
+                    var myChart1 = echarts.init(chartDom1);
+                    var option1 = {
+                        tooltip: {},
+                        xAxis: {
+                            data: ['문학', '사회과학', '철학', '어학', '예술', '만화']
+                        },
+                        yAxis: {
+                            interval: 5,
+                        },
+                        series: [{
+                            //name: '예제 데이터',
+                            type: 'bar',
+                            data: [5, 20, 36, 10, 10, 100]
+                        }]
+                    };
+                    myChart1.setOption(option1);
+
+                    // 두 번째 차트 초기화 및 옵션 설정
+                    var chartDom2 = document.getElementById('chart2');
+                    var myChart2 = echarts.init(chartDom2);
+                    var option2 = {
+                        tooltip: {},
+                        legend: {
+                            //data: ['예제 데이터']
+                        },
+                        series: [{
+                            //name: '예제 데이터',
+                            type: 'pie',
+                            label: {
+                                //show: false // 레이블을 숨김
+                                position: 'inside', // 레이블을 원 안에 위치
+                                formatter: '{b}\n{d}%'  // 이름과 퍼센트를 표시
+                            },
+                            labelLine: {
+                                show: false // 레이블 라인을 숨김
+                            },
+                            data: [
+                                { value: 5, name: '문학' },
+                                { value: 20, name: '사회과학' },
+                                { value: 36, name: '철학' },
+                                { value: 10, name: '어학' },
+                                { value: 10, name: '예술' },
+                                { value: 20, name: '역사' }
+                            ]
+                        }]
+                    };
+                    myChart2.setOption(option2);
+                </script>
+            </div>
+        </div>
+    </div>
+</main>
+</html>
