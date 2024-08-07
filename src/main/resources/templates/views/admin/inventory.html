@@ -19,7 +19,7 @@
 		<th:block th:insert="~{views/admin/sidebar}" />
 
 		<div class="container">
-			<div class="sub-name">상품관리</div>
+			<h2>상품관리</h2>
 			<div class="search-box">
 				<div class="search-section">
 					<label for="search">검색분류:</label>
@@ -34,16 +34,13 @@
 					<div>
 						<label>상품분류:</label>
 						<select>
-							<option>- 대분류 선택 -</option>
+							<option>- 출판사 선택 -</option>
 						</select>
 						<select>
-							<option>- 중분류 선택 -</option>
+							<option>- 장르 선택 -</option>
 						</select>
 						<select>
-							<option>- 소분류 선택 -</option>
-						</select>
-						<select>
-							<option>- 상세분류 선택 -</option>
+							<option>- 작가 선택 -</option>
 						</select>
 					</div>
 					<div>
@@ -51,13 +48,6 @@
 						<select>
 							<option>상품등록일</option>
 						</select>
-						<button>오늘</button>
-						<button>3일</button>
-						<button>7일</button>
-						<button>1개월</button>
-						<button>3개월</button>
-						<button>1년</button>
-						<button>전체</button>
 						<input type="date" value="2018-06-15"> ~ <input type="date" value="2019-06-15">
 					</div>
 					<div>
@@ -80,8 +70,6 @@
 					<button>삭제</button>
 					<button>상품복사</button>
 					<button>판매변경 ▼</button>
-					<button>상품분류변경</button>
-					<button>메인진열수정 ▶</button>
 				</div>
 
 				<table>
@@ -92,7 +80,6 @@
 							<th>판매가</th>
 							<th>판매상태</th>
 							<th>바로구매 URL</th>
-							<th>상품분류</th>
 							<th>상품 등록일</th>
 						</tr>
 					</thead>
@@ -107,7 +94,6 @@
 								<button>주소복사</button>
 								<button>SNS공유</button>
 							</td>
-							<td></td>
 							<td>2019-06-14</td>
 						</tr>
 						<tr>
@@ -120,7 +106,6 @@
 								<button>주소복사</button>
 								<button>SNS공유</button>
 							</td>
-							<td></td>
 							<td>2019-06-14</td>
 						</tr>
 						<tr>
@@ -133,7 +118,6 @@
 								<button>주소복사</button>
 								<button>SNS공유</button>
 							</td>
-							<td></td>
 							<td>2019-06-14</td>
 						</tr>
 						<!-- 추가 행들... -->
