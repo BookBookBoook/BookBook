@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/admin/inventory.css">
+<link rel="stylesheet" href="/css/admin/commons.css">
 <link rel="stylesheet" href="/css/admin/sidebar.css">
 <link rel="stylesheet" href="/css/admin/index.css">
 
@@ -19,20 +19,21 @@
 		<th:block th:insert="~{views/admin/sidebar}" />
 
 		<div class="container">
-			<h2>상품관리</h2>
+			<h1>상품 관리</h1>
 			<div class="search-box">
 				<div class="search-section">
-					<label for="search">검색분류:</label>
-					<select id="search">
-						<option>상품명</option>
-					</select>
-					<input type="text" placeholder="검색어 입력">
-					<button>검색</button>
-				</div>
+					<div class="filter-section">
+						<label for="search" class="jump">검색분류</label>
+						<select id="search">
+							<option>상품명</option>
+						</select>
+						<input type="text" placeholder="검색어 입력">
+						<button>검색</button>
+					</div>
 
-				<div class="filter-section">
-					<div>
-						<label>상품분류:</label>
+
+					<div class="filter-section">
+						<label class="jump">상품분류</label>
 						<select>
 							<option>- 출판사 선택 -</option>
 						</select>
@@ -43,15 +44,15 @@
 							<option>- 작가 선택 -</option>
 						</select>
 					</div>
-					<div>
-						<label>상품등록일:</label>
+					<div class="filter-section">
+						<label>상품등록일</label>
 						<select>
 							<option>상품등록일</option>
 						</select>
-						<input type="date" value="2018-06-15"> ~ <input type="date" value="2019-06-15">
+						<input type="date" id="startDate"> ~ <input type="date" id="endDate">
 					</div>
-					<div>
-						<label>판매상태:</label>
+					<div class="filter-section">
+						<label class="jump">판매상태</label>
 						<input type="radio" name="sale" checked> 전체
 						<input type="radio" name="sale"> 판매함
 						<input type="radio" name="sale"> 판매안함
