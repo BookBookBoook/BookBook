@@ -146,16 +146,16 @@
 	bottom: 10%;
 	right: 60px;
 	cursor: pointer;
-	width: 50px; /* 이미지 크기 */
-	height: 50px; /* 이미지 크기 */
+	width: 80px; /* 이미지 크기 */
+	height: 80px; /* 이미지 크기 */
 }
 
 #close-button {
+	display:flex;
 	cursor: pointer;
 	font-size: 18px;
 	background: #ff9040;
 	border: none;
-	padding: 10px;
 	border-radius: 4px;
 	position: absolute; /* 부모 요소를 기준으로 위치 조정 */
 	top: 10px; /* 상단에서 10px 위치 */
