@@ -1,117 +1,186 @@
-.review-container {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+
+.container {
     max-width: 800px;
-    margin: 20px auto;
-    background: white;
+    border-top:1px solid rgba(240, 240, 240,0.5); 
+    margin: 0 auto;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.line{
+	width: 100%;
+    display: flex;
+    align-items: center;
+}
+.line h1 {
+    margin: 0;
 }
 
-.review-title, .review-subtitle {
-    color: #333;
+.line button {
+    margin-left: auto;
+}
+.save{background-color: #ff9040; color: white;}
+.arar{background-color: rgba(240, 240, 240,0.5);}
+.btn {
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
-.review-section {
-    margin-bottom: 30px;
+.save:hover {
+    background-color: #fb6a00;;
 }
 
-.review-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 5px;
+
+.review-tabs {
+    margin: 20px 0;
+}
+
+.review-list {
     margin-top: 20px;
 }
-
-.review-form-inner {
+.review-header {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.review-input, .review-textarea {
+.review-header h3 {
+    margin: 0;
+}
+
+.stars-display {
+    font-size: 18px;
+    color: #FFD700;  /* 금색 */
+}
+
+.review-item {
+    border-bottom: 1px solid rgb(240, 240, 240);
+    position: relative;
+    padding-bottom: 40px;
+    padding: 15px;
     margin-bottom: 10px;
+    border-radius: 4px;
+}
+.like-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-right: 10pxl
+}
+
+.like-button i {
+    color: rgba(26, 115, 232, 0.6); /* 구글 스타일의 파란색 */
+    margin-right: 5px;
+    font-size: 18px; /* 아이콘 크기 조정 */
+}
+
+.like-count {
+    color: #666;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 4px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#reviewForm input,
+#reviewForm textarea {
+    width: 95%;
+    height:30px;
     padding: 10px;
+    margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-.review-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
+#reviewForm textarea {
+    height: 100px;
 }
 
-.review-button:hover {
-    background-color: #45a049;
-}
-
-.review-tabs {
-    margin-bottom: 20px;
-}
-
-.review-tab {
-    background-color: #f1f1f1;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    margin-right: 5px;
-    cursor: pointer;
-}
-
-.review-tab.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.review-item {
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-}
-
-.review-header {
+.rating {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    height:50px;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
 }
 
-.review-like-button {
-    background-color: #f1f1f1;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-.review-like-button:hover {
-    background-color: #ddd;
-}
-
-.star-rating {
-    display: inline-block;
-    direction: rtl;
-    unicode-bidi: bidi-override;
-}
-
-.star-rating input {
+.rating > input {
     display: none;
 }
 
-.star-rating label {
-    color: #ccc;
+.rating > label {
+    position: relative;
+    width: 1em;
     font-size: 30px;
-    padding: 0;
+    color: #FFD600;
     cursor: pointer;
 }
 
-.star-rating label:hover,
-.star-rating label:hover ~ label,
-.star-rating input:checked ~ label {
-    color: #ffcc00;
+.rating > label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0;
 }
 
-#openReviewForm {
-    margin-bottom: 20px;
+.rating > label:hover:before,
+.rating > label:hover ~ label:before {
+    opacity: 1 !important;
+}
+
+.rating > input:checked ~ label:before {
+    opacity: 1;
+}
+
+.rating:hover > input:checked ~ label:before {
+    opacity: 0.4;
+}
+
+.stars-display {
+    color: #FFD600;
+    font-size: 20px;
 }
