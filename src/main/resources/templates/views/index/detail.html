@@ -3,6 +3,14 @@
 	th:replace="~{views/commons/layout::layout(~{::head} ,~{::main} ) }">
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="/css/mainContent/detail.css"/>
+	<link rel="stylesheet" href="/css/mainContent/review.css"/>
+	<script src="/js/mainContent/review.js"></script>
+	<script src="/js/mainContent/detail.js"></script>
 </head>
 <body>
 	<main class="container">
@@ -16,7 +24,7 @@
 					<li>무료배송</li>
 					<li>베스트셀러</li>
 				</ul>
-				<h1 class="book-title">축구의 시대 - 정몽규 축구 30년</h1>
+				<h1 class="bookTitle">축구의 시대 - 정몽규 축구 30년</h1>
 				<p class="book-author">정몽규 저</p>
 				<p class="book-publisher">브레인스토어</p>
 				<p class="book-date">2024년 07월 26일</p>
@@ -50,15 +58,27 @@
 				</div>
 			</div>
 		</div>
-		<div class="plus"><img alt="상세 이미지" src="img/plusdetail.jpg"></div>
+		<div class="plus">
+			<img alt="상세 이미지" src="img/plusdetail.jpg">
+		</div>
 		<div>
-			<div>책 소개</div>
-			<div>책 소개</div>
+			<div>
+				<h3>책 소개</h3>
+			</div>
+			<div class="bookContent">
+				<p>"축구의 시대 - 정몽규 축구 30년"은 대한축구협회 회장이자 현대산업개발 회장인 정몽규의 축구 인생을 담은
+					책입니다. 이 책은 정몽규가 30년 동안 한국 축구계에서 경험하고 목격한 다양한 사건과 변화, 그리고 그의 비전을 담고
+					있습니다. 주요 내용: 정몽규의 축구 입문과 열정: 어떻게 축구에 빠지게 되었고, 그의 열정이 어떻게 발전했는지
+					설명합니다. 한국 축구의 발전 과정: 1990년대부터 현재까지 한국 축구가 어떻게 변화하고 성장했는지 서술합니다. 국제
+					축구계에서의 경험: FIFA, AFC 등 국제 축구 기구에서의 활동과 경험을 공유합니다. 축구 행정가로서의 도전과 성과:
+					대한축구협회 회장으로서 겪은 다양한 도전과 이룩한 성과들을 소개합니다. 한국 축구의 미래 비전: 정몽규가 바라보는 한국
+					축구의 미래와 발전 방향에 대해 논합니다. 축구를 통한 사회 공헌: 축구가 어떻게 사회에 긍정적인 영향을 미칠 수
+					있는지에 대한 그의 생각을 담고 있습니다. 이 책은 단순히 개인의 회고록을 넘어, 한국 축구의 현대사를 조망하고 미래를
+					전망하는 중요한 자료로서의 가치를 지닙니다. 축구 팬은 물론, 스포츠 행정이나 경영에 관심 있는 독자들에게도 유익한
+					인사이트를 제공할 것으로 기대됩니다.</p>
+			</div>
 		</div>
 		<div th:replace="~{views/index/review.html}"></div>
 	</main>
-	<script src="/js/mainContent/review.js"></script>
-	<script src="/js/mainContent/bookList.js"></script>
-	<script src="/js/mainContent/detail.js"></script>
 </body>
 </html>
