@@ -45,7 +45,7 @@
     font-size: 12px;
 }
 
-.book-title {
+.bookTitle {
     font-size: 24px;
     margin: 10px 0;
     text-align: left;
@@ -125,3 +125,4 @@
     color: #333;
 }
 .plus{text-align: center;}
+.bookContent{width: 800px; margin-bottom: 20px; padding: 0 8px;}

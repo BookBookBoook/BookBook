@@ -3,12 +3,14 @@
 	th:replace="~{views/commons/layout::layout(~{::head} ,~{::main} ) }">
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/mainContent/bannerCartMore.js"></script>
+<link rel="stylesheet" href="/css/mainContent/main_content.css"/>
 </head>
 <body>
 	<main>
 		<!--메인 자동 슬라이더 배너  -->
 		<div class="slider-container">
-			
+
 			<div class="slider" aria-live="polite">
 				<div class="slide" aria-hidden="true" data-src="img/banner1.jpg"></div>
 				<div class="slide" aria-hidden="true" data-src="img/banner2.jpg"></div>
@@ -22,5 +24,6 @@
 		</div>
 		<div th:replace="~{views/index/bookSlider.html}"></div>
 	</main>
+	
 </body>
 </html>
