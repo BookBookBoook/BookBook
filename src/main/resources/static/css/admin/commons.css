@@ -1,7 +1,8 @@
+@charset "UTF-8";
+
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f0f0f0;
-	
 	
 }
 
@@ -15,7 +16,7 @@ body {
 	margin: 20px;
 }
 
-.container h2 {
+.container h1 {
 	padding: 20px
 }
 
@@ -32,9 +33,26 @@ body {
 .search-section, .filter-section {
 	margin: 20px;
 }
-.filter-section div {
-	margin-bottom: 20px;
+
+.filter-section {
+    margin-bottom: 20px;
+    white-space: nowrap;
 }
+
+label {
+	width:100px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.filter-section input{
+    margin-right: 10px;
+}
+
+.jump {
+	margin-right: 26px;
+}
+
 
 input, select, button {
 	padding: 5px;
@@ -45,23 +63,29 @@ input, select, button {
 button {
 	background-color: white;
 	border: 1px solid #a9a9a9;
+	padding: 7px 15px;
+	
+	border-radius: 3px;
 }
 
 .btns {
 	display: flex;
-	
 	justify-content: center;
+	margin-bottom: 20px;
 }
 
 .search-btn {
 	background-color: #ff9040;
 	color: white;
+	border: none;
+	
 }
 
 .inven-box {
 	padding:20px;
 	background-color: white;
 	border: 0.5px solid #d9d9d9;
+	white-space: nowrap;
 }
 
 table {
@@ -69,10 +93,19 @@ table {
 	border-collapse: collapse;
 }
 
+th {
+	font-weight: bold;
+	background-color: #f7f7f7;
+}
+
 th, td {
 	border: 1px solid #ddd;
 	padding: 8px;
 	text-align: left;
+	overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
 th {
