@@ -31,6 +31,7 @@ function displayReviews(filter = 'all') {
 }
 
 // 리뷰 폼 열기 버튼 이벤트 리스너
+
 openReviewFormButton.addEventListener('click', function() {
     reviewFormContainer.style.display = 
         reviewFormContainer.style.display === 'none' ? 'block' : 'none';
