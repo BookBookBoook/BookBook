@@ -4,14 +4,22 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
 	<link rel="stylesheet" href="/css/mypage/account-delete.css">
+	<script type="text/javascript">
+		function accountDelete(){
+			//비밀번호 일치하는지 확인
+			
+			if(confirm("정말 탈퇴하시겠습니까?\n탈퇴 후 동일 아이디로 재가입이 불가합니다.")){
+				//status를 탈퇴중으로 변경
+			}
+		}
+	</script>
 </head>
 <main>
-	<div class="container">
+	<div class="flex">
         <th:block  th:insert="~{views/mypage/sidebar}"/>
         <div class="main-content">
             <div class="container-main">
 		        <div class="head">
-		            <img src="/img/Untitled_removebg_preview.png">
 		            <h1>회원탈퇴</h1>
 		            <div class="header-buttons">
 		                <button class="header-button">로그아웃</button>
@@ -42,7 +50,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                </ul>
 		            </div>
 		
-		            <div class="info-box">
+		            <div class="info-box flex between">
 		                <h2>탈퇴 관련 문의가 있으시면 1:1 문의를 이용해 주세요.</h2>
 		                <button class="auth-button">1:1 문의하기</button>
 		            </div>
@@ -64,7 +72,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		            </div>
 		
 		            <div class="info-box">
-		                <h2>정확한 본인확인을 위해 비밀번호를 입력해 주세요.</h2>
+		                <h2>정확한 본인확인을 위해 비밀번호를 다시 한 번 입력해 주세요.</h2>
 		                <div class="form-group">
 		                    <label for="userId">아이디</label>
 		                    <input type="text" id="userId" value="test@test.com" disabled>
@@ -75,7 +83,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                </div>
 		            </div>
 		
-		            <button class="delete-button">회원탈퇴</button>
+		            <button class="delete-button" onclick="accountDelete()">회원탈퇴</button>
 		        </section>
 		    </div>
         </div>
