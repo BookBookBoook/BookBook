@@ -22,6 +22,10 @@ public class IndexController {
 	public String detail() {
 		return "views/index/detail.html";
 	}
+	@GetMapping("/event")
+	public String event() {
+		return "views/index/event.html";
+	}
 	
 	
 }

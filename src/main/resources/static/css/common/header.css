@@ -84,7 +84,6 @@ header, main {
 	list-style: none;
 	display: flex;
 	margin: 0;
-	margin-top: 10px;
 }
 
 .header-middle-right ul li {
@@ -95,7 +94,7 @@ header, main {
 	color: #333;
 }
 .header-middle-right > ul > li > a > i{
-	font-size: 35px;
+	font-size: 30px;
 }
 
 /*헤더 - 하  */

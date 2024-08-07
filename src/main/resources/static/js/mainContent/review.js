@@ -1,92 +1,98 @@
-// 리뷰 데이터 배열
-let reviews = [
-    { id: 1, title: "좋은 제품", content: "매우 만족스러운 제품입니다.", rating: 5, likes: 10, isPurchased: true },
-    { id: 2, title: "그저 그러네요", content: "기대만큼은 아니었습니다.", rating: 3, likes: 2, isPurchased: false }
-];
+$(document).ready(function() {
+    // 리뷰 데이터 (예시) - 좋아요 수 추가
+    const reviews = [
+        { id: 1, name: "홍길동", content: "좋은 제품입니다.", rating: 5, isBuyer: true, likes: 10 },
+        { id: 2, name: "김철수", content: "배송이 빨라요.", rating: 4, isBuyer: true, likes: 5 },
+        { id: 3, name: "이영희", content: "품질이 좋아 보입니다.", rating: 3, isBuyer: false, likes: 2 }
+    ];
 
-// DOM 요소 선택
-const reviewForm = document.getElementById('reviewForm');
-const reviewsContainer = document.getElementById('reviewsContainer');
-const openReviewFormButton = document.getElementById('openReviewForm');
-const reviewFormContainer = document.querySelector('.review-form');
+    // 별점 표시 함수
+    function getStars(rating) {
+        return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    }
 
-// 리뷰 표시 함수
-function displayReviews(filter = 'all') {
-    reviewsContainer.innerHTML = '';
-    const filteredReviews = filter === 'all' ? reviews : reviews.filter(review => review.isPurchased);
+    // 리뷰 목록 표시 함수
+    function displayReviews(reviewsToShow) {
+        const $reviewList = $('#reviewList');
+        $reviewList.empty();
+        
+        reviewsToShow.forEach(review => {
+            $reviewList.append(`
+                <div class="review-item" data-id="${review.id}">
+                    <div class="review-header">
+                        <h3>${review.name}</h3>
+                        <div class="stars-display">${getStars(review.rating)}</div>
+                    </div>
+                    <p>${review.content}</p>
+                    <button class="like-button">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span class="like-count">${review.likes}</span>
+                    </button>
+                </div>
+            `);
+        });
+    }
 
-    filteredReviews.forEach(review => {
-        const reviewElement = document.createElement('div');
-        reviewElement.className = 'review-item';
-        reviewElement.innerHTML = `
-            <div class="review-header">
-                <h3 class="review-item-title">${review.title}</h3>
-                <span class="review-item-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</span>
-            </div>
-            <p class="review-item-content">${review.content}</p>
-            <button class="review-like-button" data-id="${review.id}">👍 ${review.likes}</button>
-        `;
-        reviewsContainer.appendChild(reviewElement);
+    // 초기 리뷰 목록 표시
+    displayReviews(reviews);
+
+    // 전체 리뷰 버튼 클릭 이벤트
+    $('#allReviewsBtn').click(function() {
+        $(this).addClass('active');
+        $('#buyerReviewsBtn').removeClass('active');
+        displayReviews(reviews);
     });
-}
 
-// 리뷰 폼 열기 버튼 이벤트 리스너
+    // 구매자 리뷰 버튼 클릭 이벤트
+    $('#buyerReviewsBtn').click(function() {
+        $(this).addClass('active');
+        $('#allReviewsBtn').removeClass('active');
+        const buyerReviews = reviews.filter(review => review.isBuyer);
+        displayReviews(buyerReviews);
+    });
 
-openReviewFormButton.addEventListener('click', function() {
-    reviewFormContainer.style.display = 
-        reviewFormContainer.style.display === 'none' ? 'block' : 'none';
-    this.textContent = 
-        reviewFormContainer.style.display === 'none' ? '리뷰 작성' : '작성 취소';
-});
+    // 리뷰 작성 버튼 클릭 이벤트
+    $('#writeReviewBtn').click(function() {
+        $('#reviewModal').css('display', 'block');
+    });
 
-// 리뷰 제출 이벤트 리스너
-reviewForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const title = document.getElementById('reviewTitle').value;
-    const content = document.getElementById('reviewContent').value;
-    const rating = document.querySelector('input[name="rating"]:checked');
+    // 모달 닫기 버튼 클릭 이벤트
+    $('.close').click(function() {
+        $('#reviewModal').css('display', 'none');
+    });
 
-    if (!rating) {
-        alert('별점을 선택해주세요.');
-        return;
-    }
-
-    const newReview = {
-        id: reviews.length + 1,
-        title,
-        content,
-        rating: parseInt(rating.value),
-        likes: 0,
-        isPurchased: Math.random() < 0.5 // 임의로 구매 여부 설정
-    };
-
-    reviews.push(newReview);
-    displayReviews();
-    this.reset();
-    reviewFormContainer.style.display = 'none';
-    openReviewFormButton.textContent = '리뷰 작성';
-});
-
-// 탭 전환 이벤트 리스너
-document.querySelector('.review-tabs').addEventListener('click', function(e) {
-    if (e.target.classList.contains('review-tab')) {
-        document.querySelectorAll('.review-tab').forEach(tab => tab.classList.remove('active'));
-        e.target.classList.add('active');
-        displayReviews(e.target.dataset.tab);
-    }
-});
-
-// 좋아요 버튼 이벤트 리스너
-reviewsContainer.addEventListener('click', function(e) {
-    if (e.target.classList.contains('review-like-button')) {
-        const reviewId = Number(e.target.dataset.id);
+    // 좋아요 버튼 클릭 이벤트
+    $(document).on('click', '.like-button', function() {
+        const reviewId = $(this).closest('.review-item').data('id');
         const review = reviews.find(r => r.id === reviewId);
         if (review) {
             review.likes++;
-            e.target.textContent = `👍 ${review.likes}`;
+            $(this).find('.like-count').text(review.likes);
         }
-    }
-});
+    });
 
-// 초기 리뷰 표시
-displayReviews();
+    // 리뷰 제출 이벤트
+    $('#reviewForm').submit(function(e) {
+        e.preventDefault();
+        const name = $('#name').val();
+        const content = $('#content').val();
+        const rating = $('input[name="rating"]:checked').val();
+
+        // 새 리뷰 추가 (실제로는 서버에 전송해야 함)
+        reviews.push({
+            id: reviews.length + 1,
+            name,
+            content,
+            rating: parseInt(rating),
+            isBuyer: true,
+            likes: 0  // 초기 좋아요 수는 0
+        });
+
+        // 폼 초기화 및 모달 닫기
+        this.reset();
+        $('#reviewModal').css('display', 'none');
+
+        // 리뷰 목록 갱신
+        displayReviews(reviews);
+    });
+});
