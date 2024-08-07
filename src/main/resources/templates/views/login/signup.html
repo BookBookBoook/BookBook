@@ -1,132 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>네이버 회원가입</title>
-	<link rel="stylesheet" href="/css/login/login.css">
-
+<meta charset="UTF-8">
+<title>북북 회원가입</title>
+<link rel="stylesheet" href="/css/login/signup.css">
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/login/address.js"></script>
 </head>
-
 <body>
-
-    <div class="main-signup">
-
+	<div class="main-signup">
 		<header>
-		 <a href="/">
-			<div class="logo">
-			<img src="/img/Untitled_removebg_preview.png" class="image">			
-			</div>
+			<a th:href="@{/}">
+				<div class="logo">
+					<img th:src="@{/img/Untitled_removebg_preview.png}" class="image">
+				</div>
 			</a>
 		</header>
 
-        <!--회원가입 부분-->
-        <section class="signup-wrap">
+		<!--회원가입 부분-->
+		<section class="signup-wrap">
+			<div>
+				<h3>아이디</h3>
+				<div class="signup-input">
+					<input id="signup-id" type="text"> <span class="signup-at"></span>
+				</div>
 
-            <div>
-    
-                <h3>아이디</h3>
-                <span class="signup-input">
-                    <input id="signup-id" type="text"></input>
-                    <span class="signup-at"></span>
-                </span>
+				<h3>비밀번호</h3>
+				<div class="signup-input">
+					<input id="signup-pw" type="password"> <span
+						class="pw-lock"></span>
+				</div>
 
-                <h3>비밀번호</h3>
-                <span class="signup-input">
-                    <input id="signup-pw" type="text"></input>
-                    <span class="pw-lock"></span>
-                </span>
+				<h3>비밀번호 재확인</h3>
+				<div class="signup-input">
+					<input id="signup-pww" type="password"> <span
+						class="pww-lock"></span>
+				</div>
+			</div>
 
-                <h3>비밀번호 재확인</h3>
-                <span class="signup-input">
-                    <input id="signup-pww" type="text"></input>
-                    <span class="pww-lock"></span>
-                </span>
+			<div class="phone">
+				<!--이름, 생년월일, 성별, 이메일-->
+				<h3>이름</h3>
+				<div class="signup-input">
+					<input id="signup-name" type="text">
+				</div>
 
-            </div>
+				<h3>생년월일</h3>
+				<div class="birth-wrap">
+					<div class="signup-input-birth">
+						<input id="signup-birth-yy" type="text" placeholder="년(4자)">
+					</div>
+					<div class="signup-input-birth">
+						<select id="signup-birth-mm" class="selectbox" name="month">
+							<option value="month">월</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+					</div>
+					<div class="signup-input-birth">
+						<input id="signup-birth-dd" type="text" placeholder="일">
+					</div>
+				</div>
 
-            <div style="margin-top: 35px;">
-                <!--이름,생년월일,성별,이메일-->
-                <h3>이름</h3>
-                <span class="signup-input">
-                    <input id="signup-name" type="text"></input>
-                </span>
+				<h3>성별</h3>
+				<div class="signup-input">
+					<select id="signup-gender" class="selectbox" name="gender">
+						<option value="gender">성별</option>
+						<option value="man">남자</option>
+						<option value="woman">여자</option>
+					</select>
+				</div>
 
-                <h3>생년월일</h3>
-                <span style="display: flex;">
-                    <span class="signup-input-birth">
-                        <input id="signup-birth-yy" type="text" placeholder="년(4자)"></input>
-                    </span>
-                    <span class="signup-input-birth" style="margin-left: 10px;">
-                        <select id="signup-birth-mm" class="selectbox" name="month" onchange="">
-                            <option value="month">월</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                    </span>
-                    <span class="signup-input-birth" style="margin-left: 10px;">
-                        <input id="signup-birth-dd" type="text" placeholder="일"></input>
-                    </span>
-                </span>
+				<h3>주민등록번호</h3>
+				<div class="signup-input-ssn">
+					<input id="signup-ssn" type="text"
+						placeholder="주민등록번호 (13자리 (-)제외)" maxlength="13"
+						pattern="\d{6}-\d{7}" title="형식: 123456-1234567" required>
+				</div>
 
-                <h3>성별</h3>
-                <span class="signup-input">
-                    <select id="signup-gender" class="selectbox" name="gender" onchange="">
-                        <option value="gender">성별</option>
-                        <option value="man">남자</option>
-                        <option value="woman">여자</option>
-                    </select>
-                </span>
+				<h3>본인 확인 이메일</h3>
+				<div class="signup-input">
+					<input id="signup-email" type="email" placeholder="선택입력" required
+						pattern=".+@.+\..+" title="이메일 형식이 올바르지 않습니다.">
+				</div>
 
-                <span class="choice">
-                    <h3>본인 확인 이메일</h3>
-                </span>
-                <span class="signup-input">
-                    <input id="signup-email" type="text" placeholder="선택입력"></input>
-                </span>
 
-            </div>
+				<div class="phone">
+					<h3>휴대전화</h3>
+					<div class="signup-input-phone">
+						<input id="signup-phone" type="text"
+							placeholder=" (예: 010-1234-5678)" maxlength="13"
+							pattern="01[0-9]-[0-9]{4}-[0-9]{4}" title="형식: 010-1234-5678"
+							required class="phone-part">
+					</div>
+				</div>
 
-            <div style="margin-top: 35px;">
-                <!--휴대전화-->
-                <h3>휴대전화</h3>
-                <span class="signup-input">
-                    <select id="signup-country" class="selectbox" name="country" onchange="">
-                        <option value="ko">대한민국 +82</option>
-                    </select>
-                </span>
-                <div style="display: flex;">
-                    <span class="signup-input" style="width:100%; margin: 10px 0px 0px 0px">
-                        <input id="signup-phone" type="text" placeholder="전화번호 입력"></input>
-                    </span>
-                    <span class="cnum-btn-wrap">
-                        <button id="cnum-btn">인증번호 받기</button>
-                    </span>
-                </div>
-                
-                <span class="signup-input-c" style="margin-top: 10px;">
-                    <input id="signup-cnum" type="text" placeholder="인증번호 입력하세요"></input>
-                </span>
-            </div>
 
-            <div>
-                <!--가입하기-->
-                <div class="signup-btn-wrap">
-                    <button id="signup-btn">가입하기</button>
-                </div>
-            </div>
-        </section>       
-    </div>
 
+				<div class="address">
+					<h3>주소</h3>
+					<div class="signup-address">
+						<input type="text" id="sample6_postcode" placeholder="우편번호">
+						<input type="button" onclick="sample6_execDaumPostcode()"
+							value="우편번호 찾기">
+					</div>
+					<div class="signup-address">
+						<input type="text" id="sample6_address" placeholder="주소">
+					</div>
+					<div class="signup-address">
+						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+					</div>
+					<div class="signup-address">
+						<input type="text" id="sample6_detailAddress" placeholder="상세주소">
+					</div>
+				</div>
+
+
+				<h3>수신 동의</h3>
+				<div class="sign-check">
+					<label> <input type="checkbox" id="email-consent">
+						이메일 수신 동의
+					</label> <label> <input type="checkbox" id="sms-consent">
+						SMS 수신 동의
+					</label>
+				</div>
+
+				<div>
+					<!--가입하기-->
+					<div class="signup-btn-wrap">
+						<button id="signup-btn">가입하기</button>
+					</div>
+					<div class="publisher-signup-wrap">
+						<a th:href="@{/admin-signup}">
+							<button id="publisher-signup-btn">출판사 회원가입으로 전환</button>
+						</a>
+					</div>
+				</div>
+		</section>
+	</div>
 </body>
-
 </html>
