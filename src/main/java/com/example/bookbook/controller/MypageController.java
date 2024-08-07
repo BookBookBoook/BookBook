@@ -35,5 +35,20 @@ public class MypageController {
 	public String question() {
 		return "views/mypage/question";
 	}
+	
+	@GetMapping("/mypage/questions/detail")
+	public String questionDetail() {
+		return "views/mypage/question-detail";
+	}
+	
+	@GetMapping("/mypage/coupons")
+	public String coupon() {
+		return "views/mypage/coupon";
+	}
+	
+	@GetMapping("/mypage/favorites")
+	public String favorite() {
+		return "views/mypage/favorite";
+	}
 
 }

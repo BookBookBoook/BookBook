@@ -10,64 +10,67 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
         <th:block  th:insert="~{views/mypage/sidebar}"/>
         <div class="main-content">
             <div class="container-main">
-		        <section class="order-details-section">
-		            <h1>주문 상세</h1>
-		            <p class="order-date">2024. 7. 31 주문 <span class="order-number">주문번호 16100061537799</span></p>
-		
-		            <div class="shipping-status">
-		                <h2>배송중 - 오늘 도착 예정</h2>
-		                <div class="flex between">
-			                <div class="product-info">
-			                    <img src="/img/book-cover.png" alt="해리포터와 마법사의 돌 1">
-			                    <div class="product-details">
-			                    	<div class="product-text">
-				                        <p class="product-title">해리포터와 마법사의 돌 1</p>
-				                        <p class="product-price">17,000원 - 1개</p>
-			                        </div>
-			                        <button class="review-button">장바구니 담기</button>
-			                    </div>
-			                </div>
-			                <div class="shipping-actions">
-			                    <button class="track-button">배송조회</button>
-			                    <button class="cancel-button">배송 취소</button>
-			                    <button class="print-button">영수증 출력</button>
-			                </div>
+	        	<div class="head">
+	            	<h1>주문 상세</h1>
+	            </div>
+	            <p>
+	            	<span class="order-date">2024. 7. 31 주문</span> 
+	            	<span class="order-number">주문번호 16100061537799</span>
+	            </p>
+	
+	            <div class="shipping-status">
+	                <h2>배송중 - 오늘 도착 예정</h2>
+	                <div class="flex between">
+		                <div class="product-info">
+		                    <img src="/img/book-cover.png" alt="해리포터와 마법사의 돌 1">
+		                    <div class="product-details">
+		                    	<div class="product-text">
+			                        <p class="product-title">해리포터와 마법사의 돌 외 1권</p>
+			                        <p class="product-price">17,000원</p>
+		                        </div>
+		                        <button class="cart-btn">장바구니 담기</button>
+		                    </div>
 		                </div>
-		            </div>
-		
-		            <div class="receiver-info">
-		                <h3>받는사람 정보</h3>
-		                <p>받는사람: 전종훈</p>
-		                <p>연락처: ***-****-****</p>
-		                <p>받는주소: 서울특별시 강남구 역삼동</p>
-		            </div>
-		
-		            <div class="payment-info">
-		                <h3>결제 정보</h3>
-		                <table>
-		                    <tr>
-		                        <th>결제수단</th>
-		                        <th>금액</th>
-		                    </tr>
-		                    <tr>
-		                        <td>현대카드 / 일시불</td>
-		                        <td>17,000원</td>
-		                    </tr>
-		                    <tr>
-		                        <td>할인금액</td>
-		                        <td>0원</td>
-		                    </tr>
-		                    <tr>
-		                        <td>배송비</td>
-		                        <td>0원</td>
-		                    </tr>
-		                    <tr>
-		                        <td>총 결제금액</td>
-		                        <td>17,000원</td>
-		                    </tr>
-		                </table>
-		            </div>
-		        </section>
+		                <div class="shipping-actions">
+		                    <button class="track-button">배송조회</button>
+		                    <button class="cancel-button">배송 취소</button>
+		                    <button class="print-button">영수증 출력</button>
+		                </div>
+	                </div>
+	            </div>
+	
+	            <div class="receiver-info">
+	                <h3>받는사람 정보</h3>
+	                <p>받는사람: 전종훈</p>
+	                <p>연락처: ***-****-****</p>
+	                <p>받는주소: 서울특별시 강남구 역삼동</p>
+	            </div>
+	
+	            <div class="payment-info">
+	                <h3>결제 정보</h3>
+	                <table>
+	                    <tr>
+	                        <th>결제수단</th>
+	                        <th>금액</th>
+	                    </tr>
+	                    <tr>
+	                        <td>현대카드 / 일시불</td>
+	                        <td>17,000원</td>
+	                    </tr>
+	                    <tr>
+	                        <td>할인금액</td>
+	                        <td>0원</td>
+	                    </tr>
+	                    <tr>
+	                        <td>배송비</td>
+	                        <td>0원</td>
+	                    </tr>
+	                    <tr>
+	                        <td>총 결제금액</td>
+	                        <td>17,000원</td>
+	                    </tr>
+	                </table>
+	            </div>
 		    </div>
         </div>
     </div>
