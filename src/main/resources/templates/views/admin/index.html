@@ -35,25 +35,25 @@
 <script>
 	// 임시 데이터
 	var monthlySalesData = [
-		{period: 'January', sales: 120},
-		{period: 'February', sales: 150},
-		{period: 'March', sales: 180},
-		{period: 'April', sales: 200},
-		{period: 'May', sales: 220},
-		{period: 'June', sales: 170},
-		{period: 'July', sales: 210},
-		{period: 'August', sales: 190},
-		{period: 'September', sales: 230},
-		{period: 'October', sales: 240},
-		{period: 'November', sales: 260},
-		{period: 'December', sales: 300}
+		{period: '1월', sales: 120},
+		{period: '2월', sales: 150},
+		{period: '3월', sales: 180},
+		{period: '4월', sales: 200},
+		{period: '5월', sales: 220},
+		{period: '6월', sales: 170},
+		{period: '7월', sales: 210},
+		{period: '8월', sales: 190},
+		{period: '9월', sales: 230},
+		{period: '10월', sales: 240},
+		{period: '11월', sales: 260},
+		{period: '12월', sales: 300}
 	];
 
 	var weeklySalesData = [
-		{period: 'Week 1', sales: 30},
-		{period: 'Week 2', sales: 50},
-		{period: 'Week 3', sales: 45},
-		{period: 'Week 4', sales: 60}
+		{period: '1주', sales: 30},
+		{period: '2주', sales: 50},
+		{period: '3주', sales: 45},
+		{period: '4주', sales: 60}
 	];
 
 	// 월별 판매 차트
@@ -62,17 +62,19 @@
 		title: {
 			text: '월별 판매량'
 		},
-		tooltip: {},
-		xAxis: {
-			type: 'category',
-			data: monthlySalesData.map(function (item) {return item.period;})
-		},
-		yAxis: {
-			type: 'value'
+		tooltip: {
+			trigger: 'item',
+			formatter: '{a} <br/>{b} : ({d}%)'
 		},
 		series: [{
-			type: 'bar',
-			data: monthlySalesData.map(function (item) {return item.sales;})
+			name: 'Sales',
+			type: 'pie',
+			data: monthlySalesData.map(function (item) {
+				return {value: item.sales, name: item.period};
+			}),
+			label: {
+				formatter: '{b}: ({d}%)'
+			}
 		}]
 	};
 	monthlySalesChart.setOption(monthlySalesOption);
