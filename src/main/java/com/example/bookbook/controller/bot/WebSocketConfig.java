@@ -26,5 +26,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		//사용자->서버 메세지를 전송할때
 		// 클라이언트가 서버로 메시지를 보낼 때 "/message/경로" 형식으로 보낸다
 		registry.setApplicationDestinationPrefixes("/message");
+		
+		// 서버가 클라이언트로 메시지를 보낼 때 "/topic" 형식으로 보낸다
+        registry.setUserDestinationPrefix("/topic");
 	}
 }
