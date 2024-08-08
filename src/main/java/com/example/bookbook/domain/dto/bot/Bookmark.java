@@ -1,4 +1,4 @@
-package com.example.bookbook.domain.dto;
+package com.example.bookbook.domain.dto.bot;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,10 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class PhoneInfo {
-
-	private String deptName;
-	private String memberName;
-	private String phone;
+@Setter
+public class Bookmark {
+    private Long id;
+    private String title;
+    private String url;
 }
