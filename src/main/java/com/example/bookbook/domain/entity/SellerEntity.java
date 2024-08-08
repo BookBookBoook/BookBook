@@ -1,3 +1,4 @@
+/*
 package com.example.bookbook.domain.entity;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "seller") // 별도로 지정하지 않으면 클래스이름이 테이블명
 public class SellerEntity {
-
+	
 	@Id // PK 컬럼 설정하는 어노테이션
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long sellerId; // ID
@@ -58,3 +59,4 @@ public class SellerEntity {
 	private boolean approval;
 	
 }
+*/
