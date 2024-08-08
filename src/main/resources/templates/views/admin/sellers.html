@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/admin/commons.css">
+	<link rel="stylesheet" href="/css/admin/sidebar.css">
+	<script src="/js/admin/sidebar.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+	<div style="display: flex;">
+		<th:block th:insert="~{views/admin/sidebar}" />
+		<div class="container">
+			<h1>출판사 관리</h1>
+			<div class="search-box">
+				<div class="filters">
+					<div class="filter-section">
+						<label class="jump">출판사</label>
+						<select>
+							<option>이름</option>
+							<option>전화번호</option>
+							<option>이메일</option>
+						</select> <input type="text" placeholder="검색">
+						<button>검색</button>
+					</div>
+					<div class="filter-section">
+						<label class="jump">계약일</label>
+						<input type="date" id="startDate"> ~ <input type="date" id="endDate">
+						<button>검색</button>
+					</div>
+					<div class="filter-section">
+						<label>계정상태</label>
+						<input type="radio" name="payment" checked> 전체
+						<input type="radio" name="payment"> 활성화
+						<input type="radio" name="payment"> 비활성화
+						<input type="radio" name="payment"> 탈퇴
+					</div>
+
+				</div>
+			</div>
+			<div class="inven-box">
+				<table class="order-table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>이름</th>
+							<th>연락처</th>
+							<th>팩스번호</th>
+							<th>이메일</th>
+							<th>주소</th>
+							<th>계약일</th>
+							<th>매출현황</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td><a href="/admin/sellers/detail">북북출판사</a></td>
+							<td>02-000-0000</td>
+							<td>050-0000-0000</td>
+							<td>tset01@test.com</td>
+							<td>우어어어으어응어어엉</td>
+							<td>2024-08-08</td>
+							<td>15,000,000</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><a href="#">뿍뿍출판사</a></td>
+							<td>02-000-0001</td>
+							<td>050-0000-0001</td>
+							<td>test02@test.com</td>
+							<td>는어어어엉어엉</td>
+							<td>2024-08-08</td>
+							<td>15,000,000</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
