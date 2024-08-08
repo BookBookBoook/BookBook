@@ -1,16 +1,18 @@
 package com.example.bookbook.controller.bot;
-/*
+
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableRabbit
 public class RabbitMQConfig {
+/*
+	// 메세지 브로커
 	
 	//스프링 부트의 자동 구성 기능을 통해 RabbitMQ와 연동할 수 있도록 설정됨.
 	//스프링 부트의 자동 구성은 클래스 경로에 필요한 라이브러리와 설정이 감지되면 해당 설정을 자동으로 수행하여 빈을 생성 함.
@@ -91,6 +95,5 @@ public class RabbitMQConfig {
 	MessageConverter messageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
-
-}
 */
+}
