@@ -22,7 +22,7 @@ h1 {
     position: relative;
 }
 .active {
-    background-color: #ffa500;
+    background-color: var(--main-orange);
 }
 .label {
     position: absolute;
@@ -99,13 +99,17 @@ h1 {
 }
 
 .btn:hover {
-    background-color: #ffa500;
+    background-color: var(--main-orange);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    border: none;
+    
 }
 
 .btn-active {
-	background-color: #ffa500 !important;
+	background-color: var(--main-orange) !important;
     color: white !important;
+    border: none;
 }
 
 .summary-container {
@@ -155,8 +159,10 @@ h1 {
 
 .buttons {
     text-align: center;
+    margin-bottom: 40px;
 }
 
 .buttons .btn {
     margin: 0 10px;
+    padding: 15px 25px;
 }
