@@ -1,0 +1,49 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    width: 150px;
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+td input[type="text"],
+td input[type="date"],
+td textarea,
+td select,
+td input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+td textarea {
+    height: 100px;
+    resize: none;
+}
+
+td input[type="checkbox"] {
+    margin-left: 10px;
+}
