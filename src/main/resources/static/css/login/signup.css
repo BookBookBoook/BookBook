@@ -2,33 +2,33 @@ body {
     background-color: #f5f6f7;
 }
 
-/* .signup-input-birth {
+/* 생년월일 입력 */
+.signup-input-birth {
     display: flex;
-    justify-content: center; 중앙 정렬
-    border: solid 1px #dadada; 테두리 추가
-    background: #fff; 배경 색상
+    align-items: center;
+    justify-content: center; /* 중앙 정렬 */
+    border: solid 1px #dadada; /* 테두리 추가 */
     padding: 10px;
-    border-radius: 5px; 모서리 둥글게
+    background: #fff; /* 배경 색상 */
 }
 
-#signup-birth {
-    height: 40px; 입력 필드 높이
+.signup-input-birth input {
+    height: 29px;
     border: none;
     outline: none;
-    width: 100%; 입력 필드 너비를 100%로 설정
-    text-align: center; 텍스트 중앙 정렬
-    font-size: 16px; 폰트 크기
-    border-bottom: 2px solid #999; 하단 테두리 추가
-    transition: border-color 0.3s; 테두리 색상 변화 애니메이션
+    width: 150px; /* 입력 필드 너비 */
+    margin: 0 5px; /* 입력 필드 간 간격 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    font-size: 14px; /* 폰트 크기 */
 }
 
 #signup-birth:focus {
-    border-bottom: 2px solid #FF9040; 포커스 시 하단 테두리 색상 변경
+    border-bottom: 2px solid #FF9040; /* 포커스 시 하단 테두리 색상 변경 */
 }
 
 #signup-birth::placeholder {
-    color: #999; 플레이스홀더 색상
-} */
+    color: #999; /* 플레이스홀더 색상 */
+}
 
 
 select {
