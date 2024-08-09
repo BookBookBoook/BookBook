@@ -89,11 +89,11 @@ public class RabbitMQConfig {
 		messageListenerAdapter.setMessageConverter(messageConverter());
 		return messageListenerAdapter;
 	}
-	
+	*/
 	//RabbitMQ 메시지 변환기를 정의
 	@Bean
 	MessageConverter messageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
-*/
+
 }
