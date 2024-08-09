@@ -21,7 +21,6 @@
 	margin: 0px auto;
 }
 
-
 #wrap #gameContainer .obj {
 	position: absolute;
 }
@@ -46,8 +45,7 @@
 	border-radius: 100px;
 }
 
-#wrap #gameContainer .board_start
-img {
+#wrap #gameContainer .board_start img {
 	width: 100%;
 }
 
@@ -78,43 +76,43 @@ img {
 	position: absolute;
 	width: 100px;
 	top: 115px;
-	height: 100px;
+	height: 60px;
 }
 
 #wrap #gameContainer .board_on img:nth-child(1) {
-	left: 55px;
-	transform: rotate(-60deg);
-	top: 120px;
+	left: 70px;
+	transform: rotate(-151deg);
+	top: 145px;
 }
 
 #wrap #gameContainer .board_on img:nth-child(2) {
-	left: 62px;
-	transform: rotate(-113deg);
-	top: 286px;
+	left: 76px;
+	transform: rotate(-211deg);
+	top: 299px;
 }
 
 #wrap #gameContainer .board_on img:nth-child(3) {
-	left: 208px;
+	left: 206px;
 	top: 372px;
-	transform: rotate(-180deg);
+	transform: rotate(-270deg);
 }
 
 #wrap #gameContainer .board_on img:nth-child(4) {
-	left: 351px;
-	top: 286px;
-	transform: rotate(-245deg);
+	left: 337px;
+	top: 300px;
+	transform: rotate(-330deg);
 }
 
 #wrap #gameContainer .board_on img:nth-child(5) {
-	left: 351px;
-	top: 125px;
-	transform: rotate(-292deg);
+	left: 337px;
+	top: 146px;
+	transform: rotate(-391deg);
 }
 
 #wrap #gameContainer .board_on img:nth-child(6) {
-	left: 205px;
-	top: 42px;
-	transform: rotate(5deg);
+	left: 200px;
+	top: 73px;
+	transform: rotate(-91deg);
 }
 
 #wrap #gameContainer .obj.board_arrow {
@@ -191,8 +189,9 @@ img {
 }
 
 #popup_gift .lottery_present img {
-	display: block;
-	margin: 50px auto 30px;
+	width: 200px;  /* 원하는 너비로 조정 */
+    height: auto;  /* 비율 유지 */
+    max-width: 100%;  /* 팝업창을 벗어나지 않도록 */
 }
 
 #popup_fail {
@@ -201,10 +200,10 @@ img {
 	top: 120px;
 }
 
-.popup  .close {
+.popup .close {
 	display: inline-block;
 	width: 150px;
-	hegiht: 50px;
+	height: 50px;
 	line-height: 50px;
 	color: #fff;
 	background: #333;
