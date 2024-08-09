@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bookbook.mapper.QNAMapper">
+<!-- id는 매퍼 메서드의 이름과 일치해야한다. -->
+<!-- 조회결과를 Java 객체에 매핑하려면 resultType을 사용 > resultType은 select에서만 사용됨 -->
+	<select id="findAll" resultType="com.example.bookbook.domain.dto.QNADTO">
+		select * from qna
+	</select>
+</mapper>
