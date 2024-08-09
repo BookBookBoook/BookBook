@@ -115,3 +115,8 @@ th {
 .action-buttons button {
 	margin: 5px;
 }
+
+.stars {
+	color:#ffd700;
+	font-size: 24px;
+}
