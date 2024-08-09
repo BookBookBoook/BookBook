@@ -1,62 +1,53 @@
-/*
 package com.example.bookbook.domain.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter // Setter는 주로 안 씀
-@Setter
-@Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
-@Table(name = "seller") // 별도로 지정하지 않으면 클래스이름이 테이블명
+@Table(name = "Seller") // 테이블명을 "publisher"로 지정
 public class SellerEntity {
-	
-	@Id // PK 컬럼 설정하는 어노테이션
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private long sellerId; // ID
 
-	@Column(nullable = false)
-	private String shopName; 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long SellerId; // ID
 
-	@Column(nullable = false)
-	private String telNum; 
-	
-	@Column(nullable = false)
-	private String business_num; 
-	
-	@Column(nullable = false)
-	private String business_reg; 
-	
-	@Column(nullable = false)
-	private String bank; 
-	
-	@Column(nullable = false)
-	private long account; // ID
-	
-	@Column(nullable = false)
-	private String accountHolder; 
-	
-	@Column(nullable = false)
-	private String settlementAmount; 
+    @Column(nullable = false)
+    private String shopName; // 출판사 이름
 
-	private String businessRegCopy;
-	
-	@Column(nullable=true)
-	@ColumnDefault("false")
-	private boolean approval;
-	
+    @Column(nullable = false)
+    private String telNum; // 전화번호
+
+    @Column(nullable = false)
+    private String businessNum; // 사업자 번호
+
+    @Column(nullable = false)
+    private String businessReg; // 사업자 등록증
+
+    @Column(nullable = false)
+    private String bank; // 은행명
+
+    @Column(nullable = false)
+    private long account; // 계좌 번호
+
+    @Column(nullable = false)
+    private String accountHolder; // 계좌 소유자
+
+    @Column(nullable = false)
+    private String settlementAmount; // 정산 금액
+
+    private String businessRegCopy; // 사업자 등록증 사본
+
+	/*
+	 * @Column(nullable = true)
+	 * 
+	 * @ColumnDefault("false") private boolean approval; // 승인 여부
+	 */
+    // 추가적인 메서드를 필요에 따라 추가할 수 있습니다.
 }
-*/

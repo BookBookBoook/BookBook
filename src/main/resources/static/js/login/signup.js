@@ -1,4 +1,5 @@
 function validateForm() {
+	
   // 이메일 유효성 검사
   var emailInput = document.getElementById("signup-email");
   var emailPattern = /^.+@.+\..+$/;
@@ -54,8 +55,9 @@ function validateForm() {
     phoneInput.focus();
     return false;
   }
-
+	
   // 모든 유효성 검사를 통과하면 폼 제출
-  return true;
+   document.querySelector('form').submit();
+   return true;
 }
 
