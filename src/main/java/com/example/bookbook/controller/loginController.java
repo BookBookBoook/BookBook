@@ -21,14 +21,14 @@ public class loginController {
 		return "views/login/signup";
 	}
 	
-	@GetMapping("/admin-signup")
+	@GetMapping("/signup-admin")
 	public String signupadmin() {
-		return "views/login/admin-signup";
+		return "views/login/signup-admin";
 	}
 	
-	@GetMapping("/admin-login")
+	@GetMapping("/login-admin")
 	public String adminlogin() {
-		return "views/login/admin-login";
+		return "views/login/login-admin";
 	}
 	
 	@GetMapping("/admin-sign")

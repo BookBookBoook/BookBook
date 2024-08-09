@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>출판사 회원가입</title>
+<link rel="stylesheet" href="/css/login/signup.css">
+<script src="/js/login/publisher-signup.js"></script>
+<script src="/js/login/signup-admin.js"></script>
+</head>
+
+<body>
+
+	<div class="main-signup">
+
+		<header>
+			<a href="/">
+				<div class="logo">
+					<img src="/img/Untitled_removebg_preview.png" class="image">
+				</div>
+			</a>
+		</header>
+
+		<!-- 출판사 회원가입 부분 -->
+		<section class="signup-wrap">
+
+			<h3>출판사 이름</h3>
+			<div class="signup-input">
+				<input id="publisher-name" type="text" placeholder="출판사 이름을 입력하세요"
+					required pattern="^[가-힣a-zA-Z0-9\s]{2,50}$"
+					title="출판사 이름은 2~50자의 한글, 영문, 숫자만 사용할 수 있습니다.">
+			</div>
+
+			<h3>출판사 번호</h3>
+			<div class="signup-input">
+				<input id="publisher-number" type="text" placeholder="출판사 번호를 입력하세요"
+					required pattern="^[0-9]{2,20}$"
+					title="출판사 번호는 숫자만 2~20자 이내로 입력할 수 있습니다.">
+			</div>
+
+			<h3>사업자 번호</h3>
+			<div class="signup-input">
+				<input id="business-number" type="text" placeholder="사업자 번호를 입력하세요"
+					required pattern="^\d{3}-\d{2}-\d{5}$"
+					title="사업자 번호 형식은 123-45-67890 입니다.">
+			</div>
+
+			<h3>사업자 등록증 (이미지 파일)</h3>
+			<div class="signup-input">
+				<input id="business-registration" type="file" accept="image/*"
+					required>
+			</div>
+
+			<h3>계좌 은행 및 계좌 정보</h3>
+			<div class="signup-input">
+				<input id="account-bank" type="text" placeholder="은행명을 입력하세요"
+					required pattern="^[가-힣a-zA-Z0-9\s]{2,20}$"
+					title="은행명은 2~20자의 한글, 영문, 숫자만 사용할 수 있습니다.">
+			</div>
+			<div class="signup-input">
+				<input id="account-number" type="text" placeholder="계좌 번호를 입력하세요"
+					required pattern="^\d{2,20}$"
+					title="계좌 번호는 숫자만 2~20자 이내로 입력할 수 있습니다.">
+			</div>
+
+			<div>
+				<!-- 가입하기 -->
+				<div class="signup-btn-wrap">
+					<button id="signup-btn"
+						onclick="validatePublisherForm(); return false;">가입하기</button>
+				</div>
+			</div>
+		</section>
+	</div>
+
+</body>
+</html>
