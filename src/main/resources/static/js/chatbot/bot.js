@@ -2,9 +2,8 @@ var client;
 var key;
 let flag = false;
 let lastDate = null; // 마지막으로 표시된 날짜
-let lastOpenedDate = localStorage.getItem('lastOpenedDate'); // 로컬 스토리지에서 마지막 열었던 날짜 가져오기
 
-/* WebSocket 지원 여부를 출력 */
+// WebSocket 지원 여부를 출력
 function isWebSocketSupported() {
     return 'WebSocket' in window;
 }
@@ -14,9 +13,9 @@ if (isWebSocketSupported()) {
 } else {
     console.log("이 브라우저는 WebSocket을 지원하지 않습니다.");
 }
-/*////////////////////////*/
-/* 시간 및 날짜 포맷 함수 */
-function formatTime(now) { //현재 시간 객체를 "오후/오전 시:분" 형식으로 포맷
+
+// 시간 및 날짜 포맷 함수
+function formatTime(now) {
     var ampm = (now.getHours() > 11) ? "오후" : "오전";
     var hour = now.getHours() % 12;
     if (hour == 0) hour = 12;
@@ -25,35 +24,40 @@ function formatTime(now) { //현재 시간 객체를 "오후/오전 시:분" 형
     return `${ampm} ${hour}:${formattedMinute}`;
 }
 
-function formatDate(now) { //현재 날짜 객체를 "YYYY년 MM월 DD일 요일" 형식으로 포맷
+function formatDate(now) {
     const year = now.getFullYear();
     const month = now.getMonth() + 1; // 월 정보는 0월부터 시작하기 때문에 +1 해줘야 함
     const date = now.getDate();
-    const dayOfWeek = now.getDay(); 
+    const dayOfWeek = now.getDay();
     const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
     return `${year}년 ${month}월 ${date}일 ${days[dayOfWeek]}`;
 }
-/*////////////////////////*/
-/* 메시지 표시 및 날짜 표시 */
-function showMessage(tag) { // chat-content 요소에 메시지를 추가 / 스크롤을 자동최하단 이동
+
+// 메시지 표시 및 날짜 표시
+function showMessage(tag) {
     var chatContent = document.getElementById("chat-content");
     chatContent.innerHTML += tag;
-    // 스크롤을 최하단으로 이동
     chatContent.scrollTop = chatContent.scrollHeight;
 }
 
-function showDateIfNew() { // 오늘 날짜가 마지막으로 표시된 날짜와 다르면 날짜를 표시
+// 날짜가 오늘인 경우, 로컬 스토리지에 저장된 날짜와 비교하여 중복 표시 방지
+function showDateIfNew() {
     var now = new Date();
     var today = formatDate(now);
-    if (lastDate !== today) {
+    
+    // 로컬 스토리지에서 저장된 마지막 날짜 가져오기
+    var savedDate = localStorage.getItem('lastDisplayedDate');
+    
+    if (savedDate !== today) {
         var dateTag = `<div class="flex center date">${today}</div>`;
-        showMessage(dateTag);
-        lastDate = today;
+        var chatContent = document.getElementById("chat-content");
+        chatContent.innerHTML = dateTag + chatContent.innerHTML;
+        localStorage.setItem('lastDisplayedDate', today); // 오늘 날짜를 로컬 스토리지에 저장
     }
 }
-/*////////////////////////*/
-/* 환영 메시지 표시 및 저장 */
-function showWelcomeMessage() { // 챗봇이 열릴 때 환영 메시지를 표시/ 현재 날짜를 로컬 스토리지에 저장
+
+// 환영 메시지 표시 및 저장
+function showWelcomeMessage() {
     const now = new Date();
     const today = formatDate(now);
 
@@ -63,33 +67,35 @@ function showWelcomeMessage() { // 챗봇이 열릴 때 환영 메시지를 표�
                                 </div>
                                 <div class="message">
                                     <div class="part">
-                                        <p>안녕하세요! 무엇을 도와드릴까요?</p>
+                                        <p>
+                                        	아 귀찮게 왜 계속 열어요. <br>
+                                        	제가 만만해요?
+                                    	</p>
                                     </div>
                                 </div>
                             </div>`;
     showMessage(welcomeMessage);
-    localStorage.setItem('lastOpenedDate', today); // 현재 날짜를 로컬 스토리지에 저장
+    localStorage.setItem('lastOpenedDate', today);
+    showDateIfNew();
 }
-/*/////////////////////////////////////////////////////////////////*/
-/* /////////////////////////////////////////// WebSocket 연결 및 처리 */
-function connect() { 
-	// WebSocket을 통해 서버와 연결
-	// 특정 채널(/topic/bot/${key})을 구독 = websocketController @SendTo
+
+// WebSocket 연결 및 처리
+function connect() {
     client = Stomp.over(new SockJS('/bookBot'));
     client.connect({}, (frame) => {
+		// 연결 성공 시 frame 객체의 정보를 콘솔에 출력
+        console.log("Connected to WebSocket server with frame:", frame);
+        
         key = new Date().getTime();
         client.subscribe(`/topic/bot/${key}`, (answer) => {
             var msgObj = answer.body;
-            
-            // 콘솔에 분석 결과 출력
             console.log("Received message from server:", msgObj);
 
-            // 시간 및 날짜 포맷
             var now = new Date();
             var time = formatTime(now);
             var tag = `<div class="msg bot flex">
                         <div class="icon">
-                            <img src="/images/icon/robot-solid.svg">
+                            <img src="/img/bot/bot-img.png">
                         </div>
                         <div class="message">
                             <div class="part">
@@ -98,7 +104,6 @@ function connect() {
                             <div class="time">${time}</div>
                         </div>
                     </div>`;
-            showDateIfNew();
             showMessage(tag);
         });
 
@@ -107,13 +112,11 @@ function connect() {
             content: "answer",
             name: "userId"
         };
-        client.send("/message/bot/answer", {}, JSON.stringify(data)); 
-        //웹소켓컨트롤러로 전송경로
+        client.send("/message/bot/answer", {}, JSON.stringify(data));
     });
 }
-/*////////////////////////////////////////////////////////////////*/
-/*////////////////////////////////////////////////////////////////*/
-/* WebSocket 연결 종료 */
+
+// WebSocket 연결 종료
 function disconnect() {
     if (client) {
         client.disconnect(() => {
@@ -121,24 +124,55 @@ function disconnect() {
         });
     }
 }
-/*////////////////////////*/
 
+// 상태 저장 및 복원
+function saveChatContent() {
+    var chatContent = document.getElementById("chat-content").innerHTML;
+    localStorage.setItem('chatContent', chatContent);
+}
+
+function loadChatContent() {
+    var savedContent = localStorage.getItem('chatContent');
+    if (savedContent) {
+        document.getElementById("chat-content").innerHTML = savedContent;
+    }
+}
+
+function saveBotState() {
+    var isVisible = document.getElementById("bot-container").style.display === 'block';
+    localStorage.setItem('botState', isVisible ? 'open' : 'closed');
+}
+
+function loadBotState() {
+    var botState = localStorage.getItem('botState');
+    if (botState === 'open') {
+        document.getElementById("bot-container").style.display = 'block';
+        flag = true;
+        connect();
+        showWelcomeMessage();
+    } else {
+        document.getElementById("bot-container").style.display = 'none';
+        flag = false;
+        disconnect();
+    }
+}
+
+// 버튼 클릭 이벤트 핸들러
 function btnCloseClicked() {
-    document.getElementById("bot-container").style.display = 'none'; // 챗봇 창 숨기기
-    document.getElementById("chat-content").innerHTML = ""; // 대화 내용 초기화
-    disconnect(); // 웹소켓 연결 종료
+    document.getElementById("bot-container").style.display = 'none';
+    saveBotState();
+    disconnect();
     flag = false;
 }
 
 function btnBotClicked() {
-    if (flag) return; // 이미 챗봇이 켜져 있다면 클릭 무시
-    document.getElementById("bot-container").style.display = 'block'; // 챗봇 창 보이기
-    connect(); // 웹소켓 연결
+    if (flag) return;
+    document.getElementById("bot-container").style.display = 'block';
+    connect();
     flag = true;
-    showWelcomeMessage(); // 챗봇이 열릴 때마다 안내문 표시
+    showWelcomeMessage();
+    saveBotState();
 }
-/* //////////////////////////////////////////////// */
-/* //////////////////////////////////////////////// */
 
 function btnMsgSendClicked() {
     if (!client) {
@@ -151,7 +185,7 @@ function btnMsgSendClicked() {
         alert("질문은 최소 2글자 이상으로 부탁드립니다.");
         return;
     }
-    
+
     var now = new Date();
     var time = formatTime(now);
     var tag = `<div class="msg user flex">
@@ -162,42 +196,37 @@ function btnMsgSendClicked() {
                     <div class="time">${time}</div>
                 </div>
             </div>`;
-    
+
     showDateIfNew();
     showMessage(tag);
+    saveChatContent();
 
     var data = {
         key: key,
         content: question,
-        name: "userId" // 실제 시스템에서는 여기에 사용자의 고유 ID를 설정할 수 있음
-		// 사용자정보 안받아올거여도 필요한지 알아보기
+        name: "userId"
     };
     client.send("/message/bot/question", {}, JSON.stringify(data));
-	// client.send(destination, headers, body) 
-    // destination: 메시지가 전송될 대상 경로를 지정
-	// headers: 메시지에 대한 추가 헤더 정보를 담는 객체 /ex). 메시지의 타입, 인증 정보
-	// body: 전송할 메시지의 본문을 담고 있는 문자열
-    clearQuestion(); // 입력창 초기화
-}
-/* //////////////////////////////////////////////// */
-/* //////////////////////////////////////////////// */
-function clearQuestion() {
-    document.getElementById("question").value = ""; // 입력창을 빈 문자열로 설정
+    clearQuestion();
 }
 
+function clearQuestion() {
+    document.getElementById("question").value = "";
+}
+
+// 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', (event) => {
-    // 초기 상태 설정
-    document.getElementById("bot-container").style.display = 'none';
+    loadChatContent();
+    loadBotState();
 
     document.getElementById("chat-icon").addEventListener('click', btnBotClicked);
     document.getElementById("close-button").addEventListener('click', btnCloseClicked);
     document.getElementById("send-button").addEventListener('click', btnMsgSendClicked);
-    
-    // Enter 키를 눌렀을 때 메시지 전송 버튼 클릭 이벤트 처리
+
     document.getElementById("question").addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            event.preventDefault(); // 기본 Enter 키 동작 방지 (예: 폼 제출)
-            btnMsgSendClicked(); // 메시지 전송 버튼 클릭 이벤트 호출
+            event.preventDefault();
+            btnMsgSendClicked();
         }
     });
 });

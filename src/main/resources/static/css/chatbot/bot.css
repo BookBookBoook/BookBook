@@ -91,6 +91,7 @@
 /*/////// 유저 메세지 ////////*/
 /*/////////////////////////*/
 .msg.user {
+	padding-right: 20px;
 	justify-content: flex-end;
 }
 /* 사용자 메시지 스타일 */
