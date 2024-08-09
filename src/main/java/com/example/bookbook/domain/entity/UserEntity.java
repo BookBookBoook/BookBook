@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,7 +57,10 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String detailAddress; // 상세주소
-
+    
+    @ManyToOne
+    @JoinColumn(name = "sellerId", nullable = true)
+    private PublisherEntity seller;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
@@ -70,9 +74,22 @@ public class UserEntity {
 		return this;
 	}
     
+	public UserEntity addRoleByRange(String role) {
+		for(int i=0; i<=Role.valueOf(role).ordinal(); i++) { //.ordinal() == 범위
+			//addRole(Role.values()[i]);
+			roles.add(Role.values()[i]); //addRole 메서드가 없는 경우
+		}
+		/*
+		switch(role) {
+		case "ADMIN":
+			entity.addRole(Role.ADMIN);
+		case "MGR":
+			entity.addRole(Role.MGR);
+		case "EMP":
+			entity.addRole(Role.EMP);
+		}
+		 */
+		return this;
+	}
 	
-    @ManyToOne
-    @JoinColumn(name = "sellerId", nullable = true)
-    private PublisherEntity seller;
-
 }

@@ -16,16 +16,6 @@ public class loginController {
 		return "views/login/login";
 	}
 	
-	@GetMapping("/signup")
-	public String signup() {
-		return "views/login/signup";
-	}
-	
-	@GetMapping("/signup-admin")
-	public String signupadmin() {
-		return "views/login/signup-admin";
-	}
-	
 	@GetMapping("/login-admin")
 	public String adminlogin() {
 		return "views/login/login-admin";
@@ -35,7 +25,6 @@ public class loginController {
 	public String adminsign() {
 		return "views/login/admin-sign";
 	}
-	
 	
 	@GetMapping("/test")
 	public String test() {
