@@ -18,14 +18,14 @@
 				</div>
 			</a>
 		</header>
-
+		
 		<section class="signup-wrap">
+		<form action="/signup" method="post">
 			<div>
-				<h3>아이디</h3>
+				<h3>이메일(ID)</h3>
 				<div class="signup-input">
-					<input id="signup-id" type="text" required
-						pattern="^[a-zA-Z0-9]{4,12}$"
-						title="아이디는 4~12자리 영문, 숫자만 사용할 수 있습니다.">
+					<input id="signup-email" type="email" placeholder="선택입력"
+						pattern=".+@.+\..+" title="이메일 형식이 올바르지 않습니다.">
 				</div>
 
 				<h3>비밀번호(8자리 이상)</h3>
@@ -68,11 +68,7 @@
 							title="형식: 123456-1234567">
 					</div>
 
-					<h3>본인 확인 이메일</h3>
-					<div class="signup-input">
-						<input id="signup-email" type="email" placeholder="선택입력"
-							pattern=".+@.+\..+" title="이메일 형식이 올바르지 않습니다.">
-					</div>
+
 
 					<div class="phone">
 						<h3>휴대전화</h3>
@@ -115,6 +111,7 @@
 					</div>
 				</div>
 			</div>
+			 </form> 
 		</section>
 	</div>
 </body>

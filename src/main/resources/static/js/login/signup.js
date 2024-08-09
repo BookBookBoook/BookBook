@@ -1,10 +1,10 @@
 function validateForm() {
-  // 아이디 유효성 검사
-  var idInput = document.getElementById("signup-id");
-  var idPattern = /^[a-zA-Z0-9]{4,12}$/;
-  if (!idPattern.test(idInput.value)) {
-    alert("아이디는 4~12자리 영문, 숫자만 사용할 수 있습니다.");
-    idInput.focus();
+  // 이메일 유효성 검사
+  var emailInput = document.getElementById("signup-email");
+  var emailPattern = /^.+@.+\..+$/;
+  if (emailInput.value !== "" && !emailPattern.test(emailInput.value)) {
+    alert("이메일 형식이 올바르지 않습니다.");
+    emailInput.focus();
     return false;
   }
 
@@ -44,14 +44,7 @@ function validateForm() {
     return false;
   }
 
-  // 이메일 유효성 검사
-  var emailInput = document.getElementById("signup-email");
-  var emailPattern = /^.+@.+\..+$/;
-  if (emailInput.value !== "" && !emailPattern.test(emailInput.value)) {
-    alert("이메일 형식이 올바르지 않습니다.");
-    emailInput.focus();
-    return false;
-  }
+
 
   // 휴대전화 유효성 검사
   var phoneInput = document.getElementById("signup-phone");
