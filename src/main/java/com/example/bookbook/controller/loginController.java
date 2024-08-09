@@ -16,12 +16,12 @@ public class loginController {
 		return "views/login/login";
 	}
 	
-	@GetMapping("/login-admin")
+	@GetMapping("/login/admin")
 	public String adminlogin() {
 		return "views/login/login-admin";
 	}
 	
-	@GetMapping("/admin-sign")
+	@GetMapping("/admin/sign")
 	public String adminsign() {
 		return "views/login/admin-sign";
 	}

@@ -26,7 +26,7 @@ public class SignupController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/signup-admin")
+	@GetMapping("/signup/admin")
 	public String signupadmin() {
 		return "views/login/signup-admin";
 	}

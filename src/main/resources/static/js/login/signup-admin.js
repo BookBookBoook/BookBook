@@ -53,5 +53,6 @@ function validatePublisherForm() {
   }
 
   // 모든 유효성 검사를 통과하면 폼 제출
+  document.querySelector('form').submit();
   return true;
 }
