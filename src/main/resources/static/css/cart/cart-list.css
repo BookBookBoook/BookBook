@@ -21,6 +21,8 @@ h1 {
     justify-content: center;
     position: relative;
 }
+.circle > i 
+
 .active {
     background-color: var(--main-orange);
 }
