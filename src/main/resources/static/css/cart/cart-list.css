@@ -21,7 +21,9 @@ h1 {
     justify-content: center;
     position: relative;
 }
-.circle > i 
+.circle > i {
+	font-size: 28px;
+}
 
 .active {
     background-color: var(--main-orange);
@@ -78,7 +80,7 @@ h1 {
     margin: 20px;
 }
 .book-info p:nth-child(1) {
-	font-size: 25px;
+	font-size: 18px;
 	font-weight: 500;
 }
 
@@ -114,41 +116,6 @@ h1 {
     border: none;
 }
 
-.summary-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: 20px;
-}
-.summary-left > p {
-	font-size: 22px;
-	font-weight: 500;
-}
-.summary-right {
-    width: 450px;
-}
-
-.summary-details p {
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
-}
-
-.final-summary {
-    margin-top: 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.final-summary > p{
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-}
-
 .final-amount {
     font-size: 1.5em;
     color: #ff7b00;
@@ -159,12 +126,64 @@ h1 {
     margin-left: 10px;
 }
 
-.buttons {
-    text-align: center;
-    margin-bottom: 40px;
+.payment-summary {
+	width: 250px;
+	border: 1px solid #e5e5e5;
+	border-radius: 8px;
+	padding: 15px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	margin-top: 60px;
 }
 
-.buttons .btn {
-    margin: 0 10px;
-    padding: 15px 25px;
+.payment-summary p {
+	margin: 8px 0;
+	font-size: 14px;
+	color: #333;
+	display: flex;
+	justify-content: space-between;
+}
+
+.payment-summary .price {
+	font-weight: bold;
+	font-size: 16px;
+	text-align: right;
+}
+
+.payment-summary .final-amount {
+	font-weight: bold;
+	font-size: 18px;
+	text-align: right;
+	color: #000;
+	margin-top: 10px;
+}
+
+/* .payment-summary .button {
+	width: 100%;
+	background-color: #ff7e00;
+	color: white;
+	font-size: 16px;
+	padding: 10px 0;
+	text-align: center;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+.payment-summary .button:hover {
+	background-color: #ff8f33;
+} */
+
+.payment-summary .side-btn {
+    
+    width: 100%;
+	color: var(--black);
+	font-size: 16px;
+	padding: 10px 0;
+	text-align: center;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	margin-top: 10px;
 }

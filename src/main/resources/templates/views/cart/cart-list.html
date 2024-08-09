@@ -23,90 +23,71 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                 <div class="label">주문완료</div>
             </div>
         </div>
-        <table class="cart-table">
-            <thead>
-                <tr>
-                	<th><input type="checkbox"></th>
-                    <th>제품정보</th>
-                    <th>수량</th>
-                    <th>결제금액</th>
-                    <th>주문</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                	<td><input type="checkbox"></td>
-                    <td class="product-info">
-                        <img src="/img/book-cover.png" class="book-cover-img">
-                        <div class="book-info">
-                            <p>해리포터와 마법사의 돌 1</p>
-                            <p>J.K 롤링 저 / 강동혁 역</p>
-                        </div>
-                    </td>
-                    <td>1개</td>
-                    <td>17,000원</td>
-                    <td>
-                        <form action="/" class="buy-buttons">
-                            <button class="btn btn-active">바로 구매</button>
-                            <button class="btn">수량 변경</button>
-                            <button class="btn delete">삭제</button>
-                        </form>
-                    </td>
-                </tr>
-                <tr>
-                	<td><input type="checkbox"></td>
-                    <td class="product-info">
-                        <img src="/img/book-cover.png" class="book-cover-img">
-                        <div class="book-info">
-                            <p>해리포터와 마법사의 돌 2</p>
-                            <p>J.K 롤링 저 / 강동혁 역</p>
-                        </div>
-                    </td>
-                    <td>1개</td>
-                    <td>17,000원</td>
-                    <td>
-                        <form action="/" class="buy-buttons">
-                            <button class="btn btn-active">바로 구매</button>
-                            <button class="btn">수량 변경</button>
-                            <button class="btn">삭제</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="summary-container">
-            <div class="summary-left">
-                <p>총 주문금액</p>
-            </div>
-            <div class="summary-right">
-                <div class="summary-details">
-                    <p>
-                    	<span>상품금액</span> 
-                    	<span class="amount">36,000원</span>
-                    </p>
-                    <p>
-                    	<span>할인금액</span> 
-                    	<span class="amount">-2,000원</span>
-                    </p>
-                    <p>
-                    	<span>배송비</span> 
-                    	<span class="amount">3,000원</span>
-                    </p>
-                    <p>
-                    	<span>적립예정 포인트</span> 
-                    	<span class="amount">34원</span>
-                    </p>
-                </div>
-                <div class="final-summary">
-                    <p><span>최종결제금액</span> <span class="final-amount">37,000원</span></p>
-                </div>
-            </div>
-        </div>
-        <div class="buttons">
-            <button class="btn">쇼핑하러가기</button>
-            <button class="btn btn-active">선택상품 구매</button>
-            <button class="btn">전체상품 구매</button>
-        </div>
+        <div class="flex j-center">
+	        <table class="cart-table">
+	            <thead>
+	                <tr>
+	                	<th><input type="checkbox"></th>
+	                    <th>제품정보</th>
+	                    <th>수량</th>
+	                    <th>결제금액</th>
+	                    <th>주문</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>
+	                	<td><input type="checkbox"></td>
+	                    <td class="product-info">
+	                        <img src="/img/book-cover.png" class="book-cover-img">
+	                        <div class="book-info">
+	                            <p>해리포터와 마법사의 돌 1</p>
+	                            <p>J.K 롤링 저 / 강동혁 역</p>
+	                        </div>
+	                    </td>
+	                    <td>1개</td>
+	                    <td>17,000원</td>
+	                    <td>
+	                        <form action="/" class="buy-buttons">
+	                            <button class="btn btn-active">바로 구매</button>
+	                            <button class="btn">수량 변경</button>
+	                            <button class="btn delete">삭제</button>
+	                        </form>
+	                    </td>
+	                </tr>
+	                <tr>
+	                	<td><input type="checkbox"></td>
+	                    <td class="product-info">
+	                        <img src="/img/book-cover.png" class="book-cover-img">
+	                        <div class="book-info">
+	                            <p>해리포터와 마법사의 돌 2</p>
+	                            <p>J.K 롤링 저 / 강동혁 역</p>
+	                        </div>
+	                    </td>
+	                    <td>1개</td>
+	                    <td>17,000원</td>
+	                    <td>
+	                        <form action="/" class="buy-buttons">
+	                            <button class="btn btn-active">바로 구매</button>
+	                            <button class="btn">수량 변경</button>
+	                            <button class="btn">삭제</button>
+	                        </form>
+	                    </td>
+	                </tr>
+	            </tbody>
+	        </table>
+	        
+	        <div class="payment-summary">
+			    <p><span>상품 금액</span> <span class="price">19,800원</span></p>
+			    <p><span>배송비</span> <span class="price">0원</span></p>
+			    <p><span>상품 할인</span> <span class="price">-1,980원</span></p>
+			    <p><span>쿠폰 할인</span> <span class="price">0원</span></p>
+			    <hr>
+			    <p>최종 결제 금액 <span class="final-amount">17,820원</span></p>
+			    <button class="side-btn">쇼핑하러가기</button>
+            	<button class="side-btn">선택상품 구매</button>
+            	<button class="side-btn btn-active">전체상품 구매</button>
+			</div>
+	    </div>
     </div>
 </main>
 </html>
