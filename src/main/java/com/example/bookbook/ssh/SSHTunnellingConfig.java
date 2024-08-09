@@ -4,12 +4,17 @@ import java.util.Random;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.Resource;
 
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
@@ -17,10 +22,15 @@ import com.jcraft.jsch.Session;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Profile("ssh")
 @Configuration
+@RequiredArgsConstructor
 public class SSHTunnellingConfig {
+	
+	private final ApplicationContext application;
 	
 	@Bean
 	@ConfigurationProperties("spring.datasource.hikari")
@@ -48,8 +58,6 @@ public class SSHTunnellingConfig {
 		session.setConfig("StrictHostKeyChecking", "no");
 		session.connect();
 		
-		//localPort를 하나로 고정해서 사용하다보니 수정시 이미 바인딩된 포트라고 떠서
-		//랜덤으로 적용했어요
 		int lport=new Random().nextInt(999)+33001;
 		
 		int localPort=session.setPortForwardingL(
@@ -65,6 +73,33 @@ public class SSHTunnellingConfig {
 		config.setUsername(dataSourceProperties.getUsername());
 		config.setPassword(dataSourceProperties.getPassword());
 		return new HikariDataSource(config);
+	}
+	
+	@Bean
+	SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+		
+		SqlSessionFactoryBean factoryBean=new SqlSessionFactoryBean();
+		//1.datasource
+		factoryBean.setDataSource(dataSource);
+		//2.Configuration
+		factoryBean.setConfiguration(mybatisConfiguration());
+		//3.mapper.xml-location patton
+		String locationPattern="classpath*:mappers/**/*-mapper.xml";
+		Resource[] resource=application.getResources(locationPattern); // ... 대신 여러개 집합인 배열로..
+		factoryBean.setMapperLocations(resource);
+		
+		return factoryBean.getObject();
+	}
+	
+	@Bean
+	@ConfigurationProperties(prefix = "mybatis.configuration")
+	org.apache.ibatis.session.Configuration mybatisConfiguration() {
+		return new org.apache.ibatis.session.Configuration();
+	}
+
+	@Bean
+	SqlSessionTemplate sqlSessionTemplate(DataSource dataSource) throws Exception {
+		return new SqlSessionTemplate(sqlSessionFactory(dataSource));
 	}
 	
 }

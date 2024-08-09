@@ -5,7 +5,6 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="/css/admin/commons.css">
 	<link rel="stylesheet" href="/css/admin/sidebar.css">
-	<link rel="stylesheet" href="/css/admin/index.css">
 	<script src="/js/admin/sidebar.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -14,7 +13,7 @@
 	<div style="display: flex;">
 		<th:block th:insert="~{views/admin/sidebar}" />
 		<div class="container">
-			<h1>취소/교환/환불</h1>
+			<h1>취소/환불</h1>
 			<div class="search-box">
 				<div class="search-section">
 					<div class="filter-section">
@@ -22,8 +21,9 @@
 						<select id="search">
 							<option>미분류</option>
 						</select>
+						<input type="text" id="searchInput">
+						<button class="search-btn">검색</button>
 					</div>
-
 					<div class="filter-section">
 						<label for="search" class="jump">검색어</label>
 						<select id="search">
@@ -38,18 +38,19 @@
 						<button type="button" class="button">기간 설정</button>
 					</div>
 					<div class="filter-section">
-						<label>환불상태</label>
-						<label><input type="checkbox" checked> 전체</label>
-						<label><input type="checkbox" checked> 환불전</label>
-						<label><input type="checkbox" checked> 환불완료</label>
-						<label><input type="checkbox" checked> 환불보류</label>
-					</div>
-					<div class="filter-section">
 						<label>환불수단</label>
 						<select>
 							<option>전체</option>
 						</select>
 					</div>
+					<div class="filter-section">
+						<label>처리상태</label>
+						<label><input type="checkbox" checked> 전체</label>
+						<label><input type="checkbox" checked> 환불전</label>
+						<label><input type="checkbox" checked> 환불완료</label>
+						<label><input type="checkbox" checked> 환불보류</label>
+					</div>
+
 				</div>
 			</div>
 			<div class="inven-box">
@@ -57,12 +58,13 @@
 					<thead>
 						<tr>
 							<th><input type="checkbox"></th>
-							<th>판매결제일</th>
+							<th>결제완료일</th>
 							<th>주문번호/환불번호</th>
 							<th>주문자</th>
 							<th>총 수량</th>
 							<th>총 환불액</th>
 							<th>사용 적립금</th>
+							<th>사용 쿠폰</th>
 							<th>결제 수단</th>
 							<th>환불 수단</th>
 							<th>처리상태</th>
@@ -83,6 +85,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
+							<td></td>
 							<td>환불전</td>
 							<td></td>
 
@@ -96,6 +99,7 @@
 							<td>이유진</td>
 							<td>1건</td>
 							<td>25,000</td>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>

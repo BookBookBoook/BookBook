@@ -31,4 +31,35 @@ public class AdminController {
 		return "views/admin/refund";
 	}
 	
+	@GetMapping("/admin/order/exchange")
+	public String orderexchange() {
+		return "views/admin/exchange";
+	}
+	
+	
+	@GetMapping("/admin/users")
+	public String user() {
+		return "views/admin/users";
+	}
+	
+	@GetMapping("/admin/users/detail")
+	public String userDetail() {
+		return "views/admin/users-detail";
+	}
+	
+	@GetMapping("/admin/sellers")
+	public String seller() {
+		return "views/admin/sellers";
+	}
+	
+	@GetMapping("/admin/sellers/detail")
+	public String sellerDetail() {
+		return "views/admin/sellers-detail";
+	}
+	
+	@GetMapping("/admin/sellers/inventory/write")
+	public String sellerwrite() {
+		return "views/admin/write";
+	}
+	
 }

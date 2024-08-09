@@ -170,4 +170,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById("chat-icon").addEventListener('click', btnBotClicked);
     document.getElementById("close-button").addEventListener('click', btnCloseClicked);
     document.getElementById("send-button").addEventListener('click', btnMsgSendClicked);
+    
+    // Enter 키를 눌렀을 때 메시지 전송 버튼 클릭 이벤트 처리
+    document.getElementById("question").addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 기본 Enter 키 동작 방지 (예: 폼 제출)
+            btnMsgSendClicked(); // 메시지 전송 버튼 클릭 이벤트 호출
+        }
+    });
 });
