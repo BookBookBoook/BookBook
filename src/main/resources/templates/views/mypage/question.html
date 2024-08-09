@@ -27,25 +27,10 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>날짜</th>
 		                        <th>상태</th>
 		                    </tr>
-		                    <tr>
-		                        <td>탈퇴는 어디서 하나요.</td>
-		                        <td>2013-04-25 10:34</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>배송완료 처리가 되었는데도 배송이 오지 않았습니다.</td>
-		                        <td>2013-03-01 12:09</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>배송 언제 오나요</td>
-		                        <td>2013-02-14 21:32</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>배송 예정 시간 궁금합니다.</td>
-		                        <td>2013-01-31 15:26</td>
-		                        <td class="status">답변완료</td>
+		                    <tr th:each="dto : ${list}">
+		                        <td th:text="${dto.title}">탈퇴는 어디서 하나요.</td>
+		                        <td th:text="${dto.date.toLocalDate()}">2013-04-25 10:34</td>
+		                        <td th:text="${dto.status}" class="status">답변완료</td>
 		                    </tr>
 		                </table>
 		            </div>

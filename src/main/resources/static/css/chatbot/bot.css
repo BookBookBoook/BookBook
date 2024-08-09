@@ -86,6 +86,24 @@
 /*/////////////////////////*/
 /*/////////////////////////*/
 /*/////////////////////////*/
+#chat-content>div>div>div.part>p {
+	background-color: #ff9040;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	
+	padding: 10px;
+	position: relative;
+	min-width: 50px;
+	word-wrap: break-word; /* 줄바꿈 허용 */
+	margin: 0px;
+	padding: 10px;
+}
+#chat-content>div>div>div.part.chatbot>p {
+	border-bottom-right-radius: 10px;
+}
+#chat-content>div>div>div.part.guest {
+	border-bottom-left-radius: 10px;
+}
 
 /*/////////////////////////*/
 /*/////// 유저 메세지 ////////*/
@@ -95,22 +113,15 @@
 	justify-content: flex-end;
 }
 /* 사용자 메시지 스타일 */
-.msg.user .message {
+.msg.user > .message >.part .guest {
 	background-color: #ff9040;
-	border-radius: 10px;
 	position: relative;
 	min-width: 50px;
 	max-width: 60%;
 	word-wrap: break-word; /* 줄바꿈 허용 */
-}
-
-#chat-content>div>div>div.part>p {
-	background-color: #ff9040;
-	border-radius: 10px;
-	padding: 10px;
-	position: relative;
-	min-width: 50px;
-	word-wrap: break-word; /* 줄바꿈 허용 */
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px;
 }
 
 /*/////////////////////////*/
@@ -133,11 +144,11 @@
 /* 봇 메시지 스타일 */
 .msg.bot .message {
 	background-color: #FFF;
-	border-radius: 10px;
 	padding: 10px;
 	position: relative;
 	max-width: 60%;
 	word-wrap: break-word; /* 줄바꿈 허용 */
+	
 }
 /*/////////////////////////*/
 /*/////////////////////////*/
@@ -170,10 +181,6 @@
 	max-height: 375px;
 	overflow-y: auto; /* 수직 스크롤이 필요할 때만 나타나게 함 */
 	overflow-x: hidden; /* 수평 스크롤 숨기기 */
-}
-#chat-content > div> div > div.part > p{
-	margin: 0px;
-	padding: 10px;
 }
 
 /* Flex 설정 */

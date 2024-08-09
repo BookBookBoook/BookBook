@@ -66,7 +66,7 @@ function showWelcomeMessage() {
                                     <img src="/img/bot/bot-img.png">
                                 </div>
                                 <div class="message">
-                                    <div class="part">
+                                    <div class="part chatbot">
                                         <p>
                                         	아 귀찮게 왜 계속 열어요. <br>
                                         	제가 만만해요?
@@ -98,7 +98,7 @@ function connect() {
                             <img src="/img/bot/bot-img.png">
                         </div>
                         <div class="message">
-                            <div class="part">
+                            <div class="part chatbot">
                                 <p>${msgObj}</p>
                             </div>
                             <div class="time">${time}</div>
@@ -107,12 +107,7 @@ function connect() {
             showMessage(tag);
         });
 
-        var data = {
-            key: key,
-            content: "answer",
-            name: "userId"
-        };
-        client.send("/message/bot/answer", {}, JSON.stringify(data));
+        
     });
 }
 
@@ -190,7 +185,7 @@ function btnMsgSendClicked() {
     var time = formatTime(now);
     var tag = `<div class="msg user flex">
                 <div class="message">
-                    <div class="part">
+                    <div class="part guest">
                         <p>${question}</p>
                     </div>
                     <div class="time">${time}</div>
@@ -204,7 +199,7 @@ function btnMsgSendClicked() {
     var data = {
         key: key,
         content: question,
-        name: "userId"
+        userId: 1
     };
     client.send("/message/bot/question", {}, JSON.stringify(data));
     clearQuestion();
