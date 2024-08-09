@@ -1,54 +1,68 @@
 function validateForm() {
-    const id = document.getElementById("signup-id").value.trim();
-    const pw = document.getElementById("signup-pw").value.trim();
-    const name = document.getElementById("signup-name").value.trim();
-    const birth = document.getElementById("signup-birth").value.trim();
-    const gender = document.getElementById("signup-gender").value;
-    const ssn = document.getElementById("signup-ssn").value.trim();
-    const email = document.getElementById("signup-email").value.trim();
-    const phone = document.getElementById("signup-phone").value.trim();
-    const address = document.getElementById("sample6_address").value.trim();
-    const detailAddress = document.getElementById("sample6_detailAddress").value.trim();
+  // 아이디 유효성 검사
+  var idInput = document.getElementById("signup-id");
+  var idPattern = /^[a-zA-Z0-9]{4,12}$/;
+  if (!idPattern.test(idInput.value)) {
+    alert("아이디는 4~12자리 영문, 숫자만 사용할 수 있습니다.");
+    idInput.focus();
+    return false;
+  }
 
-    let errorMessages = [];
+  // 비밀번호 유효성 검사
+  var pwInput = document.getElementById("signup-pw");
+  var pwPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,16}$/;
+  if (!pwPattern.test(pwInput.value)) {
+    alert("비밀번호는 8~16자리 영문, 숫자, 특수문자를 포함해야 합니다.");
+    pwInput.focus();
+    return false;
+  }
 
-    if (id === "") {
-        errorMessages.push("아이디를 입력하세요.");
-    }
-    if (pw === "") {
-        errorMessages.push("비밀번호를 입력하세요.");
-    } else if (pw.length < 8) {
-        errorMessages.push("비밀번호는 최소 8자 이상이어야 합니다.");
-    }
-    if (name === "") {
-        errorMessages.push("이름을 입력하세요.");
-    }
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(birth)) {
-        errorMessages.push("생년월일 형식이 올바르지 않습니다. (YYYY-MM-DD)");
-    }
-    if (gender === "") {
-        errorMessages.push("성별을 선택하세요.");
-    }
-    if (!/^\d{6}-\d{7}$/.test(ssn)) {
-        errorMessages.push("주민등록번호 형식이 올바르지 않습니다. (123456-1234567)");
-    }
-    if (email !== "" && !/.+@.+\..+/.test(email)) {
-        errorMessages.push("이메일 형식이 올바르지 않습니다.");
-    }
-    if (!/01[0-9]-[0-9]{4}-[0-9]{4}/.test(phone)) {
-        errorMessages.push("전화번호 형식이 올바르지 않습니다. (예: 010-1234-5678)");
-    }
-    if (address === "") {
-        errorMessages.push("주소를 입력하세요.");
-    }
-    if (detailAddress === "") {
-        errorMessages.push("상세주소를 입력하세요.");
-    }
+  // 이름 유효성 검사
+  var nameInput = document.getElementById("signup-name");
+  var namePattern = /^[가-힣]{2,5}$/;
+  if (!namePattern.test(nameInput.value)) {
+    alert("이름은 2~5자리 한글만 사용할 수 있습니다.");
+    nameInput.focus();
+    return false;
+  }
 
-    if (errorMessages.length > 0) {
-        alert(errorMessages.join("\n"));
-    } else {
-        alert("가입이 완료되었습니다.");
-        // 실제 가입 로직을 여기에 추가
-    }
+  // 생년월일 유효성 검사
+  var birthInput = document.getElementById("signup-birth");
+  var birthPattern = /^\d{4}-\d{2}-\d{2}$/;
+  if (!birthPattern.test(birthInput.value)) {
+    alert("생년월일 형식이 올바르지 않습니다.");
+    birthInput.focus();
+    return false;
+  }
+
+  // 주민등록번호 유효성 검사
+  var ssnInput = document.getElementById("signup-ssn");
+  var ssnPattern = /^\d{6}-\d{7}$/;
+  if (!ssnPattern.test(ssnInput.value)) {
+    alert("주민등록번호 형식이 올바르지 않습니다.");
+    ssnInput.focus();
+    return false;
+  }
+
+  // 이메일 유효성 검사
+  var emailInput = document.getElementById("signup-email");
+  var emailPattern = /^.+@.+\..+$/;
+  if (emailInput.value !== "" && !emailPattern.test(emailInput.value)) {
+    alert("이메일 형식이 올바르지 않습니다.");
+    emailInput.focus();
+    return false;
+  }
+
+  // 휴대전화 유효성 검사
+  var phoneInput = document.getElementById("signup-phone");
+  var phonePattern = /^01[0-9]-[0-9]{4}-[0-9]{4}$/;
+  if (!phonePattern.test(phoneInput.value)) {
+    alert("휴대전화 번호 형식이 올바르지 않습니다.");
+    phoneInput.focus();
+    return false;
+  }
+
+  // 모든 유효성 검사를 통과하면 폼 제출
+  return true;
 }
+
