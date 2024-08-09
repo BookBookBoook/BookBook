@@ -32,13 +32,11 @@ public class Answer {
     @Column(name = "answerNo")  // DB 컬럼과 매핑
     private Long answerNo;
 
-    @ManyToOne
-    @JoinColumn(name = "questionNo", referencedColumnName = "questionNo", nullable = false)
-    private Question question; // Question 엔티티를 정의해야 합니다
+    @Column(nullable = false)
+    private String keyword;
 
-    @Column(name = "content", nullable = false)
+    @Column(nullable = false)
     private String content;
 
-    @Column(name = "createdAt")
-    private LocalDateTime createdAt;
+   
 }
