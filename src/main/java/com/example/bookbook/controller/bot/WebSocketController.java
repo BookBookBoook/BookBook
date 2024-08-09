@@ -1,7 +1,10 @@
 package com.example.bookbook.controller.bot;
 
+import java.text.MessageFormat;
+
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import com.example.bookbook.domain.dto.bot.AnswerDTO;
@@ -15,12 +18,14 @@ import lombok.RequiredArgsConstructor;
 public class WebSocketController {
 
     private final ChatbotService chatbotService;
+    
+    private final SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/bot/question")
-    @SendTo("/topic/bot")
+    //@SendTo("/topic/bot")
     public AnswerDTO handleWebSocketQuestion(QuestionDTO questionDTO) {
     	// QuestionDTO에서 userId 필드를 가져옴
-        Long userId = questionDTO.getUserId();
+       // Long userId = questionDTO.getUserId();
 
         /*
         // userId를 사용하여 데이터베이스나 다른 서비스에서 userName을 조회
@@ -33,8 +38,13 @@ public class WebSocketController {
         AnswerDTO answer = chatbotService.processUserQuestion(questionDTO);
         
         // 분석 결과를 콘솔에 출력
-        System.out.println("Received question from user ID " + userId + ": " + questionDTO.getQuestionNo());
+        //System.out.println("Received question from user ID " + userId + ": " + questionDTO.getQuestionNo());
         System.out.println("Analysis result: " + answer);
+        
+		long key = questionDTO.getKey();
+		String pattern = "{0}님 "+answer.getContent();
+		String message=MessageFormat.format(pattern, answer.getName());
+		messagingTemplate.convertAndSend("/topic/bot/"+key,message);
 
         return answer;
     }
