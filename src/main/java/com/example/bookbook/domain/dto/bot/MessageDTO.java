@@ -16,6 +16,6 @@ import java.util.Set;
 @Getter
 @Data
 public class MessageDTO {
-    private String content; // 분석된 내용을 담는 필드
-    private Set<String> keywords; // 분석된 키워드들을 담는 필드 (선택 사항)
+    private String content; // 분석된 내용을 담는 필드 
+    private Set<String> keywords; // 질문에서 추출된 주요 키워드를 담는 Set입니다.
 }
