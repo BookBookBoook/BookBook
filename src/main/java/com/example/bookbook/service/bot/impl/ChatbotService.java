@@ -1,19 +1,20 @@
 package com.example.bookbook.service.bot.impl;
 
-import com.example.bookbook.domain.dto.bot.AnswerDTO;
-import com.example.bookbook.domain.dto.bot.MessageDTO;
-import com.example.bookbook.domain.dto.bot.QuestionAnalysisDTO;
-import com.example.bookbook.domain.dto.bot.QuestionDTO;
-import com.example.bookbook.domain.entity.Question;
-import com.example.bookbook.domain.repository.AnswerRepository;
-import com.example.bookbook.domain.repository.QuestionAnalysisRepository;
-import com.example.bookbook.domain.repository.QuestionRepository;
-import com.example.bookbook.mapper.AnswerMapper;
-import com.example.bookbook.mapper.QuestionAnalysisMapper;
-import com.example.bookbook.mapper.QuestionMapper;
-import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.example.bookbook.domain.dto.bot.AnswerDTO;
+import com.example.bookbook.domain.dto.bot.MessageDTO;
+import com.example.bookbook.domain.dto.bot.QuestionDTO;
+import com.example.bookbook.domain.entity.Answer;
+import com.example.bookbook.domain.entity.Question;
+import com.example.bookbook.domain.entity.UserEntity;
+import com.example.bookbook.domain.repository.AnswerRepository;
+import com.example.bookbook.domain.repository.QuestionRepository;
+import com.example.bookbook.domain.repository.UserEntityRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
@@ -21,8 +22,10 @@ public class ChatbotService {
 
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
-    private final QuestionAnalysisRepository questionAnalysisRepository;
+    //private final QuestionAnalysisRepository questionAnalysisRepository;
     private final KomoranService komoranService;
+    private final ModelMapper modelMapper;
+    private final UserEntityRepository userRepo;
 
     @Transactional
     public AnswerDTO processUserQuestion(QuestionDTO questionDTO) {
@@ -33,26 +36,28 @@ public class ChatbotService {
     	// #4 분석 결과를 기반으로 generateAnswer 메소드를 호출하여 답변을 생성합니다. 생성된 답변은 AnswerDTO 형태로 데이터베이스에 저장
 
     	// #1
-        Question question = QuestionMapper.INSTANCE.toEntity(questionDTO);
+    	Question question=modelMapper.map(questionDTO, Question.class);
+    	UserEntity user=userRepo.findById(questionDTO.getUserId()).orElseThrow();
+    	question=question.user(user);
+    	System.out.println("Question>>>>:"+question);
         questionRepository.save(question);
-
+       //*
         // #2
         MessageDTO analysisResult = komoranService.nlpAnalyze(questionDTO.getContent());
-        
+        System.out.println("?>>>>:"+analysisResult);
+        Answer answer=null;
         // #3
-        analysisResult.getKeywords().forEach(keyword -> {
-            QuestionAnalysisDTO questionAnalysisDTO = QuestionAnalysisDTO.builder()
-                    .questionNo(question.getQuestionNo())
-                    .keyword(keyword)
-                    .build();
-            questionAnalysisRepository.save(QuestionAnalysisMapper.INSTANCE.toEntity(questionAnalysisDTO));
-        });
+        
+        for(String keyword : analysisResult.getKeywords()) {
+        	answer=answerRepository.findByKeyword(keyword)
+        			.orElse(Answer.builder().content("죄송합니다만, 제가 답변 할수 없는 질문입니다.").build());
+        }
 
         // #4
-        AnswerDTO answerDTO = generateAnswer(analysisResult);
-        answerRepository.save(AnswerMapper.INSTANCE.toEntity(answerDTO));
-
-        return answerDTO;
+       
+        //*/
+        AnswerDTO answerDTO=modelMapper.map(answer, AnswerDTO.class);
+        return answerDTO.name(user.getUserName());
     }
 
     private AnswerDTO generateAnswer(MessageDTO analysisResult) {

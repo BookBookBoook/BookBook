@@ -32,7 +32,7 @@ public class QuestionAnalysis {
     private Long qaNo;
 
     @ManyToOne
-    @JoinColumn(name = "questionNo", referencedColumnName = "questionNo", nullable = false)
+    @JoinColumn(name = "questionNo")
     private Question question; // Question 엔티티를 정의해야 합니다
 
     @Column(name = "keyword")
