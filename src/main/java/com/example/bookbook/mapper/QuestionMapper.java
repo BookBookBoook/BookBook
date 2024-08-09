@@ -11,10 +11,11 @@ import com.example.bookbook.domain.entity.Question;
 public interface QuestionMapper {
     QuestionMapper INSTANCE = Mappers.getMapper(QuestionMapper.class);
 
+ // Question 엔티티를 QuestionDTO로 변환
     @Mapping(source = "user.userId", target = "userId")  // User 엔티티의 userId를 DTO의 userId로 매핑
     QuestionDTO toDTO(Question question);
     
-    @Mapping(source = "questionNo", target = "question.questionNo")  // DTO의 userId를 엔티티의 userId으로 매핑
+    @Mapping(source = "userId", target = "user.userId")  // DTO의 userId를 엔티티의 User.id로 매핑
     Question toEntity(QuestionDTO questionDTO);
 
 }
