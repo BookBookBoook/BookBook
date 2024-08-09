@@ -1,15 +1,20 @@
 package com.example.bookbook.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.bookbook.service.QNAService;
+
 
 @Controller
 @RequiredArgsConstructor
 public class MypageController {
+	
+	private final QNAService qnaService;
 	
 	@GetMapping("/mypage/orders")
 	public String order() {
@@ -32,7 +37,8 @@ public class MypageController {
 	}
 	
 	@GetMapping("/mypage/questions")
-	public String question() {
+	public String question(Model model) {
+		qnaService.findAllProcess(model);
 		return "views/mypage/question";
 	}
 	
