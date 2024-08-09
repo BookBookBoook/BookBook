@@ -1,4 +1,4 @@
-package com.example.bookbook.controller.bot;
+package com.example.bookbook.config;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Configuration
-public class KomoramConfig {
+public class KomoranConfig {
 
     // 사용자 정의 사전 파일 이름
     private String USER_DIC = "user.dic";

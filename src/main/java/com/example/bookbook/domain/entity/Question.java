@@ -23,11 +23,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "question")
+@Table(name = "Question")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "question_no") // DB 컬럼과 매핑
+    @Column(name = "questionNo") // DB 컬럼과 매핑
     private Long questionNo;
 /*
     @ManyToOne
@@ -37,6 +37,6 @@ public class Question {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 }

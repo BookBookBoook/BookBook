@@ -24,20 +24,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "question_analysis")
+@Table(name = "QuestionAnalysis")
 public class QuestionAnalysis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "qa_no")  // DB 컬럼과 매핑
+    @Column(name = "qaNo")  // DB 컬럼과 매핑
     private Long qaNo;
 
     @ManyToOne
-    @JoinColumn(name = "question_no", referencedColumnName = "question_no", nullable = false)
+    @JoinColumn(name = "questionNo", referencedColumnName = "questionNo", nullable = false)
     private Question question; // Question 엔티티를 정의해야 합니다
 
     @Column(name = "keyword")
     private String keyword;
 
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 }

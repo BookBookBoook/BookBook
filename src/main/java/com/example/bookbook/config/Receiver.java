@@ -1,4 +1,4 @@
-package com.example.bookbook.controller.bot;
+package com.example.bookbook.config;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
