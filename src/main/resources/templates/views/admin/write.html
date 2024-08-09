@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/admin/write.css">
+	<link rel="stylesheet" href="/css/admin/commons.css">
+	<link rel="stylesheet" href="/css/admin/sidebar.css">
+	<script src="/js/admin/sidebar.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div style="display: flex;">
+			<th:block th:insert="~{views/admin/sidebar}" />
+	<div class="container">
+		<form id="event-form">
+			<h1>상품 등록</h1>
+			<table>
+				<tr>
+					<th>기획전 분류</th>
+					<td colspan="3">
+						<select id="category">
+							<option>메인 &gt; 제품진열 관리</option>
+							<!-- 추가 옵션을 필요에 따라 추가 -->
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>이벤트제목</th>
+					<td colspan="3">
+						<input type="text" id="event-title" name="event-title">
+					</td>
+				</tr>
+				<tr>
+					<th>이벤트짧은설명</th>
+					<td colspan="3">
+						<input type="text" id="event-description" name="event-description">
+					</td>
+				</tr>
+				<tr>
+					<th>이벤트기간</th>
+					<td>
+						<input type="date" id="event-start-date" name="event-start-date">
+					</td>
+					<td>~</td>
+					<td>
+						<input type="date" id="event-end-date" name="event-end-date">
+						<label>
+							<input type="checkbox" id="no-end-date"> 체크시 이벤트기간제한없음
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<th>이벤트 상세내용</th>
+					<td colspan="3">
+						<textarea id="event-details" name="event-details"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>이미지업로드</th>
+					<td colspan="3">
+						<input type="file" id="event-image" name="event-image">
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+
+</html>
