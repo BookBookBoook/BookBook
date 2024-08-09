@@ -25,20 +25,20 @@ import jakarta.persistence.Table;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "answer")
+@Table(name = "Answer")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "answer_no")  // DB 컬럼과 매핑
+    @Column(name = "answerNo")  // DB 컬럼과 매핑
     private Long answerNo;
 
     @ManyToOne
-    @JoinColumn(name = "question_no", referencedColumnName = "question_no", nullable = false)
+    @JoinColumn(name = "questionNo", referencedColumnName = "questionNo", nullable = false)
     private Question question; // Question 엔티티를 정의해야 합니다
 
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "created_at")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 }

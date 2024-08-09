@@ -57,10 +57,13 @@ public class ChatbotService {
 
     private AnswerDTO generateAnswer(MessageDTO analysisResult) {
     	
-    	// 분석 결과로부터 생성된 키워드를 기반으로 답변 내용을 만듭니다. 이 예시에서는 키워드를 콤마로 구분하여 문자열을 생성
-        String response = "질문 분석 결과: " + String.join(", ", analysisResult.getKeywords());
+    	// analysisResult.getKeywords()를 사용하여 키워드 집합을 가져옴
+        // 키워드가 ["자바", "챗봇"]이면, response는 "질문 분석 결과: 자바, 챗봇"
+        String response = "질문: " + analysisResult.getContent() + "\n" +
+                          "분석된 키워드: " + String.join(", ", analysisResult.getKeywords());
         return AnswerDTO.builder()
                 .content(response)
                 .build();
     }
+    
 }
