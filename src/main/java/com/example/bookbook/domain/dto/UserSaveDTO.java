@@ -34,12 +34,16 @@ public class UserSaveDTO {
 				.userRRN(userRRN)
 				.gender(gender)
 				.email(email)
+				.password(pe.encode(password))
 				.phoneNumber(phoneNumber)
 				.birthDate(birthDate)
 				.postcode(postcode)
 				.address(address)
 				.extraAddress(extraAddress)
 				.detailAddress(detailAddress)
-				.build().addRoleByRange(role);
+				.build();
 	}
+	
+	
+	
 }
