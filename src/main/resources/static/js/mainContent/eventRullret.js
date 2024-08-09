@@ -14,9 +14,12 @@ $(document).ready(function() {
 		var copImg = "img/cupon/cupon" + (gift + 1) + ".png";
 		console.log("이미지 : " + copImg);
 
-		$("#popup_gift .lottery_present").text(function() {
-			return "축하드립니다. " + present[gift] + " 룰렛 상품 " + (gift + 1) + " 당첨 되셨습니다.";
+		$("#popup_gift .lottery_present").html(function() {
+			return "<br>축하드립니다.<br>" +
+				present[gift] + " 룰렛 상품<br>" +
+				(gift + 1) + "번 당첨 되셨습니다.";
 		});
+
 		$('<img src="' + copImg + '" />').prependTo("#popup_gift .lottery_present");
 		setTimeout(function() { openPopup("popup_gift"); }, 1000);
 	}
