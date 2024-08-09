@@ -12,8 +12,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 @Data
 public class MessageDTO {
     private String content; // 분석된 내용을 담는 필드 
