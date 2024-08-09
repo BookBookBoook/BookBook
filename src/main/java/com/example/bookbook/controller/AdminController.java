@@ -62,4 +62,9 @@ public class AdminController {
 		return "views/admin/write";
 	}
 	
+	@GetMapping("/admin/review")
+	public String review() {
+		return "views/admin/review";
+	}
+	
 }
