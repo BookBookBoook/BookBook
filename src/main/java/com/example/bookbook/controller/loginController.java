@@ -1,5 +1,6 @@
 package com.example.bookbook.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class loginController {
 		return "views/login/admin-sign";
 	}
 	
+    
 	@GetMapping("/test")
 	public String test() {
 		return "views/login/test";
