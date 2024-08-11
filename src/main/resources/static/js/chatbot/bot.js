@@ -66,10 +66,12 @@ function showWelcomeMessage() {
                                     <img src="/img/bot/bot-img.png">
                                 </div>
                                 <div class="message">
+								<div class="bot-name">북Book</div>
                                     <div class="part chatbot">
                                         <p>
-                                        	아 귀찮게 왜 계속 열어요. <br>
-                                        	제가 만만해요?
+                                        	안녕하세요. <br> 
+											안내봇 ㅇㅇㅇ입니다. <br>
+                                        	무엇을 도와드릴까요?
                                     	</p>
                                     </div>
                                 </div>
@@ -158,6 +160,9 @@ function btnCloseClicked() {
     saveBotState();
     disconnect();
     flag = false;
+	document.getElementById("chat-content").innerHTML = ""; // 채팅 내용 초기화
+	localStorage.removeItem('chatContent'); // 로컬 스토리지에서 채팅 내용 제거
+
 }
 
 function btnBotClicked() {
