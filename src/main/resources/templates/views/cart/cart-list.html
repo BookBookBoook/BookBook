@@ -24,7 +24,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
             </div>
         </div>
         <div class="flex j-center">
-	        <table class="cart-table">
+	        <table class="left-section">
 	            <thead>
 	                <tr>
 	                	<th><input type="checkbox"></th>
@@ -48,7 +48,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                    <td>17,000원</td>
 	                    <td>
 	                        <form action="/" class="buy-buttons">
-	                            <button class="btn btn-active">바로 구매</button>
+	                            <button class="btn" onclick="window.location.href='/payment';">바로 구매</button>
 	                            <button class="btn">수량 변경</button>
 	                            <button class="btn delete">삭제</button>
 	                        </form>
@@ -67,7 +67,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                    <td>17,000원</td>
 	                    <td>
 	                        <form action="/" class="buy-buttons">
-	                            <button class="btn btn-active">바로 구매</button>
+	                            <button class="btn" onclick="window.location.href='/payment';">바로 구매</button>
 	                            <button class="btn">수량 변경</button>
 	                            <button class="btn">삭제</button>
 	                        </form>
@@ -83,9 +83,9 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 			    <p><span>쿠폰 할인</span> <span class="price">0원</span></p>
 			    <hr>
 			    <p>최종 결제 금액 <span class="final-amount">17,820원</span></p>
-			    <button class="side-btn">쇼핑하러가기</button>
-            	<button class="side-btn">선택상품 구매</button>
-            	<button class="side-btn btn-active">전체상품 구매</button>
+			    <button class="side-btn" onclick="window.location.href='/';">쇼핑하러가기</button>
+            	<button class="side-btn" onclick="window.location.href='/payment';">선택상품 구매</button>
+            	<button class="side-btn btn-active" onclick="window.location.href='/payment';">전체상품 구매</button>
 			</div>
 	    </div>
     </div>
