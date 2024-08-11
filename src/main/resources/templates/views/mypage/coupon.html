@@ -11,7 +11,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
         <div class="main-content">
             <div class="container-main">
 		        <div class="head">
-		            <h1>쿠폰 / 적립금</h1>
+		            <h1>나의 쿠폰</h1>
 		            <button class="head-btn" id="headBtn">교환번호 등록</button>
 		        </div>
 		        
@@ -32,28 +32,27 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 			    </div>
 		        
 		        <div class="tabs">
-		            <button class="tab active" onclick="openTab(event, 'coupon')">쿠폰</button>
-		            <button class="tab" onclick="openTab(event, 'point')">적립금</button>
+		            <button class="tab active" onclick="openTab(event, 'coupon')">사용 가능 쿠폰</button>
+		            <button class="tab" onclick="openTab(event, 'point')">소멸 예정 쿠폰</button>
 		        </div>
 		
+		        <div class="coupon-summary">
+		            <div class="available-coupons">
+		                <span>사용 가능한 쿠폰</span>
+		                <span class="count">7장</span>
+		            </div>
+		            <div class="scheduled-coupons">
+		                <span>이번 달 소멸예정 쿠폰</span>
+		                <span class="count">6장</span>
+		            </div>
+		        </div>
+		        <div class="coupon-filters">
+		        	<i id="all-btn" class="fa-regular fa-circle-check"></i>
+		            <span id="all-text" class="coupon-filters-all">전체</span>
+		            <button class="delete-button"><i class="fa-solid fa-trash trash-btn"></i>삭제</button>
+		        </div>
 		        
 		        <div id="coupon" class="tabcontent">
-			        <div class="coupon-summary">
-			            <div class="available-coupons">
-			                <span>사용 가능한 쿠폰</span>
-			                <span class="count">7장</span>
-			            </div>
-			            <div class="scheduled-coupons">
-			                <span>이번 달 소멸예정 쿠폰</span>
-			                <span class="count">6장</span>
-			            </div>
-			        </div>
-			
-			        <div class="coupon-filters">
-			        	<i id="all-btn" class="fa-regular fa-circle-check"></i>
-			            <span id="all-text" class="coupon-filters-all">전체</span>
-			            <button class="delete-button"><i class="fa-solid fa-trash trash-btn"></i>삭제</button>
-			        </div>
 		        	<div class="coupon-container">
 				        <div class="coupon">
 				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 1,000원 할인</div>
@@ -98,6 +97,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 				            <div class="details">상세보기</div>
 				        </div>
 				    </div>
+				    
 				    <div id="myModal" class="modal">
 				        <div class="modal-content">
 				            <span class="close">&times;</span>
@@ -112,6 +112,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 								무료배송쿠폰은 배송비가 발생하는 주문에 한해 배송비 무료 적용을 하실 수 있습니다. (단, 해외배송 제외)</div>
 				        </div>
 				    </div>
+				    
 		        </div>
 		        
 		        <div id="point" class="tabcontent">

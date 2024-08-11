@@ -5,7 +5,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
 	<link rel="stylesheet" href="/css/mypage/account.css">
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script src="/js/"></script>
+	<script src="/js/mypage/account.js"></script>
+	<script src="/js/login/address.js"></script>
 </head>
 <main>
 	<div class="flex">
@@ -56,11 +57,14 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                </div>
 		
 		                <div class="form-group">
-		                    <label for="postalcode">주소</label>
-		                    <input type="text" id="postalcode" value="13014" class="postalcode">
-		                    <button class="find-postalcode">주소찾기</button>
-		                    <input type="text" id="address1" value="***" class="address">
-		                    <input type="text" id="address2" value="***" class="address">
+		                    <label for="sample6_postcode">주소</label>
+		                    <div class="address-container">
+			                    <input type="text" id="sample6_postcode" value="13014" class="postalcode address" placeholder="우편번호">
+			                    <input type="button" class="find-postalcode" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+			                    <input type="text" id="sample6_address" value="서울특별시 노원구 상계동 593-1" class="address" placeholder="주소"><br>
+								<input type="text" id="sample6_detailAddress" value="화일빌딩 3층" class="address" placeholder="상세주소"><br>
+								<input type="text" id="sample6_extraAddress" class="address" placeholder="참고항목">
+							</div>
 		                </div>
 		
 		                <div class="form-group">
