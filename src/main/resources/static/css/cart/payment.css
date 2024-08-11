@@ -1,0 +1,132 @@
+.box-section {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+h3 {
+    margin-top: 0;
+    font-weight: normal;
+    font-weight: bold;
+}
+
+.input-field {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+/* 배송지정보 */
+.address{
+    align-items: baseline;
+}
+.radio-group {
+    margin-bottom: 10px;
+}
+.radio-group label {
+    margin-right: 20px;
+}
+.information{
+    color: #666;
+    font-size: 13px;
+}
+.information > i{
+    color: #666;
+    font-size: 13px;
+    margin: 5px;
+}
+
+/* 주문상품 */
+.product {
+    display: flex;
+    align-items: center;
+}
+.product-details{
+    width: 100%;
+}
+.product-details h4 {
+    margin: 0;
+    font-size: 18px;
+    text-align: start;
+}
+tr > td:nth-child(1){
+	display: flex;
+}
+td > p{
+    font-size: 14px;
+    text-align: start;
+}
+.book-detail{
+	margin-right: 20px;
+	padding: 30px;
+}
+
+
+/* 결제수단 */
+.payment-section {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.payment-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.payment-options label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.payment-options input[type="radio"] {
+    margin-right: 10px;
+}
+
+.bookbook-pay {
+    background-color: #e0f7fa;
+    padding: 3px 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+    color: #00796b;
+    font-size: 12px;
+}
+
+.other-payments {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grey-button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin-left: 10px;
+}
+
+.grey-button:hover {
+    background-color: #f0f0f0;
+}
+
+
+.payment-summary {
+	height: 330px;
+}
+.side-btn{
+	margin-bottom: 10px;
+}
+.expandable {
+    color: #666;
+    font-size: 14px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
