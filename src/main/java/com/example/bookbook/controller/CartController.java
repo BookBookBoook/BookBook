@@ -16,5 +16,15 @@ public class CartController {
 		return "views/cart/cart-list";
 	}
 	
+	@GetMapping("/payment")
+	public String payment() {
+		return "views/cart/payment";
+	}
+	
+	@GetMapping("/payment/completion")
+	public String paymentCompletion() {
+		return "views/cart/completion";
+	}
+	
 
 }

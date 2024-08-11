@@ -6,8 +6,7 @@ h1 {
 .progress-bar {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    margin: 0 auto;
+    margin: 35px auto;
     width: 40%;
     position: relative;
 }
@@ -44,19 +43,16 @@ h1 {
 }
 
 
-
-.cart-table {
-    
-    margin-top: 60px;
+/* left-section */
+.left-section {
+    margin: 40px;
     width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
 }
-.cart-table > thead > tr:nth-child(1){
+.left-section > thead > tr:nth-child(1){
 	border-top: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 }
-.cart-table th, .cart-table td {
+.left-section th, .left-section td {
     padding: 15px;
     text-align: center;
 }
@@ -126,14 +122,18 @@ h1 {
     margin-left: 10px;
 }
 
+
+/* right section */
 .payment-summary {
 	width: 250px;
+	height: 380px;
 	border: 1px solid #e5e5e5;
 	border-radius: 8px;
 	padding: 15px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	background-color: #fff;
-	margin-top: 60px;
+	margin-top: 40px;
+	position: sticky;
+	top: 30px;
 }
 
 .payment-summary p {
@@ -158,25 +158,7 @@ h1 {
 	margin-top: 10px;
 }
 
-/* .payment-summary .button {
-	width: 100%;
-	background-color: #ff7e00;
-	color: white;
-	font-size: 16px;
-	padding: 10px 0;
-	text-align: center;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	margin-top: 10px;
-}
-
-.payment-summary .button:hover {
-	background-color: #ff8f33;
-} */
-
 .payment-summary .side-btn {
-    
     width: 100%;
 	color: var(--black);
 	font-size: 16px;
