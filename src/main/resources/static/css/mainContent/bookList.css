@@ -1,4 +1,7 @@
-a{text-decoration-line: none;}
+a {
+	text-decoration-line: none;
+}
+
 .main-container {
 	display: flex;
 	max-width: 1200px;
@@ -219,21 +222,36 @@ label[for="selectAllCheckbox"] {
 }
 
 .heart-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  color: #ccc;
-  transition: color 0.3s ease, background-color 0.3s ease;
-  padding: 10px;
-  border-radius: 50%;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 24px;
+	color: #ccc;
+	transition: color 0.3s ease, background-color 0.3s ease;
+	padding: 10px;
+	border-radius: 50%;
 }
 
 .heart-button.active {
-  color: #ff0000;
+	color: #ff0000;
 }
 
 .heart-button.active .far.fa-heart::before {
-  content: "\f004";
-  font-weight: 900;
+	content: "\f004";
+	font-weight: 900;
+}
+
+.book-description {
+	white-space: pre-line;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+}
+
+.show-more {
+	color: blue;
+	cursor: pointer;
+	text-decoration: underline;
 }
