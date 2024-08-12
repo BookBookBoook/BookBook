@@ -10,19 +10,17 @@ import lombok.Setter;
 
 @Data
 public class BookDTO {
-    private String title;
-    private String author;
-    private String publisher;
-    private String pubdate;
-    private String isbn;
-    private String description;
-    private String image;
-    
-    // 추가된 필드들
-    private String price;          // 도서 가격
-    private String discount;       // 할인 가격
-    private String category;       // 도서 카테고리
-    private String link;           // 도서 상세 정보 링크
-    private Integer page;          // 페이지 수
-    private String originalTitle;  // 원제 (번역서의 경우)
+    private String title;           // 책 제목
+    private String author;          // 저자
+    private String publisher;       // 출판사
+    private String pubdate;         // 출간일
+    private String description;     // 책 소개
+    private String isbn;  // String에서 Integer로 변경
+    private String image;           // 표지 이미지 URL
+    private String link;            // 상세 정보 URL
+    private String discount;        // 판매가
+    private String category;        // 카테고리 정보 (선택적)
+
+    // 필요에 따라 추가 필드
+    private String originalTitle;   // 원제 (번역서의 경우, 선택적)
 }

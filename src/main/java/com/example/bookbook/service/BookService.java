@@ -10,9 +10,15 @@ public interface BookService {
 
 	//void searchBooks(String string, Model model);
 
-	List<BookDTO> searchBooks(String query);
 
 	void getDefaultBooks(Model model);
+
+
+	//List<BookDTO> searchBooks(String query);
+
+	BookDTO getBookByIsbn(String isbn);
+
+	void searchBooks(String query, Model model);
 
 
 
