@@ -3,12 +3,14 @@ package com.example.bookbook.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,9 +19,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
-	private final CustomUserDetailsService customUserDetailsService;
+	UsernamePasswordAuthenticationToken a;
+	
+    private final CustomUserDetailsService customUserDetailsService;
     private final CustomLoginSuccessHandler customLoginSuccessHandler;
-
+    private final CustomOAuth2UserService customOAuth2UserService;
+    
     @Bean
     @Order(1)
     public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
@@ -44,10 +49,11 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authorize -> authorize
-            		.requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event").permitAll()
+        .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-                .requestMatchers("/admin/**", "/seller/**").hasRole("SELLER")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/seller/**").hasRole("SELLER")
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
@@ -60,13 +66,23 @@ public class SecurityConfig {
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/login")
+                .logoutUrl("/logout") // 로그아웃 URL 설정
+                .logoutSuccessUrl("/login") // 로그아웃 성공 후 리디렉션 URL
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
+                .permitAll()
             )
-            .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")))
             .userDetailsService(customUserDetailsService);
-
+        
+		http
+		.oauth2Login(oauth2->oauth2
+				.loginPage("/login")
+				.defaultSuccessUrl("/additional-info", true)
+				)
+					;
+        
         return http.build();
     }
+    
+    
 }
