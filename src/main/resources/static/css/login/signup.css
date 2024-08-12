@@ -205,6 +205,7 @@ h3 {
 #business-number,
 #business-registration,
 #account-bank,
+#account-name,
 #account-number {
     height: 29px;
     border: none;
@@ -337,5 +338,4 @@ h3 {
 .birth-wrap {
     display: flex;
 }
-
 

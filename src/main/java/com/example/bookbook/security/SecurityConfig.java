@@ -2,6 +2,7 @@ package com.example.bookbook.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,51 +18,55 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	
 	private final CustomUserDetailsService customUserDetailsService;
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
 
-	@Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-  	
+    @Bean
+    @Order(1)
+    public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
         http
-	        	//csrf 보호
-            	.csrf(csrf->csrf.disable())
-					 
-	
-            
-            //uri에 대한 보안
+            .securityMatcher("/login/admin/**")
             .authorizeHttpRequests(authorize -> authorize
-            		.requestMatchers("/**","/signup","/login/**","/bookList","/detail","/event").permitAll()
-					/* .requestMatchers("/login/**","/oauth2/**").permitAll() */
-          	.requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
-            	.requestMatchers("/admin/**").hasRole("ADMIN") //admin으로 시작하는 주소는 'ADMIN' 권한이 필요하다는 의미
-            	.requestMatchers("/Seller/**").hasRole("Seller")
-              .anyRequest().authenticated() //위 설정을 제외한 나머지 요청은 인증 필요
+                .anyRequest().permitAll()
             )
-            
-            //http 인증 설정 (기본 설정 사용)
-            .httpBasic(Customizer.withDefaults())
-            
-            //form 로그인 설정 (기본 설정 사용)
             .formLogin(login -> login
-          		  .loginPage("/login") //로그인 페이지로 이동하는 url
-          		  .failureUrl("/login?error=true") //로그인 실패시 url
-          		  .permitAll()
-          		  .usernameParameter("email")
-          		  .passwordParameter("password")
-          		  .defaultSuccessUrl("/", true) 
-          		  )
-            
-            //logout 설정
-            .logout(logout -> logout
-          		  .logoutSuccessUrl("/login") //로그아웃 시 로그인 페이지로
-          		  .invalidateHttpSession(true)
-          		  .deleteCookies("JSESSIONID")) //로그아웃 시 쿠키 삭제
-            //GET 요청을 통해 로그아웃을 처리하도록 허용
-            .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")))
-            
-            .userDetailsService(customUserDetailsService);
-        	
+                .loginPage("/login/admin")
+                .loginProcessingUrl("/login/admin")
+                .failureUrl("/login/admin?error=true")
+                .usernameParameter("businessNum")
+                .passwordParameter("password")
+                .successHandler(customLoginSuccessHandler)
+                .permitAll()
+            );
         return http.build();
-    }	
-	 
+    }
 
+    @Bean
+    @Order(2)
+    public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(authorize -> authorize
+            		.requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/admin/**", "/seller/**").hasRole("SELLER")
+                .anyRequest().authenticated()
+            )
+            .formLogin(login -> login
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .failureUrl("/login?error=true")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .successHandler(customLoginSuccessHandler)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+            )
+            .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")))
+            .userDetailsService(customUserDetailsService);
+
+        return http.build();
+    }
 }

@@ -1,5 +1,9 @@
 package com.example.bookbook.domain.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,41 +17,76 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Seller") // 테이블명을 "publisher"로 지정
 public class SellerEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long SellerId; // ID
+    private Long sellerId;
+
+    // Seller specific fields
+    @Column(nullable = false)
+    private String shopName;
 
     @Column(nullable = false)
-    private String shopName; // 출판사 이름
+    private String telNum;
+
+    @Column(nullable = false, unique = true)
+    private String businessNum;
 
     @Column(nullable = false)
-    private String telNum; // 전화번호
+    private String businessReg;
 
     @Column(nullable = false)
-    private String businessNum; // 사업자 번호
+    private String bank;
 
     @Column(nullable = false)
-    private String businessReg; // 사업자 등록증
+    private String account;  // Changed from long to String
 
     @Column(nullable = false)
-    private String bank; // 은행명
+    private String accountHolder;
+
+    @Column(nullable = true)
+    private String settlementAmount;
+
+    private String businessRegCopy;
+
+    // User fields
+    @Column(nullable = false)
+    private String userName;
 
     @Column(nullable = false)
-    private long account; // 계좌 번호
+    private String userRRN;
 
     @Column(nullable = false)
-    private String accountHolder; // 계좌 소유자
+    private String gender;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
-    private String settlementAmount; // 정산 금액
+    private String phoneNumber;
 
-    private String businessRegCopy; // 사업자 등록증 사본
+    @Column(nullable = false)
+    private String password;
 
-	/*
-	 * @Column(nullable = true)
-	 * 
-	 * @ColumnDefault("false") private boolean approval; // 승인 여부
-	 */
-    // 추가적인 메서드를 필요에 따라 추가할 수 있습니다.
+    @Column(nullable = false)
+    private String birthDate;
+
+    @Column(nullable = false)
+    private String postcode;
+
+    @Column(nullable = false)
+    private String address;
+
+    @Column(nullable = true)
+    private String extraAddress;
+
+    @Column(nullable = false)
+    private String detailAddress;
+
+    @Column(nullable = true)
+    private Long status;
+    
+    
+    // You might want to add a relationship with UserEntity
+    @OneToOne(mappedBy = "seller")
+    private UserEntity user;
 }
