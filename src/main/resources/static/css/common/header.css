@@ -197,3 +197,34 @@ header, main {
 .show {
     display: block;
 }
+
+/* 로그인,로그아웃 설정 */
+
+.header-top .user-info span {
+    color: var(--black);
+    font-size: 12px; /* 다른 링크들과 동일한 폰트 크기 */
+    font-weight: 500; /* 다른 링크들과 동일한 폰트 굵기 */
+}
+
+.header-top .logout-form {
+    display: inline-block;
+    margin-left: 15px; /* 다른 li 요소들과 간격을 맞춤 */
+}
+
+.header-top .logout-form form {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.header-top .logout-form button {
+    background: none;
+    border: none;
+    color: var(--black);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+}
+
+

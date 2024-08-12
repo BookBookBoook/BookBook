@@ -283,7 +283,8 @@ h3 {
 
 /* 회원가입 버튼 */
 #signup-btn {
-    width: 100px;
+    width:450px;
+    height:50px;
     background-color: #FF9040;
     border: none;
     color: #fff;
@@ -310,6 +311,8 @@ h3 {
     font-size: 18px;
     outline: none;
     cursor: pointer;
+    width:450px;
+    height:50px;
 }
 
 /* 수신 동의 체크박스 스타일 */

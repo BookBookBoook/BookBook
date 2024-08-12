@@ -2,14 +2,26 @@
 
 <header th:fragment="top">
 	<div id="header-box">
-		<div class="header-top">
-			<ul>
-				<li><a href="/signup">회원가입</a></li>
-				<li><a href="/login">로그인</a></li>
-				<li><a href="/mypage/orders">주문배송</a></li>
-				<li><a href="/mypage/questions">고객센터</a></li>
-			</ul>
-		</div>
+        <div class="header-top">
+        <ul>
+            <li sec:authorize="isAnonymous()"><a href="/signup">회원가입</a></li>
+            <li sec:authorize="isAnonymous()"><a href="/login">로그인</a></li>
+            <li sec:authorize="isAuthenticated()" class="user-info">
+                <span th:text="${#authentication.principal.name}"></span>
+                <span th:text="${#authentication.principal.email}"></span>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="logout-form">
+                <form action="/logout" method="post">
+                    <input type="hidden" th:name="${_csrf != null ? _csrf.parameterName : 'csrf'}"
+                           th:value="${_csrf != null ? _csrf.token : ''}"/>
+                    <button type="submit">로그아웃</button>
+                </form>
+            </li>
+            <li><a href="/mypage/orders">주문배송</a></li>
+            <li><a href="/mypage/questions">고객센터</a></li>
+        </ul>
+    </div>
+</div>
 		<div class="containers">
 			<div class="flex a-center">
 				<a href="/"><img src="/img/Untitled_removebg_preview.png"
