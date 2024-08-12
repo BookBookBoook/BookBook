@@ -66,11 +66,11 @@ function showWelcomeMessage() {
                                     <img src="/img/bot/bot-img.png">
                                 </div>
                                 <div class="message">
-								<div class="bot-name">북Book</div>
+								<div class="bot-name">북엉이</div>
                                     <div class="part chatbot">
                                         <p>
                                         	안녕하세요. <br> 
-											안내봇 ㅇㅇㅇ입니다. <br>
+											안내봇 북엉이입니다. 북북. <br>
                                         	무엇을 도와드릴까요?
                                     	</p>
                                     </div>
