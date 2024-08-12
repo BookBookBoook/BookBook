@@ -31,28 +31,5 @@ public class loginController {
 		return "views/login/test";
 	}
 	
-	@GetMapping("/seller")
-	public String seller() {
-		return "views/login/seller";
-	}
-	
-	@GetMapping("/admin1")
-	public String admin() {
-		return "views/login/admin";
-	}
-	
-	@GetMapping("/admin/detail")
-	public String deatil() {
-		return "views/login/admin-detail";
-	}
-	
-	@GetMapping("/refund")
-	public String refund() {
-		return "views/login/refund";
-	}
 
-	@GetMapping("/review")
-	public String review() {
-		return "views/login/review";
-	}
 }
