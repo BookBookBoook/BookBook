@@ -40,7 +40,7 @@ public class ChatbotService {
     	UserEntity user=userRepo.findById(questionDTO.getUserId()).orElseThrow();
     	question=question.user(user);
     	System.out.println("Question>>>>:"+question);
-        questionRepository.save(question);
+        //questionRepository.save(question);
        //*
         // #2
         MessageDTO analysisResult = komoranService.nlpAnalyze(questionDTO.getContent());

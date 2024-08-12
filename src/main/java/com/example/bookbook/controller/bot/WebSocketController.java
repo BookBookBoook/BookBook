@@ -39,12 +39,13 @@ public class WebSocketController {
         
         // 분석 결과를 콘솔에 출력
         //System.out.println("Received question from user ID " + userId + ": " + questionDTO.getQuestionNo());
-        System.out.println("Analysis result: " + answer);
         
-		long key = questionDTO.getKey();
-		String pattern = "{0}님 "+answer.getContent();
-		String message=MessageFormat.format(pattern, answer.getName());
-		messagingTemplate.convertAndSend("/topic/bot/"+key,message);
+		long key = questionDTO.getKey(); //QuestionDTO에서 key 값을 추출
+		String pattern = "{0}님 "+answer.getContent();  //AnswerDTO answer에서 답변추출
+		String message=MessageFormat.format(pattern, answer.getName());//MessageFormat을 사용하여 사용자 이름을 포함한 답변 메시지를 포맷
+		System.out.println("Analysis result: " + message);
+		
+		messagingTemplate.convertAndSend("/topic/bot/"+key,message); // "/topic/bot/"+key 경로로 반환
 
         return answer;
     }
