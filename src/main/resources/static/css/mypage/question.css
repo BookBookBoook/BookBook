@@ -44,7 +44,14 @@ th, td {
 	padding: 10px;
 	text-align: left;
 }
+th:nth-child(1){
+	width: 480px;
+}
 
-.status {
+
+.status{
+	color: var(--main-orange);
+}
+.status-finish {
 	color: green;
 }
