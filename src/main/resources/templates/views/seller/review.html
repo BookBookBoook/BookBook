@@ -20,16 +20,18 @@
 						<label for="search">리뷰검색</label>
 						<select id="search">
 							<option>전체</option>
-							<option>고객 성명</option>
+							<option>상품코드</option>
 							<option>책 이름</option>
 						</select>
 						<input type="text" id="searchInput">
-						<button class="search-btn">검색</button>
 					</div>
 					<div class="filter-section">
 						<label for="search" class="jump2">작성기간</label>
 						<input type="date" id="startDate"> ~ <input type="date" id="endDate">
-						<button type="button" class="button">기간 설정</button>
+					</div>
+					<div class="btns">
+						<button class="search-btn">검색</button>
+						<button>초기화</button>
 					</div>
 				</div>
 			</div>
@@ -37,7 +39,6 @@
 				<table class="order-table">
 					<thead>
 						<tr>
-							<th>상세보기</th>
 							<th>리뷰번호</th>
 							<th>작성일</th>
 							<th>고객정보</th>
@@ -50,7 +51,6 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><a href="#"><button>상세보기</button></a></td>
 							<td>2</td>
 							<td>2024-08-09</td>
 							<td>이유진<br>
@@ -59,24 +59,19 @@
 							<td>키 쑥쑥 크는 방법<br>
 								상품코드 : 00001<br>
 								판매가 : 12,000
-								
+
 							</td>
 							<td><span class="stars">★★★★★</span> <br>
 								이 책을 보고 키가 10cm나 컸어요!
-								
+
 							</td>
 							<td>배송 완료</td>
 							<td>
-								<select id="search">
-									<option>관리</option>
-									<option>비공개</option>
-									<option>삭제</option>
-								</select>
+								<button>신고하기</button>
 							</td>
 
 						</tr>
 						<tr>
-							<td><a href="#"><button>상세보기</button></a></td>
 							<td>1</td>
 							<td>2024-08-09</td>
 							<td>김도영<br>
@@ -91,11 +86,7 @@
 							</td>
 							<td>배송 완료</td>
 							<td>
-								<select id="search">
-									<option>관리</option>
-									<option>비공개</option>
-									<option>삭제</option>
-								</select>
+								<button>신고하기</button>
 							</td>
 							</td>
 
@@ -105,6 +96,7 @@
 				</table>
 			</div>
 		</div>
+	</div>
 </body>
 
 </html>

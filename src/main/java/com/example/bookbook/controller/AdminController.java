@@ -75,4 +75,12 @@ public class AdminController {
 	public String adminInventoryWrite() {
 		return "views/admin/inventory-write";
 	}
+	@GetMapping("/admin/sellers/sign")
+	public String adminSellerSign() {
+		return "views/admin/sign";
+	}
+	@GetMapping("/admin/review/complain")
+	public String adminReviewComplain() {
+		return "views/admin/complain";
+	}
 }

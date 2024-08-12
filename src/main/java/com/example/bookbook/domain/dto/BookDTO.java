@@ -5,21 +5,24 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class BookDTO {
     private String title;
-    private List<String> authors;
-    private String thumbnail;
-    private int price;
-    private String contents;
-
-    private String isbn;           // ISBN
-    private String publisher;      // 출판사
-    private int salePrice;         // 판매가
-    private String status;         // 판매 상태
-    private String category;       // 카테고리
-    private String url;            // 상세 페이지 URL
-    private List<String> translators;    // 번역자 (있는 경우)
+    private String author;
+    private String publisher;
+    private String pubdate;
+    private String isbn;
+    private String description;
+    private String image;
+    
+    // 추가된 필드들
+    private String price;          // 도서 가격
+    private String discount;       // 할인 가격
+    private String category;       // 도서 카테고리
+    private String link;           // 도서 상세 정보 링크
+    private Integer page;          // 페이지 수
+    private String originalTitle;  // 원제 (번역서의 경우)
 }
