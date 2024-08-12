@@ -102,7 +102,8 @@ input {
 }
 /*로그인버튼*/
 #login-btn {
-	width: 100px;
+    width:440px;
+    height:50px;
 	background-color: #FF9040;
 	border: none;
 	color: #fff;
