@@ -8,8 +8,27 @@
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/login/address.js"></script>
 <script src="/js/login/signup.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+	
+    <script>
+    function submitAndRedirect() {
+        var form = $('#signupForm');
+        $.ajax({
+            url: '/signup/save-and-redirect',
+            type: 'POST',
+            data: form.serialize(),
+            success: function(response) {
+                window.location.href = '/signup/admin';
+            },
+            error: function(xhr, status, error) {
+                console.error("Error occurred: " + error);
+                alert("오류가 발생했습니다. 다시 시도해 주세요.");
+            }
+        });
+    }
+    </script>
 	<div class="main-signup">
 		<header>
 			<a th:href="@{/}">
@@ -20,10 +39,10 @@
 		</header>
 
 		<section class="signup-wrap">
-			<form action="/signup" method="post">
-			
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-				<div>
+			<form id="signupForm" action="/signup" method="post">
+          <input type="hidden" th:name="${_csrf != null ? _csrf.parameterName : '_csrf'}" 
+                       th:value="${_csrf != null ? _csrf.token : ''}"/>
+                   	<div>
 					<h3>이메일(ID)</h3>
 					<div class="signup-input">
 						<input id="signup-email" type="email" name="email"
@@ -67,7 +86,7 @@
 						<h3>주민등록번호</h3>
 						<div class="signup-input-ssn">
 							<input id="signup-ssn" type="text" name="userRRN"
-								placeholder="주민등록번호 (13자리)" maxlength="14" required
+								placeholder="******-*******" maxlength="14" required
 								pattern="^\d{6}-\d{7}$" title="형식: 123456-1234567">
 						</div>
 
@@ -75,7 +94,7 @@
 							<h3>휴대전화</h3>
 							<div class="signup-input-phone">
 								<input id="signup-phone" type="text" name="phoneNumber"
-									placeholder=" (예: 010-1234-5678)" maxlength="13"
+									placeholder=" (010-1234-5678)" maxlength="13"
 									pattern="01[0-9]-[0-9]{4}-[0-9]{4}" title="형식: 010-1234-5678"
 									required class="phone-part">
 							</div>
@@ -104,20 +123,17 @@
 
 						<div>
 							<div class="signup-btn-wrap">
-								<button id="signup-btn" type="submit"
-									onclick="validateForm(); return false;">가입하기</button>
-							</div>
-							<div class="publisher-signup-wrap">
-								<a th:href="@{/signup-admin}">
-									<button id="publisher-signup-btn" type="button">출판사
-										회원가입으로 전환</button>
-								</a>
-							</div>
+                        <button id="signup-btn" type="submit" onclick="validateForm(); return false;">가입하기</button>
+                    </div>
+                    <div class="publisher-signup-wrap">
+                        <button id="publisher-signup-btn" type="button" onclick="submitAndRedirect()">출판사 회원가입으로 전환</button>
+                    </div>
 						</div>
 					</div>
 				</div>
 			</form>
 		</section>
 	</div>
+
 </body>
 </html>
