@@ -20,10 +20,12 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
             Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-        if (roles.contains("ROLE_SELLER") || roles.contains("ROLE_ADMIN")) {
+        if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect("/admin");
+        } else if (roles.contains("ROLE_SELLER")) {
+            response.sendRedirect("/seller");
         } else {
-            response.sendRedirect("/");
+            response.sendRedirect("/");  // 일반 사용자의 경우 메인 페이지로
         }
     }
 }
