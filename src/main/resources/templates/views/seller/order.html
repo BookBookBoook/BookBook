@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/admin/commons.css">
+	<link rel="stylesheet" href="/css/admin/sidebar.css">
+	<script src="/js/admin/sidebar.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div style="display: flex;">
+		<th:block th:insert="~{views/seller/sidebar}" />
+		<div class="container">
+			<h1>주문 내역</h1>
+			<div class="search-box">
+				<div class="filter-section">
+					<select>
+						<option>주문번호</option>
+					</select>
+					<input type="text" placeholder="검색">
+					<button>검색</button>
+				</div>
+
+				<div class="filters">
+					<div class="filter-section">
+						<label>주문상태</label>
+						<input type="radio" name="status" checked> 전체
+						<input type="radio" name="status"> 주문
+						<input type="radio" name="status"> 입금
+						<input type="radio" name="status"> 준비
+						<input type="radio" name="status"> 배송
+						<input type="radio" name="status"> 완료
+						<input type="radio" name="status"> 전체취소
+						<input type="radio" name="status"> 부분취소
+					</div>
+					<div class="filter-section">
+						<label>결제수단</label>
+						<input type="radio" name="payment" checked> 전체
+						<input type="radio" name="payment"> 무통장
+						<input type="radio" name="payment"> 가상계좌
+						<input type="radio" name="payment"> 계좌이체
+						<input type="radio" name="payment"> 휴대폰
+						<input type="radio" name="payment"> 신용카드
+						<input type="radio" name="payment"> PG간편결제
+						<input type="radio" name="payment"> KAKAOPAY
+					</div>
+					<div class="filter-section">
+						<label>기타선택</label>
+						<input type="checkbox"> 미수금
+						<input type="checkbox"> 반품, 품절
+						<input type="checkbox"> 환불
+						<input type="checkbox"> 포인트주문
+						<input type="checkbox"> 쿠폰
+					</div>
+					<div class="filter-section">
+						<label>주문일자</label>
+						<input type="date" id="startDate"> ~ <input type="date" id="endDate">
+						<button>검색</button>
+					</div>
+				</div>
+			</div>
+			<div class="inven-box">
+				<table class="order-table">
+					<thead>
+						<tr>
+							<th><input type="checkbox"></th>
+							<th>주문번호</th>
+							<th>결제수단</th>
+							<th>운송장번호</th>
+							<th>배송정보</th>
+							<th>주문자명</th>
+							<th>주문자전화</th>
+							<th>받는분</th>
+							<th>주문상품</th>
+							<th>주문수량</th>
+							<th>주문금액</th>
+							<th>입금금액</th>
+							<th>주문취소</th>
+							<th>쿠폰</th>
+							<th>미수금</th>
+							<th>보기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>20151211-12013764</td>
+							<td>무통장</td>
+							<td>-</td>
+							<td>-</td>
+							<td>이유진</td>
+							<td>010-6225-6102</td>
+							<td>이유진</td>
+							<td>book</td>
+							<td>1건</td>
+							<td>25,000</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>25,000</td>
+							<td><a href="#">보기</a></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>20151211-12013764</td>
+							<td>무통장</td>
+							<td>-</td>
+							<td>-</td>
+							<td>이유진</td>
+							<td>010-6225-6102</td>
+							<td>이유진</td>
+							<td>book</td>
+							<td>1건</td>
+							<td>25,000</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>25,000</td>
+							<td><a href="#">보기</a></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>20151211-12013764</td>
+							<td>무통장</td>
+							<td>-</td>
+							<td>-</td>
+							<td>이유진</td>
+							<td>010-6225-6102</td>
+							<td>이유진</td>
+							<td>book</td>
+							<td>1건</td>
+							<td>25,000</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>25,000</td>
+							<td><a href="#">보기</a></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>20151211-12013764</td>
+							<td>무통장</td>
+							<td>-</td>
+							<td>-</td>
+							<td>이유진</td>
+							<td>010-6225-6102</td>
+							<td>이유진</td>
+							<td>book</td>
+							<td>1건</td>
+							<td>25,000</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>25,000</td>
+							<td><a href="#">보기</a></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>20151211-12013764</td>
+							<td>무통장</td>
+							<td>-</td>
+							<td>-</td>
+							<td>이유진</td>
+							<td>010-6225-6102</td>
+							<td>이유진</td>
+							<td>book</td>
+							<td>1건</td>
+							<td>25,000</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>25,000</td>
+							<td><a href="#">보기</a></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>20151211-12013764</td>
+							<td>무통장</td>
+							<td>-</td>
+							<td>-</td>
+							<td>이유진</td>
+							<td>010-6225-6102</td>
+							<td>이유진</td>
+							<td>book</td>
+							<td>1건</td>
+							<td>25,000</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>25,000</td>
+							<td><a href="#">보기</a></td>
+						</tr>
+						<!-- 다른 주문 항목들을 여기에 추가할 수 있습니다 -->
+					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+							<td></td>
+							<td colspan="3"></td>
+							<td colspan="3"></td>
+							<td colspan="2">5건</td>
+							<td>46,100</td>
+							<td>10,000</td>
+							<td>1,100</td>
+							<td>0</td>
+							<td>35,000</td>
+							<td></td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

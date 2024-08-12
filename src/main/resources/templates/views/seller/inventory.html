@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/admin/commons.css">
+<link rel="stylesheet" href="/css/admin/sidebar.css">
+<script src="/js/admin/sidebar.js"></script>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Product Management</title>
+
+
+</head>
+
+<body>
+	<div style="display: flex;">
+		<th:block th:insert="~{views/seller/sidebar}" />
+		<div class="container">
+			<h1>상품 관리</h1>
+			<div class="search-box">
+				<div class="search-section">
+					<div class="filter-section">
+						<label for="search" class="jump">검색분류</label>
+						<select id="search">
+							<option>상품명</option>
+						</select>
+						<input type="text" placeholder="검색어 입력">
+						<button>검색</button>
+					</div>
+
+
+					<div class="filter-section">
+						<label class="jump">상품분류</label>
+						<select>
+							<option>- 출판사 선택 -</option>
+						</select>
+						<select>
+							<option>- 장르 선택 -</option>
+						</select>
+						<select>
+							<option>- 작가 선택 -</option>
+						</select>
+					</div>
+					<div class="filter-section">
+						<label>상품등록일</label>
+						<select>
+							<option>상품등록일</option>
+						</select>
+						<input type="date" id="startDate"> ~ <input type="date" id="endDate">
+					</div>
+					<div class="filter-section">
+						<label class="jump">판매상태</label>
+						<input type="radio" name="sale" checked> 전체
+						<input type="radio" name="sale"> 판매함
+						<input type="radio" name="sale"> 판매안함
+					</div>
+
+				</div>
+				<div class="btns">
+					<button class="search-btn">검색</button>
+					<button>초기화</button>
+				</div>
+			</div>
+
+
+			<div class="inven-box">
+				<div class="action-buttons">
+					<button>삭제</button>
+					<button>상품복사</button>
+					<button>판매변경 ▼</button>
+				</div>
+
+				<table>
+					<thead>
+						<tr>
+							<th><input type="checkbox"></th>
+							<th>상품명</th>
+							<th>판매가</th>
+							<th>판매상태</th>
+							<th>바로구매 URL</th>
+							<th>상품 등록일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>테스트상품 22</td>
+							<td>10,000</td>
+							<td>판매함</td>
+							<td>
+								http://m.ectopsu1607.caf
+								<button>주소복사</button>
+								<button>SNS공유</button>
+							</td>
+							<td>2019-06-14</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>테스트상품 22</td>
+							<td>10,000</td>
+							<td>판매함</td>
+							<td>
+								http://m.ectopsu1607.caf
+								<button>주소복사</button>
+								<button>SNS공유</button>
+							</td>
+							<td>2019-06-14</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>테스트상품 22</td>
+							<td>10,000</td>
+							<td>판매함</td>
+							<td>
+								http://m.ectopsu1607.caf
+								<button>주소복사</button>
+								<button>SNS공유</button>
+							</td>
+							<td>2019-06-14</td>
+						</tr>
+						<!-- 추가 행들... -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
