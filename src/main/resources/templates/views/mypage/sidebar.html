@@ -1,8 +1,9 @@
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div class="sidebar">
     <div class="profile-section">
         <div class="profile-pic">😊</div>
         <div class="profile-info">
-            <div><b>이유진님</b></div>
+            <div sec:authorize="hasRole('ROLE_USER')"><b th:text="|${#authentication.principal.name}님|">이름</b></div>
             <div>
 	            <span class="wish">찜 <b>0 </b> </span>
 	            <span class="favorite-find"> 내 취향</span>
