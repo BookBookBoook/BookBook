@@ -1,5 +1,7 @@
 package com.example.bookbook.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.bookbook.domain.dto.BookDTO;
 import com.example.bookbook.service.BookService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,19 +30,24 @@ public class IndexController {
 		return "views/index/index.html";
 	}
 
-	// 도서목록페이지
 	@GetMapping("/bookList")
-	public String listBooks(Model model) {
-		bookservice.searchBooks("베스트셀러", model);
-		return "views/index/serchBookList.html";
-	}
+    public String listBooks(Model model) {
+		bookservice.getDefaultBooks(model);
+        return "views/index/serchBookList";
+    }
 
+	/*
+	 * @GetMapping("/search") public String search(@RequestParam("query") String
+	 * query, Model model) { bookservice.searchBooks(query, model); return
+	 * "views/index/serchBookList.html"; }
+	 */
 	@GetMapping("/search")
-	public String search(@RequestParam("query") String query, Model model) {
-		bookservice.searchBooks(query, model);
-		return "views/index/serchBookList.html";
-	}
-
+    public String searchBooks(@RequestParam String query, Model model) {
+        List<BookDTO> books = bookservice.searchBooks(query);
+        model.addAttribute("books", books);
+        return "searchResults";
+    }
+	
 	// 도서상세페이지
 	@GetMapping("/detail")
 	public String detail() {
