@@ -66,8 +66,7 @@ input, select, button {
 button {
 	background-color: white;
 	border: 1px solid #a9a9a9;
-	padding: 10px 20px;
-	border-radius: 3px;
+	padding: 7px 15px;
 }
 
 .btns {
@@ -76,12 +75,6 @@ button {
 	margin-bottom: 20px;
 }
 
-.search-btn {
-	background-color: #ccc;
-	color: white;
-	border: none;
-	
-}
 .delete-btn {
 	display:flex;
 	justify-content:flex-end;
