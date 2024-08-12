@@ -5,6 +5,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
     <link rel="stylesheet" href="/css/mypage/sidebar.css">
     <link rel="stylesheet" href="/css/mypage/favorite.css">
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    
 </head>
 <main>
     <div class="flex">
@@ -16,83 +17,72 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                 </div>
                 
                 <section class="favorite-header">
-	                <div id="chart1"></div>
-	                <div id="chart2"></div>
+                	<div class="chart-container">
+                		<div class="chart-text">
+	                		<span class="chart-name">관심있는 장르</span>
+	                		<span class="chart-info">실결제, 찜하기, 장바구니에 담은 책 기준</span>
+                		</div>
+	                	<div id="chart1" class="chart"></div>
+	                </div>
+                	<div class="chart-container">
+                		<div class="chart-text bar-chart">
+	                		<span class="chart-name">이달의 구매 현황</span>
+	                		<span class="chart-info">구매한 책의 장르</span>
+                		</div>
+	                	<div id="chart2" class="chart"></div>
+	                </div>
                 </section>
-
-                <script type="text/javascript">
-                    // 첫 번째 차트
-                    var chartDom1 = document.getElementById('chart1');
-                    var myChart1 = echarts.init(chartDom1);
-                    var option1 = {
-                        
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: '{b}: {c} ({d}%)'
-                        },
-                        legend: {
-                            orient: 'vertical',  // 범례를 수직으로 정렬
-                            left: '50%',  // 범례를 차트의 오른쪽에 위치
-                            top: 'center',  // 범례를 차트의 세로 가운데에 위치
-                            formatter: function (name) {
-                                var data = {
-                                    '문학': '1위: 소설/시/희곡 > 한국소설',
-                                    '사회과학': '2위: 사회과학 > 사회문제',
-                                    '철학': '3위: 에세이 > 사진/그림 에세이',
-                                    '어학': '4위: 소설/시/희곡 > 단편/중편소설',
-                                    '예술': '5위: 소설/시/희곡 > 프랑스소설',
-                                    '역사': '6위: 에세이 > 사진/그림 에세이'
-                                };
-                                return data[name];  // name 값에 따라 범례 항목의 내용을 설정
-                            }
-                        },
-                        series: [{
-                            //name: '예제 데이터',
-                            type: 'pie',
-                            radius: '50%',  // 원형 차트의 크기 설정
-                            center: ['25%', '50%'],
-                            label: {
-                                show: false, // 레이블을 숨김
-                                //position: 'left',
-                                //formatter: '{b}\n{d}%'  // 이름과 퍼센트를 표시
-                            },
-                            labelLine: {
-                                show: false // 레이블 라인을 숨김
-                            },
-                            data: [
-                                { value: 5, name: '문학' },
-                                { value: 20, name: '사회과학' },
-                                { value: 36, name: '철학' },
-                                { value: 10, name: '어학' },
-                                { value: 10, name: '예술' },
-                                { value: 20, name: '역사' }
-                            ]
-                        }]
-                    };
-                    myChart1.setOption(option1);
-
-                    // 두 번째 차트
-                    var chartDom2 = document.getElementById('chart2');
-                    var myChart2 = echarts.init(chartDom2);
-                    var option2 = {
-                        
-                        tooltip: {},
-                        xAxis: {
-                            data: ['문학', '사회과학', '철학', '어학', '예술', '만화']
-                        },
-                        yAxis: {
-                            interval: 5,
-                        },
-                        series: [{
-                            //name: '예제 데이터',
-                            type: 'bar',
-                            data: [5, 20, 36, 10, 10, 50]
-                        }]
-                    };
-                    myChart2.setOption(option2);
-                </script>
+                
+                <section class="wish-list">
+                	<div class="wish-text">
+                		<span class="chart-name">찜 목록</span>
+                	</div>
+                	<div class="book-grid">
+				        <div class="book-item">
+				            <img src="image1.jpg">
+				            <h3>너무나 많은 여름이</h3>
+				            <p>김안수 (지은이)</p>
+				        </div>
+				        <div class="book-item">
+				            <img src="image2.jpg">
+				            <h3>노르웨이의 시간 - 피오르와 디자이...</h3>
+				            <p>신하자 (지은이)</p>
+				        </div>
+				        <div class="book-item">
+				            <img src="image3.jpg">
+				            <h3>바깥은 여름</h3>
+				            <p>김애란 (지은이)</p>
+				        </div>
+				        <div class="book-item">
+				            <img src="image4.jpg">
+				            <h3>어쩌면 스무 번</h3>
+				            <p>권혜영 (지은이)</p>
+				        </div>
+				        <div class="book-item">
+				            <img src="image5.jpg">
+				            <h3>트로피칼 나이트</h3>
+				            <p>조예은 (지은이)</p>
+				        </div>
+				        <div class="book-item">
+				            <img src="image6.jpg">
+				            <h3>락타임, 러브, 좀비 (리커버)</h3>
+				            <p>조예은 (지은이)</p>
+				        </div>
+				        <div class="book-item">
+				            <img src="image7.jpg">
+				            <h3>제품 전시 - 지구최강 사람들이</h3>
+				            <p>제품이 누나 (지은이)</p>
+				        </div>
+				        <div class="book-item">
+				            <img src="image8.jpg">
+				            <h3>컬티시 - 정신의 언어학</h3>
+				            <p>아만다 몽텔 (지은이), 김다...</p>
+				        </div>
+				    </div>
+                </section>
             </div>
         </div>
     </div>
+    <script src="/js/mypage/favorite.js"></script>
 </main>
 </html>

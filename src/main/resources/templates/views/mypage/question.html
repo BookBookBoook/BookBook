@@ -16,7 +16,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		        </div>
 		        <div class="tabs">
 		            <button class="tab active" onclick="openTab(event, 'all')">전체</button>
-		            <button class="tab" onclick="openTab(event, 'inProgress')">답변중</button>
+		            <button class="tab" onclick="openTab(event, 'inProgress')">답변대기</button>
 		            <button class="tab" onclick="openTab(event, 'answered')">답변완료</button>
 		        </div>
 		        <div class="content">
@@ -30,7 +30,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                    <tr th:each="dto : ${list}">
 		                        <td th:text="${dto.title}">탈퇴는 어디서 하나요.</td>
 		                        <td th:text="${dto.date.toLocalDate()}">2013-04-25 10:34</td>
-		                        <td th:text="${dto.status}" class="status">답변완료</td>
+		                        <td th:if="${dto.status==1}" class="status-finish">답변완료</td>
+		                        <td th:if="${dto.status==0}" class="status">답변대기</td>
 		                    </tr>
 		                </table>
 		            </div>
@@ -41,12 +42,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>날짜</th>
 		                        <th>상태</th>
 		                    </tr>
-		                    <tr>
-		                        <td>문의 1: 답변중인 문의 내용 예시입니다.</td>
-		                        <td>2023-07-01 14:23</td>
-		                        <td>답변중</td>
+		                    <tr th:each="dto : ${list}">
+		                        <td th:if="${dto.status==0}" th:text="${dto.title}">탈퇴는 어디서 하나요.</td>
+		                        <td th:if="${dto.status==0}" th:text="${dto.date.toLocalDate()}">2013-04-25 10:34</td>
+		                        <td th:if="${dto.status==0}" class="status">답변대기</td>
 		                    </tr>
-		                    <!-- 더 많은 답변중 문의 추가 가능 -->
 		                </table>
 		            </div>
 		            <div id="answered" class="tabcontent">
@@ -56,40 +56,10 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>날짜</th>
 		                        <th>상태</th>
 		                    </tr>
-		                    <tr>
-		                        <td>여자친구를 만들어야할지 말아야할지 고민입니다.</td>
-		                        <td>2013-04-25 10:34</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>안녕하세요. 멀티사라서버의 동대륙 기자를 하고 싶습니다.</td>
-		                        <td>2013-03-01 12:09</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>11D 이벤트 당첨자입니다. HDD가 없어요;</td>
-		                        <td>2013-02-14 21:32</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>11D 이벤트 당첨자입니다. - 2</td>
-		                        <td>2013-01-31 15:26</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>오토 유져입니다.</td>
-		                        <td>2013-01-30 23:54</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>11D 이벤트 당첨자입니다.</td>
-		                        <td>2013-01-25 09:43</td>
-		                        <td class="status">답변완료</td>
-		                    </tr>
-		                    <tr>
-		                        <td>댓글 문장이 표시가 안됩니다.</td>
-		                        <td>2013-01-23 12:11</td>
-		                        <td class="status">답변완료</td>
+		                    <tr th:each="dto : ${list}">
+		                        <td th:if="${dto.status==1}" th:text="${dto.title}">탈퇴는 어디서 하나요.</td>
+		                        <td th:if="${dto.status==1}" th:text="${dto.date.toLocalDate()}">2013-04-25 10:34</td>
+		                        <td th:if="${dto.status==1}" class="status-finish">답변완료</td>
 		                    </tr>
 		                </table>
 		            </div>
