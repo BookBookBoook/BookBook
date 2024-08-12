@@ -9,6 +9,7 @@ html,body {
 
 .content{
 	width: 100%;
+	margin: 20px;
 }
 .grid-container {
 	display:grid;
@@ -16,7 +17,6 @@ html,body {
 	grid-template-rows: 1fr 1fr;
 	height: 100%;
 	width: 100%;
-	/* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
 	position:relative;
 	grid-gap: 20px;
 	

@@ -20,7 +20,6 @@
 					<label>검색</label>
 
 					<input type="text" placeholder="검색">
-					<button>검색</button>
 				</div>
 
 				<div class="filters">
@@ -34,11 +33,16 @@
 					<div class="filter-section">
 						<label>등록일자</label>
 						<input type="date" id="startDate"> ~ <input type="date" id="endDate">
-						<button>검색</button>
+					</div>
+					<div class="btns">
+						<button class="search-btn">검색</button>
+						<button>초기화</button>
 					</div>
 				</div>
 			</div>
 			<div class="inven-box">
+				<button>삭제</button>
+				<button>비활성화</button>
 				<table class="order-table">
 					<thead>
 						<tr>
@@ -63,9 +67,6 @@
 						</tr>
 
 				</table>
-				<div class="delete-btn">
-				<button>삭제</button>
-				</div>
 			</div>
 		</div>
 	</div>

@@ -22,7 +22,7 @@ public class SellerController {
 	public String sellerInventoryWrite() {
 		return "views/seller/inventory-write";
 	}
-	@GetMapping("/seller/exchange")
+	@GetMapping("/seller/order/exchange")
 	public String sellerExchange() {
 		return "views/seller/exchange";
 	}
@@ -31,7 +31,7 @@ public class SellerController {
 	public String sellerOrder() {
 		return "views/seller/order";
 	}
-	@GetMapping("/seller/refund")
+	@GetMapping("/seller/order/refund")
 	public String sellerRefund() {
 		return "views/seller/refund";
 	}
@@ -43,4 +43,13 @@ public class SellerController {
 	public String sellerReview() {
 		return "views/seller/review";
 	}
+	@GetMapping("/seller/user")
+	public String sellerUser() {
+		return "views/seller/users";
+	}
+	@GetMapping("/seller/user/detail")
+	public String sellerDetail() {
+		return "views/seller/users-detail";
+	}
+	
 }

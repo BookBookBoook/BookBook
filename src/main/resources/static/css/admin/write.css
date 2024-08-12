@@ -79,15 +79,6 @@ td textarea {
 	
 }
 
-button {
-	background-color:#ff9040;
-	color: white;
-	padding: 10px 20px;
-	border-radius: 3px;
-	border: none;
-}
-
-
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -158,9 +149,9 @@ td textarea {
 }
 
 button {
-	background-color:#ff9040;
-	color: white;
+	background-color:white;
+	color: #333;
 	padding: 10px 20px;
 	border-radius: 3px;
-	border: none;
+	
 }

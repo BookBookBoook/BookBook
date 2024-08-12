@@ -34,7 +34,7 @@ body {
 .sidebar ul {
     list-style-type: none;
     padding: 0;
-    padding-left: 20px;
+    
 }
 
 .sidebar ul li {
@@ -53,32 +53,27 @@ body {
     padding: 10px;
     border-radius: 5px;
     transition: background-color 0.3s;
+    padding-left: 20px;
 }
 
-.sidebar ul li a:hover, .sidebar ul li a.active {
+.sidebar ul li a:hover{
     background-color: #555;
 }
 
-.content {
-    flex: 1;
-    padding: 20px;
-    max-width: calc(100% - 250px); 
-    margin-left: auto; 
-}
 
 .user-info {
 	display: flex;
 }
 
-.user-info p {
-	margin-right: 10px;
+.user-info a,.user-info p {
+	margin: 20px;
 	font-size: 18px;
 	font-weight: bold;
 	color: white;
+	text-decoration: none;
 }
 
-.user-info>p:first-of-type {
-	margin-left: 20px;
+.user-info>a:first-of-type , .user-info p:first-of-type {
 	flex-grow: 1;
 }
 
@@ -93,4 +88,14 @@ body {
 	display: none;
 	list-style: none;
 	margin:20px;
+}
+
+.logout {
+	position: fixed;
+	bottom: 20px;
+	left:20px;
+}
+
+.logout img {
+	width:30%;
 }
