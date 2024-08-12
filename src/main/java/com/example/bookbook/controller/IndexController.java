@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
 	
 	//책 서비스
-	private final BookService bookService;
+	/* private final BookService bookService; */
 	
 	//메인페이지 이동
 	@GetMapping
@@ -25,18 +25,20 @@ public class IndexController {
 		return "views/index/index.html";
 	}
 	
-	//검색페이지
-	@GetMapping("/search")
-	public String searchBooks(@RequestParam String query,int page,int size, Model model) {
-		bookService.searchBooks(query,page,size,model);
-		return "views/index/searchResults";
-	}
+	/*
+	 * //검색페이지
+	 * 
+	 * @GetMapping("/search") public String searchBooks(@RequestParam String
+	 * query,int page,int size, Model model) {
+	 * bookService.searchBooks(query,page,size,model); return
+	 * "views/index/searchResults"; }
+	 */
 	//검색
 	
 	//도서목록페이지
 	@GetMapping("/bookList")
 	public String listBooks(Model model) {
-		bookService.getAllBooks(model);
+		/* bookService.getAllBooks(model); */
 		return "views/index/bookList.html";
 	}
 	//도서상세페이지

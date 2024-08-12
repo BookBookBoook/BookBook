@@ -45,7 +45,7 @@ function validatePublisherForm() {
 
   // 계좌 번호 유효성 검사
   var accountNumberInput = document.getElementById("account-number");
-  var accountNumberPattern = /^\d{2,20}$/;
+  var accountNumberPattern = /^\d{1,4}(-\d{1,4}){0,4}$/;
   if (!accountNumberPattern.test(accountNumberInput.value)) {
     alert("계좌 번호는 숫자만 2~20자 이내로 입력할 수 있습니다.");
     accountNumberInput.focus();

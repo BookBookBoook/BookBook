@@ -1,13 +1,13 @@
 function validateForm() {
 	
-  // 이메일 유효성 검사
-  var emailInput = document.getElementById("signup-email");
-  var emailPattern = /^.+@.+\..+$/;
-  if (emailInput.value !== "" && !emailPattern.test(emailInput.value)) {
-    alert("이메일 형식이 올바르지 않습니다.");
-    emailInput.focus();
-    return false;
-  }
+	// 이메일 유효성 검사
+	var emailInput = document.getElementById("signup-email");
+	var emailPattern = /^.+@.+\..+$/;
+	if (emailInput.value !== "" && !emailPattern.test(emailInput.value)) {
+	    alert("이메일 형식이 올바르지 않습니다.");
+	    emailInput.focus();
+	    return false;
+	}
 
   // 비밀번호 유효성 검사
   var pwInput = document.getElementById("signup-pw");
@@ -29,7 +29,7 @@ function validateForm() {
 
   // 생년월일 유효성 검사
   var birthInput = document.getElementById("signup-birth");
-  var birthPattern = /^\d{4}-\d{2}-\d{2}$/;
+  var birthPattern = /^(19|20)\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
   if (!birthPattern.test(birthInput.value)) {
     alert("생년월일 형식이 올바르지 않습니다.");
     birthInput.focus();

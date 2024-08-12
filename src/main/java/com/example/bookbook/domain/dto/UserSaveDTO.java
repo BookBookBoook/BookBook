@@ -2,8 +2,11 @@ package com.example.bookbook.domain.dto;
 
 
 
+import java.util.Set;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.bookbook.domain.entity.Role;
 import com.example.bookbook.domain.entity.UserEntity;
 
 import lombok.Setter;
@@ -25,7 +28,7 @@ public class UserSaveDTO {
     private String address; // 주소
     private String extraAddress; // 참고항목
     private String detailAddress; // 상세주소
-	private String role;
+
 	
 	public UserEntity toEntity(PasswordEncoder pe) {
 		return UserEntity.builder()
