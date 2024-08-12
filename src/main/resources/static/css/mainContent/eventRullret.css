@@ -6,10 +6,23 @@
 	font-weight: normal;
 	font-style: normal;
 }
+.text{text-align: center; font-size: 16px; margin: 0 auto; color: #000; top:10px;}
+
+.backGC {
+	
+    background-image: url("/img/cupon/roulette_bg.png");
+    width: 80%;
+    margin: 0 auto;
+    height:1243px;
+    background-size: cover; /* 이미지가 컨테이너를 덮도록 */
+    background-position: center; /* 이미지를 중앙에 위치 */
+}
+
 
 #wrap {
-	padding:50px;
-	background-color:black;
+	text-align:center;
+	margin: 0 auto;
+	padding: 0 50px;
 	position: relative;
 	overflow: hidden;
 }
@@ -28,19 +41,15 @@
 
 #wrap #gameContainer .board_start {
 	padding: 10px;
-	background: #f00;
-	text-align: center;
-	vertical-align: middle;
 	line-height: 150px;
-	border: 1px solid #000;
 	color: #fff;
-	background: #f00;
+	background: #ff9040;
 	text-align: center;
 	vertical-align: middle;
 	font-weight: bold;
 	position: absolute;
-	left: 165px;
-	top: 210px;
+	left: 168px;
+	top: 590px;
 	z-index: 9;
 	width: 150px;
 	border-radius: 100px;
@@ -65,7 +74,7 @@
 #wrap #gameContainer .board_on {
 	width: 508px;
 	height: 508px;
-	top: 40px;
+	top: 430px;
 	left: 0px;
 	z-index: 3;
 	background-image:
