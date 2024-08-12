@@ -17,54 +17,79 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/inventory")
-	public String inventory() {
+	public String adminInventory() {
 		return "views/admin/inventory";
 	}
 	
 	@GetMapping("/admin/order")
-	public String order() {
+	public String adminOrder() {
 		return "views/admin/order";
 	}
 	
 	@GetMapping("/admin/order/refund")
-	public String orderRefund() {
+	public String adminOrderRefund() {
 		return "views/admin/refund";
 	}
 	
 	@GetMapping("/admin/order/exchange")
-	public String orderexchange() {
+	public String adminOrderExchange() {
 		return "views/admin/exchange";
 	}
 	
 	
 	@GetMapping("/admin/users")
-	public String user() {
+	public String adminUser() {
 		return "views/admin/users";
 	}
 	
 	@GetMapping("/admin/users/detail")
-	public String userDetail() {
+	public String adminUserDetail() {
 		return "views/admin/users-detail";
 	}
 	
 	@GetMapping("/admin/sellers")
-	public String seller() {
+	public String adminSeller() {
 		return "views/admin/sellers";
 	}
 	
 	@GetMapping("/admin/sellers/detail")
-	public String sellerDetail() {
+	public String adminSellerDetail() {
 		return "views/admin/sellers-detail";
 	}
 	
-	@GetMapping("/admin/sellers/inventory/write")
-	public String sellerwrite() {
-		return "views/admin/write";
-	}
+	
 	
 	@GetMapping("/admin/review")
-	public String review() {
+	public String adminReview() {
 		return "views/admin/review";
 	}
 	
+	@GetMapping("/admin/inquiry")
+	public String adminInquiry() {
+		return "views/admin/inquiry";
+	}
+	
+	@GetMapping("/admin/inquiry/list")
+	public String adminInquiryList() {
+		return "views/admin/inquiry-list";
+	}
+	
+	@GetMapping("/admin/inquiry/write")
+	public String adminInquiryWrite() {
+		return "views/admin/inquiry-write";
+	}
+	
+	@GetMapping("/admin/promotion")
+	public String adminPromotion() {
+		return "views/admin/promotion";
+	}
+	
+	@GetMapping("/admin/promotion/write")
+	public String adminPromotionWrite() {
+		return "views/admin/promotion-write";
+	}
+	@GetMapping("/admin/inventory/write")
+	public String adminInventoryWrite() {
+		return "views/admin/inventory-write";
+	}
 }
