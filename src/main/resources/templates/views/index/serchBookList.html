@@ -44,7 +44,7 @@
 								<input type="checkbox" class="bookCheckbox">
 							</div>
 							<div class="bookImg">
-								<img th:alt="${book.title}" th:src="${book.thumbnail}"
+								<img th:alt="${book.title}" th:src="${book.image}"
 									name="thumbnail"> <span><a href="/detail">새창보기</a></span>
 								<span class="chang"><a href="/detail">미리보기</a></span>
 							</div>
@@ -53,11 +53,11 @@
 									<a href="/detail" name="title" th:text="${book.title}"></a>
 								</h3>
 								<h4>
-									<a href="/detail" name="authors"
-										th:text="${#strings.listJoin(book.authors, ', ')}"></a>
+									<a href="/detail" name="authors" th:text="${book.author}"></a>
 								</h4>
-								<h5 name="price" th:text="${book.price + '원'}"></h5>
-								<h6 name="content" th:text="${book.contents}"></h6>
+								<h5 name="price"
+									th:text="${book.price != null ? book.price + '원' : '가격 정보 없음'}"></h5>
+								<h6 name="content" th:text="${book.description}"></h6>
 							</div>
 							<div>
 								<p>당일배송</p>
