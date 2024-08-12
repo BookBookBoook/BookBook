@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/admin/detail.css">
+	<link rel="stylesheet" href="/css/admin/commons.css">
+	<link rel="stylesheet" href="/css/admin/sidebar.css">
+	<script src="/js/admin/sidebar.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div style="display: flex;">
+		<th:block th:insert="~{views/seller/sidebar}" />
+		<div class="container">
+			<h1>출판사 상세 정보</h1>
+			<div class="profile-container">
+				<div class="profile-header">
+					<div class="info-pic">
+
+					</div>
+					<div class="profile-details">
+
+						<h2>북북 출판사</h2>
+						<p class="ID">bookbook001</p>
+					</div>
+				</div>
+				<div class="selection-info">
+					<h2>출판사 정보</h2>
+					<div class="info-item">
+						<label>대표자명</label>
+						<p>김북북</p>
+					</div>
+					<div class="info-item">
+						<label>사업자 등록번호</label>
+						<p>000-00-00000</p>
+					</div>
+					<div class="info-item">
+						<label>담당자 이름</label>
+						<p>박북북</p>
+					</div>
+					<div class="info-item">
+						<label>연락처</label>
+						<p>02-000-0000</p>
+					</div>
+					<div class="info-item">
+						<label>팩스번호</label>
+						<p>050-0000-0000</p>
+					</div>
+					<div class="info-item">
+						<label>이메일</label>
+						<p>test01@test.com</p>
+					</div>
+					<div class="info-item">
+						<label>주소</label>
+						<p>우어어어으어응어어엉</p>
+					</div>
+					<div class="info-item">
+						<label>계약일</label>
+						<p>2024-08-08</p>
+					</div>
+					<h2>매출 정보</h2>
+					<div class="info-item">
+						<label>정산 예정 금액</label>
+						<p>4,500,000</p>
+					</div>
+					<div class="info-item">
+						<label>정산 예정 금액</label>
+						<p>4,500,000</p>
+					</div>
+					<div class="info-item">
+						<label>매출 현황</label>
+						<p>50,000,000</p>
+					</div>
+					<div class="info-item">
+						<label>총 정산 금액</label>
+						<p>45,500,000</p>
+					</div>
+					<div class="info-item">
+						<label>정산대금 입금계좌</label>
+						<p>NH농협 000000-00-000000 (예금주:김북북)</p>
+					</div>
+				</div>
+				<div class="account-link">
+
+				</div>
+				<div class="account-delete">
+					<button class="delete-account-button">비활성화</button>
+					<button class="delete-account-button">계정 삭제</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
