@@ -1,3 +1,4 @@
+/*
 package com.example.bookbook.service.bot.impl;
 
 import org.modelmapper.ModelMapper;
@@ -41,7 +42,7 @@ public class ChatbotService {
     	question=question.user(user);
     	System.out.println("Question>>>>:"+question);
         //questionRepository.save(question);
-       //*
+       /
         // #2
         MessageDTO analysisResult = komoranService.nlpAnalyze(questionDTO.getContent());
         System.out.println("?>>>>:"+analysisResult);
@@ -55,7 +56,7 @@ public class ChatbotService {
 
         // #4
        
-        //*/
+        //
         AnswerDTO answerDTO=modelMapper.map(answer, AnswerDTO.class);
         return answerDTO.name(user.getUserName());
     }
@@ -72,3 +73,4 @@ public class ChatbotService {
     }
     
 }
+*/
