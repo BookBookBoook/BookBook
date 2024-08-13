@@ -38,7 +38,7 @@ public class SellerEntity {
     private String bank;
 
     @Column(nullable = false)
-    private String account;  // Changed from long to String
+    private String account; 
 
     @Column(nullable = false)
     private String accountHolder;

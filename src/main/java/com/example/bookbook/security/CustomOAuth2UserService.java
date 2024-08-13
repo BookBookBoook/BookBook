@@ -79,6 +79,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	                .address("미입력")
 	                .extraAddress("미입력")
 	                .detailAddress("미입력")
+	                .status(0L)
 	                .build()
 	                .addRole(Role.USER);
 
