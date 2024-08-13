@@ -26,13 +26,14 @@ public class IndexController {
 
 	// 메인페이지 이동
 	@GetMapping
-	public String main() {
+	public String main(Model model) {
+		bookservice.getDefaultBooks(model);
 		return "views/index/index.html";
 	}
 
 	@GetMapping("/bookList")
 	public String listBooks(Model model) {
-		bookservice.getDefaultBooks(model);
+		bookservice.getBookList(model);
 		return "views/index/serchBookList";
 	}
 
