@@ -1,5 +1,6 @@
 package com.example.bookbook.service.impl;
 
+import java.io.StringReader;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -21,10 +22,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.bookbook.domain.dto.BookDTO;
+import com.example.bookbook.domain.dto.BookSearchResponse;
+import com.example.bookbook.domain.dto.BookSearchResponse.Item;
 import com.example.bookbook.domain.dto.BookSlide;
 import com.example.bookbook.domain.dto.NaverBookItem;
 import com.example.bookbook.domain.dto.NaverBookResponse;
 import com.example.bookbook.service.BookService;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 
 @Service
 public class BookServiceProcess implements BookService {
@@ -191,21 +198,58 @@ public class BookServiceProcess implements BookService {
 	}
 
 	@Override
-	public BookDTO getBookByIsbn(String isbn) {
+	public Item getBookByIsbn(String isbn) {
+
+		// 네이버 도서 검색 API에 요청할 URL을 ISBN 값과 함께 구성
+		String url = "https://openapi.naver.com/v1/search/book_adv.xml?d_isbn=" + isbn;
+
+		// RestTemplate 객체를 생성하여 HTTP 요청을 보내기 위한 준비
 		RestTemplate restTemplate = new RestTemplate();
+
+		// 요청 헤더 설정을 위한 HttpHeaders 객체 생성
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("X-Naver-Client-Id", clientId);
-		headers.set("X-Naver-Client-Secret", clientSecret);
+		headers.set("X-Naver-Client-Id", clientId); // 네이버 API의 클라이언트 ID 설정
+		headers.set("X-Naver-Client-Secret", clientSecret); // 네이버 API의 클라이언트 시크릿 설정
 
-		String url = NAVER_BOOK_API_URL + "?query=isbn:" + isbn;
+		// HttpEntity 객체를 생성하여 헤더를 포함한 요청 엔티티 생성
+		HttpEntity<String> entity = new HttpEntity<>(headers);
 
-		ResponseEntity<NaverBookResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
-				new HttpEntity<>(headers), NaverBookResponse.class);
+		// RestTemplate을 사용하여 네이버 API에 GET 요청을 보내고 응답을 받음
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
-		NaverBookResponse response = responseEntity.getBody();
-		if (response != null && !response.getItems().isEmpty()) {
-			return convertToBookDTO(response.getItems().get(0));
+		// 응답 상태 코드가 2xx (성공) 인지 확인
+		if (response.getStatusCode().is2xxSuccessful()) {
+		    // 응답 본문(XML 형식)을 문자열로 가져옴
+		    String xmlResponse = response.getBody();
+		    try {
+		        // JAXBContext를 생성하여 XML 데이터를 Java 객체로 변환하기 위한 설정
+		        JAXBContext jaxbContext = JAXBContext.newInstance(BookSearchResponse.class);
+		        // Unmarshaller 객체를 생성하여 XML을 Java 객체로 변환
+		        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+		        // StringReader를 사용하여 XML 문자열을 읽어들이고, BookSearchResponse 객체로 변환
+		        StringReader reader = new StringReader(xmlResponse);
+		        BookSearchResponse bookSearchResponse = (BookSearchResponse) unmarshaller.unmarshal(reader);
+		        return bookSearchResponse.getChannel().getItems().get(0);
+		        /*
+		        // 변환된 BookSearchResponse 객체에서 각 도서 항목을 반복하여 출력
+		        for (BookSearchResponse.Item item : bookSearchResponse.getChannel().getItems()) {
+		            System.out.println("Title: " + item.getTitle()); // 도서 제목 출력
+		            System.out.println("Author: " + item.getAuthor()); // 저자 출력
+		            System.out.println("Publisher: " + item.getPublisher()); // 출판사 출력
+		            // 필요한 다른 필드도 출력 가능
+		        }
+		        */
+
+		    } catch (JAXBException e) {
+		        // XML 변환 과정에서 발생한 예외 처리
+		        e.printStackTrace();
+		    }
+		} else {
+		    // 응답이 2xx가 아닌 경우, 실패한 상태 코드 출력
+		    System.out.println("Request failed with status code: " + response.getStatusCode());
 		}
+
 		return null;
 	}
 
