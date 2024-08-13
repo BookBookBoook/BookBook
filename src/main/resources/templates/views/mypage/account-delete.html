@@ -21,10 +21,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
             <div class="container-main">
 		        <div class="head">
 		            <h1>회원탈퇴</h1>
-		            <div class="header-buttons">
+		            <form class="header-buttons" action="/logout" method="post">
+		            	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 		                <button class="header-button">로그아웃</button>
-		                <button class="header-button">회원정보</button>
-		            </div>
+		                <button type="button" class="header-button" onclick="window.location.href='/mypage/account';">회원정보</button>
+		            </form>
 		        </div>
 		
 		        <section class="info-section">
@@ -52,7 +53,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		
 		            <div class="info-box flex between">
 		                <h2>탈퇴 관련 문의가 있으시면 1:1 문의를 이용해 주세요.</h2>
-		                <button class="auth-button">1:1 문의하기</button>
+		                <button class="auth-button" onclick="window.location.href='/mypage/questions';">1:1 문의하기</button>
 		            </div>
 		
 		            <div class="info-box">
