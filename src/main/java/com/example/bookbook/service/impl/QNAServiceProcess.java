@@ -30,15 +30,21 @@ public class QNAServiceProcess implements QNAService{
 
 	@Override
 	public void findProcess(Model model, long qnaNum) {
-		List<QNADTO> qnas = qnaMapper.findQna(qnaNum);
-		List<QNAAnswerDTO> answers = qnaMapper.findAnswer(qnaNum);
-		model.addAttribute("qnas", qnas);
-		model.addAttribute("answers", answers);
+		QNADTO qna = qnaMapper.findQna(qnaNum);
+		QNAAnswerDTO answer = qnaMapper.findAnswer(qnaNum);
+		model.addAttribute("qna", qna);
+		model.addAttribute("answer", answer);
 	}
 	
 	@Override
 	public void saveProcess(QNACreateDTO dto) {
 		qnaMapper.save(dto);
+	}
+
+	@Override
+	public void deleteProcess(long qnaNum) {
+		qnaMapper.deleteAnswer(qnaNum);
+		qnaMapper.deleteQna(qnaNum);
 	}
 
 
