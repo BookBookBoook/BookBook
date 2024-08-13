@@ -8,24 +8,51 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import com.example.bookbook.domain.entity.UserEntity;
+import com.example.bookbook.domain.repository.UserEntityRepository;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	
-	@Override
+	private final UserEntityRepository userRepository;
+
+    @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+        if (authentication.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            UserEntity user = userDetails.getUser();
 
-        if (roles.contains("ROLE_ADMIN")) {
-            response.sendRedirect("/admin");
-        } else if (roles.contains("ROLE_SELLER")) {
-            response.sendRedirect("/seller");
+            Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+
+            if (isAdditionalInfoNeeded(user)) {
+                response.sendRedirect("/additional-info");
+            } else if (roles.contains("ROLE_ADMIN")) {
+                response.sendRedirect("/admin");
+            } else if (roles.contains("ROLE_SELLER")) {
+                response.sendRedirect("/seller");
+            } else {
+                response.sendRedirect("/"); // 일반 사용자의 경우 메인 페이지로
+            }
         } else {
-            response.sendRedirect("/");  // 일반 사용자의 경우 메인 페이지로
+            response.sendRedirect("/");
         }
+    }
+
+    private boolean isAdditionalInfoNeeded(UserEntity user) {
+        return user.getUserRRN().equals("소셜로그인") ||
+                user.getGender().equals("미입력") ||
+                user.getPhoneNumber().equals("미입력") ||
+                user.getBirthDate().equals("미입력") ||
+                user.getPostcode().equals("미입력") ||
+                user.getAddress().equals("미입력") ||
+                user.getExtraAddress().equals("미입력") ||
+                user.getDetailAddress().equals("미입력");
     }
 }
