@@ -17,4 +17,26 @@
 		values (#{dto.userId}, #{dto.title}, #{dto.content}, #{dto.qnaType}, current_timestamp)
 	</insert>
 	
+	<select id="findQna" parameterType="long" resultType="com.example.bookbook.domain.dto.QNADTO">
+		select *
+		from qna
+		where qna_num = #{qnaNum}
+	</select>
+	
+	<select id="findAnswer" parameterType="long" resultType="com.example.bookbook.domain.dto.QNAAnswerDTO">
+		select *
+		from qna_answer
+		where qna_num = #{qnaNum}
+	</select>
+	
+	<delete id="deleteAnswer" parameterType="long">
+		delete from qna_answer
+		where qna_num = #{qnaNum};
+	</delete>
+	
+	<delete id="deleteQna" parameterType="long">
+		delete from qna
+		where qna_num = #{qnaNum};
+	</delete>
+	
 </mapper>

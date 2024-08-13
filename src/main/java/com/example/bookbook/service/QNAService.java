@@ -13,4 +13,6 @@ public interface QNAService {
 
 	void findProcess(Model model, long qnaNum);
 
+	void deleteProcess(long qnaNum);
+
 }
