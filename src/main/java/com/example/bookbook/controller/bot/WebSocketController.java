@@ -1,3 +1,4 @@
+/*
 package com.example.bookbook.controller.bot;
 
 import java.text.MessageFormat;
@@ -14,6 +15,7 @@ import com.example.bookbook.service.bot.impl.ChatbotService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
+
 @RequiredArgsConstructor
 public class WebSocketController {
 
@@ -27,12 +29,12 @@ public class WebSocketController {
     	// QuestionDTO에서 userId 필드를 가져옴
        // Long userId = questionDTO.getUserId();
 
-        /*
+        
         // userId를 사용하여 데이터베이스나 다른 서비스에서 userName을 조회
         // 예를 들어, userService를 통해 조회할 수 있음 (이 부분은 서비스 로직에 따라 구현)
-        String userName = UserService.getUserNameById(userId);
+        //String userName = UserService.getUserNameById(userId);
         //userServiceProcess 라면 위에 서비스명 수정
-        */
+        
     	
         // 사용자의 질문을 Komoran을 통해 분석하고 결과를 반환
         AnswerDTO answer = chatbotService.processUserQuestion(questionDTO);
@@ -50,3 +52,4 @@ public class WebSocketController {
         return answer;
     }
 }
+*/

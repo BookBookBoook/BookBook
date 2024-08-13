@@ -1,3 +1,4 @@
+/*
 package com.example.bookbook.controller.bot;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -17,23 +18,23 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class ChatBotController {
-	/*
-	private final RabbitTemplate template;
-	*/
-	private final ChatbotService chatbotService;
-	/*
-	@Value("${spring.rabbitmq.template.exchange}")
-	private String exchange;
 	
-	@Value("${spring.rabbitmq.template.routing-key}")
-	private String routingKey;
+	//private final RabbitTemplate template;
 	
+	//private final ChatbotService chatbotService;
+	//
+	//@Value("${spring.rabbitmq.template.exchange}")
+	//private String exchange;
+	//
+	//@Value("${spring.rabbitmq.template.routing-key}")
+	//private String routingKey;
+	//
 	// /message/bot
-	@MessageMapping("/bot")
-	public void bot(Question dto) {
-		template.convertAndSend(exchange, routingKey, dto);
-	}
-	*/
+	//@MessageMapping("/bot")
+	//public void bot(Question dto) {
+	//	template.convertAndSend(exchange, routingKey, dto);
+	//}
+	
 	
     @PostMapping("/ask")
     public AnswerDTO askQuestion(@RequestBody QuestionDTO questionDTO) {
@@ -42,3 +43,4 @@ public class ChatBotController {
     }
 	
 }
+*/
