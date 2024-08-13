@@ -11,7 +11,7 @@ public interface BookService {
 	//void searchBooks(String string, Model model);
 
 
-	void getDefaultBooks(Model model);
+	void getBookList(Model model);
 
 
 	//List<BookDTO> searchBooks(String query);
@@ -19,6 +19,11 @@ public interface BookService {
 	BookDTO getBookByIsbn(String isbn);
 
 	void searchBooks(String query, Model model);
+
+
+	void getDefaultBooks(Model model);
+
+
 
 
 
