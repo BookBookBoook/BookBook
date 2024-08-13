@@ -31,7 +31,6 @@ header, main {
 	font-weight: 500;
 }
 
-/*헤더 - 중  */
 .containers {
 	margin-bottom: 20px;
 	display: flex;
@@ -49,23 +48,19 @@ header, main {
 	align-items: center;
 	justify-content: center;
 	border: 1.5px solid var(--main-orange);
-	border-radius: 25px; /* 타원형 모양을 위해 border-radius를 크게 설정 */
+	border-radius: 25px;
 	padding: 5px 10px;
 	width: 550px;
 	height: 40px;
-	margin: 0 30px;
-	flex-grow: 1;
-	margin-top: 10px;
-	background-color: white;
 	margin: 0 20px;
+	flex-grow: 1;
+	background-color: white;
 }
 
 .search-container form {
 	display: flex;
 	align-items: center;
-	background-color: #fff;
-	border-radius: 20px;
-	padding: 5px 10px;
+	width: 100%;
 }
 
 .search-container select, .search-container input[type="text"],
@@ -82,44 +77,27 @@ header, main {
 .search-container input[type="text"] {
 	flex-grow: 1;
 	padding: 5px;
+	width: 350px;
+	margin-right: 10px;
 }
 
 .search-container button {
 	cursor: pointer;
 	padding: 5px;
-}
-
-.search-tull .section select {
+	background: none;
 	border: none;
-	outline: none;
-	padding: 5px;
-	margin-right: 10px;
-	border-radius: 25px; /* 타원형 모양을 위해 border-radius를 설정 */
-}
-
-.search-container input {
-	width: 350px;
-	flex-grow: 1;
-	border: none;
-	outline: none;
-	padding: 5px;
-	border-radius: 25px; /* 타원형 모양을 위해 border-radius를 설정 */
-	margin-right: 10px;
-	flex-grow: 1;
 }
 
 .search-container i {
 	cursor: pointer;
-	margin-left: 40px;
-	margin-top: 3px;
-	color: #ff9040;
+	color: var(--main-orange);
 	font-size: 22px;
 }
 
 .header-middle-right ul {
 	list-style: none;
 	display: flex;
-	margin: 0;
+	margin-left: 310px;
 	padding: 0;
 }
 
