@@ -20,7 +20,4 @@ public class BookDTO {
     private String link;            // 상세 정보 URL
     private String discount;        // 판매가
     private String category;        // 카테고리 정보 (선택적)
-
-    // 필요에 따라 추가 필드
-    private String originalTitle;   // 원제 (번역서의 경우, 선택적)
 }
