@@ -42,6 +42,9 @@ public class QNAEntity {
 	@Column(nullable = false)
 	private String content; 
 	
+	@Column(nullable = false)
+	private String qnaType; //상품, 배송, 오류
+	
 	@CreationTimestamp
 	@Column(columnDefinition = "timestamp")
 	private LocalDateTime date;
