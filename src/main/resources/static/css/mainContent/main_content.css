@@ -64,7 +64,6 @@
 .book-slider-container {
     width: 100%;
     max-width: 1200px;
-    height: 500px;
     position: relative;
     margin: 0 auto;
     overflow: hidden;
@@ -117,10 +116,12 @@
     font-size: 14px;
     text-align: center;
 }
+.book-prev{left: 300px;}
+.book-next{right:300px;}
 
 .book-prev, .book-next {
     position: absolute;
-    top: 50%;
+    top: 105%;
     transform: translateY(-50%);
     background: rgba(0,0,0,0.5);
     color: white;
@@ -134,6 +135,3 @@
 .book-prev:hover, .book-next:hover {
     background: rgba(0,0,0,0.8);
 }
-
-.book-prev { left: 10px; }
-.book-next { right: 10px; }
