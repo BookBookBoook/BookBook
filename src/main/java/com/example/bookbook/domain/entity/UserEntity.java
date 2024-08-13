@@ -89,5 +89,4 @@ public class UserEntity {
     public void setSeller(SellerEntity seller) {
         this.seller = seller;
     }
-	
 }
