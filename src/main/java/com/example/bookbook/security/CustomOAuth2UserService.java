@@ -44,10 +44,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	            return oAuth2User.getAttribute("email");
 	        } else if ("naver".equals(registrationId)) {
 	            Map<String, Object> response = oAuth2User.getAttribute("response");
-	            return (String) response.get("email");
+	            return String.valueOf(response.get("email"));
 	        } else if ("kakao".equals(registrationId)) {
 	            Map<String, Object> kakaoAccount = oAuth2User.getAttribute("kakao_account");
-	            return (String) kakaoAccount.get("email");
+	            return String.valueOf(kakaoAccount.get("email"));
 	        }
 	        throw new OAuth2AuthenticationException("Unsupported registration ID");
 	    }
@@ -57,11 +57,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	            return oAuth2User.getAttribute("name");
 	        } else if ("naver".equals(registrationId)) {
 	            Map<String, Object> response = oAuth2User.getAttribute("response");
-	            return (String) response.get("name");
+	            return String.valueOf(response.get("name"));
 	        } else if ("kakao".equals(registrationId)) {
 	            Map<String, Object> kakaoAccount = oAuth2User.getAttribute("kakao_account");
 	            Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
-	            return (String) profile.get("nickname");
+	            return String.valueOf(profile.get("nickname"));
 	        }
 	        throw new OAuth2AuthenticationException("Unsupported registration ID");
 	    }
