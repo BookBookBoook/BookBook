@@ -19,59 +19,69 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-	private final PasswordEncoder passwordEncoder;
-    private final UserEntityRepository userRepository;
+	 private final PasswordEncoder passwordEncoder;
+	    private final UserEntityRepository userRepository;
 
-    @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oAuth2User = super.loadUser(userRequest);
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+	    @Override
+	    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+	        OAuth2User oAuth2User = super.loadUser(userRequest);
+	        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+	        return processSocialLogin(oAuth2User, registrationId);
+	    }
 
-        return socialUser(oAuth2User, registrationId);
-    }
+	    private OAuth2User processSocialLogin(OAuth2User oAuth2User, String registrationId) {
+	        String email = extractEmail(oAuth2User, registrationId);
+	        String name = extractName(oAuth2User, registrationId);
 
-    private OAuth2User socialUser(OAuth2User oAuth2User, String registrationId) {
-        final String[] email = {null};
-        final String[] name = {null};
+	        UserEntity user = userRepository.findByEmail(email)
+	                .orElseGet(() -> createSocialUser(email, name));
 
-        if (registrationId.equals("google")) {
-            email[0] = oAuth2User.getAttribute("email");
-            name[0] = oAuth2User.getAttribute("name");
-        } else if (registrationId.equals("naver")) {
-            Map<String, Object> response = oAuth2User.getAttribute("response");
-            email[0] = (String) response.get("email");
-            name[0] = (String) response.get("name");
-        } else if (registrationId.equals("kakao")) {
-            Map<String, Object> response = oAuth2User.getAttribute("kakao_account");
-            @SuppressWarnings("unchecked")
-            Map<String, Object> profile = (Map<String, Object>) response.get("profile");
-            email[0] = (String) response.get("email");
-            name[0] = (String) profile.get("nickname");
-        }
+	        return new CustomUserDetails(user);
+	    }
 
-        UserEntity entity = userRepository.findByEmail(email[0])
-                .orElseGet(() -> createSocialUser(email[0], name[0]));
+	    private String extractEmail(OAuth2User oAuth2User, String registrationId) {
+	        if ("google".equals(registrationId)) {
+	            return oAuth2User.getAttribute("email");
+	        } else if ("naver".equals(registrationId)) {
+	            Map<String, Object> response = oAuth2User.getAttribute("response");
+	            return (String) response.get("email");
+	        } else if ("kakao".equals(registrationId)) {
+	            Map<String, Object> kakaoAccount = oAuth2User.getAttribute("kakao_account");
+	            return (String) kakaoAccount.get("email");
+	        }
+	        throw new OAuth2AuthenticationException("Unsupported registration ID");
+	    }
 
-        return new CustomUserDetails(entity);
-    }
+	    private String extractName(OAuth2User oAuth2User, String registrationId) {
+	        if ("google".equals(registrationId)) {
+	            return oAuth2User.getAttribute("name");
+	        } else if ("naver".equals(registrationId)) {
+	            Map<String, Object> response = oAuth2User.getAttribute("response");
+	            return (String) response.get("name");
+	        } else if ("kakao".equals(registrationId)) {
+	            Map<String, Object> kakaoAccount = oAuth2User.getAttribute("kakao_account");
+	            Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+	            return (String) profile.get("nickname");
+	        }
+	        throw new OAuth2AuthenticationException("Unsupported registration ID");
+	    }
 
-    private UserEntity createSocialUser(String email, String name) {
-        UserEntity entity = UserEntity.builder()
-                .email(email)
-                .userName(name)
-                .password(passwordEncoder.encode(String.valueOf(System.currentTimeMillis())))
-                .userRRN("소셜로그인")
-                .gender("미입력")
-                .phoneNumber("미입력")
-                .birthDate("미입력")
-                .postcode("미입력")
-                .address("미입력")
-                .extraAddress("미입력")
-                .detailAddress("미입력")
-                .status(1L) // 활성 상태로 가정
-                .build()
-                .addRole(Role.USER);
+	    private UserEntity createSocialUser(String email, String name) {
+	        UserEntity entity = UserEntity.builder()
+	                .email(email)
+	                .userName(name)
+	                .password(passwordEncoder.encode(String.valueOf(System.currentTimeMillis())))
+	                .userRRN("소셜로그인")
+	                .gender("미입력")
+	                .phoneNumber("미입력")
+	                .birthDate("미입력")
+	                .postcode("미입력")
+	                .address("미입력")
+	                .extraAddress("미입력")
+	                .detailAddress("미입력")
+	                .build()
+	                .addRole(Role.USER);
 
-        return userRepository.save(entity);
-    }
-}
+	        return userRepository.save(entity);
+	    }
+	}
