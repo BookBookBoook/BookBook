@@ -18,7 +18,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CombinedSellerDTO {
-    // UserSaveDTO fields
+	// UserSaveDTO fields
     private String userName;
     private String userRRN;
     private String gender;

@@ -6,8 +6,9 @@
     <title>추가 정보 입력</title>
     <link rel="stylesheet" href="/css/login/signup.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="/js/login/signup.js"></script>
+    <script src="/js/login/socialsignup.js"></script>
     <script src="/js/login/address.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="main-signup">
@@ -29,7 +30,7 @@
                     <div class="signup-input-ssn">
                         <input id="signup-ssn" type="text" th:field="*{userRRN}"
                                placeholder="******-*******" maxlength="14" required
-                               pattern="^\d{6}-\d{7}$" title="형식: 123456-1234567">
+                               pattern="^\d{6}-[1-4]\d{6}$" title="형식: 123456-1234567">
                     </div>
 
                     <h3>성별</h3>
@@ -78,7 +79,7 @@
                     </div>
 
                     <div class="signup-btn-wrap">
-                        <button id="signup-btn" type="submit">가입</button>
+                        <button id="signup-btn" type="submit" onclick="validateForm();">가입</button>
                     </div>
                 </div>
             </form>
