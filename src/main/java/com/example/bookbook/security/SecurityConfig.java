@@ -7,8 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 
 
@@ -49,8 +48,8 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
         http
-        .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event").permitAll()
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event", "/additional-info").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/seller/**").hasRole("SELLER")
@@ -66,23 +65,21 @@ public class SecurityConfig {
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutUrl("/logout") // 로그아웃 URL 설정
-                .logoutSuccessUrl("/login") // 로그아웃 성공 후 리디렉션 URL
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             )
-            .userDetailsService(customUserDetailsService);
-        
-		http
-		.oauth2Login(oauth2->oauth2
-				.loginPage("/login")
-				.defaultSuccessUrl("/additional-info", true)
-				)
-					;
+            .userDetailsService(customUserDetailsService)
+            .oauth2Login(oauth2 -> oauth2
+                .loginPage("/login")
+                .userInfoEndpoint(userInfo -> userInfo
+                    .userService(customOAuth2UserService)
+                )
+                .successHandler(customLoginSuccessHandler)
+            );
         
         return http.build();
     }
-    
-    
 }

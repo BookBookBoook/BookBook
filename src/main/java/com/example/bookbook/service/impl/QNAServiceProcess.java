@@ -20,7 +20,8 @@ public class QNAServiceProcess implements QNAService{
 
 	@Override
 	public void findAllProcess(Model model, CustomUserDetails user) {
-		List<QNADTO> list = qnaMapper.findAll(user);
+		long userId = user.getUserId();
+		List<QNADTO> list = qnaMapper.findAll(userId);
 		model.addAttribute("list", list);
 		
 	}
