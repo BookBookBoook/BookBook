@@ -12,7 +12,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
             <div class="container-main">
 		        <div class="head">
 		            <h1>1:1 문의내역</h1>
-		            <button class="head-btn">1:1 문의하기</button>
+		            <button class="head-btn" onclick="window.location.href='/mypage/questions/detail';">1:1 문의하기</button>
 		        </div>
 		        <div class="tabs">
 		            <button class="tab active" onclick="openTab(event, 'all')">전체</button>
@@ -28,8 +28,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>상태</th>
 		                    </tr>
 		                    <tr th:each="dto : ${list}">
-		                        <td th:text="${dto.title}">탈퇴는 어디서 하나요.</td>
-		                        <td th:text="${dto.date.toLocalDate()}">2013-04-25 10:34</td>
+		                        <td th:text="${dto.title}">제목</td>
+		                        <td th:text="${dto.date.toLocalDate()}">날짜</td>
 		                        <td th:if="${dto.status==1}" class="status-finish">답변완료</td>
 		                        <td th:if="${dto.status==0}" class="status">답변대기</td>
 		                    </tr>
@@ -43,8 +43,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>상태</th>
 		                    </tr>
 		                    <tr th:each="dto : ${list}">
-		                        <td th:if="${dto.status==0}" th:text="${dto.title}">탈퇴는 어디서 하나요.</td>
-		                        <td th:if="${dto.status==0}" th:text="${dto.date.toLocalDate()}">2013-04-25 10:34</td>
+		                        <td th:if="${dto.status==0}" th:text="${dto.title}">제목</td>
+		                        <td th:if="${dto.status==0}" th:text="${dto.date.toLocalDate()}">날짜</td>
 		                        <td th:if="${dto.status==0}" class="status">답변대기</td>
 		                    </tr>
 		                </table>
@@ -57,8 +57,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>상태</th>
 		                    </tr>
 		                    <tr th:each="dto : ${list}">
-		                        <td th:if="${dto.status==1}" th:text="${dto.title}">탈퇴는 어디서 하나요.</td>
-		                        <td th:if="${dto.status==1}" th:text="${dto.date.toLocalDate()}">2013-04-25 10:34</td>
+		                        <td th:if="${dto.status==1}" th:text="${dto.title}">제목</td>
+		                        <td th:if="${dto.status==1}" th:text="${dto.date.toLocalDate()}">날짜</td>
 		                        <td th:if="${dto.status==1}" class="status-finish">답변완료</td>
 		                    </tr>
 		                </table>

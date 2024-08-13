@@ -64,6 +64,15 @@ body {
 	margin-right: 10px;
 }
 
+.line {
+	border-bottom: 1px solid #ccc;
+	padding: 20px;
+	margin: 10px;
+}
+h3 {
+	margin: 20px;
+}
+
 .timestamp {
 	color: #999;
 }
