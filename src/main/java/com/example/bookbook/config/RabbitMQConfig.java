@@ -79,7 +79,7 @@ public class RabbitMQConfig {
 		container.setMessageListener(messageListenerAdapter(receiver));
 		return container;
 	}
-	
+	*/
 	
 	// 메시지 리스너 어댑터를 정의
 	@Bean
@@ -89,11 +89,12 @@ public class RabbitMQConfig {
 		messageListenerAdapter.setMessageConverter(messageConverter());
 		return messageListenerAdapter;
 	}
-	*/
+	
+	
 	//RabbitMQ 메시지 변환기를 정의
 	@Bean
 	MessageConverter messageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
-
+	
 }

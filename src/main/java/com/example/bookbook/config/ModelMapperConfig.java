@@ -25,3 +25,13 @@ public class ModelMapperConfig {
 	}
 
 }
+/* 사용법
+@Autowired
+private ModelMapper modelMapper;
+
+// Entity to DTO
+UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+
+// DTO to Entity
+UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
+*/

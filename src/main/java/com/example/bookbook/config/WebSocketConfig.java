@@ -15,6 +15,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		
 		// "/bookBot" 을 엔드포인트로 등록
 		registry.addEndpoint("/bookBot").withSockJS();
+		//					.setAllowedOrigins("*") // CORS 설정, 모든 출처에서의 요청을 허용
+		//					.withSockJS();
 		
 		// 클라이언트 쪽에서 자바스크립트를 통해 웹소켓을 연결할 때
 		// var socket=new SockJS("/bookBot") 과 같이 사용한다
@@ -26,8 +28,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 		//사용자->서버 메세지를 전송할때
 		// 클라이언트가 서버로 메시지를 보낼 때 "/message/경로" 형식으로 보낸다
 		registry.setApplicationDestinationPrefixes("/message");
-		
-		// 서버가 클라이언트로 메시지를 보낼 때 "/topic" 형식으로 보낸다
-        registry.setUserDestinationPrefix("/topic");
 	}
 }

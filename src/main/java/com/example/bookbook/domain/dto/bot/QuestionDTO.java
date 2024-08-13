@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuestionDTO {
     private Long key;
-    private Long userId;  // 매퍼에서 변환
     private String content;
     
 }
