@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.ui.Model;
 
 import com.example.bookbook.domain.dto.BookDTO;
+import com.example.bookbook.domain.dto.BookSearchResponse.Item;
 
 public interface BookService {
 
@@ -16,7 +17,7 @@ public interface BookService {
 
 	//List<BookDTO> searchBooks(String query);
 
-	BookDTO getBookByIsbn(String isbn);
+	Item getBookByIsbn(String isbn);
 
 	void searchBooks(String query, Model model);
 
