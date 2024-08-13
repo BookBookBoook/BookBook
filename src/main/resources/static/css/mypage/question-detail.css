@@ -1,3 +1,8 @@
+textarea::placeholder {
+    font-size: 14px;
+    font-family: "Noto Sans KR", sans-serif;
+}
+
 .head{
 	margin-bottom: 40px;
 }
@@ -12,7 +17,7 @@
 .form-group {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     margin-bottom: 25px;
 }
 
@@ -21,20 +26,23 @@ label {
     width: 150px;
 }
 
-input[type="text"],
-input[type="email"],
-select,
+.input,
 textarea {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #FF904011;
     border-radius: 4px;
     font-size: 14px;
     box-sizing: border-box;
 }
+.span-ex{
+	width: 100%;
+    padding: 8px;
+    font-size: 14px;
+}
 
 textarea {
-    height: 80px;
+    height: 270px;
     resize: none;
 }
 
@@ -62,6 +70,6 @@ textarea {
 .note {
     font-size: 12px;
     color: #555;
-    margin-top: 15px;
+    margin-top: 60px;
     text-align: center;
 }

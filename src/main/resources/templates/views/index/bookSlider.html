@@ -7,8 +7,8 @@
     <div class="book-slider" th:if="${not #lists.isEmpty(bestSellerSlides)}">
         <div class="book-slide" th:each="slide : ${bestSellerSlides}">
             <span class="book-item" th:each="book : ${slide.books}">
-                <img th:src="${book.image}" th:alt="${book.title}">
-                <a class="book-title" th:href="${book.link}" th:text="${book.title}" th:title="${book.title}"></a>
+                <a th:href="@{|/detail/${book.isbn}|}"><img th:src="${book.image}" th:alt="${book.title}"></a>
+                <a class="book-title" th:href="@{|/detail/${book.isbn}|}" th:text="${book.title}" th:title="${book.title}"></a>
                 <span class="book-author" th:text="${book.author}"></span>
                 <span class="book-price" th:text="${book.discount} + '원'"></span>
             </span>
