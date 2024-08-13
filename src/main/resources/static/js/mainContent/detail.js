@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	const decreaseBtn = document.querySelector('.decrease');
 	const increaseBtn = document.querySelector('.increase');
 	const totalPriceSpan = document.querySelector('.total-price');
-	const unitPrice = 26100;  // 단위 가격
+	const unitPrice = document.querySelector('.price').getAttribute("data-price");  // 단위 가격
 
 	function updateTotalPrice() {
 		const quantity = parseInt(quantityInput.value);
-		const totalPrice = quantity * unitPrice;
+		const totalPrice = quantity * parseInt(unitPrice);
 		totalPriceSpan.textContent = totalPrice.toLocaleString() + '원';
 	}
 
