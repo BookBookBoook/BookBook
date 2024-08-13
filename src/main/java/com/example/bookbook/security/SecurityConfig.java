@@ -49,7 +49,7 @@ public class SecurityConfig {
     public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event", "/additional-info").permitAll()
+                .requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event", "/additional-info", "/bookBot/**").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/seller/**").hasRole("SELLER")

@@ -1,5 +1,8 @@
 package com.example.bookbook.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +14,7 @@ import com.example.bookbook.domain.entity.UserEntity;
 import com.example.bookbook.domain.repository.SellerEntityRepository;
 import com.example.bookbook.domain.repository.UserEntityRepository;
 import com.example.bookbook.service.SellerService;
+import com.example.bookbook.utils.FileUploadUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +25,7 @@ public class SellerServiceProcess implements SellerService {
 	private final UserEntityRepository userRepository;
     private final SellerEntityRepository sellerRepository;
     private final PasswordEncoder pe;
+    private final FileUploadUtil fileUploadUtil;
 
     @Override
     @Transactional
@@ -29,7 +34,7 @@ public class SellerServiceProcess implements SellerService {
         // 비밀번호 암호화
         String encodedPassword = pe.encode(dto.getPassword());
         dto.setPassword(encodedPassword);
-
+        
         // UserEntity 생성 및 저장
         UserEntity userEntity = dto.toUserEntity();
         userEntity.addRole(Role.SELLER);
