@@ -1,31 +1,5 @@
 function validateForm() {
 	
-	// 이메일 유효성 검사
-	var emailInput = document.getElementById("signup-email");
-	var emailPattern = /^.+@.+\..+$/;
-	if (emailInput.value !== "" && !emailPattern.test(emailInput.value)) {
-	    alert("이메일 형식이 올바르지 않습니다.");
-	    emailInput.focus();
-	    return false;
-	}
-
-  // 비밀번호 유효성 검사
-  var pwInput = document.getElementById("signup-pw");
-  var pwPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?:{}|<>]).{8,16}$/;
-  if (!pwPattern.test(pwInput.value)) {
-    alert("비밀번호는 8~16자리 영문, 숫자, 특수문자를 포함해야 합니다.");
-    pwInput.focus();
-    return false;
-  }
-
-  // 이름 유효성 검사
-  var nameInput = document.getElementById("signup-name");
-  var namePattern = /^[가-힣]{2,5}$/;
-  if (!namePattern.test(nameInput.value)) {
-    alert("이름은 2~5자리 한글만 사용할 수 있습니다.");
-    nameInput.focus();
-    return false;
-  }
 
   // 생년월일 유효성 검사
   var birthInput = document.getElementById("signup-birth");

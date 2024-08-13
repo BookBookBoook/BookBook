@@ -1,19 +1,26 @@
 package com.example.bookbook.controller;
 
+import java.io.IOException;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.bookbook.domain.dto.CombinedSellerDTO;
+import com.example.bookbook.domain.dto.ItemAndFileSaveDTO;
 import com.example.bookbook.domain.dto.UserSaveDTO;
 import com.example.bookbook.domain.entity.Role;
 import com.example.bookbook.service.SellerService;
 import com.example.bookbook.service.UserService;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +31,7 @@ public class SignupController {
     
     private final UserService userService;
     private final SellerService sellerService;
+
     
     @ModelAttribute("combinedSellerDTO")
     public CombinedSellerDTO combinedSellerDTO() {
@@ -54,10 +62,14 @@ public class SignupController {
         return "views/login/signup-admin";
     }
     
+
     @PostMapping("/signup/admin")
     public String signupAdmin(@ModelAttribute("combinedSellerDTO") CombinedSellerDTO dto, SessionStatus status) {
         sellerService.signupProcess(dto);
         status.setComplete(); // 세션 정보 제거
         return "redirect:/";
     }
+    
+
+    
 }
