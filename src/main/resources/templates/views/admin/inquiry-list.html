@@ -15,6 +15,10 @@
 		<div class="container">
 			<h1>문의 내용</h1>
 			<div th:replace="~{views/admin/inquiry-list-content}"></div>
+			<div class="line"></div>
+			<h3>1:1 문의 답변 내용</h3>
+			<div th:replace="~{views/admin/inquiry-write-content}"></div>
+			
 			<div class="btn">
 				<button><a href="/admin/inquiry/write">답변하기</a></button>
 			</div>
