@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bookbook.mapper.MypageUserMapper">
+	<select id="findById" parameterType="long" resultType="com.example.bookbook.domain.dto.MypageUserDTO">
+		select * from user
+		where user_id = #{userId}
+	</select>
+</mapper>

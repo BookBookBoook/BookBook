@@ -18,8 +18,12 @@ public interface QNAMapper {
 
 	void save(@Param("dto") QNACreateDTO dto);
 
-	List<QNADTO> findQna(long qnaNum);
+	QNADTO findQna(@Param("qnaNum") long qnaNum);
 
-	List<QNAAnswerDTO> findAnswer(long qnaNum);
+	QNAAnswerDTO findAnswer(long qnaNum);
+
+	void deleteAnswer(long qnaNum);
+
+	void deleteQna(long qnaNum);
 
 }

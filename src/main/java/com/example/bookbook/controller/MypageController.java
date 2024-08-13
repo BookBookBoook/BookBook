@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.bookbook.domain.dto.QNACreateDTO;
 import com.example.bookbook.security.CustomUserDetails;
+import com.example.bookbook.service.MypageUserService;
 import com.example.bookbook.service.QNAService;
 
 
@@ -20,10 +23,12 @@ import com.example.bookbook.service.QNAService;
 public class MypageController {
 	
 	private final QNAService qnaService;
+	private final MypageUserService userService;
 	
 	//회원정보
 	@GetMapping("/mypage/account")
-	public String account() {
+	public String account(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		userService.readProcess(model, user);
 		return "views/mypage/account";
 	}
 	
@@ -51,9 +56,15 @@ public class MypageController {
 	}
 	
 	@GetMapping("/mypage/questions/{qnaNum}")
-	public String questionForm(@PathVariable("qnaNum") long qnaNum, Model model) {
+	public String qnaForm(@PathVariable("qnaNum") long qnaNum, Model model) {
 		qnaService.findProcess(model, qnaNum);
 		return "views/mypage/question-form";
+	}
+	
+	@DeleteMapping("/mypage/questions/{qnaNum}")
+	public String deleteQna(@PathVariable("qnaNum") long qnaNum) {
+		qnaService.deleteProcess(qnaNum);
+		return "redirect:/mypage/questions";
 	}
 	
 	
