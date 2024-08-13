@@ -2,9 +2,19 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="com.example.bookbook.mapper.QNAMapper">
-	<!--<select id="findAll" resultType="com.example.bookbook.domain.dto.QNADTO">
-		select * from qna
+
+	<select id="findAll" parameterType="long" resultType="com.example.bookbook.domain.dto.QNADTO">
+		select * 
+		from qna
+		where user_id = #{userId}
 		order by qna_num desc
-	</select>-->
+	</select>
+	
+	<insert id="save" parameterType="com.example.bookbook.domain.dto.QNACreateDTO">
+		insert into qna (user_id, title, content, qna_type, date)
+		values (#{dto.userId}, #{dto.title}, #{dto.content}, #{dto.qnaType}, current_timestamp)
+	</insert>
+	
 </mapper>
