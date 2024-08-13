@@ -1,5 +1,5 @@
 var client;
-var key;
+let key;
 let flag = false;
 let lastDate = null; // 마지막으로 표시된 날짜
 
@@ -90,9 +90,10 @@ function connect() {
         
         key = new Date().getTime();
         client.subscribe(`/topic/bot/${key}`, (answer) => {
+			console.log("응답완료!!!");
             var msgObj = answer.body;
             console.log("Received message from server:", msgObj);
-
+			//*
             var now = new Date();
             var time = formatTime(now);
             var tag = `<div class="msg bot flex">
@@ -107,6 +108,7 @@ function connect() {
                         </div>
                     </div>`;
             showMessage(tag);
+            //*/
         });
 
         
@@ -206,7 +208,7 @@ function btnMsgSendClicked() {
         content: question,
         userId: 1
     };
-    client.send("/message/bot/question", {}, JSON.stringify(data));
+    client.send(`/message/bot/question`, {}, JSON.stringify(data));
     clearQuestion();
 }
 

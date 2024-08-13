@@ -1,21 +1,22 @@
 package com.example.bookbook.domain.dto.bot;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnswerDTO {
-    private String answer;
+@Data
+public class IntentionDTO {
+	
+    private int intentionNo;
     private String intention;
-    public AnswerDTO intention(String intention) {
-    	this.intention=intention;
-    	return this;
-    }
+    private String answer;
+    private List<KeywordDTO> keywords;
+    // getters and setters
 }

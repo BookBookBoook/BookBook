@@ -1,18 +1,17 @@
 package com.example.bookbook.domain.dto.bot;
 
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class Bookmark {
-    private Long id;
-    private String title;
-    private String url;
+@Data
+public class KeywordDTO {
+	private String keyword;
+    private int intentionNo;
 }
