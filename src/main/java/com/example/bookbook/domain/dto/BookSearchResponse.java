@@ -30,7 +30,6 @@ public class BookSearchResponse {
         private String link;
         private String image;
         private String author;
-        private String price;
         private String discount;
         private String publisher;
         private String pubdate;
