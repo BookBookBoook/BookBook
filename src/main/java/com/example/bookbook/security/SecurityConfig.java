@@ -50,7 +50,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
 
-                .requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail", "/event", "/additional-info", "/bookBot/**").permitAll()
+                .requestMatchers("/", "/signup", "/login/**", "/bookList", "/detail/**", "/event", "/additional-info", "/bookBot/**").permitAll()
 
   
 
