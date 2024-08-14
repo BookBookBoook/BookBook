@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.example.bookbook.domain.dto.InquiryDTO;
+import com.example.bookbook.domain.dto.InquiryDetailDTO;
 import com.example.bookbook.mapper.InquiryMapper;
 import com.example.bookbook.service.InquiryService;
 
@@ -26,7 +27,10 @@ public class InquiryServiceProcess implements InquiryService{
 
 	@Override
 	public void findAll(Model model, long qnaNum) {
-		// TODO Auto-generated method stub
+		InquiryDTO qna = inquiryMapper.findInquiry(qnaNum);
+		InquiryDetailDTO detail = inquiryMapper.findDetail(qnaNum);
+		model.addAttribute("qna",qna);
+		model.addAttribute("detail",detail);
 		
 	}
 	
