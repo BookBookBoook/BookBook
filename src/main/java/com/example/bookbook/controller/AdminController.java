@@ -1,16 +1,22 @@
 package com.example.bookbook.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.bookbook.service.InquiryService;
 
 
 @RequiredArgsConstructor
 @Controller
 public class AdminController {
 
+	private final InquiryService inquiryService;
+	
 	@GetMapping("/admin")
 	public String admin() {
 		return "views/admin/index";
@@ -51,18 +57,30 @@ public class AdminController {
 	public String adminReview() {
 		return "views/admin/review";
 	}
+	
+	
+	
+	
+	//문의
 	@GetMapping("/admin/inquiry")
-	public String adminInquiry() {
+	public String adminInquiry(Model model) {
+		inquiryService.findAllProcess(model);
 		return "views/admin/inquiry";
 	}
-	@GetMapping("/admin/inquiry/list")
-	public String adminInquiryList() {
+	@GetMapping("/admin/inquiry/list/{qnaNum}")
+	public String adminInquiryList(@PathVariable("qnaNum") long qnaNum, Model model) {
+		inquiryService.findAll(model,qnaNum);
 		return "views/admin/inquiry-list";
 	}
 	@GetMapping("/admin/inquiry/write")
 	public String adminInquiryWrite() {
 		return "views/admin/inquiry-write";
 	}
+	
+	
+	
+	
+	
 	@GetMapping("/admin/promotion")
 	public String adminPromotion() {
 		return "views/admin/promotion";
