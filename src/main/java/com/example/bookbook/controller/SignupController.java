@@ -49,7 +49,7 @@ public class SignupController {
     @PostMapping("/signup")
     public String signup(UserSaveDTO dto) {
         userService.signupProcess(dto, Role.USER);
-        return "redirect:/";
+        return "redirect:/login";
     }
     
     @PostMapping("/signup/save-and-redirect")
