@@ -51,6 +51,7 @@ public class IndexController {
 		bookservice.searchBooks(query, model);
 		return "views/index/serchBookList.html";
 	}
+	//상세 도서 정보
 	@GetMapping("/detail/{isbn}")
 	public String detail(@PathVariable("isbn") String isbn, Model model) {
 		try {
@@ -66,21 +67,37 @@ public class IndexController {
 		return "views/index/detail";
 	}
 	
+	//즐겨찾기 데이터 담기
 	@PostMapping("/api/books/favorite")
 	@ResponseBody
 	public ResponseEntity<String> addToFavorites(@RequestParam("isbn") String isbn) {
-	    System.out.println("Controller: Received request to add book to favorites: " + isbn);
 	    try {
 	    	bookservice.addToFavorites(isbn);
-	        System.out.println("Controller: Successfully added book to favorites: " + isbn);
 	        return ResponseEntity.ok("Book successfully added to favorites");
 	    } catch (Exception e) {
-	        System.out.println("Controller: Error adding book to favorites: " + e.getMessage());
 	        e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                .body("Error adding book to favorites: " + e.getMessage());
 	    }
 	}
+	
+	  //장바구니 담기
+	  
+	@PostMapping("/api/books/cartItem")
+	@ResponseBody
+	public ResponseEntity<String> addToCart(@RequestParam("isbn") String isbn) {
+	    System.out.println("Controller: Received request to add book to cart: " + isbn);
+	    try {
+	        bookservice.addToCart(isbn);
+	        return ResponseEntity.ok("Book successfully added to cart");
+	    } catch (Exception e) {
+	        System.out.println("Controller: Error adding book to cart: " + e.getMessage());
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Error adding book to cart: " + e.getMessage());
+	    }
+	}
+	 
 
 	// 이벤트페이지
 	@GetMapping("/event")
