@@ -30,7 +30,9 @@ import com.example.bookbook.domain.dto.BookSearchResponse.Item;
 import com.example.bookbook.domain.dto.BookSlide;
 import com.example.bookbook.domain.dto.NaverBookItem;
 import com.example.bookbook.domain.dto.NaverBookResponse;
+import com.example.bookbook.domain.entity.BookEntity;
 import com.example.bookbook.domain.entity.FavoriteBook;
+import com.example.bookbook.domain.repository.CartItemRepository;
 import com.example.bookbook.domain.repository.FavoriteBookRepository;
 import com.example.bookbook.service.BookService;
 
@@ -50,8 +52,9 @@ public class BookServiceProcess implements BookService {
 	private String clientSecret;
 
 	private static final String NAVER_BOOK_API_URL = "https://openapi.naver.com/v1/search/book.json";
-	
+
 	private final FavoriteBookRepository favoriteBookRepository;
+	private final CartItemRepository cartItemRepository;
 
 	// 검색 결과
 	public void searchBooks(String query, Model model) {
@@ -207,46 +210,49 @@ public class BookServiceProcess implements BookService {
 	}
 
 	@Override
-    public Item getBookByIsbn(String isbn) {
-        System.out.println("Fetching book details for ISBN: " + isbn);
-        String url = "https://openapi.naver.com/v1/search/book_adv.xml?d_isbn=" + isbn;
-        
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-Naver-Client-Id", clientId);
-        headers.set("X-Naver-Client-Secret", clientSecret);
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+	public Item getBookByIsbn(String isbn) {
+		// System.out.println("Fetching book details for ISBN: " + isbn);
+		String url = "https://openapi.naver.com/v1/search/book_adv.xml?d_isbn=" + isbn;
 
-        try {
-            System.out.println("Sending request to Naver API: " + url);
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-            
-            if (response.getStatusCode().is2xxSuccessful()) {
-                String xmlResponse = response.getBody();
-                System.out.println("Received XML response: " + xmlResponse);
-                
-                JAXBContext jaxbContext = JAXBContext.newInstance(BookSearchResponse.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-                StringReader reader = new StringReader(xmlResponse);
-                BookSearchResponse bookSearchResponse = (BookSearchResponse) unmarshaller.unmarshal(reader);
-                
-                if (!bookSearchResponse.getChannel().getItems().isEmpty()) {
-                    System.out.println("Successfully retrieved book details for ISBN: " + isbn); //여기까지 콘솔에 출력됨
-                    return bookSearchResponse.getChannel().getItems().get(0);
-                } else {
-                    System.out.println("No book found for ISBN: " + isbn);
-                    return null;
-                }
-            } else {
-                System.out.println("Request failed with status code: " + response.getStatusCode());
-                return null;
-            }
-        } catch (Exception e) {
-            System.out.println("Error fetching book details for ISBN " + isbn + ": " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-    
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("X-Naver-Client-Id", clientId);
+		headers.set("X-Naver-Client-Secret", clientSecret);
+		HttpEntity<String> entity = new HttpEntity<>(headers);
+
+		try {
+			// System.out.println("Sending request to Naver API: " + url);
+			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
+			if (response.getStatusCode().is2xxSuccessful()) {
+				String xmlResponse = response.getBody();
+				// System.out.println("Received XML response: " + xmlResponse);
+
+				JAXBContext jaxbContext = JAXBContext.newInstance(BookSearchResponse.class);
+				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+				StringReader reader = new StringReader(xmlResponse);
+				BookSearchResponse bookSearchResponse = (BookSearchResponse) unmarshaller.unmarshal(reader);
+
+				if (!bookSearchResponse.getChannel().getItems().isEmpty()) {
+					// System.out.println("Successfully retrieved book details for ISBN: " + isbn);
+					// // 여기까지 콘솔에 출력됨
+					return bookSearchResponse.getChannel().getItems().get(0);
+				} else {
+					// System.out.println("No book found for ISBN: " + isbn);
+					return null;
+				}
+			} else {
+				// System.out.println("Request failed with status code: " +
+				// response.getStatusCode());
+				return null;
+			}
+		} catch (Exception e) {
+			// System.out.println("Error fetching book details for ISBN " + isbn + ": " +
+			// e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 	private BookDTO convertToBookDTO1(NaverBookItem item) {
@@ -283,6 +289,55 @@ public class BookServiceProcess implements BookService {
 
 	@Override
 	public void addToFavorites(String isbn) throws Exception {
+		// System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		// System.out.println("Adding book with ISBN " + isbn + " to favorites");
+		try {
+			Item bookDetail = getBookByIsbn(isbn);
+			// System.out.println("Retrieved book details: " + bookDetail);
+
+			if (bookDetail == null) {
+				// System.out.println("Book details not found for ISBN: " + isbn);
+				throw new Exception("Book not found");
+			}
+
+			FavoriteBook favoriteBook = convertToFavoriteBook(bookDetail);
+			// System.out.println("Converted to FavoriteBook: " + favoriteBook);
+
+			favoriteBookRepository.save(favoriteBook);
+			// System.out.println("Book successfully added to favorites: " + isbn);
+		} catch (Exception e) {
+			// System.out.println("Error adding book to favorites: " + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	private FavoriteBook convertToFavoriteBook(Item item) {
+		// System.out.println("Converting Item to FavoriteBook: " + item);
+		return FavoriteBook.builder()
+				.isbn(item.getIsbn())
+				.title(item.getTitle())
+				.author(item.getAuthor())
+				.publisher(item.getPublisher())
+				// .publicationDate(parsePublicationDate(item.getPubdate()))
+				.description(truncateDescription(item.getDescription()))
+				.imageUrl(item.getImage())
+				.discountPrice(parseDiscountPrice(item.getDiscount())).build();
+	}
+
+	private Integer parseDiscountPrice(String discount) {
+		// System.out.println("Parsing discount price: " + discount);
+		try {
+			return Integer.parseInt(discount);
+		} catch (NumberFormatException e) {
+			// System.out.println("Failed to parse discount price: " + discount);
+			e.printStackTrace();
+			return null; // 또는 다른 기본값 사용
+		}
+	}
+
+	@Override
+	public void addToCart(String isbn) {
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 		System.out.println("Adding book with ISBN " + isbn + " to favorites");
 		try {
@@ -294,51 +349,28 @@ public class BookServiceProcess implements BookService {
 				throw new Exception("Book not found");
 			}
 
-			FavoriteBook favoriteBook = convertToFavoriteBook(bookDetail);
-			System.out.println("Converted to FavoriteBook: " + favoriteBook);
+			BookEntity cartItems = CartItemsBook(bookDetail);
+			System.out.println("Converted to FavoriteBook: " + cartItems);
 
-			favoriteBookRepository.save(favoriteBook);
+			cartItemRepository.save(cartItems);
 			System.out.println("Book successfully added to favorites: " + isbn);
 		} catch (Exception e) {
 			System.out.println("Error adding book to favorites: " + e.getMessage());
 			e.printStackTrace();
-			throw e;
 		}
+
 	}
 
-	private FavoriteBook convertToFavoriteBook(Item item) {
-		System.out.println("Converting Item to FavoriteBook: " + item);
-		return FavoriteBook.builder()
-				.isbn(item.getIsbn())
-				.title(item.getTitle())
+	private BookEntity CartItemsBook(Item item) { 
+		return BookEntity.builder()
+				.bookName(item.getTitle())
+				.bookImg(item.getImage())
 				.author(item.getAuthor())
 				.publisher(item.getPublisher())
-				//.publicationDate(parsePublicationDate(item.getPubdate()))
 				.description(truncateDescription(item.getDescription()))
-				.imageUrl(item.getImage())
-				.discountPrice(parseDiscountPrice(item.getDiscount()))
-				.build();
-	}
-
-	private Integer parseDiscountPrice(String discount) {
-		System.out.println("Parsing discount price: " + discount);
-        try {
-            return Integer.parseInt(discount);
-        } catch (NumberFormatException e) {
-            System.out.println("Failed to parse discount price: " + discount);
-            e.printStackTrace();
-            return null; // 또는 다른 기본값 사용
-        }
-	}
-
-	/*
-	 * private LocalDateTime parsePublicationDate(String pubdate) {
-	 * System.out.println("Parsing publication date: " + pubdate); try { return
-	 * LocalDateTime.parse(pubdate, DateTimeFormatter.ofPattern("yyyyMMdd")); }
-	 * catch (DateTimeParseException e) {
-	 * System.out.println("Failed to parse publication date: " + pubdate);
-	 * e.printStackTrace(); return LocalDateTime.now(); // 또는 null을 반환하거나 다른 기본값 사용
-	 * } }
-	 */
+				.isbn(item.getIsbn())
+				.discount(parseDiscountPrice(item.getDiscount()))
+				.build(); 
+		}
 
 }
