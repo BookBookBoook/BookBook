@@ -1,6 +1,6 @@
 var client;
 let key;
-let flag = false;
+let flag = false; // 챗봇이 열려있는 상태를 추적하는 플래그
 let lastDate = null; // 마지막으로 표시된 날짜
 
 // WebSocket 지원 여부를 출력
@@ -66,17 +66,25 @@ function showWelcomeMessage() {
                                     <img src="/img/bot/bot-img.png">
                                 </div>
                                 <div class="message">
-								<div class="bot-name">북엉이</div>
+                                <div class="bot-name">북엉이</div>
                                     <div class="part chatbot">
                                         <p>
-                                        	안녕하세요. <br> 
-											안내봇 북엉이입니다. 북북. <br>
-                                        	무엇을 도와드릴까요?
-                                    	</p>
+                                            안녕하세요. <br> 
+                                            안내봇 북엉이입니다. 북북. <br>
+                                            무엇을 도와드릴까요?
+                                        </p>
                                     </div>
                                 </div>
                             </div>`;
-    showMessage(welcomeMessage);
+    
+    // 로컬 스토리지에서 환영 메시지를 이미 표시했는지 확인
+    var hasShownWelcomeMessage = localStorage.getItem('hasShownWelcomeMessage');
+    
+    if (!hasShownWelcomeMessage) {
+        showMessage(welcomeMessage);
+        localStorage.setItem('hasShownWelcomeMessage', 'true');
+    }
+
     localStorage.setItem('lastOpenedDate', today);
     showDateIfNew();
 }
@@ -85,15 +93,15 @@ function showWelcomeMessage() {
 function connect() {
     client = Stomp.over(new SockJS('/bookBot'));
     client.connect({}, (frame) => {
-		// 연결 성공 시 frame 객체의 정보를 콘솔에 출력
+        // 연결 성공 시 frame 객체의 정보를 콘솔에 출력
         console.log("Connected to WebSocket server with frame:", frame);
         
         key = new Date().getTime();
         client.subscribe(`/topic/bot/${key}`, (answer) => {
-			console.log("응답완료!!!");
+            console.log("응답완료!!!");
             var msgObj = answer.body;
             console.log("Received message from server:", msgObj);
-			//*
+            //*
             var now = new Date();
             var time = formatTime(now);
             var tag = `<div class="msg bot flex">
@@ -110,8 +118,6 @@ function connect() {
             showMessage(tag);
             //*/
         });
-
-        
     });
 }
 
@@ -143,18 +149,35 @@ function saveBotState() {
 }
 
 function loadBotState() {
+    // 로컬 스토리지에서 챗봇 상태를 가져옵니다.
     var botState = localStorage.getItem('botState');
     if (botState === 'open') {
         document.getElementById("bot-container").style.display = 'block';
         flag = true;
         connect();
-        showWelcomeMessage();
     } else {
         document.getElementById("bot-container").style.display = 'none';
         flag = false;
         disconnect();
     }
+
+    // 같은 도메인 내에서 페이지를 이동할 때 환영 메시지를 표시하지 않도록 설정
+    var hasShownWelcomeMessage = localStorage.getItem('hasShownWelcomeMessage');
+    var wasChatReset = localStorage.getItem('chatReset');
+    
+    if (!hasShownWelcomeMessage || wasChatReset) {
+        if (botState === 'open') {
+            showWelcomeMessage();
+            localStorage.removeItem('chatReset'); // 채팅 초기화 상태 제거
+        }
+    }
 }
+
+// 페이지를 떠날 때 챗봇 상태를 저장
+window.addEventListener('beforeunload', function() {
+    saveChatContent();
+    saveBotState();
+});
 
 // 버튼 클릭 이벤트 핸들러
 function btnCloseClicked() {
@@ -162,9 +185,10 @@ function btnCloseClicked() {
     saveBotState();
     disconnect();
     flag = false;
-	document.getElementById("chat-content").innerHTML = ""; // 채팅 내용 초기화
-	localStorage.removeItem('chatContent'); // 로컬 스토리지에서 채팅 내용 제거
-
+    document.getElementById("chat-content").innerHTML = ""; // 채팅 내용 초기화
+    localStorage.removeItem('chatContent'); // 로컬 스토리지에서 채팅 내용 제거
+    localStorage.setItem('chatReset', 'true'); // 채팅 초기화 상태 저장
+    localStorage.removeItem('hasShownWelcomeMessage'); // 환영 메시지 표시 상태 제거
 }
 
 function btnBotClicked() {
@@ -172,7 +196,16 @@ function btnBotClicked() {
     document.getElementById("bot-container").style.display = 'block';
     connect();
     flag = true;
-    showWelcomeMessage();
+    
+    var hasShownWelcomeMessage = localStorage.getItem('hasShownWelcomeMessage');
+    var wasChatReset = localStorage.getItem('chatReset');
+    
+    // 채팅이 초기화된 상태이거나 환영 메시지가 아직 표시되지 않았으면 환영 메시지 표시
+    if (!hasShownWelcomeMessage || wasChatReset) {
+        showWelcomeMessage();
+        localStorage.removeItem('chatReset'); // 채팅 초기화 상태 제거
+    }
+    
     saveBotState();
 }
 
@@ -219,7 +252,7 @@ function clearQuestion() {
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', (event) => {
     loadChatContent();
-    loadBotState();
+    loadBotState(); // 챗봇 상태를 로드하고 표시
 
     document.getElementById("chat-icon").addEventListener('click', btnBotClicked);
     document.getElementById("close-button").addEventListener('click', btnCloseClicked);
