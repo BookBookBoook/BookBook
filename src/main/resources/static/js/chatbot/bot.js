@@ -109,6 +109,7 @@ function connect() {
                             <img src="/img/bot/bot-img.png">
                         </div>
                         <div class="message">
+                        <div class="bot-name">북엉이</div>
                             <div class="part chatbot">
                                 <p>${msgObj}</p>
                             </div>
