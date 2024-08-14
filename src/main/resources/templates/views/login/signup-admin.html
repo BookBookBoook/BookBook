@@ -4,10 +4,60 @@
     <meta charset="UTF-8">
     <title>출판사 회원가입</title>
     <link rel="stylesheet" href="/css/login/signup.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/login/publisher-signup.js"></script>
     <script src="/js/login/signup-admin.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
+<script th:inline="javascript">
+var csrfToken = $("meta[name='_csrf']").attr("content");
+var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+function uploadBusinessReg(input) {
+    if (input.files && input.files[0]) {
+        var file = input.files[0];
+        
+        if (file.type !== "image/png") {
+            alert("PNG 파일만 업로드 가능합니다.");
+            input.value = "";
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append("file", file);
+
+        $.ajax({
+            url: '/api/upload',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
+            success: function(response) {
+                $('#businessRegImageId').val(response.id);
+                $('#upload-status');
+            },
+            error: function(xhr, status, error) {
+                console.error("Upload failed:", status, error);
+                $('#upload-status').text('업로드 실패: ' + (xhr.responseJSON ? xhr.responseJSON.error : error));
+            }
+        });
+    }
+}
+
+function validatePublisherForm() {
+    if ($('#businessRegImageId').val() === '') {
+        alert('사업자 등록증을 업로드해주세요.');
+        return false;
+    }
+    // 추가적인 유효성 검사 로직...
+    return true;
+}
+</script>
 <div class="main-signup">
     <header>
         <a href="/">
@@ -18,10 +68,9 @@
     </header>
 
     <section class="signup-wrap">
-        <form th:action="@{/signup/admin}" th:object="${combinedSellerDTO}" method="post">
-          <input type="hidden" th:name="${_csrf != null ? _csrf.parameterName : '_csrf'}" 
-                       th:value="${_csrf != null ? _csrf.token : ''}"/>
-            
+        <form th:action="@{/signup/admin}" th:object="${combinedSellerDTO}" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
             <input type="hidden" th:field="*{email}" />
             <input type="hidden" th:field="*{password}" />
             <input type="hidden" th:field="*{userName}" />
@@ -33,7 +82,7 @@
             <input type="hidden" th:field="*{address}" />
             <input type="hidden" th:field="*{extraAddress}" />
             <input type="hidden" th:field="*{detailAddress}" />
-            
+
             <h3>출판사 이름</h3>
             <div class="signup-input">
                 <input id="publisher-name" type="text" th:field="*{shopName}" placeholder="출판사 이름을 입력하세요"
@@ -55,11 +104,12 @@
                     title="사업자 번호 형식은 123-45-67890 입니다.">
             </div>
 
-            <h3>사업자 등록증 (이미지 파일)</h3>
+            <h3>사업자 등록증 (PNG 파일만 가능)</h3>
             <div class="signup-input">
-                <input id="business-registration" type="file" th:field="*{businessReg}" accept="image/*"
-                    required>
+                <input id="business-registration" type="file" name="businessRegFile" accept="image/png" onchange="uploadBusinessReg(this)" required>
+                <div id="upload-status"></div>
             </div>
+            <input type="hidden" id="businessRegImageId" th:field="*{businessRegImageId}">
 
             <h3>계좌 은행 및 계좌 정보</h3>
             <div class="signup-input">
@@ -80,12 +130,13 @@
 
             <div>
                 <div class="signup-btn-wrap">
-                    <button id="signup-btn" type="submit"
-                        onclick="validatePublisherForm(); return false;">가입하기</button>
+                    <button id="signup-btn" type="submit" onclick="return validatePublisherForm();">가입하기</button>
                 </div>
             </div>
         </form>
     </section>
 </div>
+
+
 </body>
 </html>
