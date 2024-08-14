@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.bookbook.domain.dto.QNACreateDTO;
+import com.example.bookbook.domain.dto.accountUpdateDTO;
 import com.example.bookbook.security.CustomUserDetails;
 import com.example.bookbook.service.MypageUserService;
 import com.example.bookbook.service.QNAService;
@@ -30,6 +32,12 @@ public class MypageController {
 	public String account(Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		userService.readProcess(model, user);
 		return "views/mypage/account";
+	}
+	
+	@PutMapping("/mypage/account")
+	public String accountUpdate(accountUpdateDTO dto) {
+		userService.updateProcess(dto);
+		return "redirect:/mypage/account";
 	}
 	
 	@GetMapping("/mypage/account/delete")
