@@ -36,7 +36,7 @@ public class BookEntity {
     private long bookNum; //도서번호
 
     @ManyToOne // FK 단방향
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "id", nullable = true)
     private CategoryEntity category; //카테고리 fk
 
     @Column(nullable = false)
