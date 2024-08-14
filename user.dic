@@ -2,6 +2,8 @@
 인기도서	NNP
 할인	NNP
 반갑습니다	NNP
+재고있나요	NNP
+책	NNP
 조회	NNP
 재고있나요	NNP
 하이	NNP
@@ -23,6 +25,7 @@
 인기	NNP
 추천 도서	NNP
 판타지북스	NNP
+할인해주나요	NNP
 안녕하세요	NNP
 인기 도서	NNP
 히사시부리	NNP
