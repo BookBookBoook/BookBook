@@ -15,15 +15,31 @@
     <script>
     function submitAndRedirect() {
         var form = $('#signupForm');
+        var csrfToken = $("input[name='_csrf']").val();
+        var csrfHeader = $("input[name='_csrf']").attr('name');
+        
+        console.log("CSRF Token:", csrfToken);
+        console.log("CSRF Header:", csrfHeader);
+        
         $.ajax({
             url: '/signup/save-and-redirect',
             type: 'POST',
             data: form.serialize(),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
             success: function(response) {
-                window.location.href = '/signup/admin';
+                console.log("Response:", response);
+                if (response === "success") {
+                    window.location.href = '/signup/admin';
+                } else {
+                    alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                }
             },
             error: function(xhr, status, error) {
-                console.error("Error occurred: " + error);
+                console.error("Error occurred:", error);
+                console.error("Status:", status);
+                console.error("Response:", xhr.responseText);
                 alert("오류가 발생했습니다. 다시 시도해 주세요.");
             }
         });
