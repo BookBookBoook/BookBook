@@ -12,15 +12,15 @@ on:
     #branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
+
 env:
   PROJECT_NAME: "bookbook"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write  # 변경된 부분: write 권한 추가
 
     steps:
     - uses: actions/checkout@v4
@@ -33,13 +33,14 @@ jobs:
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     
-    
     # Build with gradle
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3 
+
     # gradlew 실행권한 부여
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
+
     # gradlew 실행
     - name: Build with Gradle Wrapper
       run: ./gradlew build
@@ -74,5 +75,7 @@ jobs:
           --deployment-group-name ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }} \
           --s3-location bucket=${{secrets.S3_LOCATION_BUCKET}},key=${{env.PROJECT_NAME}}.zip,bundleType=zip
 
+    # 변경된 부분: 조건부 실행 추가
     - name: Generate and submit dependency graph
+      if: github.event.pull_request.head.repo.full_name == github.repository
       uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
