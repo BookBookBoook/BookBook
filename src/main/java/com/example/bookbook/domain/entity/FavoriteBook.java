@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Book {
+public class FavoriteBook {
 	
 	@Id
     @Column(length = 13)
@@ -35,33 +35,16 @@ public class Book {
 
     private String publisher;
 
-    @Column(name = "publication_date")
-    private LocalDateTime publicationDate;
-
     @Column(length = 500)
     private String description;
 
     @Column(name = "image_url")
     private String imageUrl;
 
-    private Integer price;
-
     @Column(name = "discount_price")
     private Integer discountPrice;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }

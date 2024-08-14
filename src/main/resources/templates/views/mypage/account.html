@@ -20,13 +20,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		        </form>
 		        
 		        <section class="info-section">
-		            <div class="info-box">
-		                <p>* 표시로 보이는 정보는 아래 "숨은 정보 업데이트" 버튼을 클릭하고 비밀번호 인증 후 수정 가능합니다.</p>
-		                <p></p>
-		                <button class="update-button">숨은 정보 업데이트</button>
-		            </div>
-		
-		            <form class="info-form">
+		        
+		            <form class="info-form" action="/mypage/account" method="post">
+		            <input type="hidden" name="_method" value="put">
+		            <input type="hidden" name="userId" th:value="${#authentication.principal.userId}">
+		            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 		                <div class="form-group">
 		                    <label for="userId">아이디</label>
 		                    <input type="text" id="userId" th:value="${user.email}" disabled>
@@ -34,7 +32,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		
 		                <div class="form-group">
 		                    <label for="userName">이름</label>
-		                    <input type="text" id="userName" th:value="${user.userName}">
+		                    <input type="text" name="userName" id="userName" th:value="${user.userName}">
 		                </div>
 		
 		                <div class="form-group">
@@ -54,7 +52,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                
 		                <div class="form-group">
 		                    <label for="phone">전화번호</label>
-		                    <input type="text" id="phone" th:value="${user.phoneNumber}">
+		                    <input type="text" name="phoneNumber" id="phone" th:value="${user.phoneNumber}">
 		                </div>
 		
 		                <div class="form-group">
@@ -65,11 +63,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                <div class="form-group">
 		                    <label for="sample6_postcode">배송정보</label>
 		                    <div class="address-container">
-			                    <input type="text" id="sample6_postcode" th:value="${user.postcode}" class="postalcode address" placeholder="우편번호">
+			                    <input type="text" id="sample6_postcode" name="postcode" th:value="${user.postcode}" class="postalcode address" placeholder="우편번호">
 			                    <input type="button" class="find-postalcode" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-			                    <input type="text" id="sample6_address" th:value="${user.address}" class="address" placeholder="주소"><br>
-								<input type="text" id="sample6_detailAddress" th:value="${user.detailAddress}" class="address" placeholder="상세주소"><br>
-								<input type="text" id="sample6_extraAddress" class="address" th:value="${user.extraAddress}" placeholder="참고항목">
+			                    <input type="text" id="sample6_address" name="address" th:value="${user.address}" class="address" placeholder="주소"><br>
+								<input type="text" id="sample6_detailAddress" name="detailAddress" th:value="${user.detailAddress}" class="address" placeholder="상세주소"><br>
+								<input type="text" id="sample6_extraAddress" name="extraAddress" class="address" th:value="${user.extraAddress}" placeholder="참고항목">
 							</div>
 		                </div>
 		

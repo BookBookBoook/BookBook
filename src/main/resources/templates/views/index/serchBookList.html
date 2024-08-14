@@ -8,7 +8,8 @@
 <script src="/js/mainContent/heartButton.js"></script>
 <link rel="stylesheet" href="/css/mainContent/bookList.css" />
 
-
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <body>
 	<main class="main-container">
@@ -61,7 +62,6 @@
 									<a th:href="@{|/detail/${book.isbn}|}" name="authors"
 										th:text="${book.author}"></a>
 								</h4>
-								<!-- <p th:text="${book.isbn}"></p> -->
 								<h5 name="price"
 									th:text="${book.discount != null ? #numbers.formatDecimal(book.discount, 0, 'COMMA', 0, 'POINT') + '원' : '가격 정보 없음'}"></h5>
 								<h6 name="content" th:text="${book.description}"></h6>
@@ -73,9 +73,11 @@
 								</h5>
 							</div>
 							<div class="button-container">
-								<form id="favoriteForm" onsubmit="return false;">
-									<!-- 기존 버튼 및 기타 요소들 -->
-									<button type="button" class="heart-button">
+								<form th:action="@{/api/books/favorite}" method="post"
+									class="favorite-form"
+									onsubmit="return addToFavorites(this, event)">
+									<input type="hidden" name="isbn" th:value="${book.isbn}" />
+									<button type="submit" class="heart-button">
 										<i class="far fa-heart"></i>
 									</button>
 								</form>

@@ -41,6 +41,7 @@ public class CombinedSellerDTO {
     private String accountHolder;
     private String settlementAmount;
     private String businessRegCopy;
+    private Long businessRegImageId;
 
     public UserEntity toUserEntity() {
         return UserEntity.builder()
