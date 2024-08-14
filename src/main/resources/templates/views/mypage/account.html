@@ -23,6 +23,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		        
 		            <form class="info-form" action="/mypage/account" method="post">
 		            <input type="hidden" name="_method" value="put">
+		            <input type="hidden" name="userId" th:value="${#authentication.principal.userId}">
 		            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 		                <div class="form-group">
 		                    <label for="userId">아이디</label>

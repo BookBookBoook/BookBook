@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class accountUpdateDTO {
 	private long userId; // 사용자ID
 	private String userName; // 사용자이름
