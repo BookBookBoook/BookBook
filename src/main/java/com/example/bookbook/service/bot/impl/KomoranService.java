@@ -28,8 +28,9 @@ public class KomoranService {
 		});
 		
 		//문자에서 명사들만 추출한 목록 중복제거해서 set
-		Set<String> nouns=result.getNouns().stream()
+		Set<String> nouns=result.getNouns().stream() //getNouns(): 분석 결과 중 명사류(NNG, NNP)만 반환합니다
 				.collect(Collectors.toSet());
+		
 		nouns.forEach((noun)->{
 			System.out.println(">>>:"+ noun);
 		});//메세지에서 명사추출
@@ -49,6 +50,8 @@ public class KomoranService {
                 .keywords(nouns)
                 .build();
 
+        
+        
         // 분석된 명사와 관련된 추가 로직을 여기에 추가할 수 있습니다.
         return messageDTO;
     }
