@@ -21,10 +21,20 @@ public class AdminController {
 	public String admin() {
 		return "views/admin/index";
 	}
+	
+	//상품
 	@GetMapping("/admin/inventory")
 	public String adminInventory() {
-		return "views/admin/inventory";
+		return "views/admin/inventory";	
 	}
+	@GetMapping("/admin/inventory/write")
+	public String adminInventoryWrite() {
+		return "views/admin/inventory-write";
+	}
+	
+	
+	
+	//주문
 	@GetMapping("/admin/order")
 	public String adminOrder() {
 		return "views/admin/order";
@@ -37,6 +47,9 @@ public class AdminController {
 	public String adminOrderExchange() {
 		return "views/admin/exchange";
 	}
+	
+	
+	//사용자 관리
 	@GetMapping("/admin/users")
 	public String adminUser() {
 		return "views/admin/users";
@@ -53,9 +66,10 @@ public class AdminController {
 	public String adminSellerDetail() {
 		return "views/admin/sellers-detail";
 	}
-	@GetMapping("/admin/review")
-	public String adminReview() {
-		return "views/admin/review";
+
+	@GetMapping("/admin/sellers/sign")
+	public String adminSellerSign() {
+		return "views/admin/sign";
 	}
 	
 	
@@ -72,6 +86,7 @@ public class AdminController {
 		inquiryService.findAll(model,qnaNum);
 		return "views/admin/inquiry-list";
 	}
+	
 	@GetMapping("/admin/inquiry/write")
 	public String adminInquiryWrite() {
 		return "views/admin/inquiry-write";
@@ -79,8 +94,18 @@ public class AdminController {
 	
 	
 	
+	//리뷰
+	@GetMapping("/admin/review")
+	public String adminReview() {
+		return "views/admin/review";
+	}
+	@GetMapping("/admin/review/complain")
+	public String adminReviewComplain() {
+		return "views/admin/complain";
+	}
 	
 	
+	//프로모션
 	@GetMapping("/admin/promotion")
 	public String adminPromotion() {
 		return "views/admin/promotion";
@@ -89,16 +114,6 @@ public class AdminController {
 	public String adminPromotionWrite() {
 		return "views/admin/promotion-write";
 	}
-	@GetMapping("/admin/inventory/write")
-	public String adminInventoryWrite() {
-		return "views/admin/inventory-write";
-	}
-	@GetMapping("/admin/sellers/sign")
-	public String adminSellerSign() {
-		return "views/admin/sign";
-	}
-	@GetMapping("/admin/review/complain")
-	public String adminReviewComplain() {
-		return "views/admin/complain";
-	}
+	
+	
 }
