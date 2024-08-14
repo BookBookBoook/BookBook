@@ -1,5 +1,6 @@
 package com.example.bookbook.domain.entity;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -9,8 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,7 +24,6 @@ public class SellerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sellerId;
 
-    // Seller specific fields
     @Column(nullable = false)
     private String shopName;
 
@@ -31,8 +33,8 @@ public class SellerEntity {
     @Column(nullable = false, unique = true)
     private String businessNum;
 
-    @Column(nullable = false)
-    private String businessReg;
+    @Column(nullable = true)
+    private String businessReg; // This will now store the URL of the business registration image
 
     @Column(nullable = false)
     private String bank;
@@ -84,9 +86,11 @@ public class SellerEntity {
 
     @Column(nullable = true)
     private Long status;
-    
-    
-    // You might want to add a relationship with UserEntity
+
     @OneToOne(mappedBy = "seller")
     private UserEntity user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "business_reg_image_id", referencedColumnName = "id")
+    private ImageEntity businessRegImage;
 }
