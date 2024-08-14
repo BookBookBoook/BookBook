@@ -48,35 +48,26 @@
 					<thead>
 						<tr>
 
-							<th>문의 접수 번호</th>
+							<th>접수 번호</th>
 							<th class="long">제목</th>
+							<th>문의타입</th>
 							<th>상태</th>
-							<th>작성자</th>
 							<th>작성일</th>
 							<th>상세보기</th>
 
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr th:each="dto:${list}">
 
-							<td>2</td>
-							<td>안녕하세요</td>
-							<td>답변대기</td>
-							<td>이유진</td>
-							<td>2024-08-10</td>
-							<td><a href="/admin/inquiry/list"><button>상세보기</button></a></td>
+							<td th:text="${dto.qnaNum}"></td>
+							<td th:text="${dto.title}"></td>
+							<td th:text="${dto.qnaType}"></td>
+							<td th:if="${dto.status==1}" class="status-finish">답변완료</td>
+							<td th:if="${dto.status==0}" class="status">답변대기</td>
+							<td th:text="${dto.date.toLocalDate()}"></td>
+							<td><a th:href="|/admin/inquiry/list/${dto.qnaNum}|"><button>상세보기</button></a></td>
 						</tr>
-						<tr>
-
-							<td>2</td>
-							<td>안녕하세요</td>
-							<td>답변완료</td>
-							<td>이유진</td>
-							<td>2024-08-10</td>
-							<td><a href="#"><button>상세보기</button></a></td>
-						</tr>
-
 					</tbody>
 				</table>
 			</div>
