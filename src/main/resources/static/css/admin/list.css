@@ -23,7 +23,6 @@ body {
 .box {
 	border: 1px solid #ddd;
 	margin: 20px;
-	border-radius: 5px;
 }
 
 .header {
@@ -80,6 +79,12 @@ h3 {
 .memo {
 	font-size: 16px;
 	margin: 50px;
+}
+
+.content {
+	border: 1px solid #ccc;
+	padding:20px;
+	margin: 20px;
 }
 
 .btn {

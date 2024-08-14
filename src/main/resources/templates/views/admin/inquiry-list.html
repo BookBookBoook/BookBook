@@ -17,8 +17,12 @@
 			<div th:replace="~{views/admin/inquiry-list-content}"></div>
 			<div class="line"></div>
 			<h3>1:1 문의 답변 내용</h3>
-			<div th:replace="~{views/admin/inquiry-write-content}"></div>
-			
+			<div th:if="${detail != null}">
+				<div th:replace="~{views/admin/inquiry-write-content}"></div>
+			</div>
+			<div th:unless="${detail != null}">
+				<div class="content">답변 내용이 없습니다.</div>
+			</div>
 			<div class="btn">
 				<button><a href="/admin/inquiry/write">답변하기</a></button>
 			</div>
