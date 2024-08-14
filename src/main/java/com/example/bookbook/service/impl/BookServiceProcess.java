@@ -3,6 +3,9 @@ package com.example.bookbook.service.impl;
 import java.io.StringReader;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,13 +30,17 @@ import com.example.bookbook.domain.dto.BookSearchResponse.Item;
 import com.example.bookbook.domain.dto.BookSlide;
 import com.example.bookbook.domain.dto.NaverBookItem;
 import com.example.bookbook.domain.dto.NaverBookResponse;
+import com.example.bookbook.domain.entity.FavoriteBook;
+import com.example.bookbook.domain.repository.FavoriteBookRepository;
 import com.example.bookbook.service.BookService;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceProcess implements BookService {
 
 	@Value("${naver.openapi.clientId}")
@@ -43,6 +50,8 @@ public class BookServiceProcess implements BookService {
 	private String clientSecret;
 
 	private static final String NAVER_BOOK_API_URL = "https://openapi.naver.com/v1/search/book.json";
+	
+	private final FavoriteBookRepository favoriteBookRepository;
 
 	// 검색 결과
 	public void searchBooks(String query, Model model) {
@@ -198,59 +207,46 @@ public class BookServiceProcess implements BookService {
 	}
 
 	@Override
-	public Item getBookByIsbn(String isbn) {
+    public Item getBookByIsbn(String isbn) {
+        System.out.println("Fetching book details for ISBN: " + isbn);
+        String url = "https://openapi.naver.com/v1/search/book_adv.xml?d_isbn=" + isbn;
+        
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Naver-Client-Id", clientId);
+        headers.set("X-Naver-Client-Secret", clientSecret);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
-		// 네이버 도서 검색 API에 요청할 URL을 ISBN 값과 함께 구성
-		String url = "https://openapi.naver.com/v1/search/book_adv.xml?d_isbn=" + isbn;
-
-		// RestTemplate 객체를 생성하여 HTTP 요청을 보내기 위한 준비
-		RestTemplate restTemplate = new RestTemplate();
-
-		// 요청 헤더 설정을 위한 HttpHeaders 객체 생성
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("X-Naver-Client-Id", clientId); // 네이버 API의 클라이언트 ID 설정
-		headers.set("X-Naver-Client-Secret", clientSecret); // 네이버 API의 클라이언트 시크릿 설정
-
-		// HttpEntity 객체를 생성하여 헤더를 포함한 요청 엔티티 생성
-		HttpEntity<String> entity = new HttpEntity<>(headers);
-
-		// RestTemplate을 사용하여 네이버 API에 GET 요청을 보내고 응답을 받음
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-
-		// 응답 상태 코드가 2xx (성공) 인지 확인
-		if (response.getStatusCode().is2xxSuccessful()) {
-		    // 응답 본문(XML 형식)을 문자열로 가져옴
-		    String xmlResponse = response.getBody();
-		    try {
-		        // JAXBContext를 생성하여 XML 데이터를 Java 객체로 변환하기 위한 설정
-		        JAXBContext jaxbContext = JAXBContext.newInstance(BookSearchResponse.class);
-		        // Unmarshaller 객체를 생성하여 XML을 Java 객체로 변환
-		        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-		        // StringReader를 사용하여 XML 문자열을 읽어들이고, BookSearchResponse 객체로 변환
-		        StringReader reader = new StringReader(xmlResponse);
-		        BookSearchResponse bookSearchResponse = (BookSearchResponse) unmarshaller.unmarshal(reader);
-		        return bookSearchResponse.getChannel().getItems().get(0);
-		        /*
-		        // 변환된 BookSearchResponse 객체에서 각 도서 항목을 반복하여 출력
-		        for (BookSearchResponse.Item item : bookSearchResponse.getChannel().getItems()) {
-		            System.out.println("Title: " + item.getTitle()); // 도서 제목 출력
-		            System.out.println("Author: " + item.getAuthor()); // 저자 출력
-		            System.out.println("Publisher: " + item.getPublisher()); // 출판사 출력
-		            // 필요한 다른 필드도 출력 가능
-		        }
-		        */
-
-		    } catch (JAXBException e) {
-		        // XML 변환 과정에서 발생한 예외 처리
-		        e.printStackTrace();
-		    }
-		} else {
-		    // 응답이 2xx가 아닌 경우, 실패한 상태 코드 출력
-		    System.out.println("Request failed with status code: " + response.getStatusCode());
-		}
-
-		return null;
+        try {
+            System.out.println("Sending request to Naver API: " + url);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+            
+            if (response.getStatusCode().is2xxSuccessful()) {
+                String xmlResponse = response.getBody();
+                System.out.println("Received XML response: " + xmlResponse);
+                
+                JAXBContext jaxbContext = JAXBContext.newInstance(BookSearchResponse.class);
+                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+                StringReader reader = new StringReader(xmlResponse);
+                BookSearchResponse bookSearchResponse = (BookSearchResponse) unmarshaller.unmarshal(reader);
+                
+                if (!bookSearchResponse.getChannel().getItems().isEmpty()) {
+                    System.out.println("Successfully retrieved book details for ISBN: " + isbn); //여기까지 콘솔에 출력됨
+                    return bookSearchResponse.getChannel().getItems().get(0);
+                } else {
+                    System.out.println("No book found for ISBN: " + isbn);
+                    return null;
+                }
+            } else {
+                System.out.println("Request failed with status code: " + response.getStatusCode());
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error fetching book details for ISBN " + isbn + ": " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    
 	}
 
 	private BookDTO convertToBookDTO1(NaverBookItem item) {
@@ -284,5 +280,65 @@ public class BookServiceProcess implements BookService {
 		}
 		return slides;
 	}
+
+	@Override
+	public void addToFavorites(String isbn) throws Exception {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		System.out.println("Adding book with ISBN " + isbn + " to favorites");
+		try {
+			Item bookDetail = getBookByIsbn(isbn);
+			System.out.println("Retrieved book details: " + bookDetail);
+
+			if (bookDetail == null) {
+				System.out.println("Book details not found for ISBN: " + isbn);
+				throw new Exception("Book not found");
+			}
+
+			FavoriteBook favoriteBook = convertToFavoriteBook(bookDetail);
+			System.out.println("Converted to FavoriteBook: " + favoriteBook);
+
+			favoriteBookRepository.save(favoriteBook);
+			System.out.println("Book successfully added to favorites: " + isbn);
+		} catch (Exception e) {
+			System.out.println("Error adding book to favorites: " + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	private FavoriteBook convertToFavoriteBook(Item item) {
+		System.out.println("Converting Item to FavoriteBook: " + item);
+		return FavoriteBook.builder()
+				.isbn(item.getIsbn())
+				.title(item.getTitle())
+				.author(item.getAuthor())
+				.publisher(item.getPublisher())
+				//.publicationDate(parsePublicationDate(item.getPubdate()))
+				.description(truncateDescription(item.getDescription()))
+				.imageUrl(item.getImage())
+				.discountPrice(parseDiscountPrice(item.getDiscount()))
+				.build();
+	}
+
+	private Integer parseDiscountPrice(String discount) {
+		System.out.println("Parsing discount price: " + discount);
+        try {
+            return Integer.parseInt(discount);
+        } catch (NumberFormatException e) {
+            System.out.println("Failed to parse discount price: " + discount);
+            e.printStackTrace();
+            return null; // 또는 다른 기본값 사용
+        }
+	}
+
+	/*
+	 * private LocalDateTime parsePublicationDate(String pubdate) {
+	 * System.out.println("Parsing publication date: " + pubdate); try { return
+	 * LocalDateTime.parse(pubdate, DateTimeFormatter.ofPattern("yyyyMMdd")); }
+	 * catch (DateTimeParseException e) {
+	 * System.out.println("Failed to parse publication date: " + pubdate);
+	 * e.printStackTrace(); return LocalDateTime.now(); // 또는 null을 반환하거나 다른 기본값 사용
+	 * } }
+	 */
 
 }

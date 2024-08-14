@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.bookbook.domain.dto.CombinedSellerDTO;
+import com.example.bookbook.domain.entity.ImageEntity;
 import com.example.bookbook.domain.entity.Role;
 import com.example.bookbook.domain.entity.SellerEntity;
 import com.example.bookbook.domain.entity.UserEntity;
 import com.example.bookbook.domain.repository.SellerEntityRepository;
 import com.example.bookbook.domain.repository.UserEntityRepository;
+import com.example.bookbook.service.ImageService;
 import com.example.bookbook.service.SellerService;
 import com.example.bookbook.utils.FileUploadUtil;
 
@@ -25,7 +27,7 @@ public class SellerServiceProcess implements SellerService {
 	private final UserEntityRepository userRepository;
     private final SellerEntityRepository sellerRepository;
     private final PasswordEncoder pe;
-    private final FileUploadUtil fileUploadUtil;
+    private final ImageService imageService;
 
     @Override
     @Transactional
@@ -47,6 +49,13 @@ public class SellerServiceProcess implements SellerService {
         // UserEntity에 SellerEntity 연결
         userEntity.setSeller(sellerEntity);
         userRepository.save(userEntity);
+        
+        // 사업자 등록증 이미지 처리
+        if (dto.getBusinessRegImageId() != null) {
+            ImageEntity image = imageService.getImageById(dto.getBusinessRegImageId());
+            sellerEntity.setBusinessRegImage(image);
+            sellerEntity.setBusinessReg(image.getFileUrl());
+        }
 
     }
 }

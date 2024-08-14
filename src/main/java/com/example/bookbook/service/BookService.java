@@ -25,6 +25,9 @@ public interface BookService {
 	void getDefaultBooks(Model model);
 
 
+	void addToFavorites(String isbn) throws Exception;
+
+
 
 
 
