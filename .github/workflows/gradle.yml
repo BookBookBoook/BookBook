@@ -75,3 +75,4 @@ jobs:
           --s3-location bucket=${{secrets.S3_LOCATION_BUCKET}},key=${{env.PROJECT_NAME}}.zip,bundleType=zip
 
     #   run: gradle build
+    
