@@ -10,7 +10,7 @@
                 <a th:href="@{|/detail/${book.isbn}|}"><img th:src="${book.image}" th:alt="${book.title}"></a>
                 <a class="book-title" th:href="@{|/detail/${book.isbn}|}" th:text="${book.title}" th:title="${book.title}"></a>
                 <span class="book-author" th:text="${book.author}"></span>
-                <span class="book-price" th:text="${book.discount} + '원'"></span>
+                <span class="book-price" th:text="|${#numbers.formatInteger(book.discount,3,'COMMA')} 원|"></span>
             </span>
         </div>
     </div>

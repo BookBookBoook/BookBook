@@ -28,6 +28,12 @@ public interface BookService {
 	void addToFavorites(String isbn) throws Exception;
 
 
+	
+
+
+	void addToCart(String isbn);
+	 
+
 
 
 
