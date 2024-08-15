@@ -12,4 +12,6 @@ public interface MypageUserMapper {
 
 	void updateId(accountUpdateDTO dto);
 
+	void changeStatus(long userId);
+
 }

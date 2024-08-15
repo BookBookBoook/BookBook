@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>북북 로그인</title>
     <link rel="stylesheet" href="/css/login/login.css">
+    <script type="text/javascript">
+	    // URL에서 쿼리 파라미터를 가져오는 함수
+	    function getParameterByName(name) {
+	        let url = window.location.href;
+	        name = name.replace(/[\[\]]/g, '\\$&');
+	        let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+	            results = regex.exec(url);
+	        if (!results) return null;
+	        if (!results[2]) return '';
+	        return results[2];  // URL 인코딩이 없으므로 바로 반환
+	    }
+	
+	    // 로그인 실패 시 알람 메시지 출력
+	    let errorMessage = getParameterByName('exception');
+	    if (errorMessage) {
+	        if (errorMessage === 'delete') {
+	            alert('탈퇴 처리된 아이디입니다.\n다른 아이디로 로그인하시거나 새로 회원가입 해주세요.');
+	        }
+	    }
+	</script>
 </head>
 
 <body>

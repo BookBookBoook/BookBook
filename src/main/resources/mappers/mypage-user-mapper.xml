@@ -19,4 +19,10 @@
 			detail_address = #{detailAddress}
 		where user_id = #{userId}
 	</update>
+	
+	<update id="changeStatus" parameterType="long">
+		update user
+		set status = 1
+		where user_id = #{userId}
+	</update>
 </mapper>

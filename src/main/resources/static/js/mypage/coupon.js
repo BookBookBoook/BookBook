@@ -1,4 +1,8 @@
-//쿠폰, 적립금 페이지 이동
+//csrf 토큰
+const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+//사용가능한 쿠폰, 만료된 쿠폰 페이지 이동
 function openTab(evt, tabName) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
@@ -81,5 +85,29 @@ span.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+    }
+}
+
+//쿠폰 추가할때 체크
+async function registerCoupon() {
+	
+    const couponNum = document.getElementById('couponNum').value;
+
+    try {
+        const response = await fetch('/mypage/coupons', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                [header]: token
+            },
+            body: new URLSearchParams({ couponNum })
+        });
+
+        const result = await response.text();
+
+        alert(result); //서버에서 가져온 message 출력
+        window.location.href = '/mypage/coupons';
+    } catch (error) {
+        console.log('An error occurred: ' + error.message);
     }
 }

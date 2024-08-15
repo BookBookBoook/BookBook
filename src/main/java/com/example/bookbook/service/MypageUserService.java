@@ -11,4 +11,6 @@ public interface MypageUserService {
 
 	void updateProcess(accountUpdateDTO dto);
 
+	void changeStatus(CustomUserDetails user);
+
 }
