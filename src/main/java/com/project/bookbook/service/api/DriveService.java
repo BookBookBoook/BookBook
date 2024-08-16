@@ -1,5 +1,6 @@
 package com.project.bookbook.service.api;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,29 +80,6 @@ public class DriveService {
         return files;
     }
 
-	
-    public File getFileDetails(String accessToken, String fileId) throws Exception {
-        System.out.println("Fetching file details for fileId: " + fileId);
-
-        String apiUrl = "https://www.worksapis.com/v1.0/users/me/drive/files/" + fileId;
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + accessToken);
-
-        String fileResponseResult = openApiUtil.request(apiUrl, headers, "GET", null);
-        System.out.println("File details response: " + fileResponseResult);
-        
-        File file = openApiUtil.objectMapper(fileResponseResult, new TypeReference<File>() {});
-        
-        // 이미지 파일인 경우 URL 추가
-        if (file.getFileType().toString().startsWith("image")) {
-            file.setImageUrl(apiUrl + "/content"); // 이미지 파일의 콘텐츠 URL 설정
-        }
-
-        return file;
-    }
-
-
 
     private NaverTokenDTO getAccessToken(String code) throws Exception {
         String apiUrl = "https://auth.worksmobile.com/oauth2/v2.0/token";
@@ -119,8 +97,40 @@ public class DriveService {
         return openApiUtil.objectMapper(responseBody, new TypeReference<NaverTokenDTO>() {});
     }
     
-    
-    
+    public String getFileName(String accessToken, String fileId) throws Exception {
+        String apiUrl = "https://www.worksapis.com/v1.0/users/me/drive/files/" + fileId;
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        try {
+            String responseBody = openApiUtil.request(apiUrl, headers, "GET", null);
+            Map<String, Object> fileInfo = openApiUtil.objectMapper(responseBody, new TypeReference<Map<String, Object>>() {});
+
+            String fileName = (String) fileInfo.get("fileName");
+            if (fileName == null) {
+                throw new IllegalStateException("File name not found in API response");
+            }
+            return fileName;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public byte[] downloadFile(String accessToken, String fileId) throws Exception {
+        String apiUrl = "https://www.worksapis.com/v1.0/users/me/drive/files/" + fileId + "/download";
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        try {
+            String responseBody = openApiUtil.request(apiUrl, headers, "GET", null);
+            // 응답이 바이너리 데이터인 경우, 문자열을 바이트 배열로 변환
+            return responseBody.getBytes();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
     
     private String encodeParameters(Map<String, String> params) {
         StringBuilder result = new StringBuilder();
