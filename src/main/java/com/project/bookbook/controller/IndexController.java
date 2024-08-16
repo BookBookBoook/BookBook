@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.bookbook.domain.dto.BookDTO;
 import com.project.bookbook.domain.dto.BookSearchResponse.Item;
 import com.project.bookbook.domain.entity.UserEntity;
+import com.project.bookbook.domain.repository.WishService;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.BookService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 @RequestMapping("/")
@@ -34,6 +34,7 @@ public class IndexController {
 	// 책 서비스
 	@Autowired
 	private final BookService bookservice;
+	private final WishService wishService;
 
 	// 메인페이지 이동
 	@GetMapping
@@ -48,14 +49,14 @@ public class IndexController {
 		bookservice.getBookList(model);
 		return "views/index/serchBookList";
 	}
-	
 
 	@GetMapping("/search")
 	public String search(@RequestParam("query") String query, Model model) {
 		bookservice.searchBooks(query, model);
 		return "views/index/serchBookList.html";
 	}
-	//상세 도서 정보
+
+	// 상세 도서 정보
 	@GetMapping("/detail/{isbn}")
 	public String detail(@PathVariable("isbn") String isbn, Model model) {
 		try {
@@ -70,47 +71,54 @@ public class IndexController {
 		}
 		return "views/index/detail";
 	}
-	
-	//즐겨찾기 데이터 담기
-	@PostMapping("/api/books/favorite")
+
+	// 즐겨찾기 데이터 담기
+	@PostMapping("/api/books/wish")
 	@ResponseBody
-	public ResponseEntity<String> addToFavorites(@RequestParam("isbn") String isbn) {
-	    try {
-	    	bookservice.addToFavorites(isbn);
-	        return ResponseEntity.ok("Book successfully added to favorites");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                .body("Error adding book to favorites: " + e.getMessage());
-	    }
+	public ResponseEntity<String> addToWishlist(@RequestParam("isbn") String isbn,
+			@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+		//System.out.println("요청 받음 - ISBN: " + isbn + ", 사용자: " + userDetails);
+
+		try {
+			Long userId = userDetails.getUserId();
+			//System.out.println("처리 중 - ISBN: " + isbn + ", 사용자 ID: " + userId);
+
+			wishService.addToWishlist(isbn, userId);
+
+			return ResponseEntity.ok("Book successfully added to wishlist///");
+		} catch (Exception e) {
+			//System.err.println("위시리스트 추가 중 오류 발생: " + e.getMessage());
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error adding book to wishlist: ///" + e.getMessage());
+		}
 	}
-	
-	  //장바구니 담기
-	  
+
+	// 장바구니 담기
+
 	@PostMapping("/api/books/cartItem")
 	@ResponseBody
-	public ResponseEntity<String> addToCart(
-	        @RequestParam("isbn") String isbn,
-	        @RequestParam(value = "quantity", defaultValue = "1") int quantity,
-	        @AuthenticationPrincipal CustomUserDetails userDetails) {
-	    
-	    System.out.println("요청 받음 - ISBN: " + isbn + ", 수량: " + quantity + ", 사용자: " + userDetails);
-	    
-	    try {
-	        Long userId = userDetails.getUserId();
-	        System.out.println("처리 중 - ISBN: " + isbn + ", 수량: " + quantity + ", 사용자 ID: " + userId);
-	        
-	        bookservice.addToCart(isbn, userId, quantity);
-	        
-	        return ResponseEntity.ok("Book successfully added to cart");
-	    } catch (Exception e) {
-	        System.err.println("장바구니 추가 중 오류 발생: " + e.getMessage());
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                .body("Error adding book to cart: " + e.getMessage());
-	    }
+	public ResponseEntity<String> addToCart(@RequestParam("isbn") String isbn,
+			@RequestParam(value = "quantity", defaultValue = "1") int quantity,
+			@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+		//System.out.println("요청 받음 - ISBN: " + isbn + ", 수량: " + quantity + ", 사용자: " + userDetails);
+
+		try {
+			Long userId = userDetails.getUserId();
+			System.out.println("처리 중 - ISBN: " + isbn + ", 수량: " + quantity + ", 사용자 ID: " + userId);
+
+			bookservice.addToCart(isbn, userId, quantity);
+
+			return ResponseEntity.ok("Book successfully added to cart");
+		} catch (Exception e) {
+			//System.err.println("장바구니 추가 중 오류 발생: " + e.getMessage());
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error adding book to cart: " + e.getMessage());
+		}
 	}
-	 
 
 	// 이벤트페이지
 	@GetMapping("/event")
