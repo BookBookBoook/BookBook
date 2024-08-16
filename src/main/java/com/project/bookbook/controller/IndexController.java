@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bookbook.domain.dto.BookDTO;
 import com.project.bookbook.domain.dto.BookSearchResponse.Item;
+import com.project.bookbook.domain.entity.UserEntity;
+import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.BookService;
 
 import lombok.RequiredArgsConstructor;
@@ -85,13 +89,22 @@ public class IndexController {
 	  
 	@PostMapping("/api/books/cartItem")
 	@ResponseBody
-	public ResponseEntity<String> addToCart(@RequestParam("isbn") String isbn) {
-	    System.out.println("Controller: Received request to add book to cart: " + isbn);
+	public ResponseEntity<String> addToCart(
+	        @RequestParam("isbn") String isbn,
+	        @RequestParam(value = "quantity", defaultValue = "1") int quantity,
+	        @AuthenticationPrincipal CustomUserDetails userDetails) {
+	    
+	    System.out.println("요청 받음 - ISBN: " + isbn + ", 수량: " + quantity + ", 사용자: " + userDetails);
+	    
 	    try {
-	        bookservice.addToCart(isbn);
+	        Long userId = userDetails.getUserId();
+	        System.out.println("처리 중 - ISBN: " + isbn + ", 수량: " + quantity + ", 사용자 ID: " + userId);
+	        
+	        bookservice.addToCart(isbn, userId, quantity);
+	        
 	        return ResponseEntity.ok("Book successfully added to cart");
 	    } catch (Exception e) {
-	        System.out.println("Controller: Error adding book to cart: " + e.getMessage());
+	        System.err.println("장바구니 추가 중 오류 발생: " + e.getMessage());
 	        e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                .body("Error adding book to cart: " + e.getMessage());

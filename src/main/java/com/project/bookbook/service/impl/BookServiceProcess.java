@@ -1,6 +1,10 @@
 package com.project.bookbook.service.impl;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -24,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.bookbook.domain.dto.BookDTO;
 import com.project.bookbook.domain.dto.BookSearchResponse;
 import com.project.bookbook.domain.dto.BookSlide;
@@ -31,11 +36,16 @@ import com.project.bookbook.domain.dto.NaverBookItem;
 import com.project.bookbook.domain.dto.NaverBookResponse;
 import com.project.bookbook.domain.dto.BookSearchResponse.Item;
 import com.project.bookbook.domain.entity.BookEntity;
+import com.project.bookbook.domain.entity.CartDetailEntity;
+import com.project.bookbook.domain.entity.CartEntity;
 import com.project.bookbook.domain.entity.FavoriteBook;
-import com.project.bookbook.domain.repository.CartItemRepository;
+import com.project.bookbook.domain.entity.UserEntity;
+import com.project.bookbook.domain.repository.BookRepository;
 import com.project.bookbook.domain.repository.FavoriteBookRepository;
 import com.project.bookbook.service.BookService;
+import com.project.bookbook.service.CartService;
 
+import jakarta.transaction.Transactional;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -54,40 +64,56 @@ public class BookServiceProcess implements BookService {
 	private static final String NAVER_BOOK_API_URL = "https://openapi.naver.com/v1/search/book.json";
 
 	private final FavoriteBookRepository favoriteBookRepository;
-	private final CartItemRepository cartItemRepository;
+	private final BookRepository bookRepository;
+	private final CartService cartService;
 
 	// 검색 결과
 	public void searchBooks(String query, Model model) {
-		try {
-			String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
-			String url = NAVER_BOOK_API_URL + "?query=" + encodedQuery + "&display=20"; // 결과 수를 100개로 설정
+	    try {
+	        String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString());
+	        String urlString = NAVER_BOOK_API_URL + "?query=" + encodedQuery + "&display=20";
+	        URL url = new URL(urlString);
 
-			HttpHeaders headers = new HttpHeaders();
-			headers.set("X-Naver-Client-Id", clientId);
-			headers.set("X-Naver-Client-Secret", clientSecret);
-			headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("GET");
+	        conn.setRequestProperty("X-Naver-Client-Id", clientId);
+	        conn.setRequestProperty("X-Naver-Client-Secret", clientSecret);
 
-			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<NaverBookResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
-					new HttpEntity<>(headers), NaverBookResponse.class);
+	        int responseCode = conn.getResponseCode();
+	        if (responseCode == HttpURLConnection.HTTP_OK) {
+	            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+	            String inputLine;
+	            StringBuilder response = new StringBuilder();
+	            while ((inputLine = in.readLine()) != null) {
+	                response.append(inputLine);
+	            }
+	            in.close();
 
-			NaverBookResponse response = responseEntity.getBody();
-			if (response != null && response.getItems() != null && !response.getItems().isEmpty()) {
-				List<BookDTO> books = response.getItems().stream().map(this::convertToBookDTO)
-						.collect(Collectors.toList());
-				model.addAttribute("books", books);
-				model.addAttribute("query", query);
-				logger.info("검색 결과: {} 건", books.size());
-			} else {
-				model.addAttribute("books", Collections.emptyList());
-				model.addAttribute("error", "검색 결과가 없습니다.");
-				logger.info("검색 결과 없음: {}", query);
-			}
-		} catch (Exception e) {
-			logger.error("책 검색 중 오류 발생: {}", e.getMessage(), e);
-			model.addAttribute("books", Collections.emptyList());
-			model.addAttribute("error", "검색 중 오류가 발생했습니다: " + e.getMessage());
-		}
+	            ObjectMapper mapper = new ObjectMapper();
+	            NaverBookResponse bookResponse = mapper.readValue(response.toString(), NaverBookResponse.class);
+
+	            if (bookResponse != null && bookResponse.getItems() != null && !bookResponse.getItems().isEmpty()) {
+	                List<BookDTO> books = bookResponse.getItems().stream()
+	                                                  .map(this::convertToBookDTO)
+	                                                  .collect(Collectors.toList());
+	                model.addAttribute("books", books);
+	                model.addAttribute("query", query);
+	                logger.info("검색 결과: {} 건", books.size());
+	            } else {
+	                model.addAttribute("books", Collections.emptyList());
+	                model.addAttribute("error", "검색 결과가 없습니다.");
+	                logger.info("검색 결과 없음: {}", query);
+	            }
+	        } else {
+	            logger.error("HTTP 요청 실패: {}", responseCode);
+	            model.addAttribute("books", Collections.emptyList());
+	            model.addAttribute("error", "API 요청 실패: " + responseCode);
+	        }
+	    } catch (Exception e) {
+	        logger.error("책 검색 중 오류 발생: {}", e.getMessage(), e);
+	        model.addAttribute("books", Collections.emptyList());
+	        model.addAttribute("error", "검색 중 오류가 발생했습니다: " + e.getMessage());
+	    }
 	}
 
 	private BookDTO convertToBookDTO(NaverBookItem item) {
@@ -255,20 +281,6 @@ public class BookServiceProcess implements BookService {
 
 	}
 
-	private BookDTO convertToBookDTO1(NaverBookItem item) {
-		BookDTO book = new BookDTO();
-		book.setTitle(item.getTitle());
-		book.setAuthor(item.getAuthor());
-		book.setPublisher(item.getPublisher());
-		book.setPubdate(item.getPubdate());
-		book.setDescription(item.getDescription());
-		book.setIsbn(item.getIsbn());
-		book.setImage(item.getImage());
-		book.setLink(item.getLink());
-		book.setDiscount(item.getDiscount());
-		// 기타 필요한 필드 설정
-		return book;
-	}
 
 	@Override
 	public void getDefaultBooks(Model model) {
@@ -314,14 +326,10 @@ public class BookServiceProcess implements BookService {
 
 	private FavoriteBook convertToFavoriteBook(Item item) {
 		// System.out.println("Converting Item to FavoriteBook: " + item);
-		return FavoriteBook.builder()
-				.isbn(item.getIsbn())
-				.title(item.getTitle())
-				.author(item.getAuthor())
+		return FavoriteBook.builder().isbn(item.getIsbn()).title(item.getTitle()).author(item.getAuthor())
 				.publisher(item.getPublisher())
 				// .publicationDate(parsePublicationDate(item.getPubdate()))
-				.description(truncateDescription(item.getDescription()))
-				.imageUrl(item.getImage())
+				.description(truncateDescription(item.getDescription())).imageUrl(item.getImage())
 				.discountPrice(parseDiscountPrice(item.getDiscount())).build();
 	}
 
@@ -336,41 +344,48 @@ public class BookServiceProcess implements BookService {
 		}
 	}
 
+
 	@Override
-	public void addToCart(String isbn) {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-		System.out.println("Adding book with ISBN " + isbn + " to favorites");
-		try {
-			Item bookDetail = getBookByIsbn(isbn);
-			System.out.println("Retrieved book details: " + bookDetail);
+	@Transactional
+	public void addToCart(String isbn, Long userId, int quantity) {
+	    System.out.println("서비스 시작 - ISBN: " + isbn + ", 사용자 ID: " + userId + ", 수량: " + quantity);
 
-			if (bookDetail == null) {
-				System.out.println("Book details not found for ISBN: " + isbn);
-				throw new Exception("Book not found");
-			}
+	    BookEntity book = findOrCreateBook(isbn);
 
-			BookEntity cartItems = CartItemsBook(bookDetail);
-			System.out.println("Converted to FavoriteBook: " + cartItems);
-
-			cartItemRepository.save(cartItems);
-			System.out.println("Book successfully added to favorites: " + isbn);
-		} catch (Exception e) {
-			System.out.println("Error adding book to favorites: " + e.getMessage());
-			e.printStackTrace();
-		}
-
+	    try {
+	        cartService.addToCart(book, userId, quantity);
+	        System.out.println("장바구니에 책 추가 완료 - 수량: " + quantity);
+	    } catch (Exception e) {
+	        System.err.println("장바구니에 책 추가 중 오류 발생: " + e.getMessage());
+	        e.printStackTrace();
+	        throw e; // 상위 레벨로 예외를 전파
+	    }
 	}
 
-	private BookEntity CartItemsBook(Item item) { 
-		return BookEntity.builder()
-				.bookName(item.getTitle())
-				.bookImg(item.getImage())
-				.author(item.getAuthor())
-				.publisher(item.getPublisher())
-				.description(truncateDescription(item.getDescription()))
-				.isbn(item.getIsbn())
-				.discount(parseDiscountPrice(item.getDiscount()))
-				.build(); 
-		}
+	private BookEntity findOrCreateBook(String isbn) {
+	    return bookRepository.findByIsbn(isbn).orElseGet(() -> {
+	        System.out.println("책을 찾지 못함. 네이버 API에서 정보 가져오기 시도");
+	        Item naverBookItem = getBookByIsbn(isbn);
+	        if (naverBookItem == null) {
+	            throw new RuntimeException("Book not found in Naver API");
+	        }
+	        BookEntity newBook = createAndSaveBookEntity(naverBookItem);
+	        System.out.println("새 책 저장됨 - BookNum: " + newBook.getBookNum());
+	        return newBook;
+	    });
+	}
+
+	private BookEntity createAndSaveBookEntity(Item item) {
+	    BookEntity book = BookEntity.builder()
+	            .bookName(item.getTitle())
+	            .bookImg(item.getImage())
+	            .author(item.getAuthor())
+	            .publisher(item.getPublisher())
+	            .description(truncateDescription(item.getDescription()))
+	            .isbn(item.getIsbn())
+	            .discount(parseDiscountPrice(item.getDiscount()))
+	            .build();
+	    return bookRepository.save(book);
+	}
 
 }
