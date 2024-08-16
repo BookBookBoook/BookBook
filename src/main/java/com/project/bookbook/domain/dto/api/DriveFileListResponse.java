@@ -1,19 +1,18 @@
 package com.project.bookbook.domain.dto.api;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NaverTokenDTO {
-	
-	private String access_token;
-	private String refresh_token;
-	private String expires_in;
-	private String scope;
-	private String token_type;
-	
+public class DriveFileListResponse {
+    private List<Files> files;
+    private ResponseMetadata responseMetaData;
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>네이버 웍스 드라이브 파일 목록</title>
+    <style>
+    </style>
+</head>
+<body>
+    <h1>네이버 웍스 드라이브 파일 목록</h1>
+    <table>
+        <tr>
+            <th>파일 이름</th>
+            <th>파일 크기</th>
+            <th>파일 타입</th>
+            <th>생성 날짜</th>
+            <th>수정 날짜</th>
+        </tr>
+        <tr th:each="file : ${files}">
+            <td>
+                <a href="#" th:data-file-id="${file.fileId}" th:text="${file.fileName}" class="file-link"></a>
+            </td>
+            <td th:text="${file.fileSize}"></td>
+            <td th:text="${file.fileType}"></td>
+            <td th:text="${file.createdTime}"></td>
+            <td th:text="${file.modifiedTime}"></td>
+        </tr>
+    </table>
+
+    <div id="fileModal" class="modal">
+        <!-- 모달 내용 -->
+    </div>
+
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var fileLinks = document.querySelectorAll('.file-link');
+            fileLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var fileId = this.getAttribute('data-file-id');
+                    showFileDetails(fileId);
+                });
+            });
+        });
+
+        function showFileDetails(fileId) {
+            fetch(`/drive/file-details?fileId=${fileId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('modalFileName').textContent = data.fileName;
+                    document.getElementById('modalFileDetails').innerHTML = `
+                        <p>파일 ID: ${data.fileId}</p>
+                        <p>파일 크기: ${data.fileSize}</p>
+                        <p>파일 타입: ${data.fileType}</p>
+                        <p>파일 경로: ${data.filePath}</p>
+                        <p>생성 날짜: ${data.createdTime}</p>
+                        <p>수정 날짜: ${data.modifiedTime}</p>
+                        <p>접근 날짜: ${data.accessedTime}</p>
+                        <p>부모 폴더 ID: ${data.parentFileId}</p>
+                        <p>권한 존재 여부: ${data.hasPermission}</p>
+                        <p>공유 여부: ${data.shared}</p>
+                    `;
+                    document.getElementById('fileModal').style.display = 'block';
+                });
+        }
+
+        // 모달 닫기 로직
+        var modal = document.getElementById('fileModal');
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
