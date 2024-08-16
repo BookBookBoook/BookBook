@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -74,7 +75,12 @@ public class SecurityConfig {
                 .permitAll()
             )
             //GET 요청을 통해 로그아웃을 처리하도록 허용
-            .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")))
+            .logout(logout -> logout.logoutRequestMatcher(
+            		 new OrRequestMatcher(
+	    			        new AntPathRequestMatcher("/logout", "GET"),
+	    			        new AntPathRequestMatcher("/logout", "POST")
+	    			    )
+            ))
             .userDetailsService(customUserDetailsService)
             .oauth2Login(oauth2 -> oauth2
                 .loginPage("/login")

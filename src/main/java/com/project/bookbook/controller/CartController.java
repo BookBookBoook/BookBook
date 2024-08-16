@@ -1,18 +1,22 @@
 package com.project.bookbook.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import com.project.bookbook.security.CustomUserDetails;
+import com.project.bookbook.service.CartService;
 
 @Controller
 @RequiredArgsConstructor
 public class CartController {
 	
+	private final CartService cartService;
+	
 	@GetMapping("/cart")
-	public String cartList() {
+	public String cartList(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		cartService.findAllProcess(model, user);
 		return "views/cart/cart-list";
 	}
 	
