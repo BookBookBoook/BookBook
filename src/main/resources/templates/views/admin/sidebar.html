@@ -1,3 +1,5 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
 <div class="wrapper">
 	<nav class="sidebar">
 		<a href="/admin"><img src="/img/logo7.png" class="logo"></a>
@@ -35,7 +37,15 @@
 					<li><a href="/admin/review/complain">신고 리뷰</a></li>
 				</ul>
 			</li>
-			<li><a class="menu">클라우드</a></li>
+                <li>
+                    <a th:href="@{'https://auth.worksmobile.com/oauth2/v2.0/authorize?client_id=' 
+                        + ${@environment.getProperty('naver.client.id')} 
+                        + '&redirect_uri=' 
+                        + ${@environment.getProperty('naver.client.redirect-uri')} 
+                        + '&scope=' 
+                        + ${@environment.getProperty('naver.client.scope')} 
+                        + '&response_type=code&state=drive_access'}" class="menu">드라이브</a>
+                </li>
 			<li>
 				<a class="menu">프로모션 및 쿠폰</a>
 				<ul class="submenu">
@@ -54,3 +64,4 @@
 	</nav>
 	
 </div>
+</html>

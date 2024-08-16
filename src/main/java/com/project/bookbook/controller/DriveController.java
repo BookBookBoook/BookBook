@@ -1,24 +1,29 @@
 package com.project.bookbook.controller;
 
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller; import
-org.springframework.ui.Model; import
-org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller; 
+import org.springframework.ui.Model; 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import
-org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import com.project.bookbook.domain.dto.api.File;
 import com.project.bookbook.domain.dto.api.Files;
-import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.api.DriveService;
 
 import jakarta.servlet.http.HttpSession;
@@ -113,23 +118,30 @@ public class DriveController {
 	        return "views/naver/drive-sub";
 	    }
 	    
-	    @GetMapping("/drive/file-details")
-	    @ResponseBody
-	    public ResponseEntity<File> getFileDetails(@RequestParam("fileId") String fileId,
-	                                               HttpSession session) {
+	    @GetMapping("/drive/files/download")
+	    public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") String fileId, HttpSession session) {
 	        String accessToken = (String) session.getAttribute("accessToken");
-	        System.out.println("AccessToken retrieved from session for file details: " + accessToken);
 	        if (accessToken == null) {
-	            return ResponseEntity.badRequest().build();
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	        }
+
 	        try {
-	            File fileDetails = driveservice.getFileDetails(accessToken, fileId);
-	            return ResponseEntity.ok(fileDetails);
+	            String fileName = driveservice.getFileName(accessToken, fileId);
+	            byte[] fileData = driveservice.downloadFile(accessToken, fileId);
+
+	            ByteArrayResource resource = new ByteArrayResource(fileData);
+
+	            return ResponseEntity.ok()
+	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + "\"")
+	                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	                .contentLength(fileData.length)
+	                .body(resource);
 	        } catch (Exception e) {
-	            System.err.println("Error fetching file details: " + e.getMessage());
-	            return ResponseEntity.internalServerError().build();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	        }
 	    }
+	    
+	    
 	    
 		@PostMapping("/userinfo")
 		@ResponseBody
