@@ -2,16 +2,16 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.bookbook.mapper.CouponMapper">
+<mapper namespace="com.project.bookbook.mapper.CouponMapper">
 	
-	<select id="findAll" parameterType="long" resultType="com.example.bookbook.domain.dto.CouponListDTO">
+	<select id="findAll" parameterType="long" resultType="com.project.bookbook.domain.dto.CouponListDTO">
 		SELECT c.*
 		FROM coupon c
 		JOIN user_coupon uc ON c.coupon_num = uc.coupon_num
 		WHERE uc.user_id = #{userId};
 	</select>
 	
-	<select id="checkCoupon" parameterType="long" resultType="com.example.bookbook.domain.dto.CouponListDTO">
+	<select id="checkCoupon" parameterType="long" resultType="com.project.bookbook.domain.dto.CouponListDTO">
 		select * from coupon
 		where coupon_num = #{couponNum}
 	</select>
@@ -21,7 +21,7 @@
 		values(#{couponNum}, #{userId})
 	</insert>
 	
-	<select id="checkDuplicateCoupon" parameterType="long" resultType="com.example.bookbook.domain.dto.UserCouponDTO">
+	<select id="checkDuplicateCoupon" parameterType="long" resultType="com.project.bookbook.domain.dto.UserCouponDTO">
 		select * from user_coupon
 		where coupon_num = #{couponNum}
 	</select>
