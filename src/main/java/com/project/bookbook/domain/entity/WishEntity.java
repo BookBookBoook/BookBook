@@ -21,17 +21,17 @@ import lombok.Setter;
 @Entity
 @Table(name = "wish")
 public class WishEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long wishNum; //찜번호
-	
+	private long wishNum; // 찜번호
+
 	@ManyToOne // FK 단방향
 	@JoinColumn(name = "userId", nullable = false)
 	private UserEntity user; // 사용자ID fk
-	
+
 	@ManyToOne // FK 단방향
-	@JoinColumn(name = "bookNum", nullable = false)
-	private BookEntity book ; // 도서번호 fk
+	@JoinColumn(name = "isbn", nullable = false)
+	private FavoriteBook favoriteBook; // ISBN fk
 
 }
