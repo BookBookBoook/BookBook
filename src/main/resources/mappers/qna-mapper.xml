@@ -3,27 +3,27 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.example.bookbook.mapper.QNAMapper">
+<mapper namespace="com.project.bookbook.mapper.QNAMapper">
 
-	<select id="findAll" parameterType="long" resultType="com.example.bookbook.domain.dto.QNADTO">
+	<select id="findAll" parameterType="long" resultType="com.project.bookbook.domain.dto.QNADTO">
 		select * 
 		from qna
 		where user_id = #{userId}
 		order by qna_num desc
 	</select>
 	
-	<insert id="save" parameterType="com.example.bookbook.domain.dto.QNACreateDTO">
+	<insert id="save" parameterType="com.project.bookbook.domain.dto.QNACreateDTO">
 		insert into qna (user_id, title, content, qna_type, date)
 		values (#{dto.userId}, #{dto.title}, #{dto.content}, #{dto.qnaType}, current_timestamp)
 	</insert>
 	
-	<select id="findQna" parameterType="long" resultType="com.example.bookbook.domain.dto.QNADTO">
+	<select id="findQna" parameterType="long" resultType="com.project.bookbook.domain.dto.QNADTO">
 		select *
 		from qna
 		where qna_num = #{qnaNum}
 	</select>
 	
-	<select id="findAnswer" parameterType="long" resultType="com.example.bookbook.domain.dto.QNAAnswerDTO">
+	<select id="findAnswer" parameterType="long" resultType="com.project.bookbook.domain.dto.QNAAnswerDTO">
 		select *
 		from qna_answer
 		where qna_num = #{qnaNum}
