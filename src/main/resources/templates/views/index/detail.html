@@ -55,7 +55,7 @@
 				</div>
 				<div class="quantity-selector">
 					<button class="decrease">-</button>
-					<input type="text" value="1" readonly>
+					<input type="text" name="quantity" value="1" readonly>
 					<button class="increase">+</button>
 					<span class="total-price" th:if="${book}"
 						th:text="${book.discount + '원'}">총 가격</span>
@@ -63,7 +63,8 @@
 				<div class="action-buttons">
 					<form th:action="@{/api/books/cartItem}" method="post"
 						class="cart-form" onsubmit="return addToCartItems(this,event)">
-						<input type="hidden" name="isbn" th:value="${book.isbn}" />
+						<input type="hidden" name="isbn" th:value="${book.isbn}" /> <input
+							type="hidden" name="quantity" value="1" />
 						<button type="submit" class="action-button cart-button">장바구니</button>
 					</form>
 					<button class="action-button buy-now">바로구매</button>
