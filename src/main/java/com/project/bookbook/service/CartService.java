@@ -10,5 +10,7 @@ public interface CartService {
 
 	void findAllProcess(Model model, CustomUserDetails user);
 
+	void deleteCartDetail(long cartDetailNum);
+
 
 }
