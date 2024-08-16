@@ -10,9 +10,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Component
 public class OpenApiUtil {
 	public String request(String apiUrl, Map<String, String> requestHeaders, String methodType, String requestBody){
         HttpURLConnection con = connect(apiUrl);
