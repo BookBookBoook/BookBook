@@ -2,81 +2,76 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>네이버 웍스 드라이브 파일 목록</title>
-    <style>
-    </style>
+    <title>클라우드</title>
+    <link rel="stylesheet" href="/css/admin/commons.css">
+    <link rel="stylesheet" href="/css/admin/sidebar.css">
+    <script src="/js/admin/sidebar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
-    <h1>네이버 웍스 드라이브 파일 목록</h1>
-    <table>
-        <tr>
-            <th>파일 이름</th>
-            <th>파일 크기</th>
-            <th>파일 타입</th>
-            <th>생성 날짜</th>
-            <th>수정 날짜</th>
-        </tr>
-        <tr th:each="file : ${files}">
-            <td>
-                <a href="#" th:data-file-id="${file.fileId}" th:text="${file.fileName}" class="file-link"></a>
-            </td>
-            <td th:text="${file.fileSize}"></td>
-            <td th:text="${file.fileType}"></td>
-            <td th:text="${file.createdTime}"></td>
-            <td th:text="${file.modifiedTime}"></td>
-        </tr>
-    </table>
-
-    <div id="fileModal" class="modal">
-        <!-- 모달 내용 -->
+    <div style="display: flex;">
+        <th:block th:insert="~{views/admin/sidebar}" />
+        <div class="container">
+            <h1>네이버 웍스 드라이브 파일 목록</h1>
+            <div class="search-box">
+                <div class="search-section">
+                    <div class="filter-section">
+                        <label for="search">파일 검색</label>
+                        <select id="search">
+                            <option>전체</option>
+                            <option>파일명</option>
+                            <option>파일 타입</option>
+                        </select>
+                        <input type="text" id="searchInput">
+                    </div>
+                    <div class="filter-section">
+                        <label for="search" class="jump2">생성 기간</label>
+                        <input type="date" id="startDate"> ~ <input type="date" id="endDate">
+                    </div>
+                    <div class="filters">
+                        <div class="filter-section">
+                            <label>파일 타입</label>
+                            <input type="radio" name="fileType" checked> 전체
+                            <input type="radio" name="fileType"> 문서
+                            <input type="radio" name="fileType"> 이미지
+                            <input type="radio" name="fileType"> 기타
+                        </div>
+                        <div class="btns">
+                            <button class="search-btn">검색</button>
+                            <button>초기화</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="inven-box">
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>파일 이름</th>
+                            <th>파일 크기</th>
+                            <th>파일 타입</th>
+                            <th>생성 날짜</th>
+                            <th>수정 날짜</th>
+                            <th>다운로드</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="file : ${files}">
+                            <td th:text="${file.fileName}"></td>
+                            <td th:text="${file.fileSize}"></td>
+                            <td th:text="${file.fileType}"></td>
+                            <td th:text="${file.createdTime}"></td>
+                            <td th:text="${file.modifiedTime}"></td>
+                            <td>
+                                <a th:href="@{/drive/files/download(fileId=${file.fileId})}"
+                                   class="btn-download">다운로드</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-    <script th:inline="javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            var fileLinks = document.querySelectorAll('.file-link');
-            fileLinks.forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    var fileId = this.getAttribute('data-file-id');
-                    showFileDetails(fileId);
-                });
-            });
-        });
-
-        function showFileDetails(fileId) {
-            fetch(`/drive/file-details?fileId=${fileId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('modalFileName').textContent = data.fileName;
-                    document.getElementById('modalFileDetails').innerHTML = `
-                        <p>파일 ID: ${data.fileId}</p>
-                        <p>파일 크기: ${data.fileSize}</p>
-                        <p>파일 타입: ${data.fileType}</p>
-                        <p>파일 경로: ${data.filePath}</p>
-                        <p>생성 날짜: ${data.createdTime}</p>
-                        <p>수정 날짜: ${data.modifiedTime}</p>
-                        <p>접근 날짜: ${data.accessedTime}</p>
-                        <p>부모 폴더 ID: ${data.parentFileId}</p>
-                        <p>권한 존재 여부: ${data.hasPermission}</p>
-                        <p>공유 여부: ${data.shared}</p>
-                    `;
-                    document.getElementById('fileModal').style.display = 'block';
-                });
-        }
-
-        // 모달 닫기 로직
-        var modal = document.getElementById('fileModal');
-        var span = document.getElementsByClassName("close")[0];
-
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 </body>
 </html>
