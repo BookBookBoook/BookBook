@@ -1,5 +1,6 @@
 package com.project.bookbook.service.impl;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,23 @@ import com.project.bookbook.domain.repository.UserRepository;
 import com.project.bookbook.service.CartService;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import com.project.bookbook.domain.dto.CartDetailDTO;
+import com.project.bookbook.mapper.CartMapper;
+import com.project.bookbook.security.CustomUserDetails;
+import com.project.bookbook.service.CartService;
+
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CartServiceProcess implements CartService{
+
 
 	@Autowired
     private CartRepository cartRepository;
@@ -26,34 +39,16 @@ public class CartServiceProcess implements CartService{
     @Autowired
     private UserRepository userRepository;
 	
-    @Override
-    @Transactional
-    public void addToCart(BookEntity book, Long userId, int quantity) {
-        UserEntity user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
-        System.out.println("///////////사용자 ID: " + userId);
+  
+	private final CartMapper cartMapper;
+	
+	@Override
+	public void findAllProcess(Model model, CustomUserDetails user) {
+		long userId = user.getUserId();
+		List<CartDetailDTO> cartDetails = cartMapper.findAllCartDetail(userId);
+		model.addAttribute("cartDetails", cartDetails);
+		
+	}
 
-        CartEntity cart = cartRepository.findByUser_UserId(userId)
-            .orElseGet(() -> {
-                CartEntity newCart = new CartEntity();
-                newCart.setUser(user);
-                return cartRepository.save(newCart);
-            });
-        System.out.println("///////////장바구니: " + cart);
-
-        CartDetailEntity cartDetail = cartDetailRepository
-            .findByCart_CartNumAndBook_BookNum(cart.getCartNum(), book.getBookNum())
-            .orElseGet(() -> {
-                CartDetailEntity newCartDetail = new CartDetailEntity();
-                newCartDetail.setCart(cart);
-                newCartDetail.setBook(book);
-                newCartDetail.setCartCnt(0L);
-                return newCartDetail;
-            });
-
-        cartDetail.setCartCnt(cartDetail.getCartCnt() + quantity);
-        cartDetailRepository.save(cartDetail);
-        System.out.println("///////////장바구니 디테일 (수량 추가 후): " + cartDetail + ", 추가된 수량: " + quantity);
-    }
 
 }
