@@ -1,5 +1,19 @@
 package com.project.bookbook.service.impl;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.project.bookbook.domain.entity.BookEntity;
+import com.project.bookbook.domain.entity.CartDetailEntity;
+import com.project.bookbook.domain.entity.CartEntity;
+import com.project.bookbook.domain.entity.UserEntity;
+import com.project.bookbook.domain.repository.CartDetailRepository;
+import com.project.bookbook.domain.repository.CartRepository;
+import com.project.bookbook.domain.repository.UserRepository;
+import com.project.bookbook.service.CartService;
+
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -10,12 +24,22 @@ import com.project.bookbook.mapper.CartMapper;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CartService;
 
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CartServiceProcess implements CartService{
+
+
+	@Autowired
+    private CartRepository cartRepository;
+    @Autowired
+    private CartDetailRepository cartDetailRepository;
+    @Autowired
+    private UserRepository userRepository;
 	
+  
 	private final CartMapper cartMapper;
 	
 	@Override
@@ -25,5 +49,6 @@ public class CartServiceProcess implements CartService{
 		model.addAttribute("cartDetails", cartDetails);
 		
 	}
+
 
 }
