@@ -1,10 +1,12 @@
 function addToCartItems(form, event) {
-     event.preventDefault();
+    event.preventDefault();
     const isbn = form.querySelector('input[name="isbn"]').value;
+    const quantityInput = form.querySelector('input[name="quantity"]');
+    const quantity = quantityInput ? quantityInput.value : '1';  // 수량 입력 필드가 없으면 '1' 사용
     const csrfToken = document.querySelector('meta[name="_csrf"]').content;
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
 
-    console.log("Client: Sending request to add book to CartItems: " + isbn);
+    console.log("Client: Sending request to add book to CartItems: " + isbn + ", Quantity: " + quantity);
 
     fetch(form.action, {
         method: 'POST',
@@ -12,7 +14,7 @@ function addToCartItems(form, event) {
             'Content-Type': 'application/x-www-form-urlencoded',
             [csrfHeader]: csrfToken
         },
-        body: new URLSearchParams(new FormData(form))
+        body: `isbn=${encodeURIComponent(isbn)}&quantity=${encodeURIComponent(quantity)}`
     })
     .then(response => {
         if (!response.ok) {
@@ -26,7 +28,6 @@ function addToCartItems(form, event) {
         const cartButton = form.querySelector('.cart-button');
         cartButton.textContent = '장바구니에 추가됨';
         cartButton.disabled = true;
-        // 선택적: 애니메이션 효과 추가
         cartButton.classList.add('added-to-cart');
     })
     .catch((error) => {
