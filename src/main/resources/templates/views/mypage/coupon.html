@@ -4,6 +4,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
 	<link rel="stylesheet" href="/css/mypage/coupon.css">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <main>
 	<div class="flex">
@@ -16,10 +18,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		        </div>
 		        
 		        <div class="modal" id="modal-register">
-			        <div class="modal-register">
+			        <form class="modal-register" action="/mypage/coupons" method="post">
+			        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 				        <span class="close">&times;</span>
 				        <h2>교환번호 등록</h2>
-				        <input type="text" placeholder="번호를 입력해 주세요">
+				        <input id="couponNum" type="text" name="couponNum" placeholder="번호를 입력해 주세요">
 				        <div class="info">
 				            <p><strong>교환번호 이용안내</strong></p>
 				            <p>받은 쿠폰의 교환번호는 '상세보기'를 눌러 확인 가능합니다.</p>
@@ -27,23 +30,23 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 				            <p>이용중인 다른 교환번호가 있을 경우, 기간 연장이 아닌 별도의 교환번호가 생성됩니다.</p>
 				            <p>등록된 교환번호는 취소/환불이 불가능합니다.</p>
 				        </div>
-				        <button>등록</button>
-				    </div>
+				        <button type="button" onclick="registerCoupon()">등록</button>
+				    </form>
 			    </div>
 		        
 		        <div class="tabs">
 		            <button class="tab active" onclick="openTab(event, 'coupon')">사용 가능 쿠폰</button>
-		            <button class="tab" onclick="openTab(event, 'point')">소멸 예정 쿠폰</button>
+		            <button class="tab" onclick="openTab(event, 'expiredCoupon')">만료된 쿠폰</button>
 		        </div>
 		
 		        <div class="coupon-summary">
 		            <div class="available-coupons">
 		                <span>사용 가능한 쿠폰</span>
-		                <span class="count">7장</span>
+		                <span class="count" th:text="|${#lists.size(coupons)}장|"></span>
 		            </div>
 		            <div class="scheduled-coupons">
-		                <span>이번 달 소멸예정 쿠폰</span>
-		                <span class="count">6장</span>
+		                <span>만료된 쿠폰</span>
+		                <span class="count" th:text="|${#lists.size(expiredCoupons)}장|">6장</span>
 		            </div>
 		        </div>
 		        <div class="coupon-filters">
@@ -54,70 +57,50 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		        
 		        <div id="coupon" class="tabcontent">
 		        	<div class="coupon-container">
-				        <div class="coupon">
-				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 1,000원 할인</div>
-				            <div class="description">어린이 과학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
-				            <div class="dates">2024.07.22 ~ 2024.08.31 <span class="days-left">D-25</span></div>
-				            <div class="details">상세보기</div>
-				        </div>
-				        <div class="coupon">
-				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 1,000원 할인</div>
-				            <div class="description">어린이 수학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
-				            <div class="dates">2024.07.22 ~ 2024.08.31 <span class="days-left">D-25</span></div>
-				            <div class="details">상세보기</div>
-				        </div>
-				        <div class="coupon">
-				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 1,000원 할인</div>
-				            <div class="description">미스터리아(2024년 제 52호) 1000원 할인쿠폰</div>
-				            <div class="dates">2024.07.30 ~ 2024.08.31 <span class="days-left">D-25</span></div>
-				            <div class="details">상세보기</div>
-				        </div>
-				        <div class="coupon">
-				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 2,000원 할인</div>
-				            <div class="description">sam 7.8 2nd 필립커버 케이스 (Black) 2000원 할인쿠폰</div>
-				            <div class="dates">2024.08.01 ~ 2024.08.31 <span class="days-left">D-25</span></div>
-				            <div class="details">상세보기</div>
-				        </div>
-				        <div class="coupon">
-				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 2,000원 할인</div>
-				            <div class="description">sam 7.8 2nd 필립커버 케이스 (White) 2000원 할인쿠폰</div>
-				            <div class="dates">2024.08.01 ~ 2024.08.31 <span class="days-left">D-25</span></div>
-				            <div class="details">상세보기</div>
-				        </div>
-				        <div class="coupon">
-				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 7,000원 할인</div>
-				            <div class="description">sam Stylus Pen(sam 전자책 단말기) 7000원 할인쿠폰</div>
-				            <div class="dates">2024.08.01 ~ 2024.08.31 <span class="days-left">D-25</span></div>
-				            <div class="details">상세보기</div>
-				        </div>
-				        <div class="coupon">
-				            <div class="discount"><i class="fa-regular fa-circle-check"></i> 5%할인</div>
-				            <div class="description">[교보문고x취다이닝] 흐르는 강물처럼 특별할인</div>
-				            <div class="dates">2024.06.14 ~ 2024.09.30</div>
-				            <div class="details">상세보기</div>
-				        </div>
-				    </div>
-				    
-				    <div id="myModal" class="modal">
-				        <div class="modal-content">
-				            <span class="close">&times;</span>
-				            <div class="discount">1,000원 할인 쿠폰</div>
-				            <div class="description">대상 상품 : 어린이 과학동아(2024년 8월 1일자)(15호)<br>쿠폰 교환번호: 2132347822</div>
-				            <div class="dates">사용 기한 : 2024.07.22 ~ 2024.08.31</div>
+				        <div class="coupon" th:each="coupon : ${coupons}">
+				            <div class="discount">
+				            	<i class="fa-regular fa-circle-check"></i> 
+				            	<span th:text="${coupon.couponName}">1,000원 할인</span>
+				            </div>
+				            <div class="description" th:text="${coupon.couponDetail}">어린이 과학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
 				            <div class="dates">
-				            	유의사항 : 중복 사용 불가합니다.<br> 
-				            	첫구매 회원 대상으로만 사용 가능합니다. <br>
-				            	상품쿠폰은 상품 종 별로 적용되며, 쿠폰에 따라 1개 또는 주문수량에 맞게 적용됩니다.<br>
-								유효기간이 지난 쿠폰은 재발행 되지 않습니다.<br>
-								무료배송쿠폰은 배송비가 발생하는 주문에 한해 배송비 무료 적용을 하실 수 있습니다. (단, 해외배송 제외)</div>
+				            	<span th:text="|${coupon.startDate.toLocalDate()} ~ ${coupon.endDate.toLocalDate()}|">날짜</span> 
+				            	<span class="days-left" th:text="|D-${coupon.remainingDays()}|" >D-25</span>
+				            </div>
+				            <div class="details">상세보기</div>
 				        </div>
 				    </div>
-				    
 		        </div>
 		        
-		        <div id="point" class="tabcontent">
-		        	
+		        <div id="expiredCoupon" class="tabcontent">
+		        	<div class="coupon-container">
+			        	<div class="coupon" th:each="expiredCoupon : ${expiredCoupons}">
+				            <div class="discount">
+				            	<i class="fa-regular fa-circle-check"></i> 
+				            	<span th:text="${expiredCoupon.couponName}">1,000원 할인</span>
+				            </div>
+				            <div class="description" th:text="${expiredCoupon.couponDetail}">어린이 과학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
+				            <div class="dates">
+				            	<span th:text="|${expiredCoupon.startDate.toLocalDate()} ~ ${expiredCoupon.endDate.toLocalDate()}|">날짜</span> 
+				            </div>
+				            <div class="details">상세보기</div>
+				        </div>
+				    </div>
 		        </div>
+		        
+		        <div id="myModal" class="modal">
+			        <div class="modal-content">
+			            <span class="close">&times;</span>
+			            <div class="discount">할인 쿠폰 유의사항</div>
+			            <div class="description">대상 상품 및 적용 주문금액을 확인해주세요.</div>
+			            <div class="dates">
+			            	유의사항 : 중복 사용 불가합니다.<br> 
+			            	유효기간이 지난 쿠폰은 재발행 되지 않습니다. <br>
+							주문 취소 시에도 동일하게 적용됩니다.<br>
+							무료배송쿠폰은 배송비가 발생하는 주문에 한해 배송비 무료 적용을 하실 수 있습니다. (단, 해외배송 제외)</div>
+			        </div>
+			    </div>
+			    
 		    </div>
         </div>
     </div>

@@ -38,7 +38,7 @@ public class OrdersEntity{
 	private UserEntity user; // 사용자ID fk
 	
 	@ManyToOne // FK 단방향
-	@JoinColumn(name = "itemKey", nullable = false)
+	@JoinColumn(name = "bookNum", nullable = false)
 	private BookEntity book ; // 도서번호 fk
 	
 	@CreationTimestamp

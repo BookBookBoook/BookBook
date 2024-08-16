@@ -29,7 +29,7 @@ public class CartDetailEntity {
 	private long cartDetailNum; //장바구니 상세번호
 	
 	@ManyToOne // FK 단방향
-	@JoinColumn(name = "itemKey", nullable = false)
+	@JoinColumn(name = "bookNum", nullable = false)
 	private BookEntity book ; // 도서번호 fk
 	
 	@ManyToOne // FK 단방향
