@@ -42,5 +42,11 @@ public class CartServiceProcess implements CartService{
 		
 	}
 
+	@Override
+	public void deleteCartDetail(long cartDetailNum) {
+		cartMapper.deleteCartDetail(cartDetailNum);
+		
+	}
+
 
 }
