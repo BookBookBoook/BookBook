@@ -1,5 +1,6 @@
 package com.example.bookbook.security;
 
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +27,11 @@ public class CustomUserDetailsService implements UserDetailsService{
                 .orElseGet(() -> sellerRepository.findByBusinessNum(username)
                         .map(SellerEntity::getUser)
                         .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username)));
+        
+        //status가 0이 아니라면 탈퇴처리된 회원
+        if(user.getStatus() != 0) {
+        	throw new DisabledException("delete");
+        }
         
         return new CustomUserDetails(user);
     }

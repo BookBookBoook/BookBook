@@ -7,9 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-
-
-
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +21,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomLoginSuccessHandler customLoginSuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     
     @Bean
     @Order(1)
@@ -50,18 +49,18 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
 
-                .requestMatchers("/", "/signup/**", "/login/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload").permitAll()
-
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/", "/signup/**", "/login/**", "/logout/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/seller/**").hasRole("SELLER")
-                .requestMatchers("/mypage/**").hasRole("SELLER")
+                .requestMatchers("/mypage/**").hasRole("USER")
                 .anyRequest().authenticated()
             )
             .formLogin(login -> login
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .failureUrl("/login?error=true")
+                .failureHandler(customAuthenticationFailureHandler)
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .successHandler(customLoginSuccessHandler)
@@ -74,6 +73,8 @@ public class SecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             )
+            //GET 요청을 통해 로그아웃을 처리하도록 허용
+            .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")))
             .userDetailsService(customUserDetailsService)
             .oauth2Login(oauth2 -> oauth2
                 .loginPage("/login")

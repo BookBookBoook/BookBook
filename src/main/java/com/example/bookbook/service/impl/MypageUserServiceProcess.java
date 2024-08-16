@@ -29,8 +29,15 @@ public class MypageUserServiceProcess implements MypageUserService{
 	@Override
 	@Transactional
 	public void updateProcess(accountUpdateDTO dto) {
-		System.out.println(">>>>>>>"+dto);
 		userMapper.updateId(dto);
+	}
+
+	@Override
+	@Transactional
+	public void changeStatus(CustomUserDetails user) {
+		long userId = user.getUserId();
+		userMapper.changeStatus(userId);
+		
 	}
 
 }
