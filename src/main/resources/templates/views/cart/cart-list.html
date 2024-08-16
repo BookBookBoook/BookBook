@@ -5,7 +5,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	<link rel="stylesheet" href="/css/cart/cart-list.css">
 </head>
 <main>
-	<div>
+	<div th:with="totalAmount=0">
         <h1>장바구니</h1>
         <div class="progress-bar">
             <div class="circle active">
@@ -28,24 +28,26 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	            <thead>
 	                <tr>
 	                	<th><input type="checkbox"></th>
-	                    <th>제품정보</th>
+	                    <th class="book-info-text">제품정보</th>
 	                    <th>수량</th>
 	                    <th>결제금액</th>
 	                    <th>주문</th>
 	                </tr>
 	            </thead>
 	            <tbody>
-	                <tr>
+	                <tr th:each="cartDetail : ${cartDetails}"
+	                	th:with="itemAmount=${cartDetail.discount != null && cartDetail.cartCnt != null ? cartDetail.discount * cartDetail.cartCnt : 0},
+                         totalAmount=${totalAmount + itemAmount}">
 	                	<td><input type="checkbox"></td>
-	                    <td class="product-info">
-	                        <img src="/img/book-cover.png" class="book-cover-img">
+	                    <td class="product-info book-info-text">
+	                        <img th:src="${cartDetail.bookImg}" class="book-cover-img">
 	                        <div class="book-info">
-	                            <p>해리포터와 마법사의 돌 1</p>
-	                            <p>J.K 롤링 저 / 강동혁 역</p>
+	                            <p th:text="${cartDetail.bookName}">해리포터와 마법사의 돌 1</p>
+	                            <p th:text="${cartDetail.author}">J.K 롤링 저 / 강동혁 역</p>
 	                        </div>
 	                    </td>
-	                    <td>1개</td>
-	                    <td>17,000원</td>
+	                    <td th:text="|${cartDetail.cartCnt}개|">1개</td>
+	                    <td th:text="|${#numbers.formatDecimal(itemAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
 	                    <td>
 	                        <form action="/" class="buy-buttons">
 	                            <button class="btn" onclick="window.location.href='/payment';">바로 구매</button>
@@ -54,25 +56,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                        </form>
 	                    </td>
 	                </tr>
-	                <tr>
-	                	<td><input type="checkbox"></td>
-	                    <td class="product-info">
-	                        <img src="/img/book-cover.png" class="book-cover-img">
-	                        <div class="book-info">
-	                            <p>해리포터와 마법사의 돌 2</p>
-	                            <p>J.K 롤링 저 / 강동혁 역</p>
-	                        </div>
-	                    </td>
-	                    <td>1개</td>
-	                    <td>17,000원</td>
-	                    <td>
-	                        <form action="/" class="buy-buttons">
-	                            <button class="btn" onclick="window.location.href='/payment';">바로 구매</button>
-	                            <button class="btn">수량 변경</button>
-	                            <button class="btn">삭제</button>
-	                        </form>
-	                    </td>
-	                </tr>
+	                
 	            </tbody>
 	        </table>
 	        
@@ -82,7 +66,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 			    <p><span>상품 할인</span> <span class="price">-1,980원</span></p>
 			    <p><span>쿠폰 할인</span> <span class="price">0원</span></p>
 			    <hr>
-			    <p>최종 결제 금액 <span class="final-amount">17,820원</span></p>
+			    <p>최종 결제 금액 <span class="final-amount" th:text="|${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 0, 'NONE')}원|">17,820원</span></p>
 			    <button class="side-btn" onclick="window.location.href='/';">쇼핑하러가기</button>
             	<button class="side-btn" onclick="window.location.href='/payment';">선택상품 구매</button>
             	<button class="side-btn btn-active" onclick="window.location.href='/payment';">전체상품 구매</button>
