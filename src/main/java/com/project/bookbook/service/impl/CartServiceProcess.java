@@ -32,14 +32,6 @@ import lombok.RequiredArgsConstructor;
 public class CartServiceProcess implements CartService{
 
 
-	@Autowired
-    private CartRepository cartRepository;
-    @Autowired
-    private CartDetailRepository cartDetailRepository;
-    @Autowired
-    private UserRepository userRepository;
-	
-  
 	private final CartMapper cartMapper;
 	
 	@Override

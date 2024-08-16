@@ -43,6 +43,7 @@ import com.project.bookbook.domain.entity.UserEntity;
 import com.project.bookbook.domain.repository.BookRepository;
 import com.project.bookbook.domain.repository.FavoriteBookRepository;
 import com.project.bookbook.service.BookService;
+import com.project.bookbook.service.CartItemService;
 import com.project.bookbook.service.CartService;
 
 import jakarta.transaction.Transactional;
@@ -65,7 +66,7 @@ public class BookServiceProcess implements BookService {
 
 	private final FavoriteBookRepository favoriteBookRepository;
 	private final BookRepository bookRepository;
-	private final CartService cartService;
+	private final CartItemService cartItemService;
 
 	// 검색 결과
 	public void searchBooks(String query, Model model) {
@@ -353,7 +354,7 @@ public class BookServiceProcess implements BookService {
 	    BookEntity book = findOrCreateBook(isbn);
 
 	    try {
-	        cartService.addToCart(book, userId, quantity);
+	    	cartItemService.addToCart(book, userId, quantity);
 	        System.out.println("장바구니에 책 추가 완료 - 수량: " + quantity);
 	    } catch (Exception e) {
 	        System.err.println("장바구니에 책 추가 중 오류 발생: " + e.getMessage());
