@@ -24,4 +24,9 @@
 		    c.user_id = #{userId};
 	</select>
 	
+	<delete id="deleteCartDetail" parameterType="long">
+		delete from cart_detail
+		where cart_detail_num = #{cartDetailNum};
+	</delete>
+	
 </mapper>

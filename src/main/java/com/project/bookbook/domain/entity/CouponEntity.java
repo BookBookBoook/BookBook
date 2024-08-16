@@ -1,6 +1,7 @@
 package com.project.bookbook.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +28,7 @@ import lombok.Setter;
 public class CouponEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long couponNum; // 쿠폰 번호
+	private String couponNum; // 쿠폰 번호
 	
 	@Column(nullable=false)
 	private String couponName; //쿠폰 이름
@@ -41,5 +42,21 @@ public class CouponEntity {
 	
 	@Column(columnDefinition = "timestamp")
 	private LocalDateTime endDate; //쿠폰 만료일
+	
+	@PrePersist
+    public void generateId() {
+        if (this.couponNum == null) {
+            this.couponNum = generateRandomId(); 
+        }
+    }
+
+    private String generateRandomId() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(12);
+        for (int i = 0; i < 12; i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
+    }
 
 }

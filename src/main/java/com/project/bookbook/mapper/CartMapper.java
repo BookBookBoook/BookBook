@@ -11,4 +11,6 @@ public interface CartMapper {
 
 	List<CartDetailDTO> findAllCartDetail(long userId);
 
+	void deleteCartDetail(long cartDetailNum);
+
 }
