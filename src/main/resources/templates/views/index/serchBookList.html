@@ -74,7 +74,7 @@
 								</h5>
 							</div>
 							<div class="button-container">
-								<form th:action="@{/api/books/favorite}" method="post" class="favorite-form" onsubmit="return addToFavorites(this, event)">
+								<form th:action="@{/api/books/wish}" method="post" class="favorite-form" onsubmit="return addToFavorites(this, event)">
 									<input type="hidden" name="isbn" th:value="${book.isbn}" />
 									<button type="submit" class="heart-button">
 										<i class="far fa-heart"></i>
