@@ -14,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 public class MessageDTO {
-    private String content; // 분석된 내용을 담는 필드 
-    private Set<String> keywords; // 질문에서 추출된 주요 키워드를 담는 Set입니다.
+	private String content; // 응답 메시지 내용
+    private Set<String> nouns; // 명사 집합
+    private Set<String> verbs; // 동사 집합 (추가된 필드)
 }

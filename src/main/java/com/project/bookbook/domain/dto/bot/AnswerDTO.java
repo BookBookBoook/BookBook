@@ -13,9 +13,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AnswerDTO {
     private String answer;
-    private String intention;
-    public AnswerDTO intention(String intention) {
-    	this.intention=intention;
+    private int vvNo;
+    private int nnpNo;
+    public AnswerDTO nnpNo(int nnpNo) {
+    	this.nnpNo=nnpNo;
+    	return this;
+    }
+    public AnswerDTO vvNo(int vvNo) {
+    	this.vvNo=vvNo;
     	return this;
     }
 }
