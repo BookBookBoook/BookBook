@@ -1,5 +1,7 @@
 package com.project.bookbook.domain.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,5 +36,9 @@ public class UserCouponEntity {
 	@ManyToOne // FK 단방향
 	@JoinColumn(name = "couponNum", nullable = false)
 	private CouponEntity coupon ; // 쿠폰번호 fk
+	
+	@Column(nullable=true)
+	@ColumnDefault("0")
+	private int status; //0:사용전, 1:사용후
 
 }

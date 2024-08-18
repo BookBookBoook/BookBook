@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -37,7 +39,6 @@ public class CouponServiceProcess implements CouponService{
 		model.addAttribute("coupons", possibleCoupons);
 		
 		//현재 날짜 기준으로 만료된 쿠폰만 필터링
-		
 		List<CouponListDTO> expiredCoupons = coupons.stream()
 				.filter(coupon -> coupon.getEndDate().isBefore(now))
 				.collect(Collectors.toList());

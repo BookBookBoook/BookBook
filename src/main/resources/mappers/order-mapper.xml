@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.bookbook.mapper.OrdersMapper">
+	
+	<insert id="insertUserOrder" parameterType="map">
+		insert into user_orders (merchant_uid, order_date, user_id)
+		values (#{merchantUid}, CURRENT_TIMESTAMP, #{userId})
+	</insert>
+	
+	<insert id="insertUserOrdersDetail" parameterType="map">
+		insert into user_orders_detail (merchant_uid, book_num, order_cnt)
+		values (#{merchantUid}, #{bookNum}, #{cartCnt})
+	</insert>
+	
+	<select id="findByOrderBook" parameterType="long" resultType="com.project.bookbook.domain.dto.OrderDetailDTO">
+		SELECT 
+		    b.book_num,
+		    uod.order_cnt,
+		    b.book_name,
+		    b.book_img,
+		    b.author,
+		    b.discount,
+		    b.stock
+		FROM 
+		    book b
+		JOIN 
+		    user_orders_detail uod
+		ON 
+		    b.book_num = uod.book_num
+		WHERE 
+		    uod.merchant_uid = ${merchantUid};
+	</select>
+	
+	
+</mapper>

@@ -4,6 +4,10 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/cart/cart-list.css">
 	<link rel="stylesheet" href="/css/cart/payment.css">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script src="/js/cart/payment.js"></script>
 </head>
 <main>
 	<div>
@@ -51,33 +55,20 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                 </div>
 
                 <div class="box-section">
-                    <h3>주문상품 <span>총 1개</span></h3>
+                    <h3>주문상품 <span th:text="|총 ${#lists.size(orderBooks)}개|">총 1개</span></h3>
                     <div class="product">
                         <table class="product-details">
                             <tbody>
-                                <tr>
+                                <tr th:each="orderBook:${orderBooks}">
                                     <td>
-                                        <img src="/img/book-cover.png" class="book-cover-img">
+                                        <img th:src="${orderBook.bookImg}" class="book-cover-img">
                                         <div class="book-detail">
-	                                        <h4>해리포터와 마법사의 돌 1</h4>
-	                                        <p>J.K 롤링 저 / 강동혁 역</p>
+	                                        <h4 th:text="${orderBook.bookName}">해리포터와 마법사의 돌 1</h4>
+	                                        <p th:text="${orderBook.author}">J.K 롤링 저 / 강동혁 역</p>
                                         </div>
                                     </td>
-                                    <td>1개</td>
-                                    <td>17,820원</td>
-                                    <td><del>19,800원</del></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="/img/book-cover.png" class="book-cover-img">
-                                        <div class="book-detail">
-	                                        <h4>해리포터와 마법사의 돌 2</h4>
-	                                        <p>J.K 롤링 저 / 강동혁 역</p>
-                                        </div>
-                                    </td>
-                                    <td>1개</td>
-                                    <td>17,820원</td>
-                                    <td><del>19,800원</del></td>
+                                    <td th:text="|${orderBook.orderCnt}개|">1개</td>
+                                    <td th:text="|${orderBook.discount}원|">17,820원</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -86,36 +77,53 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 
                 <div class="box-section">
                     <h3>할인쿠폰</h3>
-                    <p>사용가능한 쿠폰이 없습니다.</p>
+                    <p class="coupon_number" th:text="|보유쿠폰 : ${#lists.size(coupons)}장|">보유쿠폰 : 0장</p>
+                    <div class="flex">
+	                    <button class="grey-button" onclick="openModal()">쿠폰 조회/선택</button>
+	        			<p id="selectedCoupon">쿠폰이 선택되지 않았습니다.</p>
+        			</div>
                 </div>
-
-                <div class="box-section payment-section">
-                    <h3>결제수단</h3>
-                    <div class="payment-options">
-                        <label>
-                            <input type="radio" name="payment" checked>
-                            <span>북북페이 <span class="bookbook-pay">0.3% 즉시할인</span></span>
-                        </label>
-                        <label>
-                            <input type="radio" name="payment">
-                            <span>다른 결제 수단</span>
-                        </label>
-                    </div>
-                    <div class="other-payments">
-                        <button class="grey-button">신용카드</button>
-                        <button class="grey-button">N Pay</button>
-                    </div>
-                </div>
+                
+                
             </div>
+            
+            <!-- 쿠폰 모달창 -->
+		    <div id="couponModal" class="modal">
+		        <div class="modal-content">
+		            <span class="close" onclick="closeModal()">&times;</span>
+		            <h2 class="coupon-text">쿠폰 조회/선택</h2>
+		            <div class="coupon-list" th:each="coupon : ${coupons}">
+		                <label class="coupon-item">
+		                    <input type="radio" name="coupon" th:value="${coupon.couponName}">
+		                    <input type="hidden" th:value="${coupon.couponNum}" id="couponNum">
+		                    <input type="hidden" th:value="${coupon.couponRate}" id="couponRate">
+		                    <span th:text="|${coupon.couponName}쿠폰|"></span>
+		                </label>
+		            </div>
+		            <button class="select-button" onclick="selectCoupon()">쿠폰 선택</button>
+		        </div>
+		    </div>
 	        
 	        <div class="payment-summary">
-			    <p><span>상품 금액</span> <span class="price">19,800원</span></p>
-			    <p><span>배송비</span> <span class="price">0원</span></p>
-			    <p><span>상품 할인</span> <span class="price">-1,980원</span></p>
-			    <p><span>쿠폰 할인</span> <span class="price">0원</span></p>
+			    <p><span>상품 금액</span> <span class="price all-price">0 원</span></p>
+			    <p>
+			    	<span>배송비</span> 
+			    	<span class="price" th:unless="${#lists.isEmpty(orderBooks)}">3000 원</span>
+			    	<span class="price" th:if="${#lists.isEmpty(orderBooks)}">0 원</span>
+			    </p>
+			    <p><span>상품 할인</span> <span class="price">- 0 원</span></p>
+			    <p>
+			    	<span>쿠폰 할인</span> 
+			    	<span class="price" id="selectedCouponRate">- 0 원</span></p>
 			    <hr>
-			    <p>최종 결제 금액 <span class="final-amount">17,820원</span></p>
-            	<button class="side-btn btn-active" onclick="window.location.href='/payment/completion';">결제하기</button>
+			    <p>최종 결제 금액 <span class="final-amount">0 원</span></p>
+			    
+			    <!-- input hidden으로 넘기는 값 -->
+			    <input type="hidden" th:value="${#authentication.principal.name}" id="userName">
+			    <input type="hidden" th:value="${#authentication.principal.email}" id="email">
+			    <input type="hidden" th:value="${merchantUid}" id="merchantUid">
+            	<button class="side-btn btn-active" onclick="requestPay()">결제하기</button>
+            	
                 <p class="expandable">
                 	<span>주문 상품 정보 동의</span>
                 	<i class="fa-solid fa-caret-down"></i>
