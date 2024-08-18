@@ -37,10 +37,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                    <th>주문</th>
 	                </tr>
 	            </thead>
-	            <tbody>
+	            <tbody id="cartList">
 	                <tr th:each="cartDetail : ${cartDetails}"
 	                	th:with="itemAmount=${cartDetail.discount != null && cartDetail.cartCnt != null ? cartDetail.discount * cartDetail.cartCnt : 0},
-                         totalAmount=${totalAmount + itemAmount}">
+                         totalAmount=${totalAmount + itemAmount}"
+                        th:data-cart-detail-num="${cartDetail.cartDetailNum}">
 	                	<td><input type="checkbox"></td>
 	                    <td class="product-info book-info-text">
 	                        <img th:src="${cartDetail.bookImg}" class="book-cover-img">
@@ -64,15 +65,19 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	        </table>
 	        
 	        <div class="payment-summary">
-			    <p><span>상품 금액</span> <span class="price all-price">19,800원</span></p>
-			    <p><span>배송비</span> <span class="price">3000 원</span></p>
+			    <p><span>상품 금액</span> <span class="price all-price">0 원</span></p>
+			    <p>
+			    	<span>배송비</span> 
+			    	<span class="price" th:unless="${#lists.isEmpty(cartDetails)}">3000 원</span>
+			    	<span class="price" th:if="${#lists.isEmpty(cartDetails)}">0 원</span>
+			    </p>
 			    <p><span>상품 할인</span> <span class="price">- 0 원</span></p>
 			    <p><span>쿠폰 할인</span> <span class="price">- 0 원</span></p>
 			    <hr>
-			    <p>최종 결제 금액 <span class="final-amount">17,820원</span></p>
+			    <p>최종 결제 금액 <span class="final-amount">0 원</span></p>
 			    <button class="side-btn" onclick="window.location.href='/';">쇼핑하러가기</button>
             	<button class="side-btn" onclick="window.location.href='/payment';">선택상품 구매</button>
-            	<button class="side-btn btn-active" onclick="window.location.href='/payment';">전체상품 구매</button>
+            	<button class="side-btn btn-active" onclick="paymentAll()">전체상품 구매</button>
 			</div>
 	    </div>
     </div>

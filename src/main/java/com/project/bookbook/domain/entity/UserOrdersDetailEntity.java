@@ -19,16 +19,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "orders_detail")
-public class OrdersDetailEntity {
+@Table(name = "user_orders_detail")
+public class UserOrdersDetailEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long orderDetailNum; //주문상세번호
 	
 	@ManyToOne // FK 단방향
-	@JoinColumn(name = "orderNum", nullable = false)
-	private OrdersEntity orders; // 사용자ID fk
+	@JoinColumn(name = "merchantUid", nullable = false)
+	private UserOrdersEntity orders; // 주문번호 fk
 	
 	@ManyToOne // FK 단방향
 	@JoinColumn(name = "bookNum", nullable = false)
