@@ -1,0 +1,15 @@
+package com.project.bookbook.service;
+
+import java.util.List;
+
+import org.springframework.ui.Model;
+
+import com.project.bookbook.security.CustomUserDetails;
+
+public interface OrderService {
+
+	long createOrder(List<Long> cartDetailNums, CustomUserDetails user);
+
+	void findOrdersInfo(Model model, long merchantUid);
+
+}

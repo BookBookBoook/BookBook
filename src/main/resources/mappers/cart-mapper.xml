@@ -29,4 +29,14 @@
 		where cart_detail_num = #{cartDetailNum};
 	</delete>
 	
+	<!-- CartDetailNums 리스트로 장바구니 상세 정보 가져오기 -->
+	<select id="selectCartDetailsByIds" parameterType="java.util.List" resultType="com.project.bookbook.domain.dto.CartBookCntDTO">
+	    SELECT book_num, cart_cnt
+	    FROM cart_detail 
+	    WHERE cart_detail_num IN 
+	    <foreach item="cartDetailNum" collection="list" open="(" separator="," close=")">
+	        #{cartDetailNum}
+	    </foreach>
+	</select>
+	
 </mapper>
