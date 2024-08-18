@@ -2,6 +2,8 @@ package com.project.bookbook.domain.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,28 +29,31 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class OrdersEntity{
+@Table(name = "user_orders")
+public class UserOrdersEntity{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long orderNum; //주문번호
+	private long merchantUid; //주문번호
 	
 	@ManyToOne // FK 단방향
 	@JoinColumn(name = "userId", nullable = false)
 	private UserEntity user; // 사용자ID fk
 	
 	@ManyToOne // FK 단방향
-	@JoinColumn(name = "bookNum", nullable = false)
-	private BookEntity book ; // 도서번호 fk
+	@JoinColumn(name = "couponNum", nullable = true)
+	private CouponEntity coupon; // 쿠폰 fk
 	
 	@CreationTimestamp
 	@Column(columnDefinition = "timestamp")
 	private LocalDateTime orderDate; //주문날짜
 	
-	private long orderTotal; //총 결제금액
+	@Column(nullable = true)
+	private long paidAmount; //총 결제금액
 	
-	private String orderMethod; //결제수단
+	private String cardName; //카드사 이름
+	
+	@Column(name = "card_number", nullable = true)
+	private int cardNumber; //결제 카드번호
 	
 	@Column(nullable=true)
 	@ColumnDefault("0")
@@ -59,3 +65,4 @@ public class OrdersEntity{
 	private String exchangeReason; //교환사유
 	
 }
+
