@@ -30,7 +30,7 @@ public class WebSocketController {
         System.out.println("Received question: " + questionDTO.getContent());
         
 		long key = questionDTO.getKey(); //QuestionDTO에서 key 값을 추출
-		String responseMessage = "고객님 "+answer.getAnswer();  //AnswerDTO answer에서 답변추출
+		String responseMessage = answer.getAnswer();  //AnswerDTO answer에서 답변추출
 		
 		System.out.println("Analysis result: " + responseMessage);
 		messagingTemplate.convertAndSend("/topic/bot/"+key, responseMessage);;

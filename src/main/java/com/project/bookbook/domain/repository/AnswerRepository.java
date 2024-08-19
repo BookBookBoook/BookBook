@@ -9,7 +9,7 @@ import com.project.bookbook.domain.entity.NNPIntentionEntity;
 import com.project.bookbook.domain.entity.VVIntentionEntity;
 
 public interface AnswerRepository extends JpaRepository<AnswerEntity, Integer> {
-    Optional<AnswerEntity> findByVvIntentionAndNnpIntention(VVIntentionEntity vvIntention, NNPIntentionEntity nnpIntention);
 
 	Optional<AnswerEntity> findByVvIntention_VvNoAndNnpIntention_NnpNo(int vvNo, int nnpNo);
+	
 }

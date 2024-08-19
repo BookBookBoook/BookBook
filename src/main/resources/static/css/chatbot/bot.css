@@ -7,6 +7,7 @@ p{
  	font-style: normal;
  	*/
 }
+
 /*/////////////////////////*/
 /*///////  스크롤 바 ////////*/
 /*/////////////////////////*/
@@ -41,19 +42,25 @@ p{
 /*/////// 챗봇 바디 /////////*/
 /*/////////////////////////*/
 #bot-container {
-	display: none; /* 기본적으로 숨김 */
-	position: fixed; /* 화면의 특정 위치에 고정 */
-	bottom: 10%;
-	right: 60px;
-	/*background: linear-gradient(to right, #fdc298, #f6a4a3);*/
-	background: #fff8f4;
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	width: 350px; /* 크기 조정 가능 */
-	height: 500px;
-	display: flex;
-	flex-direction: column; /* 자식 요소를 세로로 배치 */
+    position: fixed;
+    bottom: 10%;
+    right: 60px;
+    background: #fff8f4;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 350px; /* 크기 조정 가능 */
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%); /* Initially hidden */
+    opacity: 0; /* Initially hidden */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+#bot-container.open {
+    transform: translateY(0); /* Move to visible position */
+    opacity: 1; /* Fully visible */
 }
 
 #bot-top {
@@ -251,4 +258,38 @@ p{
 /* 버튼 아이콘 스타일 */
 #close-button>i {
 	font-size: 18px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* 버튼을 가로 기준 가운데 정렬 */
+    padding: 10px; /* 필요에 따라 위쪽 여백 추가 */
+}
+.faq-button {
+    display: flex;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font: 14px/100% Arial, Helvetica, sans-serif;
+    padding: .5em 2em .55em;
+    -webkit-border-radius: .5em; 
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    
+    color: #fef4e9;
+    border: solid 1px #da7c0c;
+    background: #f78d1d;
+    background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+    background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+}
+.faq-button:hover {
+    text-decoration: none;
+}
+.faq-button:active {
+    position: relative;
+    top: 1px;
+}
+.image-content > img{
+	width: 170px;
 }
