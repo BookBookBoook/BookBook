@@ -29,6 +29,7 @@ public interface BookService {
 
 
 	void addToCart(String isbn, Long userId, int quantity);
+	void addToWishlist(String isbn, Long userId) throws Exception;
 
 
 	
