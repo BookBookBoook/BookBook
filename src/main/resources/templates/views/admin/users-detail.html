@@ -22,19 +22,27 @@
 					</div>
 					<div class="profile-details">
 
-						<h2>이유진</h2>
-						<p class="ID">yujin5232</p>
+						<h2 th:text="${user.userName}"></h2>
+						<p th:text="${user.userId}" class="ID"></p>
 					</div>
 				</div>
 				<div class="selection-info">
 					<h2>회원 정보</h2>
 					<div class="info-item">
 						<label>이메일</label>
-						<p>yujin@naver.com</p>
+						<p th:text="${user.email}"></p>
 					</div>
 					<div class="info-item">
 						<label>휴대전화번호</label>
-						<p>010-0000-0000</p>
+						<p th:text="${user.phoneNumber}"></p>
+					</div>
+					<div class="info-item">
+						<label>성별</label>
+						<p th:text="${user.gender}">-</p>
+					</div>
+					<div class="info-item">
+						<label>생년월일</label>
+						<p th:text="${user.birthDate}">-</p>
 					</div>
 					<div class="info-item">
 						<label>가입일</label>
@@ -42,7 +50,7 @@
 					</div>
 					<div class="info-item">
 						<label>주소</label>
-						<p>아랄랄랄랄랄랄라</p>
+						<p th:text="${user.detailAddress}">아랄랄랄랄랄랄라</p>
 					</div>
 					<div class="info-item">
 						<label>나의 취향</label>

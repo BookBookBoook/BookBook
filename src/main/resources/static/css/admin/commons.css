@@ -3,11 +3,10 @@
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f0f0f0;
-	
 }
 
 .container {
-	width:100%;
+	width: 100%;
 	background-color: white;
 	padding: 20px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -21,7 +20,6 @@ body {
 .search-box {
 	background-color: white;
 	border: 0.5px solid #d9d9d9;
-	
 }
 
 .search-box, .inven-box {
@@ -33,35 +31,32 @@ body {
 }
 
 .filter-section {
-    margin-bottom: 20px;
-    white-space: nowrap;
+	margin-bottom: 20px;
+	white-space: nowrap;
 }
 
 label {
-	width:100px;
-    font-weight: bold;
-    margin-right: 10px;
+	width: 100px;
+	font-weight: bold;
+	margin-right: 10px;
 }
 
-.filter-section input{
-    margin-right: 10px;
+.filter-section input {
+	margin-right: 10px;
 }
 
 .jump {
 	margin-right: 26px;
 }
 
-
 .long {
 	width: 500px;
 }
-
 
 input, select, button {
 	padding: 5px;
 	margin: 5px;
 }
-
 
 button {
 	background-color: white;
@@ -76,13 +71,13 @@ button {
 }
 
 .delete-btn {
-	display:flex;
-	justify-content:flex-end;
-	margin:10px;
+	display: flex;
+	justify-content: flex-end;
+	margin: 10px;
 }
 
 .inven-box {
-	padding:20px;
+	padding: 20px;
 	background-color: white;
 	border: 0.5px solid #d9d9d9;
 	white-space: nowrap;
@@ -95,7 +90,7 @@ table {
 
 th {
 	font-weight: bold;
-	background-color: #f7f7f7;
+	background-color: #f2f2f2;
 }
 
 th, td {
@@ -103,21 +98,23 @@ th, td {
 	padding: 8px;
 	text-align: left;
 	overflow: hidden;
-    white-space: nowrap; 
-    text-overflow: ellipsis;
-    text-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: center;
 }
 
-th {
-	background-color: #f2f2f2;
+td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 150px;
 }
-
 
 .action-buttons button {
 	margin: 5px;
 }
 
 .stars {
-	color:#ffd700;
+	color: #ffd700;
 	font-size: 24px;
 }
