@@ -37,9 +37,14 @@
 		UPDATE user_orders
 	    SET coupon_num = #{couponNum},
 	        order_status = 1,
-	        paid_amount = #{finalAmount}
+	        paid_amount = #{paidAmount}
 	    WHERE merchant_uid = #{merchantUid}
 	</update>
+	
+	<select id="findByMerchantUid" parameterType="long" resultType="com.project.bookbook.domain.dto.OrdersDetailDTO">
+		select * from user_orders
+		where merchant_uid = #{merchantUid}
+	</select>
 	
 	
 </mapper>

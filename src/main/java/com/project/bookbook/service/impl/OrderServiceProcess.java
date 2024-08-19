@@ -12,11 +12,13 @@ import org.springframework.ui.Model;
 
 import com.project.bookbook.domain.dto.CartBookCntDTO;
 import com.project.bookbook.domain.dto.OrderDetailDTO;
+import com.project.bookbook.domain.dto.OrdersDetailDTO;
 import com.project.bookbook.domain.dto.PaymentPostDTO;
 import com.project.bookbook.domain.entity.UserOrdersEntity;
 import com.project.bookbook.mapper.CartMapper;
 import com.project.bookbook.mapper.OrdersMapper;
 import com.project.bookbook.security.CustomUserDetails;
+import com.project.bookbook.service.CouponService;
 import com.project.bookbook.service.OrderService;
 
 import jakarta.transaction.Transactional;
@@ -28,6 +30,7 @@ public class OrderServiceProcess implements OrderService{
 	
 	private final CartMapper cartMapper;
     private final OrdersMapper ordersMapper;
+    private final CouponService couponService;
 	
 	@Override
 	@Transactional
@@ -76,6 +79,27 @@ public class OrderServiceProcess implements OrderService{
 	@Transactional
 	public void orderCompletion(PaymentPostDTO dto) {
 		ordersMapper.orderCompletion(dto);
+		
+	}
+
+	@Override
+	public void findByMerchantUid(long merchantUid, Model model) {
+		model.addAttribute("merchantUid", merchantUid);
+		
+		OrdersDetailDTO ordersDetail = ordersMapper.findByMerchantUid(merchantUid);
+		model.addAttribute("ordersDetail", ordersDetail);
+		
+	}
+
+	@Override
+	public void findByMerchantUidAndCoupon(long merchantUid, Model model) {
+		model.addAttribute("merchantUid", merchantUid);
+		
+		OrdersDetailDTO ordersDetail = ordersMapper.findByMerchantUid(merchantUid);
+		model.addAttribute("ordersDetail", ordersDetail);
+		
+		int couponRate = couponService.findByCouponNum(ordersDetail.getCouponNum());
+		model.addAttribute("couponRate", couponRate);
 		
 	}
 	

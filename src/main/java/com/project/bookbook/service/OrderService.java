@@ -15,5 +15,9 @@ public interface OrderService {
 
 	void orderCompletion(PaymentPostDTO dto);
 
+	void findByMerchantUid(long merchantUid, Model model);
+
+	void findByMerchantUidAndCoupon(long merchantUid, Model model);
+
 
 }

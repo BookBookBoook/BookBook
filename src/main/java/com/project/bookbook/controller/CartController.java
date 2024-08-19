@@ -79,14 +79,15 @@ public class CartController {
 	@PostMapping("/payment/completion")
 	@ResponseBody
 	public String paymentPost(@RequestBody PaymentPostDTO dto) {
-		dto.setFinalAmount(dto.getAmount() - dto.getCouponRate());
+		dto.setPaidAmount(dto.getAmount() - dto.getCouponRate());
+		System.out.println(dto);
 		orderService.orderCompletion(dto);
 		return "";
 	}
 
 	@GetMapping("/payment/completion/{merchantUid}")
 	public String paymentCompletion(@PathVariable("merchantUid") long merchantUid, Model model) {
-		model.addAttribute("merchantUid", merchantUid);
+		orderService.findByMerchantUid(merchantUid, model);
 		return "views/cart/completion";
 	}
 

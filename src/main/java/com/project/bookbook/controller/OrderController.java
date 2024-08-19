@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.project.bookbook.security.CustomUserDetails;
+import com.project.bookbook.service.CouponService;
 import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.OrderService;
 
@@ -18,6 +19,7 @@ public class OrderController {
 	
 	private final OrderService orderService;
 	private final MypageUserService userService;
+	private final CouponService couponService;
 	
 	@GetMapping("/mypage/orders")
 	public String order() {
@@ -29,7 +31,7 @@ public class OrderController {
 	public String orderDetail(@PathVariable("merchantUid") long merchantUid, Model model, @AuthenticationPrincipal CustomUserDetails user) {
 		userService.readProcess(model, user);
 		orderService.findOrdersInfo(model, merchantUid);
-		//orderService.findOrdersBy
+		orderService.findByMerchantUidAndCoupon(merchantUid, model);
 		return "views/mypage/order-detail";
 	}
 	
