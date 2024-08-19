@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="/css/admin/commons.css">
-<link rel="stylesheet" href="/css/admin/sidebar.css">
-<script src="/js/admin/sidebar.js"></script>
-<script src="/js/admin/commons.js"></script>
+
 
 <head>
+	<link rel="stylesheet" href="/css/admin/commons.css">
+	<link rel="stylesheet" href="/css/admin/sidebar.css">
+	<script src="/js/admin/commons.js"></script>
+	<script src="/js/admin/sidebar.js"></script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Product Management</title>
 
 
 </head>
 
 <body>
+
+
 	<div style="display: flex;">
 		<th:block th:insert="~{views/admin/sidebar}" />
 
 		<div class="container">
-			<h1>상품 관리</h1>
+			<h1>상품 승인 목록</h1>
 			<div class="search-box">
 				<div class="search-section">
 					<div class="filter-section">
@@ -45,14 +47,15 @@
 						</select>
 					</div>
 					<div class="filter-section">
-						<label>상품등록일</label>
+						<label>등록요청일</label>
 						<input type="date" id="startDate"> ~ <input type="date" id="endDate">
 					</div>
 					<div class="filter-section">
-						<label class="jump">판매상태</label>
+						<label class="jump">승인상태</label>
 						<input type="radio" name="sale" checked> 전체
-						<input type="radio" name="sale"> 판매중
-						<input type="radio" name="sale"> 판매비활성
+						<input type="radio" name="sale"> 대기중
+						<input type="radio" name="sale"> 승인완료
+						<input type="radio" name="sale"> 승인거부
 					</div>
 
 				</div>
@@ -65,10 +68,9 @@
 
 			<div class="inven-box">
 				<div class="action-buttons">
-					<button>삭제</button>
-					<button>비활성화</button>
+					<button>승인</button>
+					<button>거부</button>
 				</div>
-
 
 				<table>
 					<thead>
@@ -88,7 +90,7 @@
 							<td><input type="checkbox" class="select-item"></td>
 							<td th:text="${dto.bookNum}"></td>
 							<td th:text="${dto.bookName}"></td>
-							<td><img th:src="${dto.bookImg}"></td>
+							<td><img th:src="${bookImg}"></td>
 							<td th:text="${dto.author}"></td>
 							<td th:text="${dto.publisher}"></td>
 							<td th:text="${dto.link}"></td>
