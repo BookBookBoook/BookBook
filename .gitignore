@@ -8,6 +8,7 @@ build/
 !**/src/test/**/build/
 
 application.properties
+user.dic
 
 ### STS ###
 .apt_generated
