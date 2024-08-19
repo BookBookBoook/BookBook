@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller; 
 import org.springframework.ui.Model; 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,12 +64,8 @@ public class DriveController {
 	        return "redirect:/";
 	    }
 	    
-	    @GetMapping("/drive")
-	    public String rootfile(Model model) throws Exception {
-	        return "views/naver/drive-sub";
-	    }
 	    
-	    @GetMapping("/drive/files")
+	    @GetMapping("/admin/drive/files")
 	    public String listFiles(@RequestParam("fileId") String fileId,
 	                            Model model,
 	                            HttpSession session) throws Exception {
@@ -93,7 +88,7 @@ public class DriveController {
 	    }
 
 
-	    @PostMapping("/drive/files")
+	    @PostMapping("/admin/drive/files")
 	    public String listFilesPost(@RequestParam("fileId") String fileId,
 	                                Model model,
 	                                HttpSession session) throws Exception {
@@ -110,15 +105,8 @@ public class DriveController {
 	        return "views/naver/drive";
 	    }
 
-	    @GetMapping("/drive/auth")
-	    public String driveAuth(Model model) {
-	        model.addAttribute("clientId", clientId);
-	        model.addAttribute("redirectUri", redirectUri);
-	        model.addAttribute("scope", clientScope);
-	        return "views/naver/drive-sub";
-	    }
 	    
-	    @GetMapping("/drive/files/download")
+	    @GetMapping("/admin/drive/files/download")
 	    public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") String fileId, HttpSession session) {
 	        String accessToken = (String) session.getAttribute("accessToken");
 	        if (accessToken == null) {

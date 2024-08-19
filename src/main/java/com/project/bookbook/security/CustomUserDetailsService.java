@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.project.bookbook.domain.entity.ApprovalStatus;
+import com.project.bookbook.domain.entity.Role;
 import com.project.bookbook.domain.entity.SellerEntity;
 import com.project.bookbook.domain.entity.UserEntity;
 import com.project.bookbook.domain.repository.SellerEntityRepository;
@@ -27,6 +29,17 @@ public class CustomUserDetailsService implements UserDetailsService{
                 .orElseGet(() -> sellerRepository.findByBusinessNum(username)
                         .map(SellerEntity::getUser)
                         .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username)));
+       
+
+        // 판매자인 경우 승인 상태 확인
+        if (user.getRoles().contains(Role.SELLER)) {
+            SellerEntity seller = sellerRepository.findByBusinessNum(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Seller not found with business number: " + username));
+
+            if (seller.getApprovalStatus() != ApprovalStatus.APPROVED) {
+                throw new DisabledException("Seller account is:" + seller.getApprovalStatus());
+            }
+        }
         
         //status가 0이 아니라면 탈퇴처리된 회원
         if(user.getStatus() != 0) {

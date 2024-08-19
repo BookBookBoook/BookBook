@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.project.bookbook.domain.entity.ApprovalStatus;
 import com.project.bookbook.domain.entity.Role;
 import com.project.bookbook.domain.entity.SellerEntity;
 import com.project.bookbook.domain.entity.UserEntity;
@@ -42,6 +43,7 @@ public class CombinedSellerDTO {
     private String settlementAmount;
     private String businessRegCopy;
     private Long businessRegImageId;
+    private ApprovalStatus approvalStatus;
 
     public UserEntity toUserEntity() {
         return UserEntity.builder()
@@ -70,6 +72,7 @@ public class CombinedSellerDTO {
                 .accountHolder(accountHolder)
                 .settlementAmount(settlementAmount)
                 .businessRegCopy(businessRegCopy)
+                .approvalStatus(approvalStatus)
                 
                 // User fields
                 .userName(userName)
