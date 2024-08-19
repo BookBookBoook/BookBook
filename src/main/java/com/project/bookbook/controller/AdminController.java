@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.bookbook.service.CustomerService;
 import com.project.bookbook.service.InquiryService;
+import com.project.bookbook.service.InventoryService;
 
 
 @RequiredArgsConstructor
@@ -16,6 +18,8 @@ import com.project.bookbook.service.InquiryService;
 public class AdminController {
 
 	private final InquiryService inquiryService;
+	private final InventoryService inventoryService;
+	private final CustomerService customerService;
 	
 	@GetMapping("/admin")
 	public String admin() {
@@ -23,10 +27,13 @@ public class AdminController {
 	}
 	
 	//상품
+	
 	@GetMapping("/admin/inventory")
-	public String adminInventory() {
+	public String adminInventory(Model model) {
+		inventoryService.findBook(model);
 		return "views/admin/inventory";	
 	}
+	
 	@GetMapping("/admin/inventory/write")
 	public String adminInventoryWrite() {
 		return "views/admin/inventory-write";
@@ -51,11 +58,13 @@ public class AdminController {
 	
 	//사용자 관리
 	@GetMapping("/admin/users")
-	public String adminUser() {
+	public String adminUser(Model model) {
+		customerService.findCustomer(model);
 		return "views/admin/users";
 	}
-	@GetMapping("/admin/users/detail")
-	public String adminUserDetail() {
+	@GetMapping("/admin/users/detail/{userId}")
+	public String adminUserDetail(@PathVariable("userId") long userId, Model model) {
+		customerService.findCustomerDetail(model,userId);
 		return "views/admin/users-detail";
 	}
 	@GetMapping("/admin/sellers")
