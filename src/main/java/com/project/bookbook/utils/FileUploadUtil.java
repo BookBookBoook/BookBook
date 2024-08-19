@@ -65,4 +65,32 @@ public class FileUploadUtil {
 		        int index = orgFileName.lastIndexOf(".");
 		        return UUID.randomUUID().toString() + orgFileName.substring(index);
 		    }
+		    
+		    public List<String> ImagesToS3(List<String> tempKeys) {
+				
+				List<String> uploadKeys=new ArrayList<>();
+				tempKeys.forEach(tempkey->{
+					
+					String[] str = tempkey.split("/");
+					String destinationkey=upload+str[str.length-1];
+					
+					CopyObjectRequest copyObjectRequest=CopyObjectRequest.builder()
+							.sourceBucket(bucket)
+							.sourceBucket(tempkey)
+							.destinationBucket(bucket)
+							.destinationBucket(destinationkey)
+							.build();
+					
+					s3Client.copyObject(copyObjectRequest);
+					s3Client.deleteObject(builder->builder.bucket(bucket).bucket(tempkey));
+					
+					String url = s3Client.utilities()
+							.getUrl(builder->builder.bucket(bucket).key(destinationkey))
+							.toString().substring(6);
+						
+					uploadKeys.add(url);
+				});
+				
+				return uploadKeys;
+			}
 		}

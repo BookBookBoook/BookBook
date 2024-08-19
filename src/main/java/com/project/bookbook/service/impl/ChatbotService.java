@@ -1,5 +1,6 @@
 package com.project.bookbook.service.impl;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -38,70 +39,94 @@ public class ChatbotService {
         Set<String> verbs = analysisResult.getVerbs();
 
         // 명사와 동사로부터 nnp_no와 vv_no 찾기
-        NNPIntentionEntity nnpIntention = findNNPIntention(nouns);
+        Set<NNPIntentionEntity> nnpIntentions = findNNPIntention(nouns);
         VVIntentionEntity vvIntention = findVVIntention(verbs);
 
-        // nnpNo와 vvNo를 null 체크 후 설정
-        int nnpNo;
-        int vvNo;
-        
-        if (nnpIntention != null) {
-            nnpNo = nnpIntention.getNnpNo();  // vvIntention이 null이 아니면 getVvNo() 호출
-        } else {
-            nnpNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
-            System.out.println("명사: "+nnpNo);
-        }
-        
-        if (vvIntention != null) {
-            vvNo = vvIntention.getVvNo();  // vvIntention이 null이 아니면 getVvNo() 호출
-        } else {
-            vvNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
-            System.out.println("동사: "+vvNo);
+        Optional<AnswerEntity> answerEntityOptional=Optional.empty();
+
+        for(NNPIntentionEntity nnpIntention : nnpIntentions) {
+        	if (answerEntityOptional.isEmpty()) { // 답변이 설정되지 않았다면
+        		int nnpNo;
+                int vvNo;
+                
+                if (nnpIntention != null) {
+                    nnpNo = nnpIntention.getNnpNo();  // vvIntention이 null이 아니면 getVvNo() 호출
+                } else {
+                    nnpNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
+                    System.out.println("명사: "+nnpNo);
+                }
+                
+                if (vvIntention != null) {
+                    vvNo = vvIntention.getVvNo();  // vvIntention이 null이 아니면 getVvNo() 호출
+                } else {
+                    vvNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
+                    System.out.println("동사: "+vvNo);
+                }
+                
+                System.out.println("1명사: " + nnpNo);
+                System.out.println("1동사: " + vvNo);
+
+                // Optional로 감싸 답변 저장
+                answerEntityOptional = answerRepository.findByVvIntention_VvNoAndNnpIntention_NnpNo(vvNo, nnpNo);
+            }
         }
         
         // 매칭된 의도에 따라 답변 찾기
-        Optional<AnswerEntity> answerEntityOptional = answerRepository.findByVvIntention_VvNoAndNnpIntention_NnpNo(vvNo, nnpNo);
         
         // 최종적으로 찾은 답변을 DTO로 변환하여 반환
-        if (answerEntityOptional.isPresent()) {
+        if (answerEntityOptional.isPresent()) { // isPresent(): 값이 있는지 확인
             AnswerEntity answerEntity = answerEntityOptional.get();
             return AnswerDTO.builder()
                     .answer(answerEntity.getAnswer())
-                    .vvNo(vvNo)
-                    .nnpNo(nnpNo)
+                    .vvNo(answerEntity.getVvIntention().getVvNo())
+                    .nnpNo(answerEntity.getNnpIntention().getNnpNo())
                     .build();
         } else {
+            // answerEntityOptional이 비어 있는 경우, 기본 메시지로 응답
+            System.out.println("답변을 찾을 수 없습니다.");
             return AnswerDTO.builder()
                     .answer("죄송부엉.. 고객님의 말씀을 잘 이해하지못한 것이에요..")
-                    .vvNo(vvNo)
-                    .nnpNo(nnpNo)
+                    .vvNo(0)
+                    .nnpNo(0)
                     .build();
         }
     }
 
-    private NNPIntentionEntity findNNPIntention(Set<String> nouns) {// 명사(nouns) 집합에서 적절한 NNPIntentionEntity를 찾는 메서드
+    private Set<NNPIntentionEntity> findNNPIntention(Set<String> nouns) {// 명사(nouns) 집합에서 적절한 NNPIntentionEntity를 찾는 메서드
+    	
+    	Set<NNPIntentionEntity> nnpi=new HashSet<>();
         for (String noun : nouns) {// 명사에 해당하는 키워드를 검색
             Optional<EXKeywordEntity> keyword = keywordRepository.findByKeyword(noun);
             
             // 키워드가 존재하고, 해당 키워드에 NNP 의도가 존재하는지 확인
-            if (keyword.isPresent() && keyword.get().getNnpIntention() != null) {// NNP 의도가 존재하면 해당 NNPIntentionEntity를 반환
-                return keyword.get().getNnpIntention();
+            if (keyword.isPresent() ) {// NNP 의도가 존재하면 해당 NNPIntentionEntity를 반환
+            	nnpi.add(keyword.get().getNnpIntention());
             }
         }
-        return null;// 적절한 NNPIntentionEntity를 찾지 못한 경우 null을 반환
+        return nnpi;// 적절한 NNPIntentionEntity를 찾지 못한 경우 null을 반환
     }
 
     
     private VVIntentionEntity findVVIntention(Set<String> verbs) {// 동사(verbs) 집합에서 적절한 VVIntentionEntity를 찾는 메서드
-        for (String verb : verbs) {// 동사에 해당하는 키워드를 검색
+    	if (verbs.isEmpty()) {
+            // 동사가 없는 경우 기본값 VVIntentionEntity를 반환
+            return VVIntentionEntity.builder()
+                                    .vvNo(0)
+                                    .build();
+        }
+    	for (String verb : verbs) {
             Optional<EXKeywordEntity> keyword = keywordRepository.findByKeyword(verb);
-            
-            // 키워드가 존재하고, 해당 키워드에 VV 의도가 존재하는지 확인
-            if (keyword.isPresent() && keyword.get().getVvIntention() != null) {// VV 의도가 존재하면 해당 VVIntentionEntity를 반환
+
+            if (keyword.isPresent() && keyword.get().getVvIntention() != null) {
                 return keyword.get().getVvIntention();
             }
         }
-        return null;// 적절한 VVIntentionEntity를 찾지 못한 경우 null을 반환
+        // 데이터베이스에 존재하지 않는 경우, 기본값을 저장하고 반환
+        VVIntentionEntity defaultVvIntention = VVIntentionEntity.builder()
+                                                                .vvNo(0)
+                                                                .build();
+        return defaultVvIntention;
     }
 
 }
+

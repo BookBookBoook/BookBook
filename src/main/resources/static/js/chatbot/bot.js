@@ -151,7 +151,24 @@ function connect() {
 				                    </div>`;
                 showMessage(buttonHTML);
             }
-			if (msgObj.includes("이벤트")) { //includes ""가 포함되어있을경우
+			if (msgObj.includes("베스트셀러")) { //includes ""가 포함되어있을경우
+                var buttonHTML = `<div class="msg bot flex">
+				                        <div class="icon">
+				                            <img src="/img/bot/bot-img-none.png">
+				                        </div>
+				                        <div class="message">
+				                            <div class="part chatbot">
+				                                <p>아래 버튼을 통해 베스트셀러 목록으로 이동해주세요!</p>
+												<div class="button-container">
+			                                    	<button class="faq-button" onclick="location.href='/bookList';"> 쿠폰조회 이동</button>
+												</div>
+				                            </div>
+				                            <div class="time">${time}</div>
+				                        </div>
+				                    </div>`;
+                showMessage(buttonHTML);
+            }
+			if (msgObj.includes("룰렛")) { //includes ""가 포함되어있을경우
                 var buttonHTML = `<div class="msg bot flex">
 				                        <div class="icon">
 				                            <img src="/img/bot/bot-img-none.png">
