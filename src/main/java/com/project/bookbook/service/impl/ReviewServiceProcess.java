@@ -44,32 +44,43 @@ public class ReviewServiceProcess implements ReviewService {
                .actualOrder(review.getActualOrder() == 1)
                .build();
    }
-	@Override
-	@Transactional(readOnly = true)
-	public List<ReviewDTO> getReviewsByIsbn(String isbn) {
-		List<ReviewEntity> reviews = reviewRepository.findByBookIsbnOrderByReviewDateDesc(isbn);
-		return reviews.stream().map(this::convertToDTO).collect(Collectors.toList());
-	}
+   @Override
+   @Transactional(readOnly = true)
+   public List<ReviewDTO> getReviewsByIsbn(String isbn) {
+       List<ReviewEntity> reviews = reviewRepository.findByBookIsbnOrderByReviewDateDesc(isbn);
+       List<ReviewDTO> reviewDTOs = reviews.stream()
+                                           .map(this::convertToDTO)
+                                           .collect(Collectors.toList());
+       return reviewDTOs;
+   }
 
-	@Override
-	@Transactional
-	public ReviewDTO createReview(long userId, String isbn, String content, int rate) {
-		UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        
-        BookEntity book = bookRepository.findByIsbn(isbn)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+   @Override
+   @Transactional
+   public ReviewDTO createReview(long userId, String isbn, String reviewContent, int rate) {
+       //System.out.println("createReview 메서드 시작 - UserID: " + userId + ", ISBN: " + isbn);
+       
+       UserEntity user = userRepository.findById(userId)
+           .orElseThrow(() -> new RuntimeException("User not found"));
+       //System.out.println("조회된 사용자: " + user.getUserName());
 
-        ReviewEntity review = ReviewEntity.builder()
-                .user(user)
-                .book(book)
-                .reviewContent(content)
-                .rate(rate)
-                //.createdAt(LocalDateTime.now())
-                .build();
+       BookEntity book = bookRepository.findByIsbn(isbn)
+           .orElseThrow(() -> new RuntimeException("Book not found"));
+       //System.out.println("조회된 책: " + book.getBookName());
 
-        ReviewEntity savedReview = reviewRepository.save(review);
-        return convertToDTO(savedReview);
-	}
+       ReviewEntity review = ReviewEntity.builder()
+           .user(user)
+           .book(book)
+           .reviewContent(reviewContent)
+           .rate(rate)
+           .build();
+
+       ReviewEntity savedReview = reviewRepository.save(review);
+       System.out.println("저장된 리뷰 ID: " + savedReview.getUser());
+
+       ReviewDTO reviewDTO = convertToDTO(savedReview);
+       System.out.println("변환된 ReviewDTO: " + reviewDTO);
+
+       return reviewDTO;
+   }
 
 }

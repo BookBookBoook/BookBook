@@ -8,7 +8,7 @@ public interface ReviewService {
 	
 	List<ReviewDTO> getReviewsByIsbn(String isbn);
 
-	ReviewDTO createReview(long userId, String isbn, String content, int rate);
+	ReviewDTO createReview(long userId, String isbn, String reviewContent, int rate);
 
 
 }
