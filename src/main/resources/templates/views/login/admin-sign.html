@@ -8,23 +8,7 @@
     <link rel="stylesheet" href="/css/admin/sidebar.css">
     <script src="/js/admin/sidebar.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .btn {
-            padding: 5px 10px;
-            margin: 0 5px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .btn-approve {
-            background-color: #FF9040;
-            color: white;
-        }
-        .btn-reject {
-            background-color: #6c757d;
-            color: white;
-        }
-    </style>
+
     <script>
         function confirmAction(action, id) {
             var message = action === 'approve' ? '이 출판사를 승인하시겠습니까?' : '이 출판사를 거부하시겠습니까?';
@@ -39,7 +23,7 @@
     <div style="display: flex;">
         <th:block th:insert="~{views/admin/sidebar}" />
         <div class="container">
-            <h1>대기 중인 출판사 회원</h1>
+            <h1>출판사 회원 등록</h1>
             <div th:if="${message}" th:text="${message}" style="color: green;"></div>
             <div th:if="${error}" th:text="${error}" style="color: red;"></div>
             <div class="inven-box">

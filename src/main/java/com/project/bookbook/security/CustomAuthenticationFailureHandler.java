@@ -51,7 +51,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
                  errorMessage = "계정이 비활성화 되었습니다. 관리자에게 문의하세요.";
              }
          } else {
-             errorMessage = "알 수 없는 이유로 로그인에 실패하였습니다. 관리자에게 문의하세요.";
+             errorMessage = "승인 대기중입니다. 관리자의 승인을 기다려주세요.";
          }
 
          errorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);

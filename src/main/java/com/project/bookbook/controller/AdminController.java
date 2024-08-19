@@ -67,23 +67,7 @@ public class AdminController {
 		customerService.findCustomerDetail(model,userId);
 		return "views/admin/users-detail";
 	}
-	@GetMapping("/admin/sellers")
-	public String adminSeller() {
-		return "views/admin/sellers";
-	}
-	@GetMapping("/admin/sellers/detail")
-	public String adminSellerDetail() {
-		return "views/admin/sellers-detail";
-	}
-
-	@GetMapping("/admin/sellers/sign")
-	public String adminSellerSign() {
-		return "views/admin/sign";
-	}
-	
-	
-	
-	
+		
 	//문의
 	@GetMapping("/admin/inquiry")
 	public String adminInquiry(Model model) {

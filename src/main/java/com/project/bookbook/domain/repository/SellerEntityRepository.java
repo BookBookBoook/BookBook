@@ -9,7 +9,9 @@ import com.project.bookbook.domain.entity.ApprovalStatus;
 import com.project.bookbook.domain.entity.SellerEntity;
 
 public interface SellerEntityRepository extends JpaRepository<SellerEntity, Long> {
-	 Optional<SellerEntity> findByBusinessNum(String businessNum);
+	Optional<SellerEntity> findByBusinessNum(String businessNum);
 
 	List<SellerEntity> findByApprovalStatus(ApprovalStatus pending);
+	
+	List<SellerEntity> findByShopNameContaining(String shopName);
 }

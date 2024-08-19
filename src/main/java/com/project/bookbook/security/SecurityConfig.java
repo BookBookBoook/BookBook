@@ -49,7 +49,7 @@
 	        http
 	            .authorizeHttpRequests(authorize -> authorize
 	
-	                .requestMatchers("/**", "/signup/**", "/login/**", "/logout/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload").permitAll()
+	                .requestMatchers("/", "/signup/**", "/login/**", "/logout/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload").permitAll()
 	                .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
 	                .requestMatchers("/admin/**").hasRole("ADMIN")
 	                .requestMatchers("/seller/**").hasRole("SELLER")
