@@ -1,10 +1,8 @@
-function addToWishlist(isbn) {
+function addToWishlist(isbn, button) {
     const csrfToken = document.querySelector('meta[name="_csrf"]').content;
     const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
 
-   // console.log("클라이언트: 위시리스트에 책 추가 요청 - ISBN: " + isbn);
-
-    fetch(form.action, {
+    fetch('/api/books/wish', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -20,28 +18,26 @@ function addToWishlist(isbn) {
     })
     .then(data => {
         console.log('클라이언트: 성공:', data);
-        alert("위시리스트에 추가되었습니다.");  // 성공 메시지 alert
-        // UI 업데이트 로직
-        const heartButton = document.querySelector(`button[data-isbn="${isbn}"] i`);
-        if (heartButton) {
-            heartButton.classList.remove('far');
-            heartButton.classList.add('fas');
-        }
+        alert("위시리스트에 추가되었습니다.");
+        // UI 업데이트
+        const icon = button.querySelector('i');
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+        button.disabled = true;
     })
     .catch((error) => {
         console.error('클라이언트: 오류:', error);
-        alert('위시리스트 추가 중 오류가 발생했습니다: ' + error.message);  // 에러 메시지 alert
+        alert('위시리스트 추가 중 오류가 발생했습니다: ' + error.message);
     });
 }
 
-// HTML에서 하트 버튼에 이벤트 리스너 추가
 document.addEventListener('DOMContentLoaded', function() {
-    const wishButtons = document.querySelectorAll('.wish-button');
+    const wishButtons = document.querySelectorAll('.heart-button');
     wishButtons.forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
             const isbn = this.getAttribute('data-isbn');
-            addToWishlist(isbn);
+            addToWishlist(isbn, this);
         });
     });
 });
