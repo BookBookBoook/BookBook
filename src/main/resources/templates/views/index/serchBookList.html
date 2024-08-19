@@ -74,15 +74,14 @@
 								</h5>
 							</div>
 							<div class="button-container">
-								<form th:action="@{/api/books/wish}" method="post" class="favorite-form" onsubmit="return addToFavorites(this, event)">
+								<button type="button" class="heart-button"
+									th:data-isbn="${book.isbn}">
+									<i class="far fa-heart"></i>
+								</button>
+								<form th:action="@{/api/books/cartItem}" method="post"
+									class="cart-form" onsubmit="return addToCartItems(this,event)">
 									<input type="hidden" name="isbn" th:value="${book.isbn}" />
-									<button type="submit" class="heart-button">
-										<i class="far fa-heart"></i>
-									</button>
-								</form>
-								<form th:action="@{/api/books/cartItem}" method="post" class="cart-form" onsubmit="return addToCartItems(this,event)">
-									<input type="hidden" name="isbn" th:value="${book.isbn}" />	
-									<button  type="submit" class="cart-button">장바구니</button>
+									<button type="submit" class="cart-button">장바구니</button>
 								</form>
 								<button class="buy-button">바로구매</button>
 							</div>
