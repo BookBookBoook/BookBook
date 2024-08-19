@@ -68,7 +68,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                                         </div>
                                     </td>
                                     <td th:text="|${orderBook.orderCnt}개|">1개</td>
-                                    <td th:text="|${orderBook.discount}원|">17,820원</td>
+                                    <td th:text="|${#numbers.formatDecimal(orderBook.discount, 1, 'COMMA', 0)}원|">17,820원</td>
                                 </tr>
                             </tbody>
                         </table>
