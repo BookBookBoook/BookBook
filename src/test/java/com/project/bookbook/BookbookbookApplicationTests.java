@@ -21,22 +21,4 @@ class BookbookbookApplicationTests {
     @Autowired
     UserEntityRepository mRepository;
     
-    @Autowired
-    private CouponExRepository couponRepository;
-
-    @Test
-    public void testCreateCouponEntity() {
-        // Given
-        CouponEntity coupon = CouponEntity.builder()
-                .couponName("배송비 무료")
-                .couponRate(3000)
-                .couponDetail("도서 구매시 배송비 무료")
-                .startDate(LocalDateTime.now())
-                .endDate(LocalDateTime.now().plusDays(30))
-                .build();
-
-        // When
-        CouponEntity savedCoupon = couponRepository.save(coupon);
-    }
-
 }

@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Seller") // 테이블명을 "publisher"로 지정
+@Table(name = "Seller")
 public class SellerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class SellerEntity {
     private String businessNum;
 
     @Column(nullable = true)
-    private String businessReg; // This will now store the URL of the business registration image
+    private String businessReg; 
 
     @Column(nullable = false)
     private String bank;
@@ -86,7 +86,13 @@ public class SellerEntity {
 
     @Column(nullable = true)
     private Long status;
+    
+    //회원가입 승인 상태
+    @Enumerated(EnumType.STRING)
+    private ApprovalStatus approvalStatus;
 
+  
+    
     @OneToOne(mappedBy = "seller")
     private UserEntity user;
 
