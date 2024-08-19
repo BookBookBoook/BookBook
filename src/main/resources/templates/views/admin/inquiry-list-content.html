@@ -7,7 +7,7 @@
 			<div class="user-details">
 				<span th:text="${qna.user}" class="username">이유진</span>
 				<span th:if="${qna.status==1}" class="status-finish">답변완료</span>
-					<span th:if="${qna.status==0}" class="status">답변대기</span>
+				<span th:if="${qna.status==0}" class="status">답변대기</span>
 				<span th:text="${qna.user}" class="subscription">yujin@naver.com</span>
 				<span th:text="${qna.date.toLocalDate()}" class="timestamp"></span>
 			</div>

@@ -38,17 +38,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>대기중</td>
-										<td>안녕하세요</td>
-										<td>2024-08-10</td>
+									<tr th:each="dto, iterStat : ${list}" th:if="${iterStat.index < 8}">
+										<td th:if="${dto.status==1}" class="status-finish">답변완료</td>
+										<td th:if="${dto.status==0}" class="status">답변대기</td>
+										<td th:text="${dto.title}"></td>
+										<td th:text="${dto.date.toLocalDate()}"></td>
 									</tr>
-									<tr>
-										<td>대기중</td>
-										<td>안녕하세요</td>
-										<td>2024-08-10</td>
-									</tr>
-
 								</tbody>
 							</table>
 						</div>

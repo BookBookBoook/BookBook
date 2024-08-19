@@ -6,5 +6,7 @@ public interface InventoryService {
 	
 	void findBook(Model model);
 
+	void deleteProcess(long bookNum);
+
 
 }

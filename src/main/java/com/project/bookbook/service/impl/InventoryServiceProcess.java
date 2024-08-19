@@ -24,6 +24,12 @@ public class InventoryServiceProcess implements InventoryService {
 		
 	}
 
+	@Override
+	public void deleteProcess(long bookNum) {
+		inventoryMapper.deleteBook(bookNum);
+		
+	}
+
 	
 
 }
