@@ -79,7 +79,8 @@ public class CartController {
 	}
 
 	@GetMapping("/payment/completion/{merchantUid}")
-	public String paymentCompletion(@PathVariable("merchantUid") long merchantUid) {
+	public String paymentCompletion(@PathVariable("merchantUid") long merchantUid, Model model) {
+		model.addAttribute("merchantUid", merchantUid);
 		return "views/cart/completion";
 	}
 

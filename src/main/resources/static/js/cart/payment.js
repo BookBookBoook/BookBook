@@ -104,35 +104,26 @@ function requestPay() {
     //notice_url: "", //웹훅 URL
   },
   async (response) => {
-	  /*
+	  
       if (response.error_code !== null) {
         return alert(`결제에 실패하였습니다. 에러 내용: ${response.error_msg}`);
       }
-      */
+      
 
-        //const notified = await fetch(`/payment/completion`, {
-       await fetch(`/payment/completion`, {
+       const notified = await fetch(`/payment/completion`, {
+       //await fetch(`/payment/completion`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             [header]: token,
           },
           body: JSON.stringify({
-            merchant_uid: response.merchant_uid, // 주문id
-            paid_amount: response.paid_amount, // 결제금액
-            card_name: response.card_name, // 카드사이름
-            card_number: response.card_number, // 카드번호
+            "merchant_uid": response.merchant_uid, // 주문id
+            "paid_amount": response.paid_amount, // 결제금액
+            "card_name": response.card_name, // 카드사이름
+            "card_number": response.card_number, // 카드번호
           }),
         })
-        .then(response => {
-			if (!response.ok) {
-            throw new Error('장바구니에 상품이 없습니다.');
-        	} else{
-				window.location.href = `/payment/${merchantUid}`;
-			}
-		});
-
-		/*
         if (notified.ok) {
           // POST 요청이 성공하면 리디렉션
           window.location.href = `/payment/completion/${response.merchant_uid}`;
@@ -140,8 +131,6 @@ function requestPay() {
           const errorData = await notified.json();
           alert(`결제 검증에 실패하였습니다. 에러 내용: ${errorData.message || "알 수 없는 오류"}`);
         }
-        }
-        */
     }
   );
 }
