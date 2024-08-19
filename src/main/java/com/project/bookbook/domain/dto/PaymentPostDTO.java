@@ -11,16 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PaymentPostDTO {
 	
-	@JsonProperty("merchant_uid")
 	private long merchantUid;
-	
-	@JsonProperty("paid_amount")
-	private int paidAmount;
-	
-	@JsonProperty("card_name")
-	private String cardName;
-	
-	@JsonProperty("card_number")
-	private String cardNumber;
+	private long couponNum;
+	private int amount;
+	private int couponRate;
+	private int finalAmount;
 
 }

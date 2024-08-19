@@ -59,6 +59,7 @@
     grid-template-columns: repeat(4, minmax(200px, 1fr));
     gap: 10px;
     margin: 0 auto;
+    margin-bottom: 35px;
 }
 
 .book-item {
@@ -79,6 +80,11 @@
     font-size: 1rem;
     margin: 0 0 10px;
     color: #333;
+    display: -webkit-box;           /* 부모 요소로 지정 */
+    -webkit-box-orient: vertical;   /* 텍스트의 방향을 수직으로 지정 */
+    -webkit-line-clamp: 2;          /* 최대 줄 수를 2줄로 제한 */
+    overflow: hidden;               /* 넘치는 내용 숨김 */
+    text-overflow: ellipsis;        /* 말줄임표(...)를 추가 */
 }
 
 .book-item p {

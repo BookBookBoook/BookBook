@@ -36,10 +36,10 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                         <button class="grey-button">배송지 수정</button>
                     </div>
                     <p>우편번호</p>
-                    <input type="text" id="postalcode" value="13014" class="postalcode input-field" disabled>
+                    <input type="text" id="postalcode" th:value="${user.postcode}" class="postalcode input-field" disabled>
                     <p>주소</p>
-                    <input type="text" id="address1" value="서울특별시 노원구 상계동 593-1" class="input-field" disabled><br>
-                    <input type="text" id="address2" value="화일빌딩 3층" class="input-field" disabled>
+                    <input type="text" id="address1" th:value="${user.address}" class="input-field" disabled><br>
+                    <input type="text" id="address2" th:value="${user.detailAddress}" class="input-field" disabled>
                 </div>
 
                 <div class="box-section">
@@ -68,7 +68,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                                         </div>
                                     </td>
                                     <td th:text="|${orderBook.orderCnt}개|">1개</td>
-                                    <td th:text="|${#numbers.formatDecimal(orderBook.discount, 1, 'COMMA', 0)}원|">17,820원</td>
+                                    <td th:text="|${#numbers.formatDecimal(orderBook.discount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -121,6 +121,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 			    <!-- input hidden으로 넘기는 값 -->
 			    <input type="hidden" th:value="${#authentication.principal.name}" id="userName">
 			    <input type="hidden" th:value="${#authentication.principal.email}" id="email">
+			    <input type="hidden" th:value="${#authentication.principal.phoneNumber}" id="phoneNumber">
 			    <input type="hidden" th:value="${merchantUid}" id="merchantUid">
             	<button class="side-btn btn-active" onclick="requestPay()">결제하기</button>
             	

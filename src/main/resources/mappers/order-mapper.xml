@@ -33,5 +33,13 @@
 		    uod.merchant_uid = ${merchantUid};
 	</select>
 	
+	<update id="orderCompletion" parameterType="com.project.bookbook.domain.dto.PaymentPostDTO">
+		UPDATE user_orders
+	    SET coupon_num = #{couponNum},
+	        order_status = 1,
+	        paid_amount = #{finalAmount}
+	    WHERE merchant_uid = #{merchantUid}
+	</update>
+	
 	
 </mapper>

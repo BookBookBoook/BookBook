@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 
 import com.project.bookbook.domain.dto.CartBookCntDTO;
 import com.project.bookbook.domain.dto.OrderDetailDTO;
+import com.project.bookbook.domain.dto.PaymentPostDTO;
 import com.project.bookbook.domain.entity.UserOrdersEntity;
 import com.project.bookbook.mapper.CartMapper;
 import com.project.bookbook.mapper.OrdersMapper;
@@ -70,5 +71,12 @@ public class OrderServiceProcess implements OrderService{
         int randomPart = 100000 + random.nextInt(900000); // 100000 ~ 999999
         return Long.parseLong(dateTimePart + randomPart);
     }
+	
+	@Override
+	@Transactional
+	public void orderCompletion(PaymentPostDTO dto) {
+		ordersMapper.orderCompletion(dto);
+		
+	}
 	
 }

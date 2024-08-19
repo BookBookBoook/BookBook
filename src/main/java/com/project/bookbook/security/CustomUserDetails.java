@@ -23,6 +23,7 @@ public class CustomUserDetails extends User implements OAuth2User {
 	    private long userId;
 	    private String password;
 	    private long status;
+	    private String phoneNumber;
 	    
 	    private Map<String, Object> attributes;
 	    
@@ -37,6 +38,7 @@ public class CustomUserDetails extends User implements OAuth2User {
 	        this.userId = entity.getUserId();
 	        this.password = entity.getPassword();
 	        this.status = entity.getStatus();
+	        this.phoneNumber = entity.getPhoneNumber();
 	    }
 
 	    // UserEntity 반환 메소드 추가

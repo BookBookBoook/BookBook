@@ -6,6 +6,9 @@ let merchantUid;
 let buyerEmail;
 let buyerName;
 let amount;
+let couponNum;
+let couponRate;
+
 
 //쿠폰 모달창
 function openModal() {
@@ -21,7 +24,8 @@ function selectCoupon() {
     if (selectedCoupon) {
         // 선택된 쿠폰의 부모 노드에서 couponRate 값 가져오기
         const couponItem = selectedCoupon.closest('.coupon-item');
-        const couponRate = couponItem.querySelector('#couponRate').value;
+        couponRate = couponItem.querySelector('#couponRate').value;
+        couponNum = couponItem.querySelector('#couponNum').value;
 
         //오른쪽 결제 정보에서 쿠폰할인 부분
         document.getElementById('selectedCouponRate').innerText = `- ${couponRate} 원`;
@@ -84,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	buyerEmail = document.getElementById("email").value;
 	buyerName = document.getElementById("userName").value;
 	amount = parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, ''));
+	buyerTel = document.getElementById("phoneNumber").value;
 	
 });
 
@@ -95,33 +100,38 @@ function requestPay() {
     pay_method: "card", //결제수단
     merchant_uid: merchantUid, //고객사 고유 주문 번호
     name: "도서", //주문명
-    //amount: 100,
-    amount: amount, //금액
+    amount: 1,
+    //amount: amount, //금액
     buyer_email: buyerEmail,
     popup: true, //결제창 팝업 여부
     buyer_name: buyerName,
+    buyer_tel: buyerTel,
     //m_redirect_url: `/payment/completion/${merchantUid}`, //결제완료 후에 이동할 URL
     //notice_url: "", //웹훅 URL
   },
   async (response) => {
 	  
-      if (response.error_code !== null) {
-        return alert(`결제에 실패하였습니다. 에러 내용: ${response.error_msg}`);
+      if (!response.success) {
+        return alert(`결제에 실패하였습니다. ${response.error_msg}`);
       }
       
 
-       const notified = await fetch(`/payment/completion`, {
        //await fetch(`/payment/completion`, {
+       const notified = await fetch('/payment/completion', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             [header]: token,
           },
           body: JSON.stringify({
-            "merchant_uid": response.merchant_uid, // 주문id
-            "paid_amount": response.paid_amount, // 결제금액
-            "card_name": response.card_name, // 카드사이름
-            "card_number": response.card_number, // 카드번호
+			merchantUid : merchantUid,
+			amount : amount,
+			couponNum : couponNum,
+			couponRate : couponRate
+            //merchant_uid: response.merchant_uid, // 주문id
+            //paid_amount: response.paid_amount, // 결제금액
+            //"card_name": response.card_name, // 카드사이름
+            //"card_number": response.card_number, // 카드번호
           }),
         })
         if (notified.ok) {
