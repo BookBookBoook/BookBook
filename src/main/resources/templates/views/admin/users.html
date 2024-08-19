@@ -50,36 +50,23 @@
 							<th>ID</th>
 							<th>이름</th>
 							<th>이메일</th>
-							<th>전화번호</th>
+							<th>연락처</th>
 							<th>주소</th>
-							<th>가입일</th>
-							<th>총 주문수</th>
-							<th>총 주문 금액</th>
-							<th>적립금</th>
+							<th>참고항목</th>
+							<th>회원상태</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td><a href="/admin/users/detail">이유진</a></td>
-							<td>yujin@naver.com</td>
-							<td>010-6225-6102</td>
-							<td>아랄랄랄랄랄랄라</td>
-							<td>2024-08-01</td>
-							<td>15건</td>
-							<td>300,000</td>
-							<td>0</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td><a href="#">김유자</a></td>
-							<td>kim@example.com</td>
-							<td>010-2345-6789</td>
-							<td>마마마마마마마마맘마마</td>
-							<td>2023-02-20</td>
-							<td>7건</td>
-							<td>200,000</td>
-							<td>0</td>
+						<tr th:each="dto:${list}">
+							<td th:text="${dto.userId}"></td>
+							<td th:text= ${dto.userName}></td>
+							<td th:text="${dto.email}"></td>
+							<td th:text="${dto.phoneNumber}"></td>
+							<td th:text="${dto.postcode}"></td>
+							<td th:text="${dto.extraAddress}"></td>
+							<td th:text="${dto.status}"></td>
+							<td><a th:href="|/admin/users/detail/${dto.userId}|"><button>상세보기</button></a></td>
 						</tr>
 					</tbody>
 				</table>
