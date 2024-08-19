@@ -1,7 +1,6 @@
 var client;
 let key;
 let flag = false; // 챗봇이 열려있는 상태를 추적하는 플래그
-let lastDate = null; // 마지막으로 표시된 날짜
 
 // WebSocket 지원 여부를 출력
 function isWebSocketSupported() {
@@ -101,9 +100,10 @@ function connect() {
             console.log("응답완료!!!");
             var msgObj = answer.body;
             console.log("Received message from server:", msgObj);
-            //*
+            
             var now = new Date();
             var time = formatTime(now);
+			
             var tag = `<div class="msg bot flex">
                         <div class="icon">
                             <img src="/img/bot/bot-img.png">
@@ -113,11 +113,97 @@ function connect() {
                             <div class="part chatbot">
                                 <p>${msgObj}</p>
                             </div>
-                            <div class="time">${time}</div>
                         </div>
                     </div>`;
             showMessage(tag);
-            //*/
+			///////////////////////////////////////////////////////////////////////////추가 html
+			if (msgObj.includes("배송조회")) { //includes ""가 포함되어있을경우
+                var buttonHTML = `<div class="msg bot flex">
+				                        <div class="icon">
+				                            <img src="/img/bot/bot-img-none.png">
+				                        </div>
+				                        <div class="message">
+				                            <div class="part chatbot">
+				                                <p>아래 버튼을 통해 배송 조회 페이지로 이동해주세요!</p>
+												<div class="button-container">
+			                                    	<button class="faq-button" onclick="location.href='/mypage/orders';"> 배송조회 이동</button>
+												</div>
+				                            </div>
+				                            <div class="time">${time}</div>
+				                        </div>
+				                    </div>`;
+                showMessage(buttonHTML);
+            }
+			if (msgObj.includes("쿠폰조회")) { //includes ""가 포함되어있을경우
+                var buttonHTML = `<div class="msg bot flex">
+				                        <div class="icon">
+				                            <img src="/img/bot/bot-img-none.png">
+				                        </div>
+				                        <div class="message">
+				                            <div class="part chatbot">
+				                                <p>아래 버튼을 통해 쿠폰 조회 페이지로 이동해주세요!</p>
+												<div class="button-container">
+			                                    	<button class="faq-button" onclick="location.href='/mypage/coupons';"> 쿠폰조회 이동</button>
+												</div>
+				                            </div>
+				                            <div class="time">${time}</div>
+				                        </div>
+				                    </div>`;
+                showMessage(buttonHTML);
+            }
+			if (msgObj.includes("이벤트")) { //includes ""가 포함되어있을경우
+                var buttonHTML = `<div class="msg bot flex">
+				                        <div class="icon">
+				                            <img src="/img/bot/bot-img-none.png">
+				                        </div>
+				                        <div class="message">
+				                            <div class="part chatbot">
+				                                <p>♚♚룰렛 오브 더 북☆북♚♚가입시$$전원 무료룰렛☜☜100%증정※ ♜북북 오브 북엉이♜펫 무료증정￥ 특정조건 §§북북팀§§★무료룰렛★쿠폰획득기회@@@ 즉시이동</p>
+												<div class="button-container">
+			                                    	<button class="faq-button" onclick="location.href='/event';"> 이벤트 페이지 이동</button>
+												</div>
+				                            </div>
+				                            <div class="time">${time}</div>
+				                        </div>
+				                    </div>`;
+                showMessage(buttonHTML);
+            }
+			
+			// 이미지 사용시
+			if (msgObj.includes("죄송")) { //startsWith ""로 시작할경우
+                var imageTag = `<div class="msg bot flex">
+				                    <div class="icon">
+				                        <img src="/img/bot/bot-img-none.png">
+				                    </div>
+				                    <div class="message">
+										<div class="part chatbot">
+											<div class="image-content">
+								                <img src="/img/bot/cry-bot-img.png" alt="환영 이미지">
+								            </div>
+										</div>
+				                        <div class="time">${time}</div>
+				                    </div>
+				                </div>`;
+                showMessage(imageTag);
+            }
+			if (msgObj.includes("안녕")) { //startsWith ""로 시작할경우
+                var imageTag = `<div class="msg bot flex">
+				                    <div class="icon">
+				                        <img src="/img/bot/bot-img-none.png">
+				                    </div>
+				                    <div class="message">
+										<div class="part chatbot">
+											<div class="image-content">
+								                <img src="/img/bot/happy-bot-img.png" alt="환영 이미지">
+								            </div>
+										</div>
+				                        <div class="time">${time}</div>
+				                    </div>
+				                </div>`;
+                showMessage(imageTag);
+            }
+            
+		   ///////////////////////////////////////////////////////////////////////////////////////
         });
     });
 }
@@ -132,32 +218,22 @@ function disconnect() {
 }
 
 // 상태 저장 및 복원
-function saveChatContent() {
-    var chatContent = document.getElementById("chat-content").innerHTML;
-    localStorage.setItem('chatContent', chatContent);
-}
-
-function loadChatContent() {
-    var savedContent = localStorage.getItem('chatContent');
-    if (savedContent) {
-        document.getElementById("chat-content").innerHTML = savedContent;
-    }
-}
-
 function saveBotState() {
-    var isVisible = document.getElementById("bot-container").style.display === 'block';
+    var isVisible = document.getElementById("bot-container").classList.contains('open');
     localStorage.setItem('botState', isVisible ? 'open' : 'closed');
 }
 
 function loadBotState() {
     // 로컬 스토리지에서 챗봇 상태를 가져옵니다.
     var botState = localStorage.getItem('botState');
+    const botContainer = document.getElementById("bot-container");
+
     if (botState === 'open') {
-        document.getElementById("bot-container").style.display = 'block';
+        botContainer.classList.add('open');
         flag = true;
         connect();
     } else {
-        document.getElementById("bot-container").style.display = 'none';
+        botContainer.classList.remove('open');
         flag = false;
         disconnect();
     }
@@ -176,13 +252,15 @@ function loadBotState() {
 
 // 페이지를 떠날 때 챗봇 상태를 저장
 window.addEventListener('beforeunload', function() {
-    saveChatContent();
     saveBotState();
+    // 대화 내용 저장을 제거하여 새로고침 시 대화 내용 초기화
+    localStorage.removeItem('chatContent');
 });
 
 // 버튼 클릭 이벤트 핸들러
 function btnCloseClicked() {
-    document.getElementById("bot-container").style.display = 'none';
+    const botContainer = document.getElementById("bot-container");
+    botContainer.classList.remove('open'); // Remove the open class to trigger the transition
     saveBotState();
     disconnect();
     flag = false;
@@ -194,14 +272,15 @@ function btnCloseClicked() {
 
 function btnBotClicked() {
     if (flag) return;
-    document.getElementById("bot-container").style.display = 'block';
+
+    const botContainer = document.getElementById("bot-container");
+    botContainer.classList.add('open'); // Add the open class to trigger the transition
     connect();
     flag = true;
     
     var hasShownWelcomeMessage = localStorage.getItem('hasShownWelcomeMessage');
     var wasChatReset = localStorage.getItem('chatReset');
     
-    // 채팅이 초기화된 상태이거나 환영 메시지가 아직 표시되지 않았으면 환영 메시지 표시
     if (!hasShownWelcomeMessage || wasChatReset) {
         showWelcomeMessage();
         localStorage.removeItem('chatReset'); // 채팅 초기화 상태 제거
@@ -235,7 +314,6 @@ function btnMsgSendClicked() {
 
     showDateIfNew();
     showMessage(tag);
-    saveChatContent();
 
     var data = {
         key: key,
@@ -252,7 +330,7 @@ function clearQuestion() {
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', (event) => {
-    loadChatContent();
+	btnCloseClicked();
     loadBotState(); // 챗봇 상태를 로드하고 표시
 
     document.getElementById("chat-icon").addEventListener('click', btnBotClicked);
