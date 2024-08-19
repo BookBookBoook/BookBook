@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.project.bookbook.domain.dto.BookDTO;
 import com.project.bookbook.domain.dto.ReviewDTO;
 import com.project.bookbook.domain.dto.BookSearchResponse.Item;
+import com.project.bookbook.domain.dto.CouponListDTO;
+import com.project.bookbook.domain.entity.UserCouponEntity;
 import com.project.bookbook.domain.entity.UserEntity;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.BookService;
 import com.project.bookbook.service.ReviewService;
+import com.project.bookbook.service.UserCouponService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +39,7 @@ public class IndexController {
 	@Autowired
 	private final BookService bookservice;
 	private final ReviewService reviewService;
+	private final UserCouponService userCouponService;
 
 	// 메인페이지 이동
 	@GetMapping
@@ -86,13 +90,14 @@ public class IndexController {
 	 */
 	@PostMapping("/detail/{isbn}/review")
 	@ResponseBody
-	public ResponseEntity<ReviewDTO> addReview(@PathVariable("isbn") String isbn,
-			@RequestBody ReviewCreateRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
+	public ResponseEntity<ReviewDTO> addReview(@PathVariable(name = "isbn") String isbn,
+			@RequestBody ReviewCreateRequest reviewRequest, @AuthenticationPrincipal CustomUserDetails userDetails) {
 		try {
-			ReviewDTO newReview = reviewService.createReview(userDetails.getUserId(), isbn, request.getContent(),
-					request.getRate());
+			ReviewDTO newReview = reviewService.createReview(userDetails.getUserId(), isbn,
+					reviewRequest.getReviewContent(), reviewRequest.getRate());
 			return ResponseEntity.ok(newReview);
 		} catch (Exception e) {
+			System.err.println("Error creating review: " + e.getMessage()); // 로그 추가
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
@@ -148,8 +153,43 @@ public class IndexController {
 
 	// 이벤트페이지
 	@GetMapping("/event")
-	public String event() {
-		return "views/index/event.html";
+	public String event(Model model) {
+		userCouponService.list(model);
+		return "views/index/event";
+	}
+
+	// 당첨된 쿠폰 조회해서 불러오기
+	@GetMapping("/api/coupons/{id}")
+	@ResponseBody
+	public ResponseEntity<CouponListDTO> getCouponById(@PathVariable("id") String id) {
+		CouponListDTO coupon = userCouponService.getCouponById(id);
+		if (coupon != null) {
+			return ResponseEntity.ok(coupon);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	// 사용자에게 쿠폰 전달하기
+	@PostMapping("/api/assign-coupon")
+	@ResponseBody
+	public ResponseEntity<UserCouponEntity> assignCoupon(@RequestBody AssignCouponRequest request,
+			@AuthenticationPrincipal CustomUserDetails userDetails) {
+
+		if (userDetails == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
+		System.out.println("쿠폰 할당 요청 받음 - 쿠폰 ID: " + request.getCouponId() + ", 사용자 ID: " + userDetails.getUserId());
+
+		try {
+			UserCouponEntity userCoupon = userCouponService.assignCouponToUser(request.getCouponId(),
+					userDetails.getUserId());
+			return ResponseEntity.ok(userCoupon);
+		} catch (RuntimeException e) {
+			System.err.println("쿠폰 할당 중 오류 발생: " + e.getMessage());
+			return ResponseEntity.badRequest().body(null);
+		}
 	}
 
 }
