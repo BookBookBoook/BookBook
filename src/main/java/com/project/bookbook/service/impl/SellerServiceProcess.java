@@ -61,12 +61,13 @@ public class SellerServiceProcess implements SellerService {
 
     }
 
-
+    // 승인 대기 조회
 	@Override
 	public List<SellerEntity> getPendingSellers() {
 		return sellerRepository.findByApprovalStatus(ApprovalStatus.PENDING);
 	}
-
+	
+	//판매자 승인 처리
 	@Override
 	public void approveSeller(Long id) {
 		 SellerEntity seller = sellerRepository.findById(id)
@@ -82,6 +83,46 @@ public class SellerServiceProcess implements SellerService {
 	        seller.setApprovalStatus(ApprovalStatus.REJECTED);
 	        sellerRepository.save(seller);
 	    }
+
 	
+	@Override
+	public List<SellerEntity> getAllSellers() {
+		return sellerRepository.findAll();
+	}
+
+	// ID로 특정 판매자 조회
+	@Override
+	public SellerEntity getSellerById(Long id) {
+		return sellerRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Seller not found"));
+	}
+
+
+	@Override
+	public List<SellerEntity> findSellersByShopName(String shopName) {
+		return sellerRepository.findByShopNameContaining(shopName);
+	}
+	
+	// 회원 삭제
+	@Override
+	public void deleteSeller(Long id) {
+		 SellerEntity seller = sellerRepository.findById(id)
+	                .orElseThrow(() -> new RuntimeException("Seller not found"));
+	        
+	        // 연관된 UserEntity 가져오기
+	        UserEntity user = seller.getUser();
+	        if (user != null) {
+	            user.setSeller(null);  // UserEntity와 SellerEntity의 관계 해제
+	            userRepository.save(user);
+	        }
+	        
+	        // 사업자 등록증 이미지 삭제
+	        if (seller.getBusinessRegImage() != null) {
+	            imageService.deleteImage(seller.getBusinessRegImage().getId());
+	        }
+	        
+	        // SellerEntity 삭제
+	        sellerRepository.delete(seller);
+	    }
 	
 }

@@ -4,10 +4,7 @@ package com.project.bookbook.domain.dto;
 
 import java.util.Set;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.project.bookbook.domain.entity.ApprovalStatus;
-import com.project.bookbook.domain.entity.Role;
 import com.project.bookbook.domain.entity.SellerEntity;
 import com.project.bookbook.domain.entity.UserEntity;
 
