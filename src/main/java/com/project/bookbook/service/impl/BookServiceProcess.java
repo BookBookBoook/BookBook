@@ -40,8 +40,11 @@ import com.project.bookbook.domain.entity.CartDetailEntity;
 import com.project.bookbook.domain.entity.CartEntity;
 import com.project.bookbook.domain.entity.FavoriteBook;
 import com.project.bookbook.domain.entity.UserEntity;
+import com.project.bookbook.domain.entity.WishEntity;
 import com.project.bookbook.domain.repository.BookRepository;
 import com.project.bookbook.domain.repository.FavoriteBookRepository;
+import com.project.bookbook.domain.repository.UserRepository;
+import com.project.bookbook.domain.repository.WishRepository;
 import com.project.bookbook.service.BookService;
 import com.project.bookbook.service.CartItemService;
 import com.project.bookbook.service.CartService;
@@ -67,7 +70,8 @@ public class BookServiceProcess implements BookService {
 	private final FavoriteBookRepository favoriteBookRepository;
 	private final BookRepository bookRepository;
 	private final CartItemService cartItemService;
-
+	private final UserRepository userRepository;
+	private final WishRepository wishRepository;
 	// 검색 결과
 	public void searchBooks(String query, Model model) {
 	    try {
@@ -385,8 +389,42 @@ public class BookServiceProcess implements BookService {
 	            .description(truncateDescription(item.getDescription()))
 	            .isbn(item.getIsbn())
 	            .discount(parseDiscountPrice(item.getDiscount()))
+	            .link(item.getLink())
 	            .build();
 	    return bookRepository.save(book);
+	}
+
+	@Override
+	public void addToWishlist(String isbn, Long userId) throws Exception {
+		// 1. 사용자 조회
+	    UserEntity user = userRepository.findById(userId)
+	            .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
+
+	    // 2. 책 정보 조회 또는 생성
+	    BookEntity book = bookRepository.findByIsbn(isbn).orElseGet(() -> {
+	        // 2.1 책이 데이터베이스에 없는 경우, 네이버 API에서 정보 가져오기
+	        Item naverBookItem = getBookByIsbn(isbn);
+	        if (naverBookItem == null) {
+	            throw new RuntimeException("네이버 API에서 책을 찾을 수 없습니다: " + isbn);
+	        }
+	        // 2.2 네이버 API에서 가져온 정보로 BookEntity 생성 및 저장
+	        return createAndSaveBookEntity(naverBookItem);
+	    });
+
+	    // 3. 위시리스트 중복 체크
+	    if (wishRepository.existsByUserAndBook(user, book)) {
+	        throw new Exception("이미 위시리스트에 추가된 책입니다.");
+	    }
+
+	    // 4. 위시리스트에 추가
+	    WishEntity wish = WishEntity.builder()
+	            .user(user)
+	            .book(book)
+	            .build();
+	    wishRepository.save(wish);
+
+	    // 5. 로그 기록
+	    logger.info("책이 위시리스트에 추가되었습니다. ISBN: {}, 사용자 ID: {}", isbn, userId);
 	}
 
 }

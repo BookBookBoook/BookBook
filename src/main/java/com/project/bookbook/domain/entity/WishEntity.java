@@ -31,7 +31,7 @@ public class WishEntity {
 	private UserEntity user; // 사용자ID fk
 
 	@ManyToOne // FK 단방향
-	@JoinColumn(name = "isbn", nullable = false)
-	private FavoriteBook favoriteBook; // ISBN fk
+	@JoinColumn(name = "bookNum", nullable = false)
+	private BookEntity book; // ISBN fk
 
 }
