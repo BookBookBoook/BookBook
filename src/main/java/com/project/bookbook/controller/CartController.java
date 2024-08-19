@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bookbook.domain.dto.PaymentAllDTO;
@@ -20,7 +21,9 @@ import com.project.bookbook.domain.dto.PaymentPostDTO;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CartService;
 import com.project.bookbook.service.CouponService;
+import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.OrderService;
+import com.project.bookbook.service.UserService;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +32,7 @@ public class CartController {
 	private final CouponService couponService;
 	private final CartService cartService;
 	private final OrderService orderService;
+	private final MypageUserService userService;
 	
 	//장바구니
 	@GetMapping("/cart")
@@ -66,16 +70,18 @@ public class CartController {
 	//결제
 	@GetMapping("/payment/{merchantUid}")
 	public String payment(@PathVariable("merchantUid") long merchantUid, Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		userService.readProcess(model, user);
 		orderService.findOrdersInfo(model, merchantUid);
 		couponService.findProcess(model, user);
 		return "views/cart/payment";
 	}
 	
 	@PostMapping("/payment/completion")
-	public String paymentPost(PaymentPostDTO dto) {
-		long merchantUid = dto.getMerchantUid();
-		System.out.println(">>>>>>>>>>>"+dto);
-		return "redirect:/payment/completion/"+merchantUid;
+	@ResponseBody
+	public String paymentPost(@RequestBody PaymentPostDTO dto) {
+		dto.setFinalAmount(dto.getAmount() - dto.getCouponRate());
+		orderService.orderCompletion(dto);
+		return "";
 	}
 
 	@GetMapping("/payment/completion/{merchantUid}")

@@ -28,15 +28,15 @@
 		<div class="payment-info">
 			<p class="main-text">주문이 완료되었습니다.
 			<p>
-			<p class="order-number" th:text="${주문번호 : merchantUid}">주문번호 : 2024080192123998</p>
+			<p class="order-number" th:text="|주문번호 : ${merchantUid}|">주문번호 : 2024080192123998</p>
 
 			<div class="button-container">
 				<button class="button primary-button">계속 쇼핑하기</button>
 				<button class="button secondary-button"
-					onclick="window.location.href='/mypage/orders/detail';">주문상세보기</button>
+					th:onclick="|window.location.href='/mypage/orders/detail/${merchantUid}';|">주문상세보기</button>
 			</div>
 
-			<table class="left-section">
+			<!-- <table class="left-section">
 				<thead>
 					<tr>
 						<th>제품정보</th>
@@ -92,7 +92,8 @@
 						</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
+			
 		</div>
 	</div>
 </main>

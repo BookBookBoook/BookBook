@@ -4,6 +4,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
 	<link rel="stylesheet" href="/css/mypage/order.css">
+	<script src="/js/mypage/shipment.js"></script>
 </head>
 <main>
 	<div class="flex">
@@ -51,7 +52,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                            <td>
 	                                <div class="order-actions">
 	                                	<div>상품 준비중</div>
-	                                    <button class="check">배송 조회</button>
+	                                    <button class="check" onclick="openAndSubmitForm()">배송 조회</button>
 	                                    <button class="cancel">주문 취소</button>
 	                                </div>
 	                            </td>

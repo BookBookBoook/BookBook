@@ -53,6 +53,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String address; // 주소
+    
+    @Column(nullable = true)
+    private String entrance; // 공동현관 비밀번호
 
     @Column(nullable = false)
     private String extraAddress; // 참고항목

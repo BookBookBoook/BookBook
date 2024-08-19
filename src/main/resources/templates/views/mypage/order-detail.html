@@ -4,6 +4,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
 	<link rel="stylesheet" href="/css/mypage/order-detail.css">
+	<script src="/js/mypage/shipment.js"></script>
 </head>
 <main>
 	<div class="flex">
@@ -15,35 +16,45 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	            </div>
 	            <p>
 	            	<span class="order-date">2024. 7. 31 주문</span> 
-	            	<span class="order-number">주문번호 16100061537799</span>
+	            	<span class="order-number" th:text="|주문번호 ${merchantUid}|">주문번호 16100061537799</span>
 	            </p>
 	
 	            <div class="shipping-status">
 	                <h2>배송중 - 오늘 도착 예정</h2>
 	                <div class="flex between">
 		                <div class="product-info">
-		                    <img src="/img/book-cover.png" alt="해리포터와 마법사의 돌 1">
+		                    <img th:src="${orderBooks[0].bookImg}">
 		                    <div class="product-details">
 		                    	<div class="product-text">
-			                        <p class="product-title">해리포터와 마법사의 돌 외 1권</p>
+			                        <p class="product-title" 
+									   th:unless="${orderBooks.size() == 1}" 
+									   th:text="|${orderBooks[0].bookName} 외 ${orderBooks.size() - 1}권|">
+									   해리포터와 마법사의 돌 외 1권
+									</p>
+									
+									<p class="product-title" 
+									   th:if="${orderBooks.size() == 1}" 
+									   th:text="${orderBooks[0].bookName}">
+									   해리포터와 마법사의 돌
+									</p>
 			                        <p class="product-price">17,000원</p>
 		                        </div>
 		                        <button class="cart-btn">장바구니 다시 담기</button>
 		                    </div>
 		                </div>
 		                <div class="shipping-actions">
-		                    <button class="track-button">배송조회</button>
+		                    <button class="track-button" onclick="openAndSubmitForm()">배송조회</button>
 		                    <button class="cancel-button">배송 취소</button>
 		                    <button class="print-button">영수증 출력</button>
 		                </div>
 	                </div>
 	            </div>
-	
+	            
 	            <div class="receiver-info">
 	                <h3>받는사람 정보</h3>
-	                <p>받는사람 : 이유진</p>
-	                <p>연락처 : 010-1234-5678</p>
-	                <p>받는주소 : 서울특별시 강남구 역삼동 76번지 33 110동 1107호</p>
+	                <p th:text="|받는사람 : ${user.userName}|">받는사람 : 이유진</p>
+	                <p th:text="|연락처 : ${user.phoneNumber}|">연락처 : 010-1234-5678</p>
+	                <p th:text="|받는주소 : ${user.address} ${user.detailAddress}|">받는주소 : 서울특별시 강남구 역삼동 76번지 33 110동 1107호</p>
 	                <p>공동현관 비밀번호 : 8277</p>
 	            </div>
 	

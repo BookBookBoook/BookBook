@@ -19,6 +19,7 @@ import com.project.bookbook.domain.dto.QNACreateDTO;
 import com.project.bookbook.domain.dto.accountUpdateDTO;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CouponService;
+import com.project.bookbook.service.FavoriteService;
 import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.QNAService;
 
@@ -31,6 +32,7 @@ public class MypageController {
 	private final MypageUserService userService;
 	private final CouponService couponService;
 	private final PasswordEncoder passwordEncoder;
+	private final FavoriteService favoriteService;
 	
 	//회원정보
 	@GetMapping("/mypage/account")
@@ -128,7 +130,8 @@ public class MypageController {
 	
 	//나의 취향
 	@GetMapping("/mypage/favorites")
-	public String favorite() {
+	public String favorite(Model model, @AuthenticationPrincipal CustomUserDetails user) {
+		favoriteService.findByUser(model, user);
 		return "views/mypage/favorite";
 	}
 
