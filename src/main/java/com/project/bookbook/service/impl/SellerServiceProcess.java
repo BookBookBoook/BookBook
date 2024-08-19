@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.bookbook.domain.dto.CombinedSellerDTO;
+import com.project.bookbook.domain.entity.ApprovalStatus;
 import com.project.bookbook.domain.entity.ImageEntity;
 import com.project.bookbook.domain.entity.Role;
 import com.project.bookbook.domain.entity.SellerEntity;
@@ -45,6 +46,7 @@ public class SellerServiceProcess implements SellerService {
         // SellerEntity 생성 및 저장 (User 정보 포함)
         SellerEntity sellerEntity = dto.toSellerEntity();
         sellerEntity = sellerRepository.save(sellerEntity);
+        sellerEntity.setApprovalStatus(ApprovalStatus.PENDING);
 
         // UserEntity에 SellerEntity 연결
         userEntity.setSeller(sellerEntity);
@@ -58,4 +60,28 @@ public class SellerServiceProcess implements SellerService {
         }
 
     }
+
+
+	@Override
+	public List<SellerEntity> getPendingSellers() {
+		return sellerRepository.findByApprovalStatus(ApprovalStatus.PENDING);
+	}
+
+	@Override
+	public void approveSeller(Long id) {
+		 SellerEntity seller = sellerRepository.findById(id)
+		            .orElseThrow(() -> new RuntimeException("Seller not found"));
+		        seller.setApprovalStatus(ApprovalStatus.APPROVED);
+		        sellerRepository.save(seller);
+		    }
+
+	@Override
+	public void rejectSeller(Long id) {
+		SellerEntity seller = sellerRepository.findById(id)
+	            .orElseThrow(() -> new RuntimeException("Seller not found"));
+	        seller.setApprovalStatus(ApprovalStatus.REJECTED);
+	        sellerRepository.save(seller);
+	    }
+	
+	
 }
