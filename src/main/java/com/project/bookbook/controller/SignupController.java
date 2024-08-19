@@ -16,7 +16,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.bookbook.domain.dto.CombinedSellerDTO;
-import com.project.bookbook.domain.dto.ItemAndFileSaveDTO;
 import com.project.bookbook.domain.dto.UserSaveDTO;
 import com.project.bookbook.domain.entity.ApprovalStatus;
 import com.project.bookbook.domain.entity.ImageEntity;
