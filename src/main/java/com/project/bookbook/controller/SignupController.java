@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.bookbook.domain.dto.CombinedSellerDTO;
 import com.project.bookbook.domain.dto.ItemAndFileSaveDTO;
 import com.project.bookbook.domain.dto.UserSaveDTO;
+import com.project.bookbook.domain.entity.ApprovalStatus;
 import com.project.bookbook.domain.entity.ImageEntity;
 import com.project.bookbook.domain.entity.Role;
 import com.project.bookbook.service.ImageService;
@@ -73,10 +74,18 @@ public class SignupController {
 
     @PostMapping("/signup/admin")
     public String signupAdmin(@ModelAttribute("combinedSellerDTO") CombinedSellerDTO dto, SessionStatus status) {
+        dto.setApprovalStatus(ApprovalStatus.PENDING);
         sellerService.signupProcess(dto);
         status.setComplete(); // 세션 정보 제거
-        return "redirect:/";
+        return "redirect:/approve";
     }
+    
+    
+    @GetMapping("/approve")
+    public String approve() {
+        return "/views/login/approve";
+    }
+    
     
     @PostMapping("/api/upload")
     @ResponseBody
@@ -91,6 +100,7 @@ public class SignupController {
             }
             ImageEntity savedImage = imageService.uploadImage(file);
             dto.setBusinessRegImageId(savedImage.getId());
+            dto.setBusinessReg(savedImage.getFileUrl());
             return ResponseEntity.ok(Map.of("id", savedImage.getId().toString(), "url", savedImage.getFileUrl()));
         } catch (IOException e) {
             e.printStackTrace();
