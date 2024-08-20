@@ -6,8 +6,8 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="/css/mainContent/eventRullret.css" />
-<meta name="_csrf" content="${_csrf.token}" />
-<meta name="_csrf_header" content="${_csrf.headerName}" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
@@ -34,7 +34,7 @@
 
 			<div id="popup_gift" class="popup">
 				<div class="popup-content">
-					<span class="close">&times;</span>
+					<span id="closePopupBtn" class="close" data-coupon-id="">&times;</span>
 					<div class="lottery_present"></div>
 				</div>
 			</div>

@@ -1,4 +1,22 @@
 $(document).ready(function() {
+	
+	/// CSRF 토큰 설정
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+    console.log("CSRF Token:", token);
+    console.log("CSRF Header Name:", header);
+
+    if (token && header) {
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            }
+        });
+    } else {
+        console.warn("CSRF token or header name is missing.");
+    }
+
     var gift;
     var rotationPos = [60, 120, 180, 240, 300, 360];
     var couponIds = [
@@ -22,7 +40,7 @@ $(document).ready(function() {
         var copImg = "img/cupon/cupon" + (gift + 1) + ".png";
         console.log("쿠폰 ID : " + couponId + ", 이미지 : " + copImg);
 
-        $.ajax({
+        $.ajax({	
             url: '/api/coupons/' + couponId,
             method: 'GET',
             success: function(coupon) {
@@ -35,11 +53,11 @@ $(document).ready(function() {
         });
     }
 
-    function displayCouponInfo(coupon, copImg) {
+     function displayCouponInfo(coupon, copImg) {
         var html = `
             <br>축하드립니다!<br>
             <span>${coupon.couponName}</span> 쿠폰에 당첨되셨습니다.<br>
-            <strong>할인율: ${coupon.couponRate}배</strong><br>
+            <strong>할인율: ${coupon.couponRate}%</strong><br>
             유효기간: ${formatDate(coupon.startDate)} ~ ${formatDate(coupon.endDate)}<br>
             <em>${coupon.couponDetail}</em><br>
             지금 바로 사용해보세요!
@@ -47,6 +65,7 @@ $(document).ready(function() {
 
         $("#popup_gift .lottery_present").html(html);
         $('<img src="' + copImg + '" />').prependTo("#popup_gift .lottery_present");
+        $("#closePopupBtn").attr("data-coupon-id", coupon.couponNum); // 쿠폰 ID 설정
         openPopup("popup_gift");
     }
 
@@ -56,6 +75,29 @@ $(document).ready(function() {
                String(date.getMonth() + 1).padStart(2, '0') + '-' + 
                String(date.getDate()).padStart(2, '0');
     }
+    function saveCouponToUser(couponId) {
+        $.ajax({
+            url: '/api/save-coupon',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                couponId: couponId
+            }),
+            success: function(response) {
+                console.log('쿠폰이 성공적으로 저장되었습니다.', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('쿠폰 저장에 실패했습니다.', error);
+            }
+        });
+    }
+
+    // 팝업 닫기 버튼 클릭 이벤트
+    $("#closePopupBtn").on("click", function() {
+        var couponId = $(this).attr("data-coupon-id");
+        saveCouponToUser(couponId);
+        closePopup();
+    });
 
     function openPopup(id) {
         $('#' + id).fadeIn(300);
