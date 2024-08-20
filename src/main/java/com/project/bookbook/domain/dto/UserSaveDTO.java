@@ -9,11 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.project.bookbook.domain.entity.Role;
 import com.project.bookbook.domain.entity.UserEntity;
 
+import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 @Setter
+@Getter
 public class UserSaveDTO {
 	
 	private long userId;

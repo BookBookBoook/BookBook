@@ -78,7 +78,10 @@
 						<label>예금주</label>
 						<p th:text="${seller.accountHolder}"></p>
 					</div>
-
+					<div class="info-item">
+						<label>승인 상태</label>
+						<p th:text="${seller.approvalStatus}"></p>
+					</div>
 					<div class="info-item">
 						<label>사업자 등록증</label>
 						<button id="showBusinessRegBtn"

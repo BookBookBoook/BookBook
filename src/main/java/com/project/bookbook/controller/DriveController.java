@@ -46,17 +46,20 @@ public class DriveController {
 		
 		@Value("${naver.client.redirect-uri}")
 		private String redirectUri;
-
+		
+		// OAuth2 인증 후 리다이렉트되는 엔드포인트
 		@GetMapping("/oauth2/code")
 	    public String redirectUri(@RequestParam("code") String code,
 	                              @RequestParam("state") String state,
 	                              Model model,
 	                              HttpSession session) throws Exception {
 	        if (state.equals("drive_access")) {
+	        	 // 인증 코드로 액세스 토큰 얻기
 	            String accessToken = driveservice.getAccessTokenForCode(code);
+	            // 세션에 액세스 토큰 저장
 	            session.setAttribute("accessToken", accessToken);
-	            // 추가된 로그
 	            System.out.println("AccessToken stored in session: " + accessToken);
+	            // 루트 파일 목록 조회
 	            List<Files> rootfiles = driveservice.rootfileRead(accessToken, model);
 	            model.addAttribute("rootfiles", rootfiles);
 	            return "views/naver/root-drive";
@@ -64,7 +67,7 @@ public class DriveController {
 	        return "redirect:/";
 	    }
 	    
-	    
+		// 루트 폴더의 파일 목록을 조회하는 GET 엔드포인트		
 	    @GetMapping("/admin/drive/files")
 	    public String listFiles(@RequestParam("fileId") String fileId,
 	                            Model model,
@@ -87,7 +90,7 @@ public class DriveController {
 	        return "views/naver/drive";
 	    }
 
-
+	    // 특정 폴더의 파일 목록을 조회하는 POST 엔드포인트 (GET과 유사)
 	    @PostMapping("/admin/drive/files")
 	    public String listFilesPost(@RequestParam("fileId") String fileId,
 	                                Model model,
@@ -97,15 +100,16 @@ public class DriveController {
 	        // 추가된 로그
 	        System.out.println("AccessToken retrieved from session (POST): " + accessToken);
 	        if (accessToken == null) {
-	            return "redirect:/drive/auth";  // 토큰이 없으면 인증 페이지로 리다이렉트
+	            return "redirect:/drive/auth";
 	        }
+	        
 	        List<File> fileList = driveservice.fileRead(accessToken, fileId, model);
 	        model.addAttribute("files", fileList);
 	        model.addAttribute("parentFileId", fileId);
 	        return "views/naver/drive";
 	    }
 
-	    
+	    // 파일 다운로드 엔드포인트	    
 	    @GetMapping("/admin/drive/files/download")
 	    public ResponseEntity<Resource> downloadFile(@RequestParam("fileId") String fileId, HttpSession session) {
 	        String accessToken = (String) session.getAttribute("accessToken");
@@ -114,23 +118,29 @@ public class DriveController {
 	        }
 
 	        try {
+	        	 // 파일 이름 조회
 	            String fileName = driveservice.getFileName(accessToken, fileId);
-	            byte[] fileData = driveservice.downloadFile(accessToken, fileId);
+	            // 파일 다운로드 URL 조회
+	            String downloadUrl = driveservice.getFileDownloadUrl(accessToken, fileId);
+	            // 파일 데이터 다운로드
+	            byte[] fileData = driveservice.downloadFileFromUrl(accessToken, downloadUrl);
 
 	            ByteArrayResource resource = new ByteArrayResource(fileData);
-
+	            
+	            // 파일 다운로드 응답 생성
 	            return ResponseEntity.ok()
 	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + "\"")
 	                .contentType(MediaType.APPLICATION_OCTET_STREAM)
 	                .contentLength(fileData.length)
 	                .body(resource);
 	        } catch (Exception e) {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(new ByteArrayResource(("Failed to download file: " + e.getMessage()).getBytes()));
 	        }
 	    }
 	    
 	    
-	    
+	    // 사용자 정보를 처리하는 엔드포인트
 		@PostMapping("/userinfo")
 		@ResponseBody
 		public Map<String, Object> handleUserInfo(@RequestBody Map<String, Object> userInfo) {

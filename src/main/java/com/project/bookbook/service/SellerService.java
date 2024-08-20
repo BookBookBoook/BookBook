@@ -19,5 +19,9 @@ public interface SellerService {
 	List<SellerEntity> findSellersByShopName(String shopName);
 
 	void deleteSeller(Long id);
+	
+	
+	boolean isEmailDuplicate(String email);
+    boolean isBusinessNumDuplicate(String businessNum);
 
 }

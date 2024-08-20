@@ -49,7 +49,7 @@
 	        http
 	            .authorizeHttpRequests(authorize -> authorize
 	
-	                .requestMatchers("/**", "/signup/**", "/login/**", "/logout/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload").permitAll()
+	                .requestMatchers("/", "/signup/**", "/login/**", "/logout/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload").permitAll()
 	                .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
 	                .requestMatchers("/admin/**").hasRole("ADMIN")
 	                .requestMatchers("/seller/**").hasRole("SELLER")
@@ -81,14 +81,19 @@
 	            ))
 	            .userDetailsService(customUserDetailsService)
 	            .oauth2Login(oauth2 -> oauth2
-	                .loginPage("/login")
-	                .userInfoEndpoint(userInfo -> userInfo
-	                    .userService(customOAuth2UserService)
-	                )
-	                .successHandler(customLoginSuccessHandler)
-	            );
-	        
-	        return http.build();
+	                    .loginPage("/login")
+	                    .userInfoEndpoint(userInfo -> userInfo
+	                        .userService(customOAuth2UserService)
+	                    )
+	                    .successHandler(customLoginSuccessHandler)
+	                    .failureHandler((request, response, exception) -> {
+	                        // OAuth2 로그인 실패 시 처리
+	                        response.sendRedirect("/login?error=oauth2");
+	                    })
+	                );
+	            
+	            return http.build();
+	        }
 	    }
 	    
-	}
+	
