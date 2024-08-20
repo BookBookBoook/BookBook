@@ -171,9 +171,9 @@ public class IndexController {
 	}
 
 	// 사용자에게 쿠폰 전달하기
-	@PostMapping("/api/assign-coupon")
+	@PostMapping("/api/save-coupon")
 	@ResponseBody
-	public ResponseEntity<UserCouponEntity> assignCoupon(@RequestBody AssignCouponRequest request,
+	public ResponseEntity<UserCouponEntity> saveCoupon(@RequestBody SaveCouponRequest request,
 			@AuthenticationPrincipal CustomUserDetails userDetails) {
 
 		if (userDetails == null) {
