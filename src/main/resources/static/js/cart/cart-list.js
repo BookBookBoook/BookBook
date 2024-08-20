@@ -1,8 +1,5 @@
 //장바구니에 담은 상품 삭제
 function deleteCartItem(cartDetailNum) {
-	//csrf 토큰
-	const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-	const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 	
     if (confirm("정말로 삭제하시겠습니까?")) { // 사용자에게 확인 요청
         const deleteUrl = `/cart/${cartDetailNum}`;
@@ -32,10 +29,6 @@ function deleteCartItem(cartDetailNum) {
 
 //전체 상품 구매 (장바구니에 담은 상품 전체 결제로 보내기)
 function paymentAll() {
-    // CSRF 토큰
-    const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-    const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
     // cartList 내의 모든 tr 요소에서 cartDetailNum 추출
     const cartItems = document.querySelectorAll('#cartList tr');
     const cartDetailNums = Array.from(cartItems).map(item => item.getAttribute('data-cart-detail-num'));
@@ -59,7 +52,8 @@ function paymentAll() {
         window.location.href = `/payment/${merchantUid}`;
     })
     .catch(error => {
-        alert(error);
+		console.log(error);
+        alert('장바구니에 상품이 없습니다.');
     });
 }
 
@@ -93,10 +87,20 @@ document.addEventListener("DOMContentLoaded", function() {
     
     document.querySelector(".final-amount").textContent = 
         new Intl.NumberFormat('ko-KR').format(finalAmount) + "원";
+        
+    
 });
 
 
 //수량변경
+const changeButton = document.getElementById('changeButton');
+const quantityControlBlock = document.querySelector('.quantity-control');
+console.log(changeButton);
+changeButton.addEventListener('click', () => {
+	quantityControlBlock.style.display = "block";
+});
+
+
 document.querySelectorAll('.quantity-control').forEach(function(control) {
     const decrementButton = control.querySelector('.decrement');
     const incrementButton = control.querySelector('.increment');

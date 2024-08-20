@@ -1,6 +1,6 @@
 //csrf 토큰
-const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+//const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+//const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
 //사용가능한 쿠폰, 만료된 쿠폰 페이지 이동
 function openTab(evt, tabName) {

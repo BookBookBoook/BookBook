@@ -79,7 +79,11 @@ public class OrderServiceProcess implements OrderService{
 	@Override
 	@Transactional
 	public void orderCompletion(PaymentPostDTO dto) {
-		ordersMapper.orderCompletion(dto);
+		if(dto.getCouponNum() != 0) {
+			ordersMapper.orderCompletion(dto);
+		}else {
+			ordersMapper.orderCompletionNoCoupon(dto);
+		}
 		
 	}
 
@@ -99,8 +103,10 @@ public class OrderServiceProcess implements OrderService{
 		OrdersDetailDTO ordersDetail = ordersMapper.findByMerchantUid(merchantUid);
 		model.addAttribute("ordersDetail", ordersDetail);
 		
-		int couponRate = couponService.findByCouponNum(ordersDetail.getCouponNum());
-		model.addAttribute("couponRate", couponRate);
+		if(ordersDetail.getCouponNum() != 0) {
+			int couponRate = couponService.findByCouponNum(ordersDetail.getCouponNum());
+			model.addAttribute("couponRate", couponRate);
+		}
 		
 	}
 

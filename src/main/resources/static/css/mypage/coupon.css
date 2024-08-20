@@ -156,7 +156,7 @@
 
 
 /* 모달 창 */
-.modal {
+.modal-background {
     display: none;
     position: fixed;
     z-index: 1;
@@ -194,7 +194,7 @@
 }
 
 
-.modal-register {
+.modal-register-ui {
 	width: 400px;
 	background-color: white;
 	border-radius: 8px;

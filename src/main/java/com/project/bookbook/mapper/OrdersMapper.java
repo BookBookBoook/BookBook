@@ -27,4 +27,6 @@ public interface OrdersMapper {
 
 	OrderDetailDTO findByOrderBookOne(long merchantUid);
 
+	void orderCompletionNoCoupon(PaymentPostDTO dto);
+
 }

@@ -48,5 +48,12 @@ public class CartServiceProcess implements CartService{
 		
 	}
 
+	@Override
+	public void cartEmptyProcess(CustomUserDetails user) {
+		long userId = user.getUserId();
+		long cartNum = cartMapper.findCartNum(userId);
+		cartMapper.deleteAllCart(cartNum);
+	}
+
 
 }

@@ -17,8 +17,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		            <button class="head-btn" id="headBtn">교환번호 등록</button>
 		        </div>
 		        
-		        <div class="modal" id="modal-register">
-			        <form class="modal-register" action="/mypage/coupons" method="post">
+		        <div class="modal-background" id="modal-register">
+			        <form class="modal-register-ui" action="/mypage/coupons" method="post">
 			        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 				        <span class="close">&times;</span>
 				        <h2>교환번호 등록</h2>

@@ -12,5 +12,7 @@ public interface CartService {
 
 	void deleteCartDetail(long cartDetailNum);
 
+	void cartEmptyProcess(CustomUserDetails user);
+
 
 }
