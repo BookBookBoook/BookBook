@@ -113,7 +113,8 @@ public class AdminController {
 	
 	//리뷰
 	@GetMapping("/admin/review")
-	public String adminReview() {
+	public String adminReview(Model model) {
+		adminService.findReviews(model);
 		return "views/admin/review";
 	}
 	@GetMapping("/admin/review/complain")
