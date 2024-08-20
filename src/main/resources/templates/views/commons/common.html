@@ -29,14 +29,17 @@
 				class="logo" alt="로고"></a>
 			<div class="search-container">
 
-				<form th:action="@{/search}" method="get">
+				<form th:action="@{/search}" method="get" id="searchForm">
 					<select name="searchType" title="검색유형선택">
 						<option>통합검색</option>
 						<option>베스트셀러</option>
 						<option>교보문고</option>
 						<option>이벤트</option>
 					</select> <input type="text" name="query" title="통합검색어 입력"
-						placeholder="왜 세계는 10대의 SNS를 금지하나">
+						placeholder="왜 세계는 10대의 SNS를 금지하나" id="queryInput">
+					<button type="button" class="head-btn" id="cameraButton">
+						<i class="fa-solid fa-camera-retro"></i>
+					</button>
 					<button type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>
@@ -77,6 +80,18 @@
 			<li><a href="/event">이벤트</a></li>
 		</ul>
 	</div>
+	
+	<!-- 모달 창 (fileUploadContainer) -->
+	<div id="modal-register" class="modal">
+	    <div id="fileUploadContainer" class="modal-register">
+	        <span class="close">&times;</span>
+	        <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+	        <img id="imagePreview" alt="Image preview">
+	        <br>
+	        <button id="confirmButton">검색</button>
+	    </div>
+	</div>
+	
 </header>
 <!-- 여기까지 헤더 영역 -->
 
@@ -111,5 +126,6 @@
 		</div>
 	</div>
 	<div class="copyright">&copy; 2024 쇼핑몰 북북. All rights reserved.</div>
+	<script src="/js/mainContent/search-img-btn.js"></script>
 </footer>
 </html>

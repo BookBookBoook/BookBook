@@ -2,6 +2,7 @@ package com.project.bookbook.service.impl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ import com.project.bookbook.domain.dto.CartBookCntDTO;
 import com.project.bookbook.domain.dto.OrderDetailDTO;
 import com.project.bookbook.domain.dto.OrdersDetailDTO;
 import com.project.bookbook.domain.dto.PaymentPostDTO;
-import com.project.bookbook.domain.entity.UserOrdersEntity;
+import com.project.bookbook.domain.dto.UserOrderDTO;
 import com.project.bookbook.mapper.CartMapper;
 import com.project.bookbook.mapper.OrdersMapper;
 import com.project.bookbook.security.CustomUserDetails;
@@ -101,6 +102,19 @@ public class OrderServiceProcess implements OrderService{
 		int couponRate = couponService.findByCouponNum(ordersDetail.getCouponNum());
 		model.addAttribute("couponRate", couponRate);
 		
+	}
+
+	@Override
+	public void findUserOrderProcess(CustomUserDetails user, Model model) {
+		long userId = user.getUserId();
+		List<UserOrderDTO> userOrders = ordersMapper.findByUserId(userId);
+		
+		for(int i=0; i<userOrders.size(); i++) {
+			long merchantUid = userOrders.get(i).getMerchantUid();
+			userOrders.get(i).setBookImg(ordersMapper.findByOrderBookOne(merchantUid).getBookImg());
+			userOrders.get(i).setBookName(ordersMapper.findByOrderBookOne(merchantUid).getBookName());
+		}
+		model.addAttribute("userOrders", userOrders);
 	}
 	
 }

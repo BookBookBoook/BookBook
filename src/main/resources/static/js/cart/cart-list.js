@@ -94,3 +94,36 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector(".final-amount").textContent = 
         new Intl.NumberFormat('ko-KR').format(finalAmount) + "원";
 });
+
+
+//수량변경
+document.querySelectorAll('.quantity-control').forEach(function(control) {
+    const decrementButton = control.querySelector('.decrement');
+    const incrementButton = control.querySelector('.increment');
+    const quantityInput = control.querySelector('.quantity-input');
+    const priceElement = document.querySelector('.price');
+
+    function updatePrice() {
+        const quantity = parseInt(quantityInput.value);
+        const totalPrice = priceElement * quantity;
+        priceElement.textContent = `${totalPrice.toLocaleString()}원`;
+    }
+
+    decrementButton.addEventListener('click', function() {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > parseInt(quantityInput.min)) {
+            quantityInput.value = currentValue - 1;
+            updatePrice();
+        }
+    });
+
+    incrementButton.addEventListener('click', function() {
+        let currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+        updatePrice();
+    });
+
+    updatePrice(); // 페이지 로드 시 초기 가격 설정
+});
+
+

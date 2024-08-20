@@ -134,5 +134,11 @@ public class MypageController {
 		favoriteService.findByUser(model, user);
 		return "views/mypage/favorite";
 	}
+	
+	@DeleteMapping("/mypage/favorites/{bookNum}")
+	public String deleteFavorite(@PathVariable("bookNum") long bookNum, @AuthenticationPrincipal CustomUserDetails user) {
+		favoriteService.deleteProcess(bookNum, user);
+		return "redirect:/mypage/favorites";
+	}
 
 }

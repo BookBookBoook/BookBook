@@ -19,10 +19,10 @@ public class OrderController {
 	
 	private final OrderService orderService;
 	private final MypageUserService userService;
-	private final CouponService couponService;
 	
 	@GetMapping("/mypage/orders")
-	public String order() {
+	public String order(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		orderService.findUserOrderProcess(user, model);
 		return "views/mypage/order";
 	}
 	

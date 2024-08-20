@@ -37,7 +37,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 									   th:text="${orderBooks[0].bookName}">
 									   해리포터와 마법사의 돌
 									</p>
-			                        <p class="product-price"  th:text="|${ordersDetail.paidAmount}원|">17,000원</p>
+			                        <p class="product-price" th:text="|${#numbers.formatDecimal(ordersDetail.paidAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</p>
 		                        </div>
 		                        <button class="cart-btn">장바구니 다시 담기</button>
 		                    </div>
@@ -66,20 +66,20 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                        <th>금액</th>
 	                    </tr>
 	                    <tr>
-	                        <td>현대카드 / 일시불</td>
-	                        <td th:text="|${ordersDetail.paidAmount}원|" >17,000원</td>
+	                        <td>국민카드 / 일시불</td>
+	                        <td th:text="|${#numbers.formatDecimal(ordersDetail.paidAmount, 0, 'COMMA', 0, 'NONE')}원|" >17,000원</td>
 	                    </tr>
 	                    <tr>
 	                        <td>할인금액</td>
-	                        <td th:text="|- ${couponRate}원|">0원</td>
+	                        <td th:text="|- ${#numbers.formatDecimal(couponRate, 0, 'COMMA', 0, 'NONE')}원|">0원</td>
 	                    </tr>
 	                    <tr>
 	                        <td>배송비</td>
-	                        <td>3000원</td>
+	                        <td>3,000원</td>
 	                    </tr>
 	                    <tr>
 	                        <td>총 결제금액</td>
-	                        <td th:text="|${ordersDetail.paidAmount}원|">17,000원</td>
+	                        <td th:text="|${#numbers.formatDecimal(ordersDetail.paidAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
 	                    </tr>
 	                </table>
 	            </div>

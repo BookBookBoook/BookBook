@@ -90,12 +90,20 @@ th {
 	flex: 2;
 	padding-left: 20px;
 	text-align: left;
+	margin-bottom: 20px;
+}
+
+.detail-view:hover{
+	color: var(--main-orange);
 }
 
 .order-info>div:nth-child(1) {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 500;
 	margin: 10px 0;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .order-actions {
@@ -117,9 +125,13 @@ th {
 	cursor: pointer;
 }
 
-.order-actions .check,
-.order-actions .review {
+.order-actions .check{
 	background-color: var(--main-orange);
+	color: #fff;
+}
+
+.order-actions .review{
+	background-color: var(--dark-orange);
 	color: #fff;
 }
 
