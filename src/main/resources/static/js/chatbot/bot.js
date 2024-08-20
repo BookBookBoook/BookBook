@@ -126,7 +126,7 @@ function connect() {
 				                            <div class="part chatbot">
 				                                <p>아래 버튼을 통해 배송 조회 페이지로 이동해주세요!</p>
 												<div class="button-container">
-			                                    	<button class="faq-button" onclick="location.href='/mypage/orders';"> 배송조회 이동</button>
+			                                    	<button class="faq-button" onclick="location.href='/mypage/orders';">배송조회 이동</button>
 												</div>
 				                            </div>
 				                            <div class="time">${time}</div>
@@ -143,7 +143,7 @@ function connect() {
 				                            <div class="part chatbot">
 				                                <p>아래 버튼을 통해 쿠폰 조회 페이지로 이동해주세요!</p>
 												<div class="button-container">
-			                                    	<button class="faq-button" onclick="location.href='/mypage/coupons';"> 쿠폰조회 이동</button>
+			                                    	<button class="faq-button" onclick="location.href='/mypage/coupons';">쿠폰 조회 이동</button>
 												</div>
 				                            </div>
 				                            <div class="time">${time}</div>
@@ -160,7 +160,24 @@ function connect() {
 				                            <div class="part chatbot">
 				                                <p>아래 버튼을 통해 베스트셀러 목록으로 이동해주세요!</p>
 												<div class="button-container">
-			                                    	<button class="faq-button" onclick="location.href='/bookList';"> 쿠폰조회 이동</button>
+			                                    	<button class="faq-button" onclick="location.href='/bookList';">베스트셀러 목록</button>
+												</div>
+				                            </div>
+				                            <div class="time">${time}</div>
+				                        </div>
+				                    </div>`;
+                showMessage(buttonHTML);
+            }
+			if (msgObj.includes("다른 상품")) { //includes ""가 포함되어있을경우
+                var buttonHTML = `<div class="msg bot flex">
+				                        <div class="icon">
+				                            <img src="/img/bot/bot-img-none.png">
+				                        </div>
+				                        <div class="message">
+				                            <div class="part chatbot">
+				                                <p>아래 버튼을 통해 고객문의 접수 도와드릴게요!</p>
+												<div class="button-container">
+			                                    	<button class="faq-button" onclick="location.href='/mypage/questions';">1:1 문의 접수</button>
 												</div>
 				                            </div>
 				                            <div class="time">${time}</div>
@@ -195,7 +212,7 @@ function connect() {
 				                    <div class="message">
 										<div class="part chatbot">
 											<div class="image-content">
-								                <img src="/img/bot/cry-bot-img.png" alt="환영 이미지">
+								                <img src="/img/bot/cry-bot-img.png" alt="사과 이미지">
 								            </div>
 										</div>
 				                        <div class="time">${time}</div>
