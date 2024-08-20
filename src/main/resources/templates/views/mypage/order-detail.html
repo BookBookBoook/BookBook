@@ -15,7 +15,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	            	<h1>주문 상세</h1>
 	            </div>
 	            <p>
-	            	<span class="order-date">2024. 7. 31 주문</span> 
+	            	<span class="order-date" th:text="|${ordersDetail.dateFormatting()} 주문|">2024. 7. 31 주문</span> 
 	            	<span class="order-number" th:text="|주문번호 ${merchantUid}|">주문번호 16100061537799</span>
 	            </p>
 	
@@ -37,7 +37,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 									   th:text="${orderBooks[0].bookName}">
 									   해리포터와 마법사의 돌
 									</p>
-			                        <p class="product-price">17,000원</p>
+			                        <p class="product-price"  th:text="|${ordersDetail.paidAmount}원|">17,000원</p>
 		                        </div>
 		                        <button class="cart-btn">장바구니 다시 담기</button>
 		                    </div>
@@ -67,19 +67,19 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                    </tr>
 	                    <tr>
 	                        <td>현대카드 / 일시불</td>
-	                        <td>17,000원</td>
+	                        <td th:text="|${ordersDetail.paidAmount}원|" >17,000원</td>
 	                    </tr>
 	                    <tr>
 	                        <td>할인금액</td>
-	                        <td>0원</td>
+	                        <td th:text="|- ${couponRate}원|">0원</td>
 	                    </tr>
 	                    <tr>
 	                        <td>배송비</td>
-	                        <td>0원</td>
+	                        <td>3000원</td>
 	                    </tr>
 	                    <tr>
 	                        <td>총 결제금액</td>
-	                        <td>17,000원</td>
+	                        <td th:text="|${ordersDetail.paidAmount}원|">17,000원</td>
 	                    </tr>
 	                </table>
 	            </div>

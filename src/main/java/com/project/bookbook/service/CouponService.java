@@ -14,4 +14,6 @@ public interface CouponService {
 
 	boolean checkDuplicateCoupon(long couponNum);
 
+	int findByCouponNum(long couponNum);
+
 }

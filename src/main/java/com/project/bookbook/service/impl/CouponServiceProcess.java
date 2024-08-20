@@ -65,4 +65,11 @@ public class CouponServiceProcess implements CouponService{
 		return couponMapper.checkDuplicateCoupon(couponNum).isEmpty();
 	}
 
+	@Override
+	public int findByCouponNum(long couponNum) {
+		return couponMapper.findByCouponNum(couponNum);
+		
+		
+	}
+
 }

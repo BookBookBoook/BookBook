@@ -26,5 +26,10 @@
 		where coupon_num = #{couponNum}
 	</select>
 	
+	<select id="findByCouponNum" parameterType="long" resultType="int">
+		select coupon_rate from coupon
+		where coupon_num = #{couponNum}
+	</select>
+	
 
 </mapper>

@@ -100,7 +100,7 @@ function requestPay() {
     pay_method: "card", //결제수단
     merchant_uid: merchantUid, //고객사 고유 주문 번호
     name: "도서", //주문명
-    amount: 1,
+    amount: 100,
     //amount: amount, //금액
     buyer_email: buyerEmail,
     popup: true, //결제창 팝업 여부

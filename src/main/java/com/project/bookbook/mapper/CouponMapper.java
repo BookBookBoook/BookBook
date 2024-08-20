@@ -21,4 +21,6 @@ public interface CouponMapper {
 
 	List<UserCouponDTO> checkDuplicateCoupon(long couponNum);
 
+	int findByCouponNum(long couponNum);
+
 }

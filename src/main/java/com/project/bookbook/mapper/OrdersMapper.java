@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.bookbook.domain.dto.OrderDetailDTO;
+import com.project.bookbook.domain.dto.OrdersDetailDTO;
 import com.project.bookbook.domain.dto.PaymentPostDTO;
 
 @Mapper
@@ -18,5 +19,7 @@ public interface OrdersMapper {
 	List<OrderDetailDTO> findByOrderBook(long merchantUid);
 
 	void orderCompletion(PaymentPostDTO dto);
+
+	OrdersDetailDTO findByMerchantUid(long merchantUid);
 
 }
