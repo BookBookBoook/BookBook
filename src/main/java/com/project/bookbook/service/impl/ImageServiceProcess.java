@@ -23,22 +23,28 @@ public class ImageServiceProcess implements ImageService {
 
 	
 	
-	
+    // 이미지 업로드 메서드
 	@Override
 	@Transactional
 	public ImageEntity uploadImage(MultipartFile file) throws IOException {
+		  // S3에 파일 업로드 후 결과를 받아옵니다.
 		  Map<String, String> uploadResult = fileUploadUtil.uploadFileToS3(file);
 	        
+		  	// 업로드 결과를 바탕으로 ImageEntity 객체를 생성합니다.	        
 	        ImageEntity image = new ImageEntity();
 	        image.setFileName(uploadResult.get("fileName"));
+	        // 여기서 S3 URL이 설정됩니다.
 	        image.setFileUrl(uploadResult.get("url"));
 	        image.setFileType(uploadResult.get("fileType"));
 	        image.setFileSize(Long.parseLong(uploadResult.get("fileSize")));
-
+	        
+	        // 생성된 ImageEntity를 데이터베이스에 저장하고 반환합니다.
+	        // 여기서 DB에 저장됩니다.
 	        return imageRepository.save(image);
 	    }
 
-
+    // ID로 이미지를 조회하는 메서드
+	
 	@Override
 	public ImageEntity getImageById(Long id) {
 		 return imageRepository.findById(id)

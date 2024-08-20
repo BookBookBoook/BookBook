@@ -42,4 +42,8 @@ public class UserServiceProcess implements UserService{
 
         repository.save(user);
     }
+	@Override
+    public boolean isEmailDuplicate(String email) {
+        return repository.findByEmail(email).isPresent();
+    }
 }

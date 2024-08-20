@@ -17,8 +17,7 @@
                 <table class="order-table">
                     <thead>
                         <tr>
-                            <th>파일 이름</th>
-                            <th>파일 크기</th>
+                            <th>파일 이름</th>                          
                             <th>파일 타입</th>
                             <th>생성 날짜</th>
                             <th>수정 날짜</th>
@@ -27,8 +26,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="file : ${rootfiles}" th:if="${rootfiles != null and not #lists.isEmpty(rootfiles)}">
-                            <td th:text="${file.fileName}"></td>
-                            <td th:text="${#numbers.formatDecimal(file.fileSize / 1024, 0, 'COMMA', 2, 'POINT')} + ' KB'"></td>
+                            <td th:text="${file.fileName}"></td>                        
                             <td th:text="${file.fileType}"></td>
                             <td th:text="${#temporals.format(T(java.time.LocalDateTime).parse(file.createdTime.substring(0, 19)), 'yyyy-MM-dd HH:mm')}"></td>
                             <td th:text="${#temporals.format(T(java.time.LocalDateTime).parse(file.modifiedTime.substring(0, 19)), 'yyyy-MM-dd HH:mm')}"></td>

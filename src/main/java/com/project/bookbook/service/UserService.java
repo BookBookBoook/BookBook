@@ -10,6 +10,6 @@ public interface UserService {
 
 	void updateAdditionalInfo(long userId, AdditionalUserInfoDTO additionalInfo);
 
-	
+	boolean isEmailDuplicate(String email);
 
 }

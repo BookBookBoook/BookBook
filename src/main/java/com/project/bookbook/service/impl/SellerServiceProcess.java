@@ -54,8 +54,16 @@ public class SellerServiceProcess implements SellerService {
         
         // 사업자 등록증 이미지 처리
         if (dto.getBusinessRegImageId() != null) {
+        	
+            // 이미지 서비스를 통해 해당 ID의 이미지 엔티티를 조회
             ImageEntity image = imageService.getImageById(dto.getBusinessRegImageId());
+            
+            // 조회한 이미지 엔티티를 판매자 엔티티의 사업자 등록증 이미지로 설정
+            // 이는 판매자 엔티티와 이미지 엔티티 간의 관계를 설정
             sellerEntity.setBusinessRegImage(image);
+            
+            // 이미지 엔티티의 파일 URL을 판매자 엔티티의 사업자 등록증 URL로 설정
+            // 이를 통해 실제 이미지 파일에 쉽게 접근할 수 있음           
             sellerEntity.setBusinessReg(image.getFileUrl());
         }
 
@@ -123,6 +131,16 @@ public class SellerServiceProcess implements SellerService {
 	        
 	        // SellerEntity 삭제
 	        sellerRepository.delete(seller);
+	    }
+
+	 @Override
+	    public boolean isEmailDuplicate(String email) {
+	        return userRepository.findByEmail(email).isPresent();
+	    }
+
+	    @Override
+	    public boolean isBusinessNumDuplicate(String businessNum) {
+	        return sellerRepository.findByBusinessNum(businessNum).isPresent();
 	    }
 	
 }
