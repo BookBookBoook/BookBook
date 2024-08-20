@@ -8,6 +8,8 @@ public interface FavoriteService {
 
 	void findByUser(Model model, CustomUserDetails user);
 
+	void deleteProcess(long bookNum, CustomUserDetails user);
+
 	
 
 }

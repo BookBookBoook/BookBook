@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.project.bookbook.domain.dto.OrderDetailDTO;
 import com.project.bookbook.domain.dto.OrdersDetailDTO;
 import com.project.bookbook.domain.dto.PaymentPostDTO;
+import com.project.bookbook.domain.dto.UserOrderDTO;
 
 @Mapper
 public interface OrdersMapper {
@@ -21,5 +22,9 @@ public interface OrdersMapper {
 	void orderCompletion(PaymentPostDTO dto);
 
 	OrdersDetailDTO findByMerchantUid(long merchantUid);
+
+	List<UserOrderDTO> findByUserId(long userId);
+
+	OrderDetailDTO findByOrderBookOne(long merchantUid);
 
 }

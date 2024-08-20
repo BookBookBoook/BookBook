@@ -19,5 +19,7 @@ public interface OrderService {
 
 	void findByMerchantUidAndCoupon(long merchantUid, Model model);
 
+	void findUserOrderProcess(CustomUserDetails user, Model model);
+
 
 }

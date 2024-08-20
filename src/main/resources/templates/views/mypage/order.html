@@ -16,62 +16,47 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	            </div>
 	            <div class="nav-tabs">
 	                <div>주문내역</div>
-	                <div>준비중 <span>0</span></div>
 	                <div>배송중 <span>0</span></div>
 	                <div>배송완료 <span>0</span></div>
 	                <div>취소 <span>0</span></div>
-	                <div>교환/환불 <span>0</span></div>
+	                <div>교환 <span>0</span></div>
+	                <div>환불 <span>0</span></div>
 	            </div>
 	            <div class="search-bar">
 	                <input type="text" placeholder="상품명/판매자명 입력">
 	            </div>
-	            <div class="order-list">
-	                <div class="order-date">2024.08.04 주문</div>
+	            
+	            <div class="order-list" >
 	                <table>
 	                    <thead>
 	                        <tr>
+	                            <th>주문일자</th>
 	                            <th>제품정보</th>
-	                            <th>수량</th>
-	                            <th>결제금액</th>
-	                            <th>주문 현황</th>
+	                            <th style="width: 100px;">결제금액</th>
+	                            <th style="width: 130px;">주문 현황</th>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr>
+	                        <tr th:each="userOrder:${userOrders}" >
+	                        	<td th:text="${userOrder.orderDate.toLocalDate()}"></td>
 	                            <td>
 	                                <div style="display: flex; align-items: center;">
-	                                    <img src="/img/book-cover.png" class="book-cover-img">
+	                                    <img th:src="${userOrder.BookImg}" class="book-cover-img">
 	                                    <div class="order-info">
-	                                        <div>해리포터와 마법사의 돌 1</div>
-	                                        <div>J.K 롤링 저 / 강동혁 역</div>
+	                                        <div th:text="|${userOrder.BookName} 외|">해리포터와 마법사의 돌 1</div>
+	                                        <a class="detail-view" th:href="|/mypage/orders/detail/${userOrder.merchantUid}|">상세보기</a>
 	                                    </div>
 	                                </div>
 	                            </td>
-	                            <td>1개</td>
-	                            <td>17,000원</td>
+	                            <td th:text="|${#numbers.formatDecimal(userOrder.paidAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
 	                            <td>
-	                                <div class="order-actions">
-	                                	<div>상품 준비중</div>
+	                                <div class="order-actions" th:if="${userOrder.orderStatus == 1}">
+	                                	<div>배송중</div>
 	                                    <button class="check" onclick="openAndSubmitForm()">배송 조회</button>
 	                                    <button class="cancel">주문 취소</button>
 	                                </div>
-	                            </td>
-	                        </tr>
-	                        <tr>
-	                            <td>
-	                                <div style="display: flex; align-items: center;">
-	                                    <img src="/img/book-cover.png" class="book-cover-img">
-	                                    <div class="order-info">
-	                                        <div>해리포터와 마법사의 돌 2</div>
-	                                        <div>J.K 롤링 저 / 강동혁 역</div>
-	                                    </div>
-	                                </div>
-	                            </td>
-	                            <td>1개</td>
-	                            <td>17,000원</td>
-	                            <td>
-	                                <div class="order-actions">
-	                                	<div>구매 완료</div>
+	                                <div class="order-actions" th:if="${userOrder.orderStatus == 2}">
+	                                	<div>배송 완료</div>
 	                                    <button class="review">리뷰 작성</button>
 	                                    <button class="delete">내역 삭제</button>
 	                                </div>
@@ -80,10 +65,13 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                    </tbody>
 	                </table>
 	            </div>
+	            
+	            <div th:if="${#lists.isEmpty(userOrders)}">
+	            	<p class="no-orders">해당 기간에 주문한 상품이 없습니다.</p>
+	            </div>
+	            
 	            <div>
 	            	<section class="notice-section">
-			            <!-- <p class="no-orders">해당 기간에 주문한 상품이 없습니다.</p> -->
-			
 			            <div class="notice-box">
 			                <h2>유의사항</h2>
 			                <ul>

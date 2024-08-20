@@ -12,5 +12,9 @@
 	    WHERE w.user_id = #{userId}
 	</select>
 	
+	<delete id="deleteFavorite" parameterType="map">
+		delete from wish
+		where user_id = #{userId} and book_num = #{bookNum}
+	</delete>
 	
 </mapper>
