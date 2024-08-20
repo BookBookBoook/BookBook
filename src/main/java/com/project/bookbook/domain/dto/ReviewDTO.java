@@ -10,6 +10,9 @@ import lombok.Data;
 public class ReviewDTO {
 	private Long reviewNum;
     private String username;
+    private String bookname;
+    private String author;
+    private String isbn;
     private String reviewContent;
     private int rate;
     private LocalDateTime reviewDate;

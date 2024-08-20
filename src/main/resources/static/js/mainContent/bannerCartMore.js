@@ -80,19 +80,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
-	function startAutoSlide() {
+	function startAutoSlides() {
 		autoSlideInterval = setInterval(nextSlide, 5000);
 	}
 
-	function stopAutoSlide() {
+	function stopAutoSlides() {
 		clearInterval(autoSlideInterval);
 	}
 
-	slider.addEventListener('mouseenter', stopAutoSlide);
-	slider.addEventListener('mouseleave', startAutoSlide);
+	slider.addEventListener('mouseenter', stopAutoSlides);
+	slider.addEventListener('mouseleave', startAutoSlides);
 
-	startAutoSlide();
-
+	// 슬라이더가 존재할 경우에만 자동 슬라이드 시작
+    if (slides.length > 0) {
+        startAutoSlide();
+    }
 	// 책 슬라이더 관련 코드
 	const bookSliderContainer = document.querySelector('.book-slider-container');
 	const bookSlider = document.querySelector('.book-slider');

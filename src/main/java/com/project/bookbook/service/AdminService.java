@@ -6,4 +6,6 @@ public interface AdminService {
 
 	void find(Model model);
 
+	void findReviews(Model model);
+
 }
