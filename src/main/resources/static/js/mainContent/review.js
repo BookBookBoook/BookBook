@@ -25,7 +25,7 @@ $(document).ready(function() {
     });
 
     // 리뷰 폼 제출 이벤트
-    $('#reviewForm').on('submit', function(e) {
+    $('#reviewForm').off('submit').on('submit', function(e) {
         e.preventDefault();
         console.log("리뷰 폼 제출됨");
 
@@ -73,7 +73,6 @@ $(document).ready(function() {
         });
     });
 
-
     // 평점 선택 시 시각적 피드백
     $('input[name="rate"]').on('change', function() {
         const rate = $(this).val();
@@ -86,11 +85,53 @@ $(document).ready(function() {
     $('#reviewContent, input[name="rate"]').on('change', function() {
         const content = $('#reviewContent').val();
         const rate = $('input[name="rate"]:checked').val();
-        
+
         if (content && rate) {
             $('#reviewSubmitBtn').prop('disabled', false);
         } else {
             $('#reviewSubmitBtn').prop('disabled', true);
         }
+    });
+
+    // 리뷰를 목록에 추가하는 함수
+    function addReviewToList(review) {
+        const reviewHtml = `
+            <div class="review-item">
+                <div class="review-header">
+                    <h3>${review.username}</h3>
+                    <div class="stars-display">
+                        <span class="star-rating" data-rating="${review.rate}"></span>
+                    </div>
+                </div>
+                <p>${review.reviewContent}</p>
+            </div>
+        `;
+        $('#reviewList').prepend(reviewHtml);
+        displayStars(); // 별점 표시 함수 호출
+    }
+
+    // 별점 표시 함수
+    function displayStars() {
+        $('.star-rating').each(function() {
+            const rating = $(this).data('rating');
+            const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+            $(this).text(stars);
+        });
+    }
+
+    // 페이지 로드 시 초기 별점 표시
+    displayStars();
+
+    // 전체 리뷰 / 구매자 리뷰 탭 전환
+    $('#allReviewsBtn').on('click', function() {
+        $(this).addClass('active');
+        $('#buyerReviewsBtn').removeClass('active');
+        // 여기에 전체 리뷰를 보여주는 로직 추가
+    });
+
+    $('#buyerReviewsBtn').on('click', function() {
+        $(this).addClass('active');
+        $('#allReviewsBtn').removeClass('active');
+        // 여기에 구매자 리뷰만 보여주는 로직 추가
     });
 });

@@ -167,7 +167,7 @@ label[for="selectAllCheckbox"] {
 
 .bookImg img {
 	width: 90%;
-	height: 90%;
+	height: 85%;
 }
 
 .chang {
@@ -254,4 +254,30 @@ label[for="selectAllCheckbox"] {
 	color: blue;
 	cursor: pointer;
 	text-decoration: underline;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+	color: black;
+	float: left;
+	padding: 8px 16px;
+	text-decoration: none;
+	transition: background-color .3s;
+	border: 1px solid #ddd;
+	margin: 0 4px;
+}
+
+.pagination a.active {
+	background-color: #4CAF50;
+	color: white;
+	border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+	background-color: #ddd;
 }

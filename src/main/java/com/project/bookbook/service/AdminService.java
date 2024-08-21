@@ -8,4 +8,6 @@ public interface AdminService {
 
 	void findReviews(Model model);
 
+	void deleteReview(Long reviewNum);
+
 }

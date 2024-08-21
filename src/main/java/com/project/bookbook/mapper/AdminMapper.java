@@ -15,4 +15,8 @@ public interface AdminMapper {
 	List<AdminIndexDTO> find();
 
 	List<ReviewDTO> findAllReviews();
+
+	void deleteReview(Long reviewNum);
+
+	List<ReviewDTO> findTop8Reviews();
 }

@@ -34,6 +34,7 @@ import com.project.bookbook.domain.dto.BookSearchResponse;
 import com.project.bookbook.domain.dto.BookSlide;
 import com.project.bookbook.domain.dto.NaverBookItem;
 import com.project.bookbook.domain.dto.NaverBookResponse;
+import com.project.bookbook.domain.dto.ReviewDTO;
 import com.project.bookbook.domain.dto.BookSearchResponse.Item;
 import com.project.bookbook.domain.entity.BookEntity;
 import com.project.bookbook.domain.entity.CartDetailEntity;
@@ -45,6 +46,7 @@ import com.project.bookbook.domain.repository.BookRepository;
 import com.project.bookbook.domain.repository.FavoriteBookRepository;
 import com.project.bookbook.domain.repository.UserRepository;
 import com.project.bookbook.domain.repository.WishRepository;
+import com.project.bookbook.mapper.BookMapper;
 import com.project.bookbook.service.BookService;
 import com.project.bookbook.service.CartItemService;
 import com.project.bookbook.service.CartService;
@@ -72,53 +74,55 @@ public class BookServiceProcess implements BookService {
 	private final CartItemService cartItemService;
 	private final UserRepository userRepository;
 	private final WishRepository wishRepository;
+	private final BookMapper bookmapper;
+
 	// 검색 결과
 	public void searchBooks(String query, Model model) {
-	    try {
-	        String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString());
-	        String urlString = NAVER_BOOK_API_URL + "?query=" + encodedQuery + "&display=20";
-	        URL url = new URL(urlString);
+		try {
+			String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8.toString());
+			String urlString = NAVER_BOOK_API_URL + "?query=" + encodedQuery + "&display=20";
+			URL url = new URL(urlString);
 
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("GET");
-	        conn.setRequestProperty("X-Naver-Client-Id", clientId);
-	        conn.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("X-Naver-Client-Id", clientId);
+			conn.setRequestProperty("X-Naver-Client-Secret", clientSecret);
 
-	        int responseCode = conn.getResponseCode();
-	        if (responseCode == HttpURLConnection.HTTP_OK) {
-	            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
-	            String inputLine;
-	            StringBuilder response = new StringBuilder();
-	            while ((inputLine = in.readLine()) != null) {
-	                response.append(inputLine);
-	            }
-	            in.close();
+			int responseCode = conn.getResponseCode();
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				BufferedReader in = new BufferedReader(
+						new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+				String inputLine;
+				StringBuilder response = new StringBuilder();
+				while ((inputLine = in.readLine()) != null) {
+					response.append(inputLine);
+				}
+				in.close();
 
-	            ObjectMapper mapper = new ObjectMapper();
-	            NaverBookResponse bookResponse = mapper.readValue(response.toString(), NaverBookResponse.class);
+				ObjectMapper mapper = new ObjectMapper();
+				NaverBookResponse bookResponse = mapper.readValue(response.toString(), NaverBookResponse.class);
 
-	            if (bookResponse != null && bookResponse.getItems() != null && !bookResponse.getItems().isEmpty()) {
-	                List<BookDTO> books = bookResponse.getItems().stream()
-	                                                  .map(this::convertToBookDTO)
-	                                                  .collect(Collectors.toList());
-	                model.addAttribute("books", books);
-	                model.addAttribute("query", query);
-	                logger.info("검색 결과: {} 건", books.size());
-	            } else {
-	                model.addAttribute("books", Collections.emptyList());
-	                model.addAttribute("error", "검색 결과가 없습니다.");
-	                logger.info("검색 결과 없음: {}", query);
-	            }
-	        } else {
-	            logger.error("HTTP 요청 실패: {}", responseCode);
-	            model.addAttribute("books", Collections.emptyList());
-	            model.addAttribute("error", "API 요청 실패: " + responseCode);
-	        }
-	    } catch (Exception e) {
-	        logger.error("책 검색 중 오류 발생: {}", e.getMessage(), e);
-	        model.addAttribute("books", Collections.emptyList());
-	        model.addAttribute("error", "검색 중 오류가 발생했습니다: " + e.getMessage());
-	    }
+				if (bookResponse != null && bookResponse.getItems() != null && !bookResponse.getItems().isEmpty()) {
+					List<BookDTO> books = bookResponse.getItems().stream().map(this::convertToBookDTO)
+							.collect(Collectors.toList());
+					model.addAttribute("books", books);
+					model.addAttribute("query", query);
+					logger.info("검색 결과: {} 건", books.size());
+				} else {
+					model.addAttribute("books", Collections.emptyList());
+					model.addAttribute("error", "검색 결과가 없습니다.");
+					logger.info("검색 결과 없음: {}", query);
+				}
+			} else {
+				logger.error("HTTP 요청 실패: {}", responseCode);
+				model.addAttribute("books", Collections.emptyList());
+				model.addAttribute("error", "API 요청 실패: " + responseCode);
+			}
+		} catch (Exception e) {
+			logger.error("책 검색 중 오류 발생: {}", e.getMessage(), e);
+			model.addAttribute("books", Collections.emptyList());
+			model.addAttribute("error", "검색 중 오류가 발생했습니다: " + e.getMessage());
+		}
 	}
 
 	private BookDTO convertToBookDTO(NaverBookItem item) {
@@ -286,7 +290,6 @@ public class BookServiceProcess implements BookService {
 
 	}
 
-
 	@Override
 	public void getDefaultBooks(Model model) {
 		List<BookDTO> bestSellerBooks = fetchBooksFromAPI("베스트셀러");
@@ -349,82 +352,88 @@ public class BookServiceProcess implements BookService {
 		}
 	}
 
-
 	@Override
 	@Transactional
 	public void addToCart(String isbn, Long userId, int quantity) {
-	    System.out.println("서비스 시작 - ISBN: " + isbn + ", 사용자 ID: " + userId + ", 수량: " + quantity);
+		System.out.println("서비스 시작 - ISBN: " + isbn + ", 사용자 ID: " + userId + ", 수량: " + quantity);
 
-	    BookEntity book = findOrCreateBook(isbn);
+		BookEntity book = findOrCreateBook(isbn);
 
-	    try {
-	    	cartItemService.addToCart(book, userId, quantity);
-	        System.out.println("장바구니에 책 추가 완료 - 수량: " + quantity);
-	    } catch (Exception e) {
-	        System.err.println("장바구니에 책 추가 중 오류 발생: " + e.getMessage());
-	        e.printStackTrace();
-	        throw e; // 상위 레벨로 예외를 전파
-	    }
+		try {
+			cartItemService.addToCart(book, userId, quantity);
+			System.out.println("장바구니에 책 추가 완료 - 수량: " + quantity);
+		} catch (Exception e) {
+			System.err.println("장바구니에 책 추가 중 오류 발생: " + e.getMessage());
+			e.printStackTrace();
+			throw e; // 상위 레벨로 예외를 전파
+		}
 	}
 
 	private BookEntity findOrCreateBook(String isbn) {
-	    return bookRepository.findByIsbn(isbn).orElseGet(() -> {
-	        System.out.println("책을 찾지 못함. 네이버 API에서 정보 가져오기 시도");
-	        Item naverBookItem = getBookByIsbn(isbn);
-	        if (naverBookItem == null) {
-	            throw new RuntimeException("Book not found in Naver API");
-	        }
-	        BookEntity newBook = createAndSaveBookEntity(naverBookItem);
-	        System.out.println("새 책 저장됨 - BookNum: " + newBook.getBookNum());
-	        return newBook;
-	    });
+		return bookRepository.findByIsbn(isbn).orElseGet(() -> {
+			System.out.println("책을 찾지 못함. 네이버 API에서 정보 가져오기 시도");
+			Item naverBookItem = getBookByIsbn(isbn);
+			if (naverBookItem == null) {
+				throw new RuntimeException("Book not found in Naver API");
+			}
+			BookEntity newBook = createAndSaveBookEntity(naverBookItem);
+			System.out.println("새 책 저장됨 - BookNum: " + newBook.getBookNum());
+			return newBook;
+		});
 	}
 
 	private BookEntity createAndSaveBookEntity(Item item) {
-	    BookEntity book = BookEntity.builder()
-	            .bookName(item.getTitle())
-	            .bookImg(item.getImage())
-	            .author(item.getAuthor())
-	            .publisher(item.getPublisher())
-	            .description(truncateDescription(item.getDescription()))
-	            .isbn(item.getIsbn())
-	            .discount(parseDiscountPrice(item.getDiscount()))
-	            .link(item.getLink())
-	            .build();
-	    return bookRepository.save(book);
+		BookEntity book = BookEntity.builder().bookName(item.getTitle()).bookImg(item.getImage())
+				.author(item.getAuthor()).publisher(item.getPublisher())
+				.description(truncateDescription(item.getDescription())).isbn(item.getIsbn())
+				.discount(parseDiscountPrice(item.getDiscount())).link(item.getLink()).build();
+		return bookRepository.save(book);
 	}
 
 	@Override
 	public void addToWishlist(String isbn, Long userId) throws Exception {
 		// 1. 사용자 조회
-	    UserEntity user = userRepository.findById(userId)
-	            .orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
+		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new Exception("사용자를 찾을 수 없습니다."));
 
-	    // 2. 책 정보 조회 또는 생성
-	    BookEntity book = bookRepository.findByIsbn(isbn).orElseGet(() -> {
-	        // 2.1 책이 데이터베이스에 없는 경우, 네이버 API에서 정보 가져오기
-	        Item naverBookItem = getBookByIsbn(isbn);
-	        if (naverBookItem == null) {
-	            throw new RuntimeException("네이버 API에서 책을 찾을 수 없습니다: " + isbn);
-	        }
-	        // 2.2 네이버 API에서 가져온 정보로 BookEntity 생성 및 저장
-	        return createAndSaveBookEntity(naverBookItem);
-	    });
+		// 2. 책 정보 조회 또는 생성
+		BookEntity book = bookRepository.findByIsbn(isbn).orElseGet(() -> {
+			// 2.1 책이 데이터베이스에 없는 경우, 네이버 API에서 정보 가져오기
+			Item naverBookItem = getBookByIsbn(isbn);
+			if (naverBookItem == null) {
+				throw new RuntimeException("네이버 API에서 책을 찾을 수 없습니다: " + isbn);
+			}
+			// 2.2 네이버 API에서 가져온 정보로 BookEntity 생성 및 저장
+			return createAndSaveBookEntity(naverBookItem);
+		});
 
-	    // 3. 위시리스트 중복 체크
-	    if (wishRepository.existsByUserAndBook(user, book)) {
-	        throw new Exception("이미 위시리스트에 추가된 책입니다.");
-	    }
+		// 3. 위시리스트 중복 체크
+		if (wishRepository.existsByUserAndBook(user, book)) {
+			throw new Exception("이미 위시리스트에 추가된 책입니다.");
+		}
 
-	    // 4. 위시리스트에 추가
-	    WishEntity wish = WishEntity.builder()
-	            .user(user)
-	            .book(book)
-	            .build();
-	    wishRepository.save(wish);
+		// 4. 위시리스트에 추가
+		WishEntity wish = WishEntity.builder().user(user).book(book).build();
+		wishRepository.save(wish);
 
-	    // 5. 로그 기록
-	    logger.info("책이 위시리스트에 추가되었습니다. ISBN: {}, 사용자 ID: {}", isbn, userId);
+		// 5. 로그 기록
+		logger.info("책이 위시리스트에 추가되었습니다. ISBN: {}, 사용자 ID: {}", isbn, userId);
+	}
+	//신상품
+	@Override
+	public void getNewBook(Model model) {
+		List<BookDTO> bookEntities = bookmapper.findAll();
+		model.addAttribute("newbooks", bookEntities);
+	}
+	//신상도서정보
+	@Override
+	public void getNewIsbn(String isbn, Model model) {
+		BookDTO newbook = bookmapper.findIsbn(isbn);
+		if (newbook != null) {
+            model.addAttribute("book", newbook);
+        } else {
+            // 도서를 찾지 못했을 경우의 처리
+            model.addAttribute("errorMessage", "도서를 찾을 수 없습니다.");
+        }
 	}
 
 }

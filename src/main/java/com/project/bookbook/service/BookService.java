@@ -32,6 +32,16 @@ public interface BookService {
 	void addToWishlist(String isbn, Long userId) throws Exception;
 
 
+	void getNewBook(Model model);
+
+
+	void getNewIsbn(String isbn, Model model);
+
+
+
+
+
+
 	
 
 

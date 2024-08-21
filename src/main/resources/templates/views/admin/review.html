@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="/css/admin/sidebar.css">
 <script src="/js/admin/sidebar.js"></script>
 <script src="/js/admin/commons.js"></script>
+<script src="/js/admin/starRating.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<script src="/js/admin/deleteReview.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -44,36 +49,42 @@
 							<th>작성일</th>
 							<th>고객정보</th>
 							<th>상품</th>
-							<th>리뷰 상세 내용</th>
-							<th>상태</th>
-							<th>리뷰 관리</th>
+							<th>별점</th>
+							<th>내용</th>
 							<th>정보</th>
 							<th>상태</th>
 
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="review : ${reviews}">
+						<tr th:each="review : ${reviews}" th:id="'review-' + ${review.reviewNum}" class="review-item">
 							<td><input type="checkbox" id="select-all"></td>
 							<td th:text="${review.reviewNum}"></td>
-							<td th:text="${#temporals.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
+							<td
+								th:text="${#temporals.format(review.reviewDate, 'yyyy-MM-dd HH:mm')}"></td>
 							<td th:text="${review.username}"></td>
 							<td>
-								<span th:text="${review.bookname}"></span>
-								<span th:text="${review.author}"></span>
-								<span th:text="${review.isbn}"></span>
+								<div>
+									<span>제목 : </span><span
+										th:text="${#strings.length(review.bookname) > 10 ? #strings.substring(review.bookname,0,10) + '...' : review.bookname}"
+										th:title="${review.bookname}"></span>
+									
+								</div>
+								<div>
+									<span>저자 : </span><span
+										th:text="${#strings.length(review.author) > 5 ? #strings.substring(review.author,0,5) + '...' : review.author}"
+										th:title="${review.author}"></span>
+								</div>
+								<div>
+									<span>번호 : </span><span th:text="${review.isbn}"></span>
+								</div>
 							</td>
-							<td th:text="${review.rate}"></td>
+							<td><span th:id="'stars-' + ${review.reviewNum}"
+								th:data-rating="${review.rate}" class="star-rating"></span></td>
 							<td th:text="${review.reviewContent}"></td>
-							<td th:text="${review.recommend}"></td>
-							<td th:text="${review.complaint}"></td>
 							<td th:text="${review.actualOrder ? '구매자' : '비구매자'}"></td>
 							<td>
-								<form
-									th:action="@{/admin/review/delete/{reviewNum}(reviewNum=${review.reviewNum})}"
-									method="post">
-									<button type="submit">삭제</button>
-								</form>
+								<button th:onclick="'deleteReview(' + ${review.reviewNum} + ')'" type="button">삭제</button>
 								<form
 									th:action="@{/admin/review/update/{reviewNum}(reviewNum=${review.reviewNum})}"
 									method="post">

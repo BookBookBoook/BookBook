@@ -13,8 +13,8 @@
 				<h3 th:text="${review.username}">[사용자명]</h3>
 				<div class="stars-display">
 					<!-- 리뷰 별점 표시 -->
-					<span th:each="i : ${#numbers.sequence(1, review.rate)}">★</span> <span
-						th:each="i : ${#numbers.sequence(review.rate + 1, 5)}">☆</span>
+					<span th:id="'stars-' + ${review.reviewNum}"
+								th:data-rating="${review.rate}" class="star-rating"></span></td>
 				</div>
 			</div>
 			<p th:text="${review.reviewContent}">[리뷰 내용]</p>
