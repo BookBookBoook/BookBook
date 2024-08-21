@@ -2,7 +2,8 @@
 	<nav class="sidebar">
 		<a href="/seller"><img src="/img/logo7.png" class="logo"></a>
 		<div class="user-info">
-			<a href="/seller/mypage">북북출판사</a>
+			<!--<a href="/seller/mypage" th:text="${#authentication.principal.sellerName}">북북출판사</a>-->
+			<a href="/seller/mypage">출판사</a>
 			<a>▼</a>
 		</div>
 		<hr class="user-info-line">
@@ -28,9 +29,8 @@
 					<li><a href="/seller/review">리뷰 보기</a></li>
 				</ul>
 			</li>
-			<li><a class="menu">클라우드</a></li>
 			
 		</ul>
-		<a href="#" class="logout"><img src="/img/logout.png"></a>
+		<a href="/logout" class="logout"><img src="/img/logout.png"></a>
 	</nav>
 </div>

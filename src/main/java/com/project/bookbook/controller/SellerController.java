@@ -3,16 +3,26 @@ package com.project.bookbook.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project.bookbook.domain.dto.OrderUpdateDTO;
 import com.project.bookbook.domain.dto.RequestRegistDTO;
+import com.project.bookbook.domain.dto.SellerUpdateDTO;
+import com.project.bookbook.security.CustomUserDetails;
+import com.project.bookbook.service.MypageSellerService;
 import com.project.bookbook.service.RegistService;
+import com.project.bookbook.service.SellerIndexService;
+import com.project.bookbook.service.SellerInventoryService;
+import com.project.bookbook.service.SellerOrderService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,14 +31,22 @@ import lombok.RequiredArgsConstructor;
 public class SellerController {
 
     private final RegistService registService;
+    private final MypageSellerService mypageSellerService;
+    private final SellerInventoryService sellerInventoryService;
+    private final SellerOrderService sellerOrderService;
+    private final SellerIndexService sellerIndexService;
+    
     
     @GetMapping("/seller")
-    public String seller() {
+    public String seller(Model model) {
+    	sellerIndexService.find(model);
         return "views/seller/index";
     }
 
+    //상품
     @GetMapping("/seller/inventory")
-    public String sellerInventory() {
+    public String sellerInventory(Model model, @AuthenticationPrincipal CustomUserDetails seller) {
+    	sellerInventoryService.findBook(model, seller);
         return "views/seller/inventory";
     }
 
@@ -59,31 +77,40 @@ public class SellerController {
     }
 
 
+    
+    //주문
+    @GetMapping("/seller/order")
+    public String sellerOrder(Model model, @AuthenticationPrincipal CustomUserDetails seller) {
+    	sellerOrderService.findBook(model, seller);
+        return "views/seller/order";
+    }
+    @PutMapping("/seller/order/{merchantUid}")
+    public String orderUpdate(@PathVariable("merchantUid") long merchantUid) {
+    	sellerOrderService.updateProcess(merchantUid);
+        return "redirect:/seller/order";
+    }
+    
+
     @GetMapping("/seller/order/exchange")
     public String sellerExchange() {
         return "views/seller/exchange";
-    }
-
-    @GetMapping("/seller/order")
-    public String sellerOrder() {
-        return "views/seller/order";
     }
 
     @GetMapping("/seller/order/refund")
     public String sellerRefund() {
         return "views/seller/refund";
     }
+    
+    
 
-    @GetMapping("/seller/mypage")
-    public String sellerMypage() {
-        return "views/seller/mypage";
-    }
+   //리뷰
 
     @GetMapping("/seller/review")
     public String sellerReview() {
         return "views/seller/review";
     }
 
+    //고객관리
     @GetMapping("/seller/user")
     public String sellerUser() {
         return "views/seller/users";
@@ -93,4 +120,17 @@ public class SellerController {
     public String sellerDetail() {
         return "views/seller/users-detail";
     }
+    
+    //마이페이지
+    @GetMapping("/seller/mypage")
+	public String sellerMypage(Model model, @AuthenticationPrincipal CustomUserDetails seller) {
+		mypageSellerService.readProcess(model,seller);
+		return "views/seller/mypage";
+	}
+    
+    @PutMapping("/seller/mypage")
+	public String sellerUpdate(SellerUpdateDTO dto) {
+		mypageSellerService.updateProcess(dto);
+		return "redirect:/seller/mypage";
+	}
 }
