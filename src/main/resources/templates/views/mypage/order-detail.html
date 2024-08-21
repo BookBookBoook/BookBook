@@ -71,7 +71,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                    </tr>
 	                    <tr>
 	                        <td>할인금액</td>
-	                        <td th:text="|- ${#numbers.formatDecimal(couponRate, 0, 'COMMA', 0, 'NONE')}원|">0원</td>
+	                        <td th:if="${couponRate != null}" th:text="|- ${#numbers.formatDecimal(couponRate, 0, 'COMMA', 0, 'NONE')}원|">0원</td>
+	                        <td th:if="${couponRate == null}">0원</td>
 	                    </tr>
 	                    <tr>
 	                        <td>배송비</td>

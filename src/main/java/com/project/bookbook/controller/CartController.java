@@ -23,7 +23,8 @@ import com.project.bookbook.service.CartService;
 import com.project.bookbook.service.CouponService;
 import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.OrderService;
-import com.project.bookbook.service.UserService;
+
+import groovy.util.logging.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
@@ -78,10 +79,18 @@ public class CartController {
 	
 	@PostMapping("/payment/completion")
 	@ResponseBody
-	public String paymentPost(@RequestBody PaymentPostDTO dto) {
-		dto.setPaidAmount(dto.getAmount() - dto.getCouponRate());
-		System.out.println(dto);
-		orderService.orderCompletion(dto);
+	public String paymentPost(@RequestBody PaymentPostDTO dto, @AuthenticationPrincipal CustomUserDetails user) {
+		dto.setPaidAmount(dto.getAmount() - dto.getCouponRate()); //쿠폰 할인 뺀 값으로 최종 값 변경
+		try {
+			orderService.orderCompletion(dto);
+			cartService.cartEmptyProcess(user); //장바구니 비우기
+			
+			if(dto.getCouponNum() !=0 ) {
+				couponService.couponStatusChange(dto.getCouponNum(), user); //쿠폰 사용 처리
+			}
+			
+		}catch (Exception e) {
+		}
 		return "";
 	}
 

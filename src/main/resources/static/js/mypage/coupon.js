@@ -1,6 +1,6 @@
 //csrf 토큰
-const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+//const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+//const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
 //사용가능한 쿠폰, 만료된 쿠폰 페이지 이동
 function openTab(evt, tabName) {
@@ -27,14 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const allBtn = document.getElementById('all-btn');
     const allText = document.getElementById('all-text');
     const couponIcons = document.querySelectorAll('.coupon .discount i');
-	/*
-    allBtn.addEventListener('click', () => {
-		allBtn.classList.toggle('selected');
-        couponIcons.forEach(icon => {
-            icon.classList.toggle('selected');
-        });
-    });
-	*/
 	
 	// 버튼과 '전체' 텍스트에 동일한 함수 할당
     const toggleSelection = () => {
@@ -56,8 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //모달 창 : 쿠폰 등록
 var modalReg = document.getElementById("modal-register");
-var btn = document.getElementById("headBtn");
-var close = document.getElementsByClassName("close")[0];
+var btn = document.getElementById("RegisterBtn");
+var close = document.getElementById("coupon-register-close");
+
+console.log(modalReg);
+console.log(btn);
 
 btn.onclick = function() {
 	modalReg.style.display = "block";
@@ -70,7 +65,7 @@ close.onclick = function() {
 //모달 창 : 쿠폰 상세 보기
 var modal = document.getElementById("myModal");
 var btns = document.getElementsByClassName("details");
-var span = document.getElementsByClassName("close")[1];
+var span = document.getElementsByClassName("close")[2];
 
 for (var i = 0; i < btns.length; i++) {
     btns[i].onclick = function() {

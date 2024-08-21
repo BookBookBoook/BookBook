@@ -39,4 +39,14 @@
 	    </foreach>
 	</select>
 	
+	<select id="findCartNum" parameterType="long" resultType="long">
+		select cart_num from cart
+		where user_id = #{userId}
+	</select>
+	
+	<delete id="deleteAllCart" parameterType="long">
+		delete from cart_detail
+		where cart_num = #{cartNum}
+	</delete>
+	
 </mapper>

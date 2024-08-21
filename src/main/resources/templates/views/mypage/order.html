@@ -5,6 +5,41 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
 	<link rel="stylesheet" href="/css/mypage/order.css">
 	<script src="/js/mypage/shipment.js"></script>
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    const searchForm = document.getElementById("search-form2");
+	    const searchInput = document.getElementById("search");
+	    const orderList = document.querySelector(".order-list table tbody");
+
+	    if (!searchForm || !searchInput || !orderList) {
+	        console.error("필요한 DOM 요소를 찾을 수 없습니다.");
+	        return;
+	    }
+
+	    searchForm.addEventListener("submit", function(event) {
+	        event.preventDefault();
+	        const query = searchInput.value.toLowerCase();
+	        filterTable(query);
+	    });
+
+	    function filterTable(query) {
+	        const rows = orderList.querySelectorAll("tr");
+
+	        rows.forEach(row => {
+	            const bookName = row.querySelector(".order-info div")?.textContent.toLowerCase() || "";
+	            const orderDate = row.querySelector("td:first-child")?.textContent.toLowerCase() || "";
+	            const orderStatus = row.querySelector(".order-actions div")?.textContent.toLowerCase() || "";
+
+	            const shouldDisplay = 
+	                bookName.includes(query) || 
+	                orderDate.includes(query) || 
+	                orderStatus.includes(query);
+
+	            row.style.display = shouldDisplay ? "" : "none";
+	        });
+	    }
+	});
+	</script>
 </head>
 <main>
 	<div class="flex">
@@ -22,9 +57,12 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                <div>교환 <span>0</span></div>
 	                <div>환불 <span>0</span></div>
 	            </div>
-	            <div class="search-bar">
-	                <input type="text" placeholder="상품명/판매자명 입력">
-	            </div>
+	            <form id="search-form2">
+				    <div class="search-wrap search-bar">
+				        <input id="search" type="text" placeholder="상품명/판매자명 입력">
+				        <button class="search-btn" type="submit">검색</button>
+				    </div>
+				</form>
 	            
 	            <div class="order-list" >
 	                <table>

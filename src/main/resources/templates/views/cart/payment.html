@@ -4,8 +4,6 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/cart/cart-list.css">
 	<link rel="stylesheet" href="/css/cart/payment.css">
-	<meta name="_csrf" th:content="${_csrf.token}" />
-	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
     <script src="/js/cart/payment.js"></script>
 </head>
@@ -59,7 +57,8 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                     <div class="product">
                         <table class="product-details">
                             <tbody>
-                                <tr th:each="orderBook:${orderBooks}">
+                                <tr th:each="orderBook:${orderBooks}"
+                                	th:with="itemAmount=${orderBook.discount * orderBook.orderCnt}">
                                     <td>
                                         <img th:src="${orderBook.bookImg}" class="book-cover-img">
                                         <div class="book-detail">
@@ -68,7 +67,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                                         </div>
                                     </td>
                                     <td th:text="|${orderBook.orderCnt}개|">1개</td>
-                                    <td th:text="|${#numbers.formatDecimal(orderBook.discount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
+                                    <td th:text="|${#numbers.formatDecimal(itemAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -97,7 +96,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                    <input type="radio" name="coupon" th:value="${coupon.couponName}">
 		                    <input type="hidden" th:value="${coupon.couponNum}" id="couponNum">
 		                    <input type="hidden" th:value="${coupon.couponRate}" id="couponRate">
-		                    <span th:text="|${coupon.couponName}쿠폰|"></span>
+		                    <b th:text="|${coupon.couponName}쿠폰|"></b>
+		                    <div class="dates flex">
+			                    <div class="description" th:text="${coupon.couponDetail}">어린이 과학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
+				            	<span class="days-left" th:text="|D-${coupon.remainingDays()}|" >D-25</span>
+				            </div>
 		                </label>
 		            </div>
 		            <button class="select-button" onclick="selectCoupon()">쿠폰 선택</button>

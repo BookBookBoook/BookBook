@@ -23,4 +23,8 @@ public interface CouponMapper {
 
 	int findByCouponNum(long couponNum);
 
+	void changeStatus(Map<String, Long> params);
+
+	List<CouponListDTO> findAllStatus1(long userId);
+
 }

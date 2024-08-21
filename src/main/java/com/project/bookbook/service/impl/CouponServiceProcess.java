@@ -18,6 +18,7 @@ import com.project.bookbook.mapper.CouponMapper;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CouponService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -31,17 +32,21 @@ public class CouponServiceProcess implements CouponService{
 		long userId = user.getUserId();
 		LocalDateTime now = LocalDateTime.now();
 		
-		//현재 날짜 기준으로 만료되지 않은 쿠폰만 필터링
+		//현재 날짜 기준으로 만료되지 않고, 사용되지 않은 쿠폰만 필터링
 		List<CouponListDTO> coupons = couponMapper.findAll(userId);
 		List<CouponListDTO> possibleCoupons = coupons.stream()
 			.filter(coupon -> ! coupon.getEndDate().isBefore(now))
 			.collect(Collectors.toList());
 		model.addAttribute("coupons", possibleCoupons);
 		
-		//현재 날짜 기준으로 만료된 쿠폰만 필터링
+		//현재 날짜 기준으로 만료되거나 사용된 쿠폰만 필터링
 		List<CouponListDTO> expiredCoupons = coupons.stream()
 				.filter(coupon -> coupon.getEndDate().isBefore(now))
 				.collect(Collectors.toList());
+		List<CouponListDTO> impossibleCoupons = couponMapper.findAllStatus1(userId);
+		for(int i=0; i<impossibleCoupons.size(); i++) {
+			expiredCoupons.add(impossibleCoupons.get(i));
+		}
 		model.addAttribute("expiredCoupons", expiredCoupons);
 	}
 
@@ -69,6 +74,18 @@ public class CouponServiceProcess implements CouponService{
 	public int findByCouponNum(long couponNum) {
 		return couponMapper.findByCouponNum(couponNum);
 		
+	}
+	
+	//쿠폰 사용처리
+	@Override
+	@Transactional
+	public void couponStatusChange(long couponNum, CustomUserDetails user) {
+		long userId = user.getUserId();
+		Map<String, Long> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("couponNum", couponNum);
+		
+		couponMapper.changeStatus(params);
 		
 	}
 

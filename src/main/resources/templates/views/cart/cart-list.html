@@ -52,22 +52,27 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                    </td>
 	                    <td >
 	                    	<span th:text="|${cartDetail.cartCnt}개|">1개</span>
-	                    	<!-- <div class="quantity-control">
+	                    	<div class="quantity-control" style="display: none">
 							    <button type="button" class="quantity-btn decrement">-</button>
 							    <input type="text" class="quantity-input" value="1" min="1" readonly>
 							    <button type="button" class="quantity-btn increment">+</button>
-							</div> -->
+							</div>
 	                    </td>
 	                    <td class="price" th:text="|${#numbers.formatDecimal(itemAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
 	                    <td>
 	                        <form class="buy-buttons">
 	                            <!-- <button class="btn" onclick="window.location.href='/payment';">바로 구매</button> -->
-	                            <button class="btn">수량 변경</button>
+	                            <button class="btn" type="button" id="changeButton">수량 변경</button>
 	                            <button class="btn delete" th:onclick="|deleteCartItem(${cartDetail.cartDetailNum});|">삭제</button>
 	                        </form>
 	                    </td>
 	                </tr>
-	                
+	                <tr th:if="${#lists.isEmpty(cartDetails)}">
+	                	<td colspan="5">
+		                	<i class="fa-solid fa-circle-info"></i>
+		                	<span>장바구니에 담긴 상품이 없습니다.</span>
+	                	</td>
+	                </tr>
 	            </tbody>
 	        </table>
 	        
