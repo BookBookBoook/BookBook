@@ -34,7 +34,7 @@ public class AnswerEntity {
     private VVIntentionEntity vvIntention; // 연관된 VV 의도
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "nnp_no", nullable = false)
+    @JoinColumn(name = "nnp_no")
     private NNPIntentionEntity nnpIntention; // 연관된 NNP 의도
 
     @Column(nullable = false)

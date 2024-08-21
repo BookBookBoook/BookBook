@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableRabbit
 public class RabbitMQConfig {
-/*
+	/*
 	// 메세지 브로커
 	
 	//스프링 부트의 자동 구성 기능을 통해 RabbitMQ와 연동할 수 있도록 설정됨.

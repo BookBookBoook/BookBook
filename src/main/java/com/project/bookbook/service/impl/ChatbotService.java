@@ -44,30 +44,41 @@ public class ChatbotService {
 
         Optional<AnswerEntity> answerEntityOptional=Optional.empty();
 
-        for(NNPIntentionEntity nnpIntention : nnpIntentions) {
-        	if (answerEntityOptional.isEmpty()) { // 답변이 설정되지 않았다면
-        		int nnpNo;
-                int vvNo;
-                
-                if (nnpIntention != null) {
-                    nnpNo = nnpIntention.getNnpNo();  // vvIntention이 null이 아니면 getVvNo() 호출
-                } else {
-                    nnpNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
-                    System.out.println("명사: "+nnpNo);
-                }
-                
-                if (vvIntention != null) {
-                    vvNo = vvIntention.getVvNo();  // vvIntention이 null이 아니면 getVvNo() 호출
-                } else {
-                    vvNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
-                    System.out.println("동사: "+vvNo);
-                }
-                
-                System.out.println("1명사: " + nnpNo);
-                System.out.println("1동사: " + vvNo);
+        if (nnpIntentions == null || nnpIntentions.isEmpty()) {
+            int nnpNo = 0;  // nnpNo를 0으로 설정
+            int vvNo;
 
-                // Optional로 감싸 답변 저장
-                answerEntityOptional = answerRepository.findByVvIntention_VvNoAndNnpIntention_NnpNo(vvNo, nnpNo);
+            if (vvIntention != null) {
+                vvNo = vvIntention.getVvNo();  // vvIntention이 null이 아니면 getVvNo() 호출
+            } else {
+                vvNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
+                System.out.println("동사: "+vvNo);
+            }
+
+            System.out.println("명사: " + nnpNo);
+            System.out.println("동사: " + vvNo);
+
+            // Optional로 감싸 답변 저장
+            answerEntityOptional = answerRepository.findByVvIntention_VvNoAndNnpIntention_NnpNo(vvNo, nnpNo);
+        } else {
+            for (NNPIntentionEntity nnpIntention : nnpIntentions) {
+                if (answerEntityOptional.isEmpty()) { // 답변이 설정되지 않았다면
+                    int nnpNo = nnpIntention.getNnpNo();  // nnpIntention에서 nnpNo를 가져옴
+                    int vvNo;
+
+                    if (vvIntention != null) {
+                        vvNo = vvIntention.getVvNo();  // vvIntention이 null이 아니면 getVvNo() 호출
+                    } else {
+                        vvNo = 0;  // vvIntention이 null이면 vvNo를 0으로 설정
+                        System.out.println("동사: "+vvNo);
+                    }
+
+                    System.out.println("명사: " + nnpNo);
+                    System.out.println("동사: " + vvNo);
+
+                    // Optional로 감싸 답변 저장
+                    answerEntityOptional = answerRepository.findByVvIntention_VvNoAndNnpIntention_NnpNo(vvNo, nnpNo);
+                }
             }
         }
         
