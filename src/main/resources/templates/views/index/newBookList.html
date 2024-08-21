@@ -14,27 +14,8 @@
 </head>
 <body>
 	<main class="main-container">
-		<aside class="category-sidebar">
-			<h2 class="sidebar-title">도서</h2>
-			<nav>
-				<ul class="category-list">
-					<li><a href="#" class="category-item" data-category="all">종합</a></li>
-					<li><a href="#" class="category-item" data-category="fiction">소설</a></li>
-					<li><a href="#" class="category-item" data-category="essay">시/에세이</a></li>
-					<li><a href="#" class="category-item" data-category="business">경제/경영</a></li>
-					<li><a href="#" class="category-item"
-						data-category="self-help">자기계발</a></li>
-					<li><a href="#" class="category-item"
-						data-category="humanities">인문</a></li>
-					<li><a href="#" class="category-item" data-category="history">역사/문화</a></li>
-					<li><a href="#" class="category-item" data-category="language">국어/외국어</a></li>
-					<li><a href="#" class="category-item" data-category="science">과학</a></li>
-					<li><a href="#" class="category-item" data-category="art">예술/대중문화</a></li>
-				</ul>
-			</nav>
-		</aside>
 		<div class="content">
-			<h1 class="content-title">도서</h1>
+			<h1 class="content-title">NEW 도서</h1>
 			<nav>
 				<div class="selectAll">
 					<input type="checkbox" id="selectAllCheckbox"> <label
@@ -44,28 +25,29 @@
 			<section id="book-list" class="book-list">
 				<div class="bookInformation">
 					<ol>
-						<li th:each="book : ${books}">
+						<li th:each="book : ${newbooks}">
 							<div>
 								<input type="checkbox" class="bookCheckbox">
 							</div>
 							<div class="bookImg">
 								<img th:alt="${book.title}" th:src="${book.image}"
 									name="thumbnail"> <span><a
-									th:href="@{'/detail/' + ${book.isbn}}">새창보기</a></span> <span
+									th:href="@{'/newDetail/' + ${book.isbn}}">새창보기</a></span> <span
 									class="chang"><a th:href="@{'/detail/' + ${book.isbn}}">미리보기</a></span>
 							</div>
 							<div class="bookContent">
 								<h3>
-									<a th:href="@{|/detail/${book.isbn}|}" name="title"
-										th:text="${book.title}"></a>
+									<a th:href="@{|/newDetail/${book.isbn}|}" name="title"
+										th:text="${#strings.length(book.title) > 25 ? #strings.substring(book.title,0,25)+'...':book.title}" th:title="${book.title}"></a>
 								</h3>
+								<p th:text="${book.isbn}"></p>
 								<h4>
-									<a th:href="@{|/detail/${book.isbn}|}" name="authors"
+									<a th:href="@{|/newDetail/${book.isbn}|}" name="authors"
 										th:text="${book.author}"></a>
 								</h4>
 								<h5 name="price"
 									th:text="${book.discount != null ? #numbers.formatDecimal(book.discount, 0, 'COMMA', 0, 'POINT') + '원' : '가격 정보 없음'}"></h5>
-								<h6 name="content" th:text="${book.description}"></h6>
+								<h6 name="content" th:text="${#strings.length(book.description) > 230 ? #strings.substring(book.description,0,230)+'...':book.description}" th:title="${book.description}"></h6>
 							</div>
 							<div>
 								<p>당일배송</p>
@@ -89,6 +71,7 @@
 					</ol>
 				</div>
 			</section>
+			
 		</div>
 	</main>
 </body>

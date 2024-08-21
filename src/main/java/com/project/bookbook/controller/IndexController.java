@@ -47,14 +47,29 @@ public class IndexController {
 		bookservice.getDefaultBooks(model);
 		return "views/index/index.html";
 	}
-
+	//신상품
+	@GetMapping("/newbookList")
+	public String newListBooks(Model model) {
+		bookservice.getNewBook(model);
+		return "views/index/newBookList";
+	}
+	
+	@GetMapping("/newDetail/{isbn}")
+	public String newdetail(@PathVariable("isbn") String isbn, Model model) {
+		System.out.println(">>>>>>>>>>>>> "+isbn);
+		bookservice.getNewIsbn(isbn,model);
+		return "views/index/newDetail";
+		
+	}
+	
+	//도서 정보
 	@GetMapping("/bookList")
 	public String listBooks(Model model) {
 		System.out.println(">>>>>>>>>>>>" + model);
 		bookservice.getBookList(model);
 		return "views/index/serchBookList";
 	}
-
+	//검색 정보
 	@GetMapping("/search")
 	public String search(@RequestParam("query") String query, Model model) {
 		bookservice.searchBooks(query, model);

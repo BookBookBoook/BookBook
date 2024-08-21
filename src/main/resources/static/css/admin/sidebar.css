@@ -109,6 +109,10 @@ a {
   transition: all 0.3s ease;
   position: relative;
 }
+.star-rating {
+    color: gold;
+    font-size: 20px;
+}
 
 /* a::after {
   content: '';

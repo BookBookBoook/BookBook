@@ -21,6 +21,8 @@ public class AdminServiceProcess implements AdminService{
 	@Override
 	public void find(Model model) {
 		List<AdminIndexDTO> list = adminMapper.find();
+		List<ReviewDTO> reviews = adminMapper.findTop8Reviews();
+        model.addAttribute("reviews", reviews);
 		model.addAttribute("list",list);
 		
 	}
@@ -29,6 +31,12 @@ public class AdminServiceProcess implements AdminService{
 	public void findReviews(Model model) {
 		List<ReviewDTO> reviews = adminMapper.findAllReviews();
         model.addAttribute("reviews", reviews);
+		
+	}
+
+	@Override
+	public void deleteReview(Long reviewNum) {
+		adminMapper.deleteReview(reviewNum);
 		
 	}
 
