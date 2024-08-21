@@ -63,6 +63,13 @@
 	    WHERE merchant_uid = #{merchantUid}
 	</update>
 	
+	<update id="orderCompletionNoCoupon" parameterType="com.project.bookbook.domain.dto.PaymentPostDTO">
+		UPDATE user_orders
+	    SET order_status = 1,
+	        paid_amount = #{paidAmount}
+	    WHERE merchant_uid = #{merchantUid}
+	</update>
+	
 	<select id="findByMerchantUid" parameterType="long" resultType="com.project.bookbook.domain.dto.OrdersDetailDTO">
 		select * from user_orders
 		where merchant_uid = #{merchantUid}

@@ -59,7 +59,7 @@ public class VisionServiceProcess implements VisionService{
             // 추출한 텍스트에서 책 제목만 추출하도록 ChatClient를 호출
             System.out.println("전체 텍스트 주석 : "+stringBuilder.toString());
             String bookName = chatClient.prompt()
-            		.system("결과를 '정의란 무엇인가' 처럼 딱 단어들로만 말해줘.")
+            		.system("결과를 '정의란 무엇인가' 처럼 딱 단어로만 말해줘.")
             		.user(stringBuilder.toString()+" >> 이 텍스트 내용을 가지고 책 검색을 할 예정이야. 책 이름을 찾으면 책 이름 하나만 return, 책 이름을 잘 모르겠으면 책 검색에 필요한 키워드를 하나만 return.").call().content();
             System.out.println("chat gpt : " + bookName);
             return bookName;

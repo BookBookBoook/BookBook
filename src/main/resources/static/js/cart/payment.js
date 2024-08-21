@@ -1,7 +1,3 @@
-//csrf 토큰
-const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
 let merchantUid;
 let buyerEmail;
 let buyerName;
@@ -146,7 +142,7 @@ function requestPay() {
 }
 
 //////////////////////////////////////
-//결제 이후 처리
+//결제 이후 처리 (아직 사용 X)
 async function getAccessToken() {
   const response = await fetch("https://api.iamport.kr/users/getToken", {
     method: "POST",
@@ -210,4 +206,3 @@ async function verifyPayment(imp_uid) {
     alert("결제에 실패하였습니다. 에러 내용: " + (error.message || "Unknown error"));
   }
 }
-

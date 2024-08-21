@@ -9,7 +9,7 @@ const confirmButton = document.querySelector('#confirmButton');
 //const closeButton = document.querySelector('#closeButton');
 const queryInput = document.querySelector('#queryInput');
 const searchForm = document.querySelector('#searchForm');
-var modalReg = document.getElementById("modal-register");
+var modalReg = document.getElementById("camera-modal");
 var close = document.getElementsByClassName("close")[0];
 
 // 카메라 버튼 클릭 시 모달 열기
@@ -66,6 +66,6 @@ confirmButton.addEventListener('click', async () => {
 	
 	
     // 검색 폼 제출
-    searchForm.submit();
+    //searchForm.submit();
 });
 

@@ -8,7 +8,14 @@
 		SELECT c.*
 		FROM coupon c
 		JOIN user_coupon uc ON c.coupon_num = uc.coupon_num
-		WHERE uc.user_id = #{userId};
+		WHERE uc.user_id = #{userId} and uc.status = 0;
+	</select>
+	
+	<select id="findAllStatus1" parameterType="long" resultType="com.project.bookbook.domain.dto.CouponListDTO">
+		SELECT c.*
+		FROM coupon c
+		JOIN user_coupon uc ON c.coupon_num = uc.coupon_num
+		WHERE uc.user_id = #{userId} and uc.status = 1;
 	</select>
 	
 	<select id="checkCoupon" parameterType="long" resultType="com.project.bookbook.domain.dto.CouponListDTO">
@@ -30,6 +37,12 @@
 		select coupon_rate from coupon
 		where coupon_num = #{couponNum}
 	</select>
+	
+	<update id="changeStatus" parameterType="map">
+		update user_coupon
+		set status = 1
+		where coupon_num = #{couponNum} and user_id = #{userId}
+	</update>
 	
 
 </mapper>

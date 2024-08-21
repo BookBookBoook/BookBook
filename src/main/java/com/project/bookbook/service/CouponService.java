@@ -16,4 +16,6 @@ public interface CouponService {
 
 	int findByCouponNum(long couponNum);
 
+	void couponStatusChange(long couponNum, CustomUserDetails user);
+
 }

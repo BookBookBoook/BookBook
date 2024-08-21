@@ -51,6 +51,18 @@ th {
 	margin-bottom: 20px;
 }
 
+.search-btn{
+	font-size: 12px;
+	background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
 .search-bar input {
 	padding: 10px;
 	width: 200px;
@@ -91,6 +103,7 @@ th {
 	padding-left: 20px;
 	text-align: left;
 	margin-bottom: 20px;
+	width: 280px;
 }
 
 .detail-view:hover{
