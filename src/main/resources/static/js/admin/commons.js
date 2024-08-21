@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
-	const selectAllCheckbox = document.getElementById('select-all');
-	const itemCheckboxes = document.querySelectorAll('.select-item');
+    const selectAllCheckbox = document.getElementById('select-all');
+    const itemCheckboxes = document.querySelectorAll('.select-item');
 
-	selectAllCheckbox.addEventListener('change', function() {
-		itemCheckboxes.forEach(checkbox => {
-			checkbox.checked = selectAllCheckbox.checked;
-		});
-	});
+    if (selectAllCheckbox) { // 요소가 존재하는지 확인
+        selectAllCheckbox.addEventListener('change', function() {
+            itemCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        });
+    }
 });
-
 
 //리스트 페이지 이동 버튼
 document.addEventListener('DOMContentLoaded', function() {
@@ -38,11 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
 		let maxPagesToShow = 10;
 		let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
 		let endPage = Math.min(pageCount, startPage + maxPagesToShow - 1);
-		
+
 		startPage = Math.max(1, endPage - maxPagesToShow + 1)
 		wrapper.appendChild(createButton('<<', () => goToPage(1)));
 		wrapper.appendChild(createButton('<', () => goToPage(Math.max(1, currentPage - 1))));
-		
+
 		for (let i = startPage; i <= endPage; i++) {
 			let btn = createButton(i, () => goToPage(i));
 			if (currentPage == i) btn.classList.add('active');
@@ -53,10 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 	function createButton(text, onClick) {
 		let button = document.createElement('button');
-		
+
 		button.innerText = text;
 		button.addEventListener('click', onClick);
-		
+
 		return button;
 	}
 	function goToPage(page) {
@@ -67,3 +68,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	displayList(rows, tableBody, itemsPerPage, currentPage);
 	setupPagination(rows, paginationContainer, itemsPerPage);
 });
+
+

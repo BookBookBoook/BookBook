@@ -15,7 +15,7 @@
 
 <body>
 	<div style="display: flex;">
-		<th:block th:insert="~{views/admin/sidebar}" />
+		<th:block th:insert="~{views/seller/sidebar}" />
 
 		<div class="container">
 			<h1>상품 관리</h1>
@@ -81,6 +81,7 @@
 							<th>출판사</th>
 							<th>바로구매 URL</th>
 							<th>판매가</th>
+							<th>상태</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -93,6 +94,14 @@
 							<td th:text="${dto.publisher}"></td>
 							<td th:text="${dto.link}"></td>
 							<td th:text="${dto.discount}"></td>
+							<td>
+								<form th:action="|/admin/inventory/${dto.bookNum}|" onsubmit="return btnDeleteClicked()"
+									method="post">
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+									<input type="hidden" name="_method" value="delete">
+									<button type="submit">삭제</button>
+								</form>
+							</td>
 						</tr>
 					</tbody>
 				</table>

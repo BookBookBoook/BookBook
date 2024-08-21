@@ -50,7 +50,6 @@ th, td {
 	padding: 8px;
 	text-align: left;
 	overflow: hidden;
-	white-space: nowrap;
 	text-overflow: ellipsis;
 	text-align: center;
 }
