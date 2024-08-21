@@ -19,6 +19,7 @@ public class RequestRegistDTO {
 
     
     private String bookName; // 도서명
+    private String isbn;
     //private String bookImg; //도서 표지;
     private int stock; // 기본값 0 설정
     private int discount; // 판매가
@@ -69,6 +70,7 @@ public class RequestRegistDTO {
         return BookEntity.builder()
                 .bookImg(uploadUrl)
                 .bookName(bookName)
+                .isbn(isbn)
                 .discount(discount)
                 .pubdate(convertToLocalDateTime())
                 .link(link)

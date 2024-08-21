@@ -168,7 +168,7 @@ function connect() {
 				                    </div>`;
                 showMessage(buttonHTML);
             }
-			if (msgObj.includes("다른 상품")) { //includes ""가 포함되어있을경우
+			if (msgObj.includes("문의")) { //includes ""가 포함되어있을경우
                 var buttonHTML = `<div class="msg bot flex">
 				                        <div class="icon">
 				                            <img src="/img/bot/bot-img-none.png">
