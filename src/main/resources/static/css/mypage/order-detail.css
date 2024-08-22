@@ -24,6 +24,7 @@ h1 {
 .shipping-status {
     border: 1px solid #ddd;
     padding: 15px;
+    margin: 10px;
     margin-bottom: 20px;
 }
 
@@ -55,12 +56,14 @@ h1 {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    width: 400px;
 }
 
 .product-title {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 5px;
+    width: 400px;
 }
 
 .product-price {

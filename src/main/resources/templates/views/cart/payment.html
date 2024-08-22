@@ -33,11 +33,25 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                         <h3>배송 정보</h3>
                         <button class="grey-button">배송지 수정</button>
                     </div>
-                    <p>우편번호</p>
-                    <input type="text" id="postalcode" th:value="${user.postcode}" class="postalcode input-field" disabled>
-                    <p>주소</p>
-                    <input type="text" id="address1" th:value="${user.address}" class="input-field" disabled><br>
-                    <input type="text" id="address2" th:value="${user.detailAddress}" class="input-field" disabled>
+                    <div class="shipment-info">
+	                    <p>이름</p>
+	                    <input type="text" id="postalcode" th:value="${user.userName}" class="new-input-field" disabled>
+                    </div>
+                    <div class="shipment-info">
+	                    <p>전화번호</p>
+	                    <input type="text" id="postalcode" th:value="${user.phoneNumber}" class="new-input-field" disabled>
+                    </div>
+                    <div class="shipment-info">
+                    	<p>우편번호</p>
+	                    <input type="text" id="postalcode" th:value="${user.postcode}" class="postalcode new-input-field" disabled>
+                    </div>
+                    <div class="shipment-info">
+	                    <p>주소</p>
+	                    <div class="address-wrapper">
+		                    <input type="text" id="address1" th:value="${user.address}" class="new-input-field" disabled><br>
+		                    <input type="text" id="address2" th:value="${user.detailAddress}" class="new-input-field" disabled>
+	                    </div>
+                    </div>
                 </div>
 
                 <div class="box-section">

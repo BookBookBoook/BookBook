@@ -21,6 +21,26 @@ h3 {
 
 
 /* 배송지정보 */
+.shipment-info {
+  display: flex;
+  align-items: flex-start;
+}
+
+.shipment-info > p {
+  width: 95px;
+  margin-top: 10px;
+}
+
+.new-input-field {
+  width: 743px;
+  padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.postcode-input {
+  width: 120px;
+}
 .address{
     align-items: baseline;
 }
@@ -38,6 +58,9 @@ h3 {
     color: #666;
     font-size: 13px;
     margin: 5px;
+}
+.postalcode{
+	width:120px;
 }
 
 /* 주문상품 */
@@ -94,7 +117,7 @@ td > p{
 
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
