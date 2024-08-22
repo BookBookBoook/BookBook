@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bookbook.domain.dto.PaymentAllDTO;
 import com.project.bookbook.domain.dto.PaymentPostDTO;
+import com.project.bookbook.domain.dto.UpdateCartDTO;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CartService;
 import com.project.bookbook.service.CouponService;
@@ -28,6 +30,7 @@ import groovy.util.logging.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class CartController {
 
 	private final CouponService couponService;
@@ -67,6 +70,35 @@ public class CartController {
 			return ResponseEntity.ok(merchantUid); //long형 orderNum을 직접 반환
 		}
 	}
+	
+	/*
+	@PutMapping("/cart/update")
+	@ResponseBody
+    public String updateCartQuantity(@RequestBody UpdateCartDTO dto) {
+		System.out.println(dto);
+        try {
+            cartService.updateCartItemQuantity(dto);
+            System.out.println("업데이트 >>>>> ");
+            return "장바구니 수량이 성공적으로 업데이트 되었습니다.";
+        } catch (Exception e) {
+            return "오류가 발생했습니다. : " + e.getMessage();
+        }
+    }
+    */
+	
+	@PutMapping("/cart/update")
+	@ResponseBody
+    public ResponseEntity<String> updateCartQuantity(@RequestBody UpdateCartDTO dto) {
+        //log.info("Received update request: {}", dto);
+        try {
+            cartService.updateCartItemQuantity(dto);
+            //log.info("Cart updated successfully for cartDetailNum: {}", dto.getCartDetailNum());
+            return ResponseEntity.ok("장바구니 수량이 성공적으로 업데이트 되었습니다.");
+        } catch (Exception e) {
+            //log.error("Error occurred while updating cart", e);
+            return ResponseEntity.internalServerError().body("오류가 발생했습니다: " + e.getMessage());
+        }
+    }
 	
 	//결제
 	@GetMapping("/payment/{merchantUid}")

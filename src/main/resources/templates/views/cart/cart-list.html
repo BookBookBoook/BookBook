@@ -30,11 +30,10 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	        <table class="left-section">
 	            <thead>
 	                <tr>
-	                	<th><input type="checkbox"></th>
 	                    <th class="book-info-text">제품정보</th>
 	                    <th>수량</th>
-	                    <th>결제금액</th>
-	                    <th>주문</th>
+	                    <th style="width: 120px;">결제금액</th>
+	                    <th style="width: 110px;">주문</th>
 	                </tr>
 	            </thead>
 	            <tbody id="cartList">
@@ -42,7 +41,6 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                	th:with="itemAmount=${cartDetail.discount != null && cartDetail.cartCnt != null ? cartDetail.discount * cartDetail.cartCnt : 0},
                          totalAmount=${totalAmount + itemAmount}"
                         th:data-cart-detail-num="${cartDetail.cartDetailNum}">
-	                	<td><input type="checkbox"></td>
 	                    <td class="product-info book-info-text">
 	                        <img th:src="${cartDetail.bookImg}" class="book-cover-img">
 	                        <div class="book-info">
@@ -58,12 +56,17 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 							    <button type="button" class="quantity-btn increment">+</button>
 							</div>
 	                    </td>
-	                    <td class="price" th:text="|${#numbers.formatDecimal(itemAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
+	                    <td class="price" 
+	                    	th:text="|${#numbers.formatDecimal(itemAmount, 0, 'COMMA', 0, 'NONE')}원|"
+	                    	th:attr="data-unit-price=${itemAmount}">17,000원</td>
 	                    <td>
 	                        <form class="buy-buttons">
-	                            <!-- <button class="btn" onclick="window.location.href='/payment';">바로 구매</button> -->
-	                            <button class="btn" type="button" id="changeButton">수량 변경</button>
-	                            <button class="btn delete" th:onclick="|deleteCartItem(${cartDetail.cartDetailNum});|">삭제</button>
+	                            <button class="btn change-quantity-btn" type="button">수량 변경</button>
+					            <div class="cancel-confirm-buttons" style="display: none;">
+					                <button class="btn cancel-btn" type="button">취소</button>
+					                <button class="btn confirm-btn" type="button">확인</button>
+					            </div>
+	                            <button id="delete-btn" class="btn delete" th:onclick="|deleteCartItem(${cartDetail.cartDetailNum});|">삭제</button>
 	                        </form>
 	                    </td>
 	                </tr>

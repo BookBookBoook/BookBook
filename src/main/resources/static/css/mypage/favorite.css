@@ -149,3 +149,13 @@
     margin: 0;
 }
 
+.no-order-block{
+	display:flex;
+	justify-content: center;
+	height: 275px;
+}
+
+.no-orders {
+	font-size: 16px;
+    margin-top: 60px;
+}

@@ -104,9 +104,8 @@ public class MypageController {
 	@PostMapping("/mypage/coupons")
 	@ResponseBody
 	public String couponAdd(@RequestParam("couponNum") long couponNum , @AuthenticationPrincipal CustomUserDetails user) {
-		System.out.println(">>>>couponNum : "+couponNum);
 		if(!couponService.checkProcess(couponNum)) {
-			if(couponService.checkDuplicateCoupon(couponNum)) {
+			if(couponService.checkDuplicateCoupon(couponNum, user)) {
 				couponService.addProcess(couponNum, user);
 				return "쿠폰이 정상적으로 등록되었습니다.";
 			}else {
@@ -126,6 +125,12 @@ public class MypageController {
 			return "쿠폰이 정상적으로 등록되었습니다.";
 		}
 		*/
+	}
+	
+	@DeleteMapping("/mypage/coupons/{couponNum}")
+	public String deleteCoupon(@PathVariable("couponNum") long couponNum, @AuthenticationPrincipal CustomUserDetails user) {
+		couponService.deleteUserCoupon(couponNum, user);
+		return "redirect:/mypage/coupons";
 	}
 	
 	//나의 취향

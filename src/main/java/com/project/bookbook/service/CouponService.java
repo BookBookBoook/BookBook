@@ -12,10 +12,12 @@ public interface CouponService {
 
 	void addProcess(long couponNum, CustomUserDetails user);
 
-	boolean checkDuplicateCoupon(long couponNum);
+	boolean checkDuplicateCoupon(long couponNum, CustomUserDetails user);
 
 	int findByCouponNum(long couponNum);
 
 	void couponStatusChange(long couponNum, CustomUserDetails user);
+
+	void deleteUserCoupon(long couponNum, CustomUserDetails user);
 
 }

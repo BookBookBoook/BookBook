@@ -6,6 +6,11 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	<link rel="stylesheet" href="/css/mypage/coupon.css">
 	<meta name="_csrf" th:content="${_csrf.token}" />
 	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<script>
+		function btnDeleteClicked(){
+			return confirm("정말로 삭제하시겠습니까?");
+		}
+	</script>
 </head>
 <main>
 	<div class="flex">
@@ -58,10 +63,13 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		        <div id="coupon" class="tabcontent">
 		        	<div class="coupon-container">
 				        <div class="coupon" th:each="coupon : ${coupons}">
-				            <div class="discount">
+				            <form class="discount" th:action="|/mypage/coupons/${coupon.couponNum}|" onsubmit="return btnDeleteClicked()" method="post">
+				            	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+								<input type="hidden" name="_method" value="delete">
 				            	<i class="fa-regular fa-circle-check"></i> 
 				            	<span th:text="${coupon.couponName}">1,000원 할인</span>
-				            </div>
+				            	<button class="trash-button-detail"><i class="fa-solid fa-trash trash-btn-detail"></i></button>
+				            </form>
 				            <div class="description" th:text="${coupon.couponDetail}">어린이 과학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
 				            <div class="dates">
 				            	<span th:text="|${coupon.startDate.toLocalDate()} ~ ${coupon.endDate.toLocalDate()}|">날짜</span> 
@@ -75,10 +83,13 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		        <div id="expiredCoupon" class="tabcontent">
 		        	<div class="coupon-container">
 			        	<div class="coupon" th:each="expiredCoupon : ${expiredCoupons}">
-				            <div class="discount">
+				            <form class="discount" th:action="|/mypage/coupons/${expiredCoupon.couponNum}|" onsubmit="return btnDeleteClicked()" method="post">
+				            	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+								<input type="hidden" name="_method" value="delete">
 				            	<i class="fa-regular fa-circle-check"></i> 
 				            	<span th:text="${expiredCoupon.couponName}">1,000원 할인</span>
-				            </div>
+				            	<button class="trash-button-detail"><i class="fa-solid fa-trash trash-btn-detail"></i></button>
+				            </form>
 				            <div class="description" th:text="${expiredCoupon.couponDetail}">어린이 과학동아(2024년 8월 1일자)(15호)<br>1000원 할인쿠폰</div>
 				            <div class="dates">
 				            	<span th:text="|${expiredCoupon.startDate.toLocalDate()} ~ ${expiredCoupon.endDate.toLocalDate()}|">날짜</span> 

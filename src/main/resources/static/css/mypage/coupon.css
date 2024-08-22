@@ -113,6 +113,18 @@
     color: #000;
 }
 
+.trash-button-detail{
+	border: none;
+    background-color: white;
+}
+
+.trash-btn-detail{
+	font-size: 22px;
+	margin-left: 10px;
+	margin-bottom: 2px;
+	color: var(--dark-grey);
+}
+
 .description {
     margin-top: 10px;
     font-size: 16px;
@@ -169,7 +181,7 @@
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 500px;
@@ -211,12 +223,12 @@
 	margin: 10px 0 20px 0;
 }
 
-.modal-register h2 {
+.modal-register-ui h2 {
 	margin: 0;
 	font-size: 24px;
 }
 
-.modal-register input {
+.modal-register-ui input {
 	width: calc(100% - 20px);
 	padding: 10px;
 	margin: 10px 0;
@@ -224,13 +236,13 @@
 	border-radius: 4px;
 }
 
-.modal-register p {
+.modal-register-ui p {
 	font-size: 14px;
 	line-height: 1.6;
 	color: #555;
 }
 
-.modal-register button {
+.modal-register-ui button {
 	width: 100%;
 	padding: 12px;
 	background-color: var(--main-orange);

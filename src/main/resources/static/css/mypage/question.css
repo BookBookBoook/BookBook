@@ -55,3 +55,15 @@ th:nth-child(1){
 .status-finish {
 	color: green;
 }
+
+
+.no-orders-div{
+	display: flex;
+    justify-content: center;
+    height: 400px;
+    align-items: center;
+}
+
+.no-orders{
+	font-size: 15px;
+}

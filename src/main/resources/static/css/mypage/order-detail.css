@@ -104,7 +104,7 @@ h1 {
 
 .receiver-info h3,
 .payment-info h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     margin-top: 0;
 }
@@ -112,6 +112,7 @@ h1 {
 .receiver-info p,
 .payment-info p {
     margin: 5px 0;
+    font-size: 16px;
 }
 
 .payment-info table {

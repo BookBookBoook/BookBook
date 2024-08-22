@@ -58,6 +58,21 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 						<p th:text="${answer.content}">요새 종이 값이 금값입니다.</p>
 					</div>
 				</div>
+				<div class="box" th:if="${#lists.isEmpty(answer)}">
+					<div class="form-header">
+						<h2>답변 미작성</h2>
+						<!-- <div class="profile-header">
+							<div class="info-pic">
+							</div>
+							<div class="user-details">
+								<span class="username">관리자</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="memo">
+						<p>곧 작성예정입니다. 조금만 기다려주세요.</p>
+					</div>
+				</div>
 		    </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 package com.project.bookbook.service;
 
 
+import com.project.bookbook.domain.dto.UpdateCartDTO;
 import com.project.bookbook.domain.entity.BookEntity;
 import org.springframework.ui.Model;
 
@@ -13,6 +14,10 @@ public interface CartService {
 	void deleteCartDetail(long cartDetailNum);
 
 	void cartEmptyProcess(CustomUserDetails user);
+
+	void updateCartItemQuantity(UpdateCartDTO dto);
+
+	
 
 
 }

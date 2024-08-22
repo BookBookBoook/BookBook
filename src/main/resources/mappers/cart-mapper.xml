@@ -49,4 +49,10 @@
 		where cart_num = #{cartNum}
 	</delete>
 	
+	<update id="updateCartItemQuantity" parameterType="com.project.bookbook.domain.dto.UpdateCartDTO">
+		update cart_detail
+		set cart_cnt = #{cartCnt}
+		where cart_detail_num = #{cartDetailNum}
+	</update>
+	
 </mapper>

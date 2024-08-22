@@ -57,6 +57,12 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 				            <p th:text="${favorite.author}">저자</p>
 				        </div>
 				    </div>
+				    <div th:if="${#lists.isEmpty(favorites)}" class="no-order-block">
+		            	<p class="no-orders">
+		            		<i class="fa-solid fa-circle-info"></i>
+		            		<span>위시리스트에 담긴 상품이 없습니다.</span>
+		            	</p>
+		            </div>
 				</section>
 				
             </div>
