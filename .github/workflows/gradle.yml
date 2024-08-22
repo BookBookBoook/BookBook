@@ -11,7 +11,7 @@ on:
   #push:
     #branches: [ "develop" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "master" ]
 
 env:
   PROJECT_NAME: "bookbook"
