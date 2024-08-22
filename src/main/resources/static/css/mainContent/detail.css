@@ -60,11 +60,48 @@
 }
 
 .book-rating {
-    margin: 10px 0;
+    align-items: center;
+    gap: 10px;
 }
 
 .stars {
+    unicode-bidi: bidi-override;
+    font-size: 25px;
+    height: 25px;
+    width: 125px;
+    position: relative;
+    padding: 0;
+}
+.review-count{margin: 0;}
+.stars-inner {
+    width: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: -2px;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.stars::before,
+.stars-inner::before {
+    content: "☆☆☆☆☆";
     color: #ffd700;
+}
+
+.stars-inner::before {
+    content: "★★★★★";
+}
+
+.rating-score {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.rating-score {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .book-price .price {

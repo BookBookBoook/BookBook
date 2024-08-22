@@ -50,6 +50,7 @@ import com.project.bookbook.mapper.BookMapper;
 import com.project.bookbook.service.BookService;
 import com.project.bookbook.service.CartItemService;
 import com.project.bookbook.service.CartService;
+import com.project.bookbook.service.ReviewService;
 
 import jakarta.transaction.Transactional;
 import jakarta.xml.bind.JAXBContext;
@@ -75,6 +76,7 @@ public class BookServiceProcess implements BookService {
 	private final UserRepository userRepository;
 	private final WishRepository wishRepository;
 	private final BookMapper bookmapper;
+	private final ReviewService reviewService;
 
 	// 검색 결과
 	public void searchBooks(String query, Model model) {
@@ -256,12 +258,10 @@ public class BookServiceProcess implements BookService {
 		HttpEntity<String> entity = new HttpEntity<>(headers);
 
 		try {
-			// System.out.println("Sending request to Naver API: " + url);
 			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
 			if (response.getStatusCode().is2xxSuccessful()) {
 				String xmlResponse = response.getBody();
-				// System.out.println("Received XML response: " + xmlResponse);
 
 				JAXBContext jaxbContext = JAXBContext.newInstance(BookSearchResponse.class);
 				Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -269,21 +269,24 @@ public class BookServiceProcess implements BookService {
 				BookSearchResponse bookSearchResponse = (BookSearchResponse) unmarshaller.unmarshal(reader);
 
 				if (!bookSearchResponse.getChannel().getItems().isEmpty()) {
-					// System.out.println("Successfully retrieved book details for ISBN: " + isbn);
-					// // 여기까지 콘솔에 출력됨
-					return bookSearchResponse.getChannel().getItems().get(0);
+					BookSearchResponse.Item item = bookSearchResponse.getChannel().getItems().get(0);
+
+					// 평균 평점과 리뷰 수 계산
+					double averageRating = reviewService.calculateAverageRating(isbn);
+					int reviewCount = reviewService.getReviewCount(isbn);
+
+					// Item 객체에 평균 평점과 리뷰 수 설정
+					item.setAverageRating(averageRating);
+					item.setReviewCount(reviewCount);
+
+					return item;
 				} else {
-					// System.out.println("No book found for ISBN: " + isbn);
 					return null;
 				}
 			} else {
-				// System.out.println("Request failed with status code: " +
-				// response.getStatusCode());
 				return null;
 			}
 		} catch (Exception e) {
-			// System.out.println("Error fetching book details for ISBN " + isbn + ": " +
-			// e.getMessage());
 			e.printStackTrace();
 			return null;
 		}
@@ -418,22 +421,24 @@ public class BookServiceProcess implements BookService {
 		// 5. 로그 기록
 		logger.info("책이 위시리스트에 추가되었습니다. ISBN: {}, 사용자 ID: {}", isbn, userId);
 	}
-	//신상품
+
+	// 신상품
 	@Override
 	public void getNewBook(Model model) {
 		List<BookDTO> bookEntities = bookmapper.findAll();
 		model.addAttribute("newbooks", bookEntities);
 	}
-	//신상도서정보
+
+	// 신상도서정보
 	@Override
 	public void getNewIsbn(String isbn, Model model) {
 		BookDTO newbook = bookmapper.findIsbn(isbn);
 		if (newbook != null) {
-            model.addAttribute("book", newbook);
-        } else {
-            // 도서를 찾지 못했을 경우의 처리
-            model.addAttribute("errorMessage", "도서를 찾을 수 없습니다.");
-        }
+			model.addAttribute("book", newbook);
+		} else {
+			// 도서를 찾지 못했을 경우의 처리
+			model.addAttribute("errorMessage", "도서를 찾을 수 없습니다.");
+		}
 	}
 
 }

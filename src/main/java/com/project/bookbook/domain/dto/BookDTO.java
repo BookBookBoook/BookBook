@@ -20,4 +20,6 @@ public class BookDTO {
     private String link;            // 상세 정보 URL
     private String discount;        // 판매가
     private String category;        // 카테고리 정보 (선택적)
+    private double averageRating;
+    private int reviewCount;
 }
