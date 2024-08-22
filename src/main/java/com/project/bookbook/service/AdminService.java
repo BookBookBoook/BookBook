@@ -10,4 +10,8 @@ public interface AdminService {
 
 	void deleteReview(Long reviewNum);
 
+	void findOrder(Model model);
+
+	void findinquiryUpdate(long qnaNum);
+
 }

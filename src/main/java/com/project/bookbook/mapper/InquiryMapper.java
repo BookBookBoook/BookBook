@@ -23,8 +23,7 @@ public interface InquiryMapper {
 	@Select("select * from qna_answer where qna_num=#{qnaNum}")
 	InquiryDetailDTO findDetail(@Param("qnaNum") long qnaNum);
 
-	@Insert("insert into qna_answer (title,content,qna_num,date) values(${dto.title},${dto.content},${dto.qnaNum},current_timestamp)")
-	 void save(@Param("dto") InquiryCreateDTO dto);
+	@Insert("insert into qna_answer (title, content, qna_num, date) values(#{dto.title}, #{dto.content}, #{dto.qnaNum}, current_timestamp)")
+	void save(@Param("dto") InquiryCreateDTO dto);
 
-	
 }

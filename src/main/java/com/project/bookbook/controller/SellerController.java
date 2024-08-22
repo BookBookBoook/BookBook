@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,6 +76,12 @@ public class SellerController {
        
         return "redirect:/seller";
     }
+    
+    @DeleteMapping("/seller/inventory/{bookNum}")
+	public String deleteInventory(@PathVariable("bookNum") long bookNum) {
+    	sellerInventoryService.deleteProcess(bookNum);
+		return "redirect:/seller/inventory";
+	}
 
 
     

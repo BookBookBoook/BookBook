@@ -18,7 +18,7 @@ import lombok.Setter;
 public class InquiryCreateDTO {
 	
 	
-	private String qnaNum;
+	private long qnaNum;
 	private String title; //답변 제목
 	private String content; //답변 내용
 }

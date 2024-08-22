@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.bookbook.domain.dto.InquiryCreateDTO;
@@ -56,7 +57,8 @@ public class AdminController {
 
 	// 주문
 	@GetMapping("/admin/order")
-	public String adminOrder() {
+	public String adminOrder(Model model) {
+		adminService.findOrder(model);
 		return "views/admin/order";
 	}
 
@@ -90,6 +92,8 @@ public class AdminController {
 		return "views/admin/inquiry";
 	}
 
+	
+
 	@GetMapping("/admin/inquiry/list/{qnaNum}")
 	public String adminInquiryList(@PathVariable("qnaNum") long qnaNum, Model model) {
 		inquiryService.findAll(model, qnaNum);
@@ -105,8 +109,16 @@ public class AdminController {
 	@PostMapping("/admin/inquiry/write/{qnaNum}")
 	public String adminInquiryCreate(InquiryCreateDTO dto) {
 		inquiryService.saveProcess(dto);
+		long qnaNum = dto.getQnaNum();
+		adminService.findinquiryUpdate(qnaNum);
 		return "redirect:/admin/inquiry";
 	}
+	/*
+	 * @PutMapping("/admin/inquiry/write/{qnaNum}") public String
+	 * inquiryUpdate(@PathVariable("qnaNum") long qnaNum) {
+	 * adminService.findinquiryUpdate(qnaNum); return
+	 * "redirect:/admin/inquiry/list/{qnaNum}"; }
+	 */
 
 	// 리뷰
 	@GetMapping("/admin/review")

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.project.bookbook.domain.dto.AdminIndexDTO;
+import com.project.bookbook.domain.dto.AdminOrderDTO;
 import com.project.bookbook.domain.dto.ReviewDTO;
 import com.project.bookbook.mapper.AdminMapper;
 import com.project.bookbook.service.AdminService;
@@ -37,6 +38,19 @@ public class AdminServiceProcess implements AdminService{
 	@Override
 	public void deleteReview(Long reviewNum) {
 		adminMapper.deleteReview(reviewNum);
+		
+	}
+
+	@Override
+	public void findOrder(Model model) {
+		List<AdminOrderDTO> list = adminMapper.findOrder();
+		model.addAttribute("list",list);
+		
+	}
+
+	@Override
+	public void findinquiryUpdate(long qnaNum) {
+		adminMapper.findInquiryUpdate(qnaNum);
 		
 	}
 
