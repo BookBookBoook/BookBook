@@ -1,11 +1,15 @@
 HELP.md
 .gradle
+settings.gradle
 *.ppk
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+
 application.properties
+user.dic
+
 ### STS ###
 .apt_generated
 .classpath

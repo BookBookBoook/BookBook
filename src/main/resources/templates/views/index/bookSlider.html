@@ -1,79 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	
-		<!-- 도서 추천 슬라이더  -->
-		<div class="book-slider-container">
-			<a href="/bookList"><h1>클릭 연관 추천 Pick</h1></a>
-			<div class="book-slider">
-	            <div class="book-slide">
-	                <span class="book-item">
-	                    <img src="img/book1.jpg" alt="Book 1">
-	                    <a class="book-title" href="#">이 여름에 별을 보다</a>
-	                    <a class="book-author" href="#">츠지무라 미즈키</a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book1.jpg" alt="Book 2">
-	                    <a class="book-title" href="#">이 여름에 별을 보다</a>
-	                    <a class="book-author" href="#">츠지무라 미즈키</a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book1.jpg" alt="Book 3">
-	                    <a class="book-title" href="#">이 여름에 별을 보다</a>
-	                    <a class="book-author" href="#">츠지무라 미즈키</a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book1.jpg" alt="Book 4">
-	                    <a class="book-title" href="#">이 여름에 별을 보다</a>
-	                    <a class="book-author" href="#">츠지무라 미즈키</a>
-	                </span>
-	            </div>
-	            <div class="book-slide">
-	                <span class="book-item">
-	                    <img src="img/book2.jpg" alt="Book 5">
-	                    <a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book2.jpg" alt="Book 6">
-	                  	<a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book2.jpg" alt="Book 7">
-	                    <a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book2.jpg" alt="Book 8">
-	                    <a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	            </div>
-	            <div class="book-slide">
-	                <span class="book-item">
-	                    <img src="img/book3.jpg" alt="Book 5">
-	                    <a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book3.jpg" alt="Book 6">
-	                    <a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book3.jpg" alt="Book 7">
-	                    <a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	                <span class="book-item">
-	                    <img src="img/book3.jpg" alt="Book 8">
-	                    <a class="book-title" href="#">당신이 누군가를 죽였다</a>
-	                    <a class="book-author" href="#">히가시노 게이고 </a>
-	                </span>
-	            </div>
-	        </div>
-	        <button class="book-prev" aria-label="Previous books">&lt;</button>
-	        <button class="book-next" aria-label="Next books">&gt;</button>
-    	</div>
-	
+
+<!-- 도서 추천 슬라이더  -->
+<div class="book-slider-container">
+    <a href="/bookList"><h1>베스트 Pick</h1></a>
+    <div class="book-slider" th:if="${not #lists.isEmpty(bestSellerSlides)}">
+        <div class="book-slide" th:each="slide : ${bestSellerSlides}">
+            <span class="book-item" th:each="book : ${slide.books}">
+                <a th:href="@{|/detail/${book.isbn}|}"><img th:src="${book.image}" th:alt="${book.title}"></a>
+                <a class="book-title" th:href="@{|/detail/${book.isbn}|}" th:text="${book.title}" th:title="${book.title}"></a>
+                <span class="book-author" th:text="${book.author}"></span>
+                <span class="book-price" th:text="|${#numbers.formatInteger(book.discount,3,'COMMA')} 원|"></span>
+            </span>
+        </div>
+    </div>
+    <div th:if="${#lists.isEmpty(bestSellerSlides)}">
+        <p>현재 표시할 도서가 없습니다.</p>
+    </div>
+</div>
+<button class="book-prev" aria-label="Previous books">&lt;</button>
+<button class="book-next" aria-label="Next books">&gt;</button>
+
 </html>
