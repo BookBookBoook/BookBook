@@ -44,7 +44,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
             response.sendRedirect("/");
         }
     }
-
+    // 사용자의 추가 정보 입력 필요 여부를 확인하는 메소드
     private boolean isAdditionalInfoNeeded(UserEntity user) {
         return user.getUserRRN().equals("소셜로그인") ||
                 user.getGender().equals("미입력") ||

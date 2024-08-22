@@ -35,10 +35,6 @@ public class loginController {
 		return "views/login/admin-sign";
 	}
 
-	@GetMapping("/test")
-	public String test() {
-		return "views/login/test";
-	}
 	
 	 @GetMapping("/additional-info")
 	    public String showAdditionalInfoForm(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {

@@ -68,6 +68,7 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 	            errorMessage = "로그인 중 오류가 발생했습니다. 다시 시도해 주세요.";
 	        }
 	        
+	     // 에러 메시지 URL 인코딩
 	        errorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
          
          // 요청 URL에 따라 다른 실패 URL 설정

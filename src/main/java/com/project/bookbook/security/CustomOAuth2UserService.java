@@ -20,15 +20,18 @@ import lombok.RequiredArgsConstructor;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	 private final PasswordEncoder passwordEncoder;
-	    private final UserEntityRepository userRepository;
-
+	 private final UserEntityRepository userRepository;
+	    
+	    // 소셜 로그인 시 사용자의 정보를 로드하는 메서드
 	    @Override
 	    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+	    	// OAuth2 인증 서버에서 사용자 정보를 가져옴
 	        OAuth2User oAuth2User = super.loadUser(userRequest);
 	        String registrationId = userRequest.getClientRegistration().getRegistrationId();
 	        return processSocialLogin(oAuth2User, registrationId);
 	    }
-
+	    
+	    // 소셜 로그인 처리 메서드: 사용자가 이미 존재하는지 확인하고, 없으면 새로 생성
 	    private OAuth2User processSocialLogin(OAuth2User oAuth2User, String registrationId) {
 	        String email = extractEmail(oAuth2User, registrationId);
 	        String name = extractName(oAuth2User, registrationId);
@@ -38,7 +41,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 	        return new CustomUserDetails(user);
 	    }
-
+	    
+	    // 소셜 로그인 플랫폼에 따라 이메일 정보를 추출하는 메서드
 	    private String extractEmail(OAuth2User oAuth2User, String registrationId) {
 	        if ("google".equals(registrationId)) {
 	            return oAuth2User.getAttribute("email");
@@ -51,7 +55,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	        }
 	        throw new OAuth2AuthenticationException("Unsupported registration ID");
 	    }
-
+	    
+	    // 소셜 로그인 플랫폼에 따라 사용자 이름을 추출하는 메서드	    
 	    private String extractName(OAuth2User oAuth2User, String registrationId) {
 	        if ("google".equals(registrationId)) {
 	            return oAuth2User.getAttribute("name");

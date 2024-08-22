@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.bookbook.domain.entity.ImageEntity;
 import com.project.bookbook.domain.repository.ImageEntityRepository;
 import com.project.bookbook.service.ImageService;
-import com.project.bookbook.utils.FileUploadUtil;
+import com.project.bookbook.utils.FileUploadUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class ImageServiceProcess implements ImageService {
 	
 	private final ImageEntityRepository imageRepository;
-    private final FileUploadUtil fileUploadUtil;
-
+    private final FileUploadUtils fileUploadUtil;
+    
 	
 	
     // 이미지 업로드 메서드

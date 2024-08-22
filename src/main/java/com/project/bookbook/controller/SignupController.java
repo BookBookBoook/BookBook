@@ -55,7 +55,7 @@ public class SignupController {
 
 		try {
 			userService.signupProcess(dto, Role.USER);
-			return "redirect:/"; // 회원가입 성공 시 리다이렉트할 경로
+			return "redirect:/login"; // 회원가입 성공 시 리다이렉트할 경로
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "회원가입 중 오류가 발생했습니다: " + e.getMessage());
 			return "redirect:/signup";
