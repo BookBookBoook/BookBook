@@ -168,9 +168,9 @@ p{
 	justify-content: flex-start;
 }
 #chat-content > div > div.icon > img{
-    width: 60px;
-    height: 60px;
-	padding: 5px;
+    width: 57px;
+    height: 57px;
+	padding: 5px 10px;
 }
 
 /* 봇 메시지 스타일 */
@@ -190,8 +190,8 @@ p{
 	bottom: 10%;
 	right: 60px;
 	cursor: pointer;
-	width: 100px; /* 이미지 크기 */
-	height: 100px; /* 이미지 크기 */
+	width: 70px; /* 이미지 크기 */
+	height: 70px; /* 이미지 크기 */
 }
 
 #close-button {
