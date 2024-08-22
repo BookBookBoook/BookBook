@@ -43,7 +43,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>상태</th>
 		                    </tr>
 		                    <tr th:each="dto : ${list}">
-		                        <td th:if="${dto.status==0}" th:text="${dto.title}">제목</td>
+		                        <td th:if="${dto.status==0}" th:text="${dto.title}" th:href="|/mypage/questions/${dto.qnaNum}|">제목</td>
 		                        <td th:if="${dto.status==0}" th:text="${dto.date.toLocalDate()}">날짜</td>
 		                        <td th:if="${dto.status==0}" class="status">답변대기</td>
 		                    </tr>
@@ -57,11 +57,18 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>상태</th>
 		                    </tr>
 		                    <tr th:each="dto : ${list}">
-		                        <td th:if="${dto.status==1}" th:text="${dto.title}">제목</td>
+		                        <td th:if="${dto.status==1}" th:text="${dto.title}" th:href="|/mypage/questions/${dto.qnaNum}|">제목</td>
 		                        <td th:if="${dto.status==1}" th:text="${dto.date.toLocalDate()}">날짜</td>
 		                        <td th:if="${dto.status==1}" class="status-finish">답변완료</td>
 		                    </tr>
 		                </table>
+		            </div>
+		            
+		            <div th:if="${#lists.isEmpty(list)}" class="no-orders-div">
+		            	<p class="no-orders">
+		            		<i class="fa-solid fa-circle-info"></i>
+		            		<span>문의 내역이 없습니다.</span>
+		            	</p>
 		            </div>
 		        </div>
 		    </div>

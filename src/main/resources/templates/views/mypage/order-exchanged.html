@@ -75,49 +75,15 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                        </tr>
 	                    </thead>
 	                    <tbody>
-	                        <tr th:each="userOrder:${userOrders}" >
-	                        	<td th:text="${userOrder.orderDate.toLocalDate()}"></td>
-	                            <td>
-	                                <div style="display: flex; align-items: center;">
-	                                    <img th:src="${userOrder.BookImg}" class="book-cover-img">
-	                                    <div class="order-info">
-	                                        <div th:text="|${userOrder.BookName} 외|">해리포터와 마법사의 돌 1</div>
-	                                        <a class="detail-view" th:href="|/mypage/orders/detail/${userOrder.merchantUid}|">상세보기</a>
-	                                    </div>
-	                                </div>
-	                            </td>
-	                            <td th:text="|${#numbers.formatDecimal(userOrder.paidAmount, 0, 'COMMA', 0, 'NONE')}원|">17,000원</td>
-	                            <td>
-	                                <div class="order-actions" th:if="${userOrder.orderStatus == 1}">
-	                                	<div>주문완료</div>
-	                                    <button class="check" th:onclick="'window.location.href=\'' + @{|/mypage/orders/detail/${userOrder.merchantUid}|} + '\''">주문 상세</button>
-	                                    <button class="cancel">주문 취소</button>
-	                                </div>
-	                                <div class="order-actions" th:if="${userOrder.orderStatus == 2}">
-	                                	<div>배송중</div>
-	                                    <button class="check" onclick="openAndSubmitForm()">배송 조회</button>
-	                                    <button class="cancel">주문 취소</button>
-	                                </div>
-	                                <div class="order-actions" th:if="${userOrder.orderStatus == 3}">
-	                                	<div>배송 완료</div>
-	                                    <button class="review">리뷰 작성</button>
-	                                    <button class="delete">내역 삭제</button>
-	                                </div>
-	                                <div class="order-actions" th:if="${userOrder.orderStatus == 4}">
-	                                	<div>주문 취소</div>
-	                                    <button class="review">다시 담기</button>
-	                                    <button class="delete">내역 삭제</button>
-	                                </div>
-	                            </td>
-	                        </tr>
+	                        
 	                    </tbody>
 	                </table>
 	            </div>
 	            
-	            <div th:if="${#lists.isEmpty(userOrders)}">
+	            <div th:if="${#lists.isEmpty(canceled)}">
 	            	<p class="no-orders">
 	            		<i class="fa-solid fa-circle-info"></i>
-	            		<span>해당 기간에 주문한 상품이 없습니다.</span>
+	            		<span>해당 기간에 교환/환불한 상품이 없습니다.</span>
 	            	</p>
 	            </div>
 	            

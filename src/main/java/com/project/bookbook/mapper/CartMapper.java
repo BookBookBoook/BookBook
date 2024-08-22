@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.project.bookbook.domain.dto.CartBookCntDTO;
 import com.project.bookbook.domain.dto.CartDetailDTO;
+import com.project.bookbook.domain.dto.UpdateCartDTO;
 
 @Mapper
 public interface CartMapper {
@@ -19,5 +20,7 @@ public interface CartMapper {
 	long findCartNum(long userId);
 
 	void deleteAllCart(long cartNum);
+
+	void updateCartItemQuantity(UpdateCartDTO dto);
 
 }

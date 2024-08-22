@@ -28,9 +28,9 @@
 		values(#{couponNum}, #{userId})
 	</insert>
 	
-	<select id="checkDuplicateCoupon" parameterType="long" resultType="com.project.bookbook.domain.dto.UserCouponDTO">
+	<select id="checkDuplicateCoupon" parameterType="map" resultType="com.project.bookbook.domain.dto.UserCouponDTO">
 		select * from user_coupon
-		where coupon_num = #{couponNum}
+		where coupon_num = #{couponNum} and user_id = #{userId}
 	</select>
 	
 	<select id="findByCouponNum" parameterType="long" resultType="int">
@@ -43,6 +43,11 @@
 		set status = 1
 		where coupon_num = #{couponNum} and user_id = #{userId}
 	</update>
+	
+	<delete id="deleteByCouponNumAndUserId" parameterType="map">
+		delete from user_coupon
+		where coupon_num = #{couponNum} and user_id = #{userId}
+	</delete>
 	
 
 </mapper>

@@ -121,6 +121,16 @@ public class OrderServiceProcess implements OrderService{
 			userOrders.get(i).setBookName(ordersMapper.findByOrderBookOne(merchantUid).getBookName());
 		}
 		model.addAttribute("userOrders", userOrders);
+		
+		List<UserOrderDTO> orderCompleted = userOrders.stream().filter(order -> order.getOrderStatus() == 1).toList();
+		List<UserOrderDTO> inProgress = userOrders.stream().filter(order -> order.getOrderStatus() == 2).toList();
+		List<UserOrderDTO> shipmentCompleted = userOrders.stream().filter(order -> order.getOrderStatus() == 3).toList();
+		List<UserOrderDTO> canceled = userOrders.stream().filter(order -> order.getOrderStatus() == 4).toList();
+
+        model.addAttribute("orderCompleted", orderCompleted);
+        model.addAttribute("inProgress", inProgress);
+        model.addAttribute("shipmentCompleted", shipmentCompleted);
+        model.addAttribute("canceled", canceled);
 	}
 	
 }

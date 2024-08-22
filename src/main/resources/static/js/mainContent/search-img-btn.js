@@ -9,18 +9,18 @@ const confirmButton = document.querySelector('#confirmButton');
 //const closeButton = document.querySelector('#closeButton');
 const queryInput = document.querySelector('#queryInput');
 const searchForm = document.querySelector('#searchForm');
-var modalReg = document.getElementById("camera-modal");
-var close = document.getElementsByClassName("close")[0];
+var cameraModal = document.getElementById("camera-modal");
+var closeBtn = document.getElementsByClassName("close")[0];
 
 // 카메라 버튼 클릭 시 모달 열기
 cameraButton.addEventListener('click', () => {
-	modalReg.style.display = "block";
+	cameraModal.style.display = "block";
     fileUploadContainer.style.display = 'block';
 });
 
 // 닫기 버튼 클릭 시 모달 닫기
-close.addEventListener('click', () => {
-	modalReg.style.display = "none";
+closeBtn.addEventListener('click', () => {
+	cameraModal.style.display = "none";
     fileUploadContainer.style.display = 'none';
     imagePreview.style.display = 'none';
     confirmButton.style.display = 'none';
@@ -58,7 +58,7 @@ confirmButton.addEventListener('click', async () => {
     queryInput.value = result.text || '실패';
 
     // 텍스트 추출 후 파일 업로드 창 닫기
-    modalReg.style.display = "none";
+    cameraModal.style.display = "none";
     fileUploadContainer.style.display = 'none';
     imagePreview.style.display = 'none';
     confirmButton.style.display = 'none';
@@ -66,6 +66,6 @@ confirmButton.addEventListener('click', async () => {
 	
 	
     // 검색 폼 제출
-    //searchForm.submit();
+    searchForm.submit();
 });
 

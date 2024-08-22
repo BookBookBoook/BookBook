@@ -19,12 +19,14 @@ public interface CouponMapper {
 
 	void save(Map<String, Long> params);
 
-	List<UserCouponDTO> checkDuplicateCoupon(long couponNum);
+	List<UserCouponDTO> checkDuplicateCoupon(Map<String, Long> params);
 
 	int findByCouponNum(long couponNum);
 
 	void changeStatus(Map<String, Long> params);
 
 	List<CouponListDTO> findAllStatus1(long userId);
+
+	void deleteByCouponNumAndUserId(Map<String, Long> params);
 
 }

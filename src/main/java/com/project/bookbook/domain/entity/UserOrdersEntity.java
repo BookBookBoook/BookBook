@@ -58,7 +58,7 @@ public class UserOrdersEntity{
 	@Column(nullable=true)
 	@ColumnDefault("0")
 	private String orderStatus; //주문상태
-	//0:주문대기, 1:주문중, 2:배송중, 3:배송완료, 4:환불, 5:교환, 6:취소
+	//0:주문대기, 1:주문완료, 2:배송중, 3:배송완료, 4:환불, 5:교환, 6:취소
 	
 	private String field; //환불사유
 	

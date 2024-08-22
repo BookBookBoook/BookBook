@@ -12,6 +12,8 @@ import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -34,5 +36,20 @@ public class OrderController {
 		orderService.findByMerchantUidAndCoupon(merchantUid, model);
 		return "views/mypage/order-detail";
 	}
+	
+	//교환,환불 목록
+	@GetMapping("/mypage/orders/exchange")
+	public String exchange(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		orderService.findUserOrderProcess(user, model);
+		return "views/mypage/order-exchanged";
+	}
+	
+	//취소 목록
+	@GetMapping("/mypage/orders/cancel")
+	public String cancel(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		orderService.findUserOrderProcess(user, model);
+		return"views/mypage/order-canceled";
+	}
+	
 	
 }

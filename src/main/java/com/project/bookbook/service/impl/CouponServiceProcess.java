@@ -66,8 +66,12 @@ public class CouponServiceProcess implements CouponService{
 	}
 
 	@Override
-	public boolean checkDuplicateCoupon(long couponNum) {
-		return couponMapper.checkDuplicateCoupon(couponNum).isEmpty();
+	public boolean checkDuplicateCoupon(long couponNum, CustomUserDetails user) {
+		long userId = user.getUserId();
+		Map<String, Long> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("couponNum", couponNum);
+		return couponMapper.checkDuplicateCoupon(params).isEmpty();
 	}
 
 	@Override
@@ -86,6 +90,16 @@ public class CouponServiceProcess implements CouponService{
 		params.put("couponNum", couponNum);
 		
 		couponMapper.changeStatus(params);
+		
+	}
+
+	@Override
+	public void deleteUserCoupon(long couponNum, CustomUserDetails user) {
+		long userId = user.getUserId();
+		Map<String, Long> params = new HashMap<>();
+		params.put("userId", userId);
+		params.put("couponNum", couponNum);
+		couponMapper.deleteByCouponNumAndUserId(params);
 		
 	}
 

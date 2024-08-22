@@ -33,19 +33,19 @@ public class SSHTunnellingConfig {
     private final Environment env;
 
     @Bean
-    public HikariConfig hikariConfig() {
+    HikariConfig hikariConfig() {
         HikariConfig config = new HikariConfig();
         config.setPoolName(env.getProperty("spring.datasource.hikari.pool-name"));
-        config.setMinimumIdle(env.getProperty("spring.datasource.hikari.minimum-idle", Integer.class, 10));
-        config.setMaximumPoolSize(env.getProperty("spring.datasource.hikari.maximum-pool-size", Integer.class, 10));
-        config.setIdleTimeout(env.getProperty("spring.datasource.hikari.idle-timeout", Long.class, 600000L));
+        config.setMinimumIdle(env.getProperty("spring.datasource.hikari.minimum-idle", Integer.class, 20));
+        config.setMaximumPoolSize(env.getProperty("spring.datasource.hikari.maximum-pool-size", Integer.class, 150));
+        config.setIdleTimeout(env.getProperty("spring.datasource.hikari.idle-timeout", Long.class, 1800000L));
         config.setMaxLifetime(env.getProperty("spring.datasource.hikari.max-lifetime", Long.class, 1800000L));
-        config.setConnectionTimeout(env.getProperty("spring.datasource.hikari.connection-timeout", Long.class, 30000L));
+        config.setConnectionTimeout(env.getProperty("spring.datasource.hikari.connection-timeout", Long.class, 90000L));
         return config;
     }
 
     @Bean
-    public org.apache.ibatis.session.Configuration mybatisConfiguration() {
+    org.apache.ibatis.session.Configuration mybatisConfiguration() {
         org.apache.ibatis.session.Configuration config = new org.apache.ibatis.session.Configuration();
         config.setMapUnderscoreToCamelCase(env.getProperty("mybatis.configuration.map-underscore-to-camel-case", Boolean.class, false));
         // 필요한 다른 MyBatis 설정을 여기에 추가
@@ -54,7 +54,7 @@ public class SSHTunnellingConfig {
 
     @Primary
     @Bean
-    public DataSource dataSource() throws JSchException {
+    DataSource dataSource() throws JSchException {
         JSch jsch = new JSch();
         jsch.addIdentity(sshTunnellingProperties.getPrivateKey());
 
@@ -83,7 +83,7 @@ public class SSHTunnellingConfig {
     }
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+    SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setConfiguration(mybatisConfiguration());
@@ -96,7 +96,7 @@ public class SSHTunnellingConfig {
     }
 
     @Bean
-    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+    SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
