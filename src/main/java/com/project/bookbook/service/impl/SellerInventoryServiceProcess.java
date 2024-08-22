@@ -30,5 +30,11 @@ public class SellerInventoryServiceProcess implements SellerInventoryService{
 		
 	}
 
+	@Override
+	public void deleteProcess(long bookNum) {
+		sellerMapper.deleteBook(bookNum);
+		
+	}
+
 	
 }

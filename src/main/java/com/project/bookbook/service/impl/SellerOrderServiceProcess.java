@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.project.bookbook.domain.dto.OrderUpdateDTO;
-import com.project.bookbook.domain.dto.sellerOrderDTO;
+import com.project.bookbook.domain.dto.SellerOrderDTO;
 import com.project.bookbook.mapper.MypageUserMapper;
 import com.project.bookbook.mapper.SellerMapper;
 import com.project.bookbook.security.CustomUserDetails;
@@ -26,8 +26,7 @@ public class SellerOrderServiceProcess implements SellerOrderService{
 	public void findBook(Model model, CustomUserDetails seller) {
 		long userId = seller.getUserId();
 		String sellerName = userMapper.getSellerName(userId);
-		System.out.println(sellerName);
-		List<sellerOrderDTO> list = sellerMapper.findOrder(sellerName);
+		List<SellerOrderDTO> list = sellerMapper.findOrder(sellerName);
 		model.addAttribute("list",list);
 		
 	}

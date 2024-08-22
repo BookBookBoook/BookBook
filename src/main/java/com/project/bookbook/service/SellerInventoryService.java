@@ -8,4 +8,6 @@ public interface SellerInventoryService {
 
 	void findBook(Model model, CustomUserDetails seller);
 
+	void deleteProcess(long bookNum);
+
 }

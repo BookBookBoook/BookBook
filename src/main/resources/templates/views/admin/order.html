@@ -67,132 +67,50 @@
 					<thead>
 						<tr>
 							<th>주문번호</th>
-							<th>결제수단</th>
-							<th>운송장번호</th>
-							<th>배송정보</th>
-							<th>주문자명</th>
-							<th>주문자전화</th>
-							<th>받는분</th>
-							<th>주문상품</th>
+							<th>사용자ID</th>
+							<th>유저이름</th>
+							<th>도서 번호</th>
+							<th>주문상태</th>
+							<th>주문상세번호 </th>
 							<th>주문수량</th>
-							<th>주문금액</th>
-							<th>입금금액</th>
-							<th>주문취소</th>
-							<th>쿠폰</th>
-							<th>미수금</th>
-							<th>보기</th>
+							<th>주문날짜</th>
+							<th>총 결제금액</th>
+							<th>쿠폰번호</th>
+							<th>쿠폰이름</th>
+							<th>상태변경</th>
+
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>20151211-12013764</td>
-							<td>무통장</td>
-							<td>-</td>
-							<td>-</td>
-							<td>이유진</td>
-							<td>010-6225-6102</td>
-							<td>이유진</td>
-							<td>book</td>
-							<td>1건</td>
-							<td>25,000</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>25,000</td>
-							<td><a href="#">보기</a></td>
+						<tr tr th:each="dto : ${list}">
+							<td th:text="${dto.merchantUid}"></td>
+							<td th:text="${dto.userId}"></td>
+							<td th:text="${dto.userName}"></td>
+							<td th:text="${dto.bookNum}"></td>
+							<td class="order-status" th:text="${dto.orderStatus == 1 ? '주문완료' : 
+											              (dto.orderStatus == 2 ? '배송중' : 
+											              (dto.orderStatus == 3 ? '배송완료' : '기타상태'))}">
+							</td>
+							<td th:text="${dto.orderDetailNum}"></td>
+							<td th:text="${dto.orderCnt}"></td>
+							<td th:text="${dto.orderDate}"></td>
+							<td th:text="${dto.paidAmount}"></td>
+							<td th:text="${dto.couponNum}"></td>
+							<td th:text="${dto.couponName}"></td>
+							<td>
+								<form class="info-form" th:action="|/seller/order/${dto.merchantUid}|" method="post">
+									<input type="hidden" name="_method" value="put">
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+									<button class="status-change-btn" data-merchant-uid="${dto.merchantUid}"
+										data-current-status="${dto.orderStatus}">상품발송</button>
+								</form>
+							</td>
 						</tr>
-						<tr>
-							<td>20151211-12013764</td>
-							<td>무통장</td>
-							<td>-</td>
-							<td>-</td>
-							<td>이유진</td>
-							<td>010-6225-6102</td>
-							<td>이유진</td>
-							<td>book</td>
-							<td>1건</td>
-							<td>25,000</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>25,000</td>
-							<td><a href="#">보기</a></td>
-						</tr>
-						<tr>
-							<td>20151211-12013764</td>
-							<td>무통장</td>
-							<td>-</td>
-							<td>-</td>
-							<td>이유진</td>
-							<td>010-6225-6102</td>
-							<td>이유진</td>
-							<td>book</td>
-							<td>1건</td>
-							<td>25,000</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>25,000</td>
-							<td><a href="#">보기</a></td>
-						</tr>
-						<tr>
-							<td>20151211-12013764</td>
-							<td>무통장</td>
-							<td>-</td>
-							<td>-</td>
-							<td>이유진</td>
-							<td>010-6225-6102</td>
-							<td>이유진</td>
-							<td>book</td>
-							<td>1건</td>
-							<td>25,000</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>25,000</td>
-							<td><a href="#">보기</a></td>
-						</tr>
-						<tr>
-							<td>20151211-12013764</td>
-							<td>무통장</td>
-							<td>-</td>
-							<td>-</td>
-							<td>이유진</td>
-							<td>010-6225-6102</td>
-							<td>이유진</td>
-							<td>book</td>
-							<td>1건</td>
-							<td>25,000</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>25,000</td>
-							<td><a href="#">보기</a></td>
-						</tr>
-						<tr>
-							<td>20151211-12013764</td>
-							<td>무통장</td>
-							<td>-</td>
-							<td>-</td>
-							<td>이유진</td>
-							<td>010-6225-6102</td>
-							<td>이유진</td>
-							<td>book</td>
-							<td>1건</td>
-							<td>25,000</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>25,000</td>
-							<td><a href="#">보기</a></td>
-						</tr>
-						<!-- 다른 주문 항목들을 여기에 추가할 수 있습니다 -->
 					</tbody>
 				</table>
 				<div id="pagination" class="pagination-container"></div>
 			</div>
 		</div>
-	</div>
 </body>
 
 </html>

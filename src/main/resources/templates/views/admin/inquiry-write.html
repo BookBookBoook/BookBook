@@ -6,6 +6,8 @@
 	<link rel="stylesheet" href="/css/admin/list.css">
 	<link rel="stylesheet" href="/css/admin/write.css">
 	<link rel="stylesheet" href="/css/admin/sidebar.css">
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 	<script src="/js/admin/sidebar.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -41,7 +43,6 @@
 							</tr>
 						</tbody>
 					</table>
-
 					<div class="btn-write">
 						<button>답변등록</button>
 					</div>

@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class sellerOrderDTO {
+public class AdminOrderDTO {
 
 	private long merchantUid; // 주문번호 fk
 	private long userId; // 사용자ID fk

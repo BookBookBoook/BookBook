@@ -32,7 +32,7 @@
 					<h2>출판사 정보</h2>
 					<form id="infoForm" class="info-form" action="/seller/mypage" method="post" >
 						<input type="hidden" name="_method" value="put">
-						<input type="hidden" name="sellerId" th:value="${#authentication.principal.sellerId}">
+						<input type="hidden" name="sellerId" th:value="${seller.sellerId}">
 						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
 						<div class="info-item">

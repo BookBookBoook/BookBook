@@ -2,6 +2,7 @@ package com.project.bookbook.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -12,7 +13,7 @@ import com.project.bookbook.domain.dto.OrderUpdateDTO;
 import com.project.bookbook.domain.dto.SellerIndexDTO;
 import com.project.bookbook.domain.dto.SellerInventoryDTO;
 import com.project.bookbook.domain.dto.SellerUpdateDTO;
-import com.project.bookbook.domain.dto.sellerOrderDTO;
+import com.project.bookbook.domain.dto.SellerOrderDTO;
 
 @Mapper
 public interface SellerMapper {
@@ -47,13 +48,16 @@ public interface SellerMapper {
             "WHERE " +
             "    b.publisher = #{sellerName} " +
             "    AND uo.order_status <> 0")
-	List<sellerOrderDTO> findOrder(@Param("sellerName") String sellerName);
+	List<SellerOrderDTO> findOrder(@Param("sellerName") String sellerName);
 
 	@Update("update user_orders set merchant_uid = #{merchantUid}, order_status = 2 where merchant_uid = #{merchantUid}")
 	void updateOrder(long merchantUid);
 
 	@Select("select * from book order by book_num desc")
 	List<SellerIndexDTO> find();
+
+	@Delete("delete from book where book_num = #{bookNum};")
+	void deleteBook(@Param("bookNum") long bookNum);
 
 
 }
