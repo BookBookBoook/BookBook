@@ -13,6 +13,7 @@
 <script src="/js/mainContent/detail.js"></script>
 <script src="/js/admin/starRating.js"></script>
 <script src="/js/mainContent/cartItemButton.js"></script>
+<script src="/js/mainContent/averageRating.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="_csrf" th:content="${_csrf.token}" />
 <meta name="_csrf_header" th:content="${_csrf.headerName}" />
@@ -35,10 +36,14 @@
 					th:text="${book.author + ' 저'}">저자</p>
 				<p class="book-publisher" th:if="${book}"
 					th:text="${book.publisher}">출판사</p>
-				<p class="book-date" th:if="${book}" th:text="${book.pubdate}">출판일</p>
-				<div class="book-rating">
-					<span class="stars">★★★☆☆</span> <span class="review-count">리뷰
-						2개</span>
+				<div class="book-rating" th:data-isbn="${book.isbn}">
+					<div>
+						<span class="stars" th:data-rating="${book.averageRating}"> </span>
+						<span class="rating-score"></span>
+					</div>
+
+					<p class="review-count" th:text="|리뷰 ${book.reviewCount}개|">리뷰
+						2개</p>
 				</div>
 				<p class="book-price">
 					<span class="price" th:if="${book}"

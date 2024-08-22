@@ -10,5 +10,9 @@ public interface ReviewService {
 
 	ReviewDTO createReview(long userId, String isbn, String reviewContent, int rate);
 
+	double calculateAverageRating(String isbn);
+
+	int getReviewCount(String isbn);
+
 
 }

@@ -10,4 +10,8 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long>{
 
 	List<ReviewEntity> findByBookIsbnOrderByReviewDateDesc(String isbn);
 
+	List<ReviewEntity> findByBookIsbn(String isbn);
+
+	int countByBookIsbn(String isbn);
+
 }

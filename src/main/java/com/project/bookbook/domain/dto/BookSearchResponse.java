@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +36,12 @@ public class BookSearchResponse {
         private String pubdate;
         private String isbn;
         private String description;
+        
+        @XmlTransient // XML 파싱에서 제외
+        private double averageRating;
+
+        @XmlTransient // XML 파싱에서 제외
+        private int reviewCount;
     }
 }
 

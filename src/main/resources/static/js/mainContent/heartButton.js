@@ -18,7 +18,7 @@ function addToWishlist(isbn, button) {
     })
     .then(data => {
         console.log('클라이언트: 성공:', data);
-        alert("위시리스트에 추가되었습니다.");
+        alert("즐겨찾기 추가되었습니다.");
         // UI 업데이트
         const icon = button.querySelector('i');
         icon.classList.remove('far');
