@@ -23,6 +23,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     
+    // 관리자 로그인을 위한 보안
     @Bean
     @Order(1)
     public SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
@@ -42,14 +43,15 @@ public class SecurityConfig {
             );
         return http.build();
     }
-
+    
+    // 사용자 로그인을 위한 보안
     @Bean
     @Order(2)
     public SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-
-                .requestMatchers("/", "/signup/**", "/login/**", "/logout/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload", "/upload-image", "/search").permitAll()
+            	// 공개 접근 허용 URL 설정           		
+                .requestMatchers("/", "/signup/**", "/login/**", "/logout/**", "/bookList", "/detail/**","/api/**","/event", "/additional-info", "/bookBot/**","/api/upload", "/upload-image", "/search","/approve").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/img/**", "/favicon.ico").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/seller/**").hasRole("SELLER")
@@ -80,6 +82,7 @@ public class SecurityConfig {
 	    			    )
             ))
             .userDetailsService(customUserDetailsService)
+            // OAuth2 로그인 설정
             .oauth2Login(oauth2 -> oauth2
                     .loginPage("/login")
                     .userInfoEndpoint(userInfo -> userInfo

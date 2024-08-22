@@ -22,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 
     private final UserEntityRepository userRepository;
     private final SellerEntityRepository sellerRepository;
-
+    // 이메일(일반 사용자) 또는 사업자 번호(판매자)로 사용자 조회
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByEmail(username)
