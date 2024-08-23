@@ -88,9 +88,10 @@ public class MypageController {
 	}
 	
 	@DeleteMapping("/mypage/questions/{qnaNum}")
+	@ResponseBody
 	public String deleteQna(@PathVariable("qnaNum") long qnaNum) {
 		qnaService.deleteProcess(qnaNum);
-		return "redirect:/mypage/questions";
+		return "";
 	}
 	
 	

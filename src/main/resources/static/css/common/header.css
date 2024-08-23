@@ -348,19 +348,33 @@ header, main {
 .modal-register {
 	width: 400px;
 	background-color: white;
-	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	padding: 25px;
 	position: relative;
-	margin: 10% auto;
+	margin: 5% auto;
 }
-.grey-button {
+.img-search-text{
+	font-size: 20px;
+    font-weight: bold;
+    margin-top: 3px;
+    display: inline-block;
+}
+.image-search-button {
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid var(--grey);
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    display: block;
+    width: 360px;
+    border-radius: 5px;
+    margin-top: 24px;
+}
+.image-search-button > span{
+	margin-left: 10px;
+}
+
+.camera-icon{
+	margin-top: 4px;
+    font-size: 18px;
 }
 
 .close {
@@ -391,12 +405,12 @@ header, main {
 }
 
 #imageFile {
-    display: block;
+    display: none;
     margin-bottom: 10px;
 }
 #imagePreview {
     display: none;
-    margin-top: 10px;
+    margin-top: 23px;
     width: 300px;
 }
 #confirmButton {
