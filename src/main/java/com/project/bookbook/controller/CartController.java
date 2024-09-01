@@ -25,6 +25,7 @@ import com.project.bookbook.service.CartService;
 import com.project.bookbook.service.CouponService;
 import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.OrderService;
+import com.project.bookbook.service.RecommendService;
 
 import groovy.util.logging.Slf4j;
 
@@ -37,6 +38,7 @@ public class CartController {
 	private final CartService cartService;
 	private final OrderService orderService;
 	private final MypageUserService userService;
+	private final RecommendService recommendService;
 	
 	//장바구니
 	@GetMapping("/cart")
@@ -129,6 +131,7 @@ public class CartController {
 	@GetMapping("/payment/completion/{merchantUid}")
 	public String paymentCompletion(@PathVariable("merchantUid") long merchantUid, Model model) {
 		orderService.findByMerchantUid(merchantUid, model);
+		recommendService.recommendBook(merchantUid, model);
 		return "views/cart/completion";
 	}
 

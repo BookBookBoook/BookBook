@@ -22,6 +22,7 @@ import com.project.bookbook.service.CouponService;
 import com.project.bookbook.service.FavoriteService;
 import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.QNAService;
+import com.project.bookbook.service.RecommendService;
 
 
 @Controller
@@ -33,6 +34,7 @@ public class MypageController {
 	private final CouponService couponService;
 	private final PasswordEncoder passwordEncoder;
 	private final FavoriteService favoriteService;
+	private final RecommendService recommendService;
 	
 	//회원정보
 	@GetMapping("/mypage/account")
@@ -146,5 +148,13 @@ public class MypageController {
 		favoriteService.deleteProcess(bookNum, user);
 		return "redirect:/mypage/favorites";
 	}
+	
+	//도서 추천
+	@GetMapping("/mypage/recommends")
+	public String recommend(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		recommendService.userRecommend(user,model);
+		return "views/mypage/recommend";
+	}
+	
 
 }
