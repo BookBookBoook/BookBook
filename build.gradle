@@ -54,6 +54,7 @@ dependencies {
 
 	implementation 'com.google.cloud:google-cloud-vision:3.45.0'
 	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-SNAPSHOT'
+	implementation 'com.google.analytics:google-analytics-admin:0.57.0'
 
 	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
     implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.1'

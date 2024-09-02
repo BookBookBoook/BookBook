@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+	<link rel="stylesheet" href="/css/mypage/sidebar.css">
+	<link rel="stylesheet" href="/css/mypage/recommend.css">
+</head>
+<main>
+	<div class="flex">
+        <th:block  th:insert="~{views/mypage/sidebar}"/>
+        <div class="main-content">
+            <div class="container-main">
+		        <div class="head">
+		            <h1>도서 추천</h1>
+		        </div>
+		        <div>
+		        	<section class="recommendations-container">
+				        <h2 class="recommend-text">요즘 <span class="highlight">20대, 여성</span>이 많이 보는 책을 확인해 보세요.</h2>
+				        <div class="book-list" >
+				            <a class="book-item">
+				                <img th:src="/" alt="Book Cover">
+				                <p>EBS 다큐프라임 자본주의</p>
+				                <p class="author">편집부 지음</p>
+				            </a>
+				        </div>
+				        <button class="refresh-btn">✔ 새로운 추천 보기</button>
+				    </section>
+				    
+				    <section class="recommendations-container">
+				        <h2 class="recommend-text">연령대와 성별을 선택하여 책 추천을 받아보세요.</h2>
+				        <form id="selectionForm" class="selection-form">
+				            <select id="ageGroup" name="ageGroup">
+				                <option value="">연령대 선택</option>
+				                <option value="10s">10대</option>
+				                <option value="20s">20대</option>
+				                <option value="30s">30대</option>
+				                <option value="40s">40대</option>
+				                <option value="50s">50대 이상</option>
+				            </select>
+				            <select id="gender" name="gender">
+				                <option value="">성별 선택</option>
+				                <option value="female">여성</option>
+				                <option value="male">남성</option>
+				            </select>
+				            <button type="submit" class="submit-button">추천 받기</button>
+				        </form>
+				        <div class="book-grid">
+				            <!-- 책 목록은 여기에 동적으로 추가됩니다 -->
+				        </div>
+				    </section>
+    
+		        </div>
+		    </div>
+        </div>
+    </div>
+    <script src="/js/mypage/recommend.js"></script>
+</main>
+</html>
