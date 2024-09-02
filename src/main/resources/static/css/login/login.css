@@ -231,7 +231,8 @@ input {
 .find-signup-wrap {
 	height: 100px;
 	grid-template-columns: 1fr 1fr 1fr;
-	margin-top: 200px;
+	position: relative;
+	top: -50px; /* 여기서 값을 조정하여 위로 이동 */
 }
 
 find-signup-wrap-admin {
@@ -309,43 +310,48 @@ find-signup-wrap-admin {
 
 /* reCAPTCHA 컨테이너 스타일 */
 .recaptcha-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
+	display: flex;
+	justify-content: center;
+	margin-top: 140px;
+}
+
+.recaptcha-container-admin {
+	display: flex;
+	justify-content: center;
 }
 
 /* g-recaptcha div 스타일 */
 .g-recaptcha {
-    transform: scale(0.9);
-    transform-origin: center;
-    -webkit-transform: scale(0.9);
-    -webkit-transform-origin: center;
+	transform: scale(0.9);
+	transform-origin: center;
+	-webkit-transform: scale(0.9);
+	-webkit-transform-origin: center;
 }
 
 /* 로그인 폼 전체 너비 조정 */
 .login-wrap form {
-    width: 100%;
-    max-width: 460px;
-    margin: 0 auto;
+	width: 100%;
+	max-width: 460px;
+	margin: 0 auto;
 }
 
 /* 로그인 버튼 위치 조정 */
 .login-btn-wrap {
-    margin-top: 20px;
+	margin-bottom: 100px;
 }
 
 /* 에러 메시지 스타일 조정 */
 .error-message {
-    width: 100%;
-    max-width: 440px;
-    margin: 0 auto 15px;
-    box-sizing: border-box;
+	width: 100%;
+	max-width: 440px;
+	margin: 0 auto 15px;
+	box-sizing: border-box;
 }
 
 /* 미디어 쿼리 추가 */
-@media (max-width: 480px) {
-    .g-recaptcha {
-        transform: scale(0.8);
-        -webkit-transform: scale(0.8);
-    }
+@media ( max-width : 480px) {
+	.g-recaptcha {
+		transform: scale(0.8);
+		-webkit-transform: scale(0.8);
+	}
 }
