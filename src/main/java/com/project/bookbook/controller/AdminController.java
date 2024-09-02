@@ -1,6 +1,13 @@
 package com.project.bookbook.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.project.bookbook.domain.dto.InquiryCreateDTO;
 import com.project.bookbook.service.AdminService;
 import com.project.bookbook.service.CustomerService;
+import com.project.bookbook.service.ExcelService;
 import com.project.bookbook.service.InquiryService;
 import com.project.bookbook.service.InventoryService;
 
@@ -28,6 +36,7 @@ public class AdminController {
 	private final InventoryService inventoryService;
 	private final CustomerService customerService;
 	private final AdminService adminService;
+	private final ExcelService excelService;
 
 	@GetMapping("/admin")
 	public String admin(Model model) {
@@ -54,6 +63,21 @@ public class AdminController {
 		inventoryService.findBook(model);
 		return "views/admin/inventory-approval";
 	}
+
+	@GetMapping("/download-excel")
+	public ResponseEntity<InputStreamResource> downloadExcel() {
+		ByteArrayInputStream in = excelService.generateExcel();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=상품목록.xlsx");
+
+		return ResponseEntity.
+				ok().
+				headers(headers).
+				contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.body(new InputStreamResource(in));
+	}
+	
+	
 
 	// 주문
 	@GetMapping("/admin/order")
@@ -91,8 +115,6 @@ public class AdminController {
 		inquiryService.findAllProcess(model);
 		return "views/admin/inquiry";
 	}
-
-	
 
 	@GetMapping("/admin/inquiry/list/{qnaNum}")
 	public String adminInquiryList(@PathVariable("qnaNum") long qnaNum, Model model) {

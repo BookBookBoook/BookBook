@@ -45,3 +45,15 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 });
+
+
+
+
+// 엑셀 다운로드 버튼 클릭 이벤트 추가
+document.addEventListener('DOMContentLoaded', function() {
+	const excelBtn = document.querySelector('.action-buttons button:nth-child(3)');
+
+	excelBtn.addEventListener('click', function() {
+		window.location.href = '/download-excel'; // 엑셀 파일 다운로드를 위한 서버 요청
+	});
+});

@@ -34,6 +34,10 @@ ext {
 
 dependencies {
 
+	// Apache POI 의존성
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'org.apache.poi:poi:5.2.3'
+
 	implementation 'com.google.cloud:google-cloud-vision:3.45.0'
 	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-SNAPSHOT'
 
