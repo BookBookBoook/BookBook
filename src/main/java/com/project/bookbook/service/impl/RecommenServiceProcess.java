@@ -1,7 +1,8 @@
 package com.project.bookbook.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.bookbook.domain.dto.api.UserRecommendDTO;
+import com.project.bookbook.domain.dto.mypage.LibraryApiResponseDTO;
+import com.project.bookbook.domain.dto.mypage.selectRecommendDTO;
 import com.project.bookbook.mapper.OrdersMapper;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.BookService;
@@ -29,7 +30,9 @@ public class RecommenServiceProcess implements RecommendService{
 
     @Value("${library.api.authKey}")
     private String authKey;
-
+    private String apiUrl = "http://data4library.kr/api/loanItemSrch";
+    
+    //결제 완료 후 결제된 책들 중 랜덤으로 하나 뽑아서 해당 책 저자의 책 추천
 	@Override
 	public void recommendBook(long merchantUid, Model model) {
 		List<String> orderBookAuthors = ordersMapper.findByorderBookAuthor(merchantUid);
@@ -42,25 +45,31 @@ public class RecommenServiceProcess implements RecommendService{
 		bookService.searchBooks(randomAuthor, model);
 		
 	}
-
+	
+	//로그인된 유저 정보(연령, 나이)로 책 추천
 	@Override
 	public void userRecommend(CustomUserDetails user, Model model) {
+		//유저의 연령대
 		String birthDate = user.getBirthDate();
 		int ageGroup = calculateAgeGroup(birthDate);
+		int ageGroupFormat = ageGroup < 20 ? 10 : ageGroup;
+		model.addAttribute("ageGroup", ageGroupFormat);
 		
+		//유저의 성별
 		String userGender = user.getGender();
 		int gender = 0; //0:남성
 		if(userGender.equals("woman")) {
 			gender = 1;
 		}
+		String genderName = gender == 0 ? "남성" : "여성";
+		model.addAttribute("genderName", genderName);
 		
-		String apiUrl = "http://data4library.kr/api/loanItemSrch";
-        
         // URL 파라미터 구성
         StringBuilder urlBuilder = new StringBuilder(apiUrl);
         urlBuilder.append("?authKey=").append(authKey);
         urlBuilder.append("&gender=").append(gender);
         urlBuilder.append("&age=").append(ageGroup);
+        urlBuilder.append("&pageNo=").append(1);
         urlBuilder.append("&pageSize=4"); //한 페이지당 제공되는 도서 목록 개수
         urlBuilder.append("&format=json");
 
@@ -70,9 +79,39 @@ public class RecommenServiceProcess implements RecommendService{
         // JSON 응답을 DTO로 변환
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            UserRecommendDTO userRecommendBooks = objectMapper.readValue(response, UserRecommendDTO.class);
-            
+            LibraryApiResponseDTO userRecommendBooks = objectMapper.readValue(response, LibraryApiResponseDTO.class);
             model.addAttribute("userRecommendBooks", userRecommendBooks);
+            
+        } catch (Exception e) {
+            // 예외 처리: 로깅 또는 사용자 정의 예외 던지기
+            throw new RuntimeException("API 응답을 파싱하는 데 실패했습니다.", e);
+        }
+		
+	}
+	
+	
+	//사용자가 선택한 정보(연령대, 성별, 장르) 가지고 도서 추천
+	@Override
+	public LibraryApiResponseDTO userSelectRecommend(selectRecommendDTO dto) {
+		
+		// URL 파라미터 구성
+        StringBuilder urlBuilder = new StringBuilder(apiUrl);
+        urlBuilder.append("?authKey=").append(authKey);
+        if(dto.getAgeGroup() >= 0) {urlBuilder.append("&age=").append(dto.getAgeGroup());};
+        if(dto.getGender() >= 0) {urlBuilder.append("&gender=").append(dto.getGender());};
+        if(dto.getKind() >= 0) {urlBuilder.append("&kdc=").append(dto.getKind());};
+        urlBuilder.append("&pageNo=").append(1);
+        urlBuilder.append("&pageSize=8"); //한 페이지당 제공되는 도서 목록 개수
+        urlBuilder.append("&format=json");
+
+        // API 호출
+        String response = openApiUtil.request(urlBuilder.toString(), null, "GET", null);
+
+        // JSON 응답을 DTO로 변환
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            LibraryApiResponseDTO userRecommendBooks = objectMapper.readValue(response, LibraryApiResponseDTO.class);
+            return userRecommendBooks;
             
         } catch (Exception e) {
             // 예외 처리: 로깅 또는 사용자 정의 예외 던지기
@@ -110,6 +149,5 @@ public class RecommenServiceProcess implements RecommendService{
             return -1; // 미상 (이 경우는 발생하지 않겠지만, 안전을 위해 포함)
         }
     }
-	
 
 }

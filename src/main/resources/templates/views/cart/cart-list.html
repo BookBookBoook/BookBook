@@ -42,6 +42,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                          totalAmount=${totalAmount + itemAmount}"
                         th:data-cart-detail-num="${cartDetail.cartDetailNum}">
 	                    <td class="product-info book-info-text">
+	                    	<input type="hidden" th:value="${cartDetail.discount}" id="one-book-price">
 	                        <img th:src="${cartDetail.bookImg}" class="book-cover-img">
 	                        <div class="book-info">
 	                            <p th:text="${cartDetail.bookName}">해리포터와 마법사의 돌 1</p>

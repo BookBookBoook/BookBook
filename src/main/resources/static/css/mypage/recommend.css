@@ -11,7 +11,8 @@
 .recommend-text {
 	font-size: 18px;
 	color: #333333;
-	margin-bottom: 20px;
+	margin-bottom: 35px;
+    margin-left: 10px;
 }
 
 .highlight {
@@ -26,19 +27,38 @@
 
 .book-item {
 	text-align: center;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
 }
 
 .book-item img {
-	width: 100%;
-	height: auto;
+	width: 180px;
+    height: 260px;
 	border-radius: 5px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
+    display: block;
+}
+
+.book-item p, .book-item a {
+	margin: 10px 0 5px;
+	font-size: 15px;
+	color: #555555;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.book-item a{
+	height: 45px;
+	-webkit-line-clamp: 2;
 }
 
 .book-item p {
-	margin: 10px 0 5px;
-	font-size: 14px;
-	color: #555555;
+	-webkit-line-clamp: 1;
 }
 
 .book-item .author {
@@ -85,6 +105,9 @@
 	font-size: 14px;
 	margin: 0;
 }
+.margin-bottom{
+	margin-bottom: 15px;
+}
 
 .book p {
 	font-size: 12px;
@@ -112,6 +135,7 @@
 
 .selection-form {
 	margin-bottom: 20px;
+	margin-left: 5px;
 }
 
 select {
