@@ -232,7 +232,7 @@ input {
 	height: 100px;
 	grid-template-columns: 1fr 1fr 1fr;
 	position: relative;
-	top: -50px; /* 여기서 값을 조정하여 위로 이동 */
+	top: -200px; /* 여기서 값을 조정하여 위로 이동 */
 }
 
 find-signup-wrap-admin {
@@ -312,7 +312,7 @@ find-signup-wrap-admin {
 .recaptcha-container {
 	display: flex;
 	justify-content: center;
-	margin-top: 140px;
+	margin-top: 40px;
 }
 
 .recaptcha-container-admin {
