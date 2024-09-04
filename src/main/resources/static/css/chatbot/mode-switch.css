@@ -1,4 +1,5 @@
-.switch-name {
+.switch-off {
+	color:#796370;
 	margin:0px;
 	display:flex;
 	font-size:15px;
@@ -6,6 +7,17 @@
 	position: absolute; /* 부모 요소를 기준으로 위치 조정 */
 	top: 12px; /* 상단에서 10px 위치 */
 	right: 110px; /* 오른쪽에서 10px 위치 */
+	vertical-align:middle;
+}
+.switch-on {
+	color:#ff4540;
+	margin:0px;
+	display:flex;
+	font-size:15px;
+	font-weight:bold;
+	position: absolute; /* 부모 요소를 기준으로 위치 조정 */
+	top: 12px; /* 상단에서 10px 위치 */
+	right: 116px; /* 오른쪽에서 10px 위치 */
 	vertical-align:middle;
 }
 .switch {
@@ -48,7 +60,7 @@
 }
 
 input:checked + .slider-btn {
-	background-color: #009500;
+	background-color: #ff4540;
 }
 
 input:focus + .slider-btn {
