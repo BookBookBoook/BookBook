@@ -1,0 +1,71 @@
+.switch-name {
+	margin:0px;
+	display:flex;
+	font-size:15px;
+	font-weight:bold;
+	position: absolute; /* 부모 요소를 기준으로 위치 조정 */
+	top: 12px; /* 상단에서 10px 위치 */
+	right: 110px; /* 오른쪽에서 10px 위치 */
+	vertical-align:middle;
+}
+.switch {
+	position: absolute; /* 부모 요소를 기준으로 위치 조정 */
+	top: 12px; /* 상단에서 10px 위치 */
+	right: 40px; /* 오른쪽에서 10px 위치 */
+	display:flex;
+	width: 52px;
+	height: 26px;
+	vertical-align:middle;
+}
+
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider-btn */
+.slider-btn {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #a6899a;
+	-webkit-transition: .4s;
+	transition: .4s;
+	box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3); /* 인셋 그림자 추가 */
+}
+.slider-btn:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 3px;
+	bottom: 3px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider-btn {
+	background-color: #009500;
+}
+
+input:focus + .slider-btn {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider-btn:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded slider-btns */
+.slider-btn.round {
+	border-radius: 34px;
+}
+
+.slider-btn.round:before {
+	border-radius: 50%;
+}
