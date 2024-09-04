@@ -7,7 +7,13 @@ p{
  	font-style: normal;
  	*/
 }
+.chat-box {
+    display: none;
+}
 
+.chat-box.active {
+    display: block;
+}
 /*/////////////////////////*/
 /*///////  스크롤 바 ////////*/
 /*/////////////////////////*/
@@ -197,13 +203,13 @@ p{
 #close-button {
 	display:flex;
 	cursor: pointer;
-	font-size: 18px;
+	font-size: 26px;
 	background: none;
 	border: none;
 	border-radius: 4px;
 	position: absolute; /* 부모 요소를 기준으로 위치 조정 */
-	top: 10px; /* 상단에서 10px 위치 */
-	right: 10px; /* 오른쪽에서 10px 위치 */
+	top: 4px; /* 상단에서 10px 위치 */
+	right: 5px; /* 오른쪽에서 10px 위치 */
 }
 
 
@@ -257,7 +263,8 @@ p{
 
 /* 버튼 아이콘 스타일 */
 #close-button>i {
-	font-size: 18px;
+	font-size: 26px;
+	color:blue;
 }
 
 .button-container {
