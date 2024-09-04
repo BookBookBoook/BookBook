@@ -73,31 +73,14 @@ public class CartController {
 		}
 	}
 	
-	/*
-	@PutMapping("/cart/update")
-	@ResponseBody
-    public String updateCartQuantity(@RequestBody UpdateCartDTO dto) {
-		System.out.println(dto);
-        try {
-            cartService.updateCartItemQuantity(dto);
-            System.out.println("업데이트 >>>>> ");
-            return "장바구니 수량이 성공적으로 업데이트 되었습니다.";
-        } catch (Exception e) {
-            return "오류가 발생했습니다. : " + e.getMessage();
-        }
-    }
-    */
-	
 	@PutMapping("/cart/update")
 	@ResponseBody
     public ResponseEntity<String> updateCartQuantity(@RequestBody UpdateCartDTO dto) {
-        //log.info("Received update request: {}", dto);
+		System.out.println(">>>>>>>>>>>updateDTO : "+dto);
         try {
             cartService.updateCartItemQuantity(dto);
-            //log.info("Cart updated successfully for cartDetailNum: {}", dto.getCartDetailNum());
             return ResponseEntity.ok("장바구니 수량이 성공적으로 업데이트 되었습니다.");
         } catch (Exception e) {
-            //log.error("Error occurred while updating cart", e);
             return ResponseEntity.internalServerError().body("오류가 발생했습니다: " + e.getMessage());
         }
     }

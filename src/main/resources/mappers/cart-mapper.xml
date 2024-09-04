@@ -51,7 +51,7 @@
 	
 	<update id="updateCartItemQuantity" parameterType="com.project.bookbook.domain.dto.UpdateCartDTO">
 		update cart_detail
-		set cart_cnt = #{cartCnt}
+		set cart_cnt = #{quantity}
 		where cart_detail_num = #{cartDetailNum}
 	</update>
 	

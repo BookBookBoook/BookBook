@@ -110,6 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
             changeButton.style.display = 'none';
             cancelConfirmButtons.style.display = 'block';
             deleteButton.style.display = 'none';
+            updatePrice(row, 1);
+            
         } else if (event.target.classList.contains('cancel-btn')) {
             resetQuantityControl(event.target.closest('tr'));
         } else if (event.target.classList.contains('confirm-btn')) {
@@ -133,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
         quantityInput.value = quantitySpan.textContent.replace('개', '');
 
         // Reset the price to its original value
-        updatePrice(row, parseInt(quantitySpan.textContent));
+        //updatePrice(row, parseInt(quantitySpan.textContent));
     }
 
     function updateQuantity(row) {
@@ -159,35 +161,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.reload();
             } else {
                 console.error('Failed to update quantity');
-                resetQuantityControl(row);
+                window.location.reload();
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            resetQuantityControl(row);
+            window.location.reload();
         });
     }
-
-    function updatePrice(row, quantity) {
-	    const priceElement = row.querySelector('.price');
-	    const unitPriceStr = priceElement.getAttribute('data-unit-price');
-	    console.log('Raw Unit Price:', unitPriceStr);
-	    
-	    const unitPrice = parseFloat(unitPriceStr);
-	    
-	    console.log('Parsed Unit Price:', unitPrice);
-	    console.log('Quantity:', quantity);
-	
-	    if (isNaN(unitPrice)) {
-	        console.error('Unit price is not a number. Check data-unit-price attribute.');
-	        return;
-	    }
-	
-	    const totalPrice = unitPrice * quantity;
-	    console.log('Total Price:', totalPrice);
-	
-	    priceElement.textContent = `${totalPrice.toLocaleString()}원`;
-	}
 
     document.querySelectorAll('.quantity-control').forEach(function(control) {
 	    const decrementButton = control.querySelector('.decrement');
@@ -212,7 +193,28 @@ document.addEventListener('DOMContentLoaded', function() {
 	    });
 	
 	    // Initialize price on load
-	    const initialQuantity = parseInt(quantityInput.value);
-	    updatePrice(row, initialQuantity);
+	    //const initialQuantity = parseInt(quantityInput.value);
+	    //updatePrice(row, initialQuantity);
 	});
 });
+
+function updatePrice(row, quantity) {
+	const priceElement = row.querySelector('.price');
+	const unitPriceStr = document.getElementById('one-book-price').value;
+	console.log('Raw Unit Price:', unitPriceStr);
+
+	const unitPrice = parseFloat(unitPriceStr);
+
+	console.log('Parsed Unit Price:', unitPrice);
+	console.log('Quantity:', quantity);
+
+	if (isNaN(unitPrice)) {
+		console.error('Unit price is not a number. Check data-unit-price attribute.');
+		return;
+	}
+
+	const totalPrice = unitPrice * quantity;
+	console.log('Total Price:', totalPrice);
+
+	priceElement.textContent = `${totalPrice.toLocaleString()}원`;
+}

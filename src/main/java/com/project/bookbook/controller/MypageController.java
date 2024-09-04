@@ -1,5 +1,8 @@
 package com.project.bookbook.controller;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,12 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bookbook.domain.dto.QNACreateDTO;
 import com.project.bookbook.domain.dto.accountUpdateDTO;
+import com.project.bookbook.domain.dto.mypage.LibraryApiResponseDTO;
+import com.project.bookbook.domain.dto.mypage.selectRecommendDTO;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CouponService;
 import com.project.bookbook.service.FavoriteService;
 import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.QNAService;
 import com.project.bookbook.service.RecommendService;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -155,6 +162,16 @@ public class MypageController {
 		recommendService.userRecommend(user,model);
 		return "views/mypage/recommend";
 	}
+	
+	@PostMapping("/mypage/recommends")
+	@ResponseBody
+	public ResponseEntity<LibraryApiResponseDTO> recommends(@RequestBody selectRecommendDTO dto) {
+		return ResponseEntity
+		        .ok()
+		        .body(recommendService.userSelectRecommend(dto));
+	}
+	
+	
 	
 
 }
