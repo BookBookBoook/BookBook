@@ -29,9 +29,6 @@ import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.QNAService;
 import com.project.bookbook.service.RecommendService;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
-
 @Controller
 @RequiredArgsConstructor
 public class MypageController {
@@ -156,6 +153,12 @@ public class MypageController {
 		return "redirect:/mypage/favorites";
 	}
 	
+	@PostMapping("/mypage/favorites")
+	public String couponAdd(@RequestParam(name="isbn") String isbn, @AuthenticationPrincipal CustomUserDetails user) {
+		couponService.addCouponProcess(isbn, user);
+		return "redirect:/mypage/coupons";
+	}
+	
 	//도서 추천
 	@GetMapping("/mypage/recommends")
 	public String recommend(@AuthenticationPrincipal CustomUserDetails user, Model model) {
@@ -170,8 +173,5 @@ public class MypageController {
 		        .ok()
 		        .body(recommendService.userSelectRecommend(dto));
 	}
-	
-	
-	
 
 }

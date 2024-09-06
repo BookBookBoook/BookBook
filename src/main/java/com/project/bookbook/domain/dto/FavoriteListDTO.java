@@ -15,5 +15,6 @@ public class FavoriteListDTO {
 	private String author;
 	private String bookImg;
 	private String bookName;
+	private String isbn;
 
 }
