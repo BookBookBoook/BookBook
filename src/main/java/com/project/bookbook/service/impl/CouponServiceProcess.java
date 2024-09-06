@@ -102,5 +102,13 @@ public class CouponServiceProcess implements CouponService{
 		couponMapper.deleteByCouponNumAndUserId(params);
 		
 	}
+	
+	
+	//마이페이지 '나의 취향'에서 쿠폰 추가
+	@Override
+	public void addCouponProcess(String isbn, CustomUserDetails user) {
+		//couponMapper.
+		
+	}
 
 }
