@@ -108,13 +108,13 @@ function connect() {
 }
 
 // 서비스 모드에서의 처리 로직
-function handleServiceMode(msgObj, time) {
+function handleServiceMode(botName,msgObj, time) {
     var tag = `<div class="msg bot flex">
                 <div class="icon">
                     <img src="/img/bot/bot-img.png">
                 </div>
                 <div class="message">
-                <div class="bot-name">북엉이</div>
+                <div class="bot-name">${botName}</div>
                     <div class="part chatbot">
                         <p>${msgObj}</p>
                     </div>
@@ -123,22 +123,124 @@ function handleServiceMode(msgObj, time) {
     showMessage(tag);
     
     // 특정 메시지에 대해 버튼 추가
-    if (msgObj.includes("배송조회")) {
+    if (msgObj.includes("배송조회")) { //includes ""가 포함되어있을경우
         var buttonHTML = `<div class="msg bot flex">
-                            <div class="icon">
-                                <img src="/img/bot/bot-img-none.png">
-                            </div>
-                            <div class="message">
-                                <div class="part chatbot">
-                                    <p>아래 버튼을 통해 배송 조회 페이지로 이동해주세요!</p>
-                                    <div class="button-container">
-                                        <button class="faq-button" onclick="location.href='/mypage/orders';">배송조회 이동</button>
-                                    </div>
-                                </div>
-                                <div class="time">${time}</div>
-                            </div>
-                        </div>`;
+		                        <div class="icon">
+		                            <img src="/img/bot/bot-img-none.png">
+		                        </div>
+		                        <div class="message">
+		                            <div class="part chatbot">
+		                                <p>아래 버튼을 통해 배송 조회 페이지로 이동해주세요!</p>
+										<div class="button-container">
+	                                    	<button class="faq-button" onclick="location.href='/mypage/orders';">배송조회 이동</button>
+										</div>
+		                            </div>
+		                            <div class="time">${time}</div>
+		                        </div>
+		                    </div>`;
         showMessage(buttonHTML);
+    }
+	if (msgObj.includes("쿠폰조회")) { //includes ""가 포함되어있을경우
+        var buttonHTML = `<div class="msg bot flex">
+		                        <div class="icon">
+		                            <img src="/img/bot/bot-img-none.png">
+		                        </div>
+		                        <div class="message">
+		                            <div class="part chatbot">
+		                                <p>아래 버튼을 통해 쿠폰 조회 페이지로 이동해주세요!</p>
+										<div class="button-container">
+	                                    	<button class="faq-button" onclick="location.href='/mypage/coupons';">쿠폰 조회 이동</button>
+										</div>
+		                            </div>
+		                            <div class="time">${time}</div>
+		                        </div>
+		                    </div>`;
+        showMessage(buttonHTML);
+    }
+	if (msgObj.includes("베스트셀러")) { //includes ""가 포함되어있을경우
+        var buttonHTML = `<div class="msg bot flex">
+		                        <div class="icon">
+		                            <img src="/img/bot/bot-img-none.png">
+		                        </div>
+		                        <div class="message">
+		                            <div class="part chatbot">
+		                                <p>아래 버튼을 통해 베스트셀러 목록으로 이동해주세요!</p>
+										<div class="button-container">
+	                                    	<button class="faq-button" onclick="location.href='/bookList';">베스트셀러 목록</button>
+										</div>
+		                            </div>
+		                            <div class="time">${time}</div>
+		                        </div>
+		                    </div>`;
+        showMessage(buttonHTML);
+    }
+	if (msgObj.includes("문의")) { //includes ""가 포함되어있을경우
+        var buttonHTML = `<div class="msg bot flex">
+		                        <div class="icon">
+		                            <img src="/img/bot/bot-img-none.png">
+		                        </div>
+		                        <div class="message">
+		                            <div class="part chatbot">
+		                                <p>아래 버튼을 통해 고객문의 접수 도와드릴게요!</p>
+										<div class="button-container">
+	                                    	<button class="faq-button" onclick="location.href='/mypage/questions';">1:1 문의 접수</button>
+										</div>
+		                            </div>
+		                            <div class="time">${time}</div>
+		                        </div>
+		                    </div>`;
+        showMessage(buttonHTML);
+    }
+	if (msgObj.includes("룰렛")) { //includes ""가 포함되어있을경우
+        var buttonHTML = `<div class="msg bot flex">
+		                        <div class="icon">
+		                            <img src="/img/bot/bot-img-none.png">
+		                        </div>
+		                        <div class="message">
+		                            <div class="part chatbot">
+		                                <p>♚♚룰렛 오브 더 북☆북♚♚가입시$$전원 무료룰렛☜☜100%증정※ ♜북북 오브 북엉이♜펫 무료증정￥ 특정조건 §§북북팀§§★무료룰렛★쿠폰획득기회@@@ 즉시이동</p>
+										<div class="button-container">
+	                                    	<button class="faq-button" onclick="location.href='/event';"> 이벤트 페이지 이동</button>
+										</div>
+		                            </div>
+		                            <div class="time">${time}</div>
+		                        </div>
+		                    </div>`;
+        showMessage(buttonHTML);
+    }
+	
+	// 이미지 사용시
+	if (msgObj.includes("죄송")) { //startsWith ""로 시작할경우
+        var imageTag = `<div class="msg bot flex">
+		                    <div class="icon">
+		                        <img src="/img/bot/bot-img-none.png">
+		                    </div>
+		                    <div class="message">
+								<div class="part chatbot">
+									<div class="image-content">
+						                <img src="/img/bot/cry-bot-img.png" alt="사과 이미지">
+						            </div>
+								</div>
+		                        <div class="time">${time}</div>
+		                    </div>
+		                </div>`;
+        showMessage(imageTag);
+    }
+	if (msgObj.includes("안녕")) { //startsWith ""로 시작할경우
+        var imageTag = `<div class="msg bot flex">
+		                    <div class="icon">
+		                        <img src="/img/bot/bot-img-none.png">
+		                    </div>
+		                    <div class="message">
+								<div class="part chatbot">
+									<div class="image-content">
+						                <img src="/img/bot/happy-bot-img.png" alt="환영 이미지">
+						            </div>
+								</div>
+		                        <div class="time">${time}</div>
+		                    </div>
+		                </div>`;
+        showMessage(imageTag);
     }
     // 여기에 다른 서비스 모드의 처리 로직 추가
 }
@@ -150,7 +252,7 @@ function handleSearchMode(msgObj, time) {
                     <img src="/img/bot/bot-img.png">
                 </div>
                 <div class="message">
-                <div class="bot-name">검색봇</div>
+                <div class="bot-name">${botName}</div>
                     <div class="part chatbot">
                         <p>${msgObj}</p>
                     </div>
@@ -194,8 +296,8 @@ function loadBotState() {
         if (botState === 'open') {
             var botName = websocketStatus === 0 ? "북엉이" : "검색봇";
             var welcomeText = websocketStatus === 0 
-                ? "안녕하세요. 안내봇 북엉이입니다. 무엇을 도와드릴까요?" 
-                : "안녕하세요. 검색봇입니다. 원하는 책의 정보를 검색해드릴게요.";
+                ? "안녕하세요.<br>안내봇 북엉이입니다.<br>무엇을 도와드릴까요?" 
+                : "안녕하세요.<br>검색봇 AI북엉이입니다.<br>기억하고 계신 책의 내용을 입력하시면 제목 찾아드릴게요.";
                 
             showWelcomeMessage(botName, welcomeText);
             localStorage.removeItem('chatReset');
@@ -234,8 +336,8 @@ function btnBotClicked() {
     if (!hasShownWelcomeMessage || wasChatReset) {
         var botName = websocketStatus === 0 ? "북엉이" : "검색봇";
         var welcomeText = websocketStatus === 0 
-            ? "안녕하세요. 안내봇 북엉이입니다. 무엇을 도와드릴까요?" 
-            : "안녕하세요. 검색봇입니다. 원하는 책의 정보를 검색해드릴게요.";
+            ? "안녕하세요.<br>안내봇 북엉이입니다.<br>무엇을 도와드릴까요?" 
+            : "안녕하세요.<br>검색봇 AI북엉이입니다.<br>기억하고 계신 책의 내용을 입력하시면 제목 찾아드릴게요.";
         
         showWelcomeMessage(botName, welcomeText);
         localStorage.removeItem('chatReset');
@@ -332,10 +434,10 @@ function toggleMode(status) {
     localStorage.removeItem('hasShownWelcomeMessage');
     
     if (flag) {
-        var botName = status === 0 ? "북엉이" : "검색봇";
+        var botName = status === 0 ? "북엉이" : "AI북엉이";
         var welcomeText = status === 0 
-            ? "안녕하세요. 안내봇 북엉이입니다. 무엇을 도와드릴까요?" 
-            : "안녕하세요. 검색봇입니다. 원하는 책의 정보를 검색해드릴게요.";
+            ? "안녕하세요.<br>안내봇 북엉이입니다.<br>무엇을 도와드릴까요?" 
+            : "안녕하세요.<br>검색봇 AI북엉이입니다.<br>기억하고 계신 책의 내용을 입력하시면 제목 찾아드릴게요.";
         
         showWelcomeMessage(botName, welcomeText);
     }
