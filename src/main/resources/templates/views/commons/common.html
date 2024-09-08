@@ -35,8 +35,16 @@
 						<option>도서</option>
 						<option>교보문고</option>
 						<option>이벤트</option>
-					</select> <input type="text" name="query" title="통합검색어 입력"
-						placeholder="왜 세계는 10대의 SNS를 금지하나" id="queryInput">
+					</select> 
+					<div class="search-input-wrapper">
+			          <input type="text" name="query" title="통합검색어 입력" placeholder="왜 세계는 10대의 SNS를 금지하나" id="queryInput" autocomplete="off">
+			          <div class="recent-searches" th:unless="${#lists.isEmpty(searchHistorys)}">
+			          	<p class="recent-text">최근 검색어</p>
+			            <ul>
+			              <li th:each=" searchHistory : ${searchHistorys}" th:text="${searchHistory.searchQuery}">검색어</li>
+			            </ul>
+			          </div>
+			        </div>
 					<button type="button" class="head-btn" id="cameraButton">
 						<i class="fa-solid fa-camera-retro"></i>
 					</button>
@@ -84,7 +92,7 @@
 	<!-- 모달 창 (fileUploadContainer) -->
 	<div id="camera-modal" class="modal">
 	    <div id="fileUploadContainer" class="modal-register">
-	    	<div display="flex between">
+	    	<div class="flex between">
 		    	<span class="img-search-text">이미지 검색</span>
 		        <span class="close">&times;</span>
 	        </div>

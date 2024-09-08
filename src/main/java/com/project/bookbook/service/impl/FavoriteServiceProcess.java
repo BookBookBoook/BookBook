@@ -30,13 +30,15 @@ public class FavoriteServiceProcess implements FavoriteService{
 		model.addAttribute("favorites", favorites);
 		
 		Random ran = new Random();
-		int randomInt = ran.nextInt(favorites.size());
-		long randomBookNum = favorites.get(randomInt).getBookNum();
-		
-		String summaryReview = reviewService.getReviewsSummaryAI(randomBookNum);
-		if(summaryReview != null) {
-			model.addAttribute("randomBook",favorites.get(randomInt));
-			model.addAttribute("summaryReview", summaryReview);
+		if(favorites.size() > 0) {
+			int randomInt = ran.nextInt(favorites.size());
+			long randomBookNum = favorites.get(randomInt).getBookNum();
+			
+			String summaryReview = reviewService.getReviewsSummaryAI(randomBookNum);
+			if(summaryReview != null) {
+				model.addAttribute("randomBook",favorites.get(randomInt));
+				model.addAttribute("summaryReview", summaryReview);
+			}
 		}
 		
 	}

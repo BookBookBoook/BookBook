@@ -10,4 +10,29 @@
 		where book_num = #{randomBookNum}
 	</select>
 	
+	<select id="findReviewByUserId" parameterType="long" resultType="com.project.bookbook.domain.dto.MypageReviewDTO">
+		select r.*, b.* 
+		from review r
+			inner join book b
+			on r.book_num = b.book_num
+		where user_id = #{userId}
+		order by review_date desc
+	</select>
+	
+	<select id="findReviewContentsByUserId" parameterType="long" resultType="String">
+		select review_content
+		from review
+		where user_id = #{userId}
+		order by review_date desc
+	</select>
+	
+	<select id="findReviewBooksByUserId" parameterType="long" resultType="String">
+		select b.book_name 
+		from review r
+			inner join book b
+			on r.book_num = b.book_num
+		where user_id = #{userId}
+		order by review_date desc
+	</select>
+	
 </mapper>

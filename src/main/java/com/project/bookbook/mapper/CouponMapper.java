@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.project.bookbook.domain.dto.CouponDTO;
 import com.project.bookbook.domain.dto.CouponListDTO;
 import com.project.bookbook.domain.dto.UserCouponDTO;
 import com.project.bookbook.domain.entity.CouponEntity;
@@ -28,5 +29,7 @@ public interface CouponMapper {
 	List<CouponListDTO> findAllStatus1(long userId);
 
 	void deleteByCouponNumAndUserId(Map<String, Long> params);
+
+	void saveCoupon(CouponDTO couponDTO);
 
 }

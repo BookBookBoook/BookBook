@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.bookbook.mapper.BookHistoryMapper">
+
+	<insert id="save" parameterType="com.project.bookbook.domain.dto.BookHistoryDTO">
+		insert into book_history (user_id, book_num, search_date)
+		values (#{userId}, #{bookNum}, current_timestamp)
+	</insert>
+	
+	<select id="findByUserId" parameterType="long" resultType="com.project.bookbook.domain.dto.BookInfoDTO">
+		select b.*, bh.search_date 
+		from book_history bh
+			join book b
+			on bh.book_num = b.book_num
+		where user_id = #{userId}
+		order by bh.search_date desc
+	</select>
+	
+	<select id="findByUserIdAndBookNum" parameterType="com.project.bookbook.domain.dto.BookHistoryDTO" resultType="long">
+		select COUNT(*) from book_history
+    	where user_id = #{userId} and book_num = #{bookNum}
+	</select>
+	
+	<update id="updateSearchDate" parameterType="com.project.bookbook.domain.dto.BookHistoryDTO">
+		update book_history
+		set search_date = current_timestamp
+		where user_id = #{userId} and book_num = #{bookNum}
+	</update>
+	
+	<delete id="deleteAllByUserId" parameterType="long">
+        DELETE FROM book_history
+        WHERE user_id = #{userId}
+    </delete>
+    
+    <select id="findIsbn" parameterType="long">
+    	select b.isbn
+		from book_history bh
+		join book b
+			 on b.book_num = bh.book_num
+		where user_id = #{userId}
+		LIMIT 4
+    </select>
+    
+    <select id="findQueryAndUserId" parameterType="map" resultType="long">
+		select COUNT(*) from search_history
+    	where user_id = #{userId} and search_query = #{searchQuery}
+	</select>
+	
+	<insert id="saveQuery" parameterType="map">
+		insert into search_history (user_id, search_query, search_date)
+		values (#{userId}, #{searchQuery}, current_timestamp)
+	</insert>
+	
+	<update id="updateQuery" parameterType="map">
+		update search_history
+		set search_date = current_timestamp
+		where user_id = #{userId} and search_query = #{searchQuery}
+	</update>
+	
+	<select id="findQueryByUserId" resultType="com.project.bookbook.domain.dto.SearchQueryDTO" parameterType="long">
+		select * from search_history
+		where user_id = #{userId}
+		order by search_date desc
+	</select>
+	
+</mapper>
