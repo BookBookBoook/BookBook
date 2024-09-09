@@ -14,4 +14,6 @@ public interface RecommendService {
 
 	LibraryApiResponseDTO userSelectRecommend(selectRecommendDTO dto);
 
+	void recommendByRecentBook(CustomUserDetails user, Model model);
+
 }

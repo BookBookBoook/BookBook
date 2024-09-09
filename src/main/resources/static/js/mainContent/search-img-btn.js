@@ -69,3 +69,29 @@ confirmButton.addEventListener('click', async () => {
     searchForm.submit();
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const queryInput = document.getElementById('queryInput');
+  const recentSearches = document.querySelector('.recent-searches');
+  const searchForm = document.getElementById('searchForm');
+
+  queryInput.addEventListener('focus', function() {
+    recentSearches.style.display = 'block';
+  });
+
+  document.addEventListener('click', function(event) {
+    if (!queryInput.contains(event.target) && !recentSearches.contains(event.target)) {
+      recentSearches.style.display = 'none';
+    }
+  });
+
+  // 최근 검색어 클릭 시 검색창에 입력하고 폼 제출
+  const searchItems = recentSearches.querySelectorAll('li');
+  searchItems.forEach(item => {
+    item.addEventListener('click', function(event) {
+      event.preventDefault(); // 기본 동작 방지
+      queryInput.value = this.textContent;
+      recentSearches.style.display = 'none';
+      searchForm.submit(); // 폼 제출
+    });
+  });
+});

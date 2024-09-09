@@ -1,0 +1,6 @@
+<div class="recent-books" th:unless="${#lists.isEmpty(LimitedBookHistorys)}">
+    <a href="/mypage/history">최근 본 도서</a>
+    <a class="book-history" th:each="book : ${LimitedBookHistorys}" th:href="|/detail/${book.isbn}|">
+        <img th:src="${book.bookImg}">
+    </a>
+</div>

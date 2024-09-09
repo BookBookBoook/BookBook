@@ -1,8 +1,10 @@
 package com.project.bookbook.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.bookbook.domain.dto.mypage.LibraryApiResponseByIsbnDTO;
 import com.project.bookbook.domain.dto.mypage.LibraryApiResponseDTO;
 import com.project.bookbook.domain.dto.mypage.selectRecommendDTO;
+import com.project.bookbook.mapper.BookHistoryMapper;
 import com.project.bookbook.mapper.OrdersMapper;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.BookService;
@@ -25,6 +27,7 @@ import org.springframework.ui.Model;
 public class RecommenServiceProcess implements RecommendService{
 	
 	private final OrdersMapper ordersMapper;
+	private final BookHistoryMapper historyMapper;
 	private final BookService bookService;
 	private final OpenApiCommonUtil openApiUtil;
 
@@ -120,6 +123,40 @@ public class RecommenServiceProcess implements RecommendService{
 		
 	}
 	
+	//사용자의 최근 본 도서 isbn 가지고 추천 도서 추천
+	@Override
+	public void recommendByRecentBook(CustomUserDetails user, Model model) {
+		long userId = user.getUserId();
+		List<String> isbns = historyMapper.findIsbn(userId);
+	
+		if(!isbns.isEmpty()) {
+			String joinedIsbns = String.join(";", isbns);
+			apiUrl = "http://data4library.kr/api/recommandList";
+			
+			// URL 파라미터 구성
+	        StringBuilder urlBuilder = new StringBuilder(apiUrl);
+	        urlBuilder.append("?authKey=").append(authKey);
+	        urlBuilder.append("&isbn13=").append(joinedIsbns);
+	        urlBuilder.append("&format=json");
+	        
+	        String response = openApiUtil.request(urlBuilder.toString(), null, "GET", null);
+
+	        // JSON 응답을 DTO로 변환
+	        try {
+	            ObjectMapper objectMapper = new ObjectMapper();
+	            LibraryApiResponseByIsbnDTO recommendBooksByIsbns = objectMapper.readValue(response, LibraryApiResponseByIsbnDTO.class);
+	            System.out.println("새로운 책 추천 성공");
+	            model.addAttribute("recommendBooksByIsbns", recommendBooksByIsbns);
+	            
+	        } catch (Exception e) {
+	            // 예외 처리: 로깅 또는 사용자 정의 예외 던지기
+	            throw new RuntimeException("API 응답을 파싱하는 데 실패했습니다.", e);
+	        }
+			
+		}
+		
+	}
+	
 	//연령대 계산
 	public static int calculateAgeGroup(String birthDateStr) {
         LocalDate birthDate = LocalDate.parse(birthDateStr);
@@ -149,5 +186,6 @@ public class RecommenServiceProcess implements RecommendService{
             return -1; // 미상 (이 경우는 발생하지 않겠지만, 안전을 위해 포함)
         }
     }
+
 
 }
