@@ -108,13 +108,13 @@ function connect() {
 }
 
 // 서비스 모드에서의 처리 로직
-function handleServiceMode(botName,msgObj, time) {
+function handleServiceMode(msgObj, time) {
     var tag = `<div class="msg bot flex">
                 <div class="icon">
                     <img src="/img/bot/bot-img.png">
                 </div>
                 <div class="message">
-                <div class="bot-name">${botName}</div>
+                <div class="bot-name">북엉이</div>
                     <div class="part chatbot">
                         <p>${msgObj}</p>
                     </div>
@@ -252,10 +252,11 @@ function handleSearchMode(msgObj, time) {
                     <img src="/img/bot/bot-img.png">
                 </div>
                 <div class="message">
-                <div class="bot-name">${botName}</div>
+                	<div class="bot-name">AI북엉이</div>
                     <div class="part chatbot">
                         <p>${msgObj}</p>
                     </div>
+					<div class="time">${time}</div>
                 </div>
             </div>`;
     showMessage(tag);
