@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROOT_DIR="/home/ec2-user/codedeploy/domovie"
+ROOT_DIR="/home/ec2-user/codedeploy"
 JAR_FILE="$ROOT_DIR/build/libs/*.jar"
 DATE=`date +"[%Y-%m-%d %H:%M:%S]"`
 DEPLOY_LOG="$ROOT_DIR/deploy.log"
