@@ -78,7 +78,7 @@ header, main {
 .search-container input[type="text"] {
 	flex-grow: 1;
 	padding: 5px;
-	width: 350px;
+	width: 325px;
 	margin-right: 10px;
 }
 
@@ -127,7 +127,6 @@ header, main {
     padding: 5px;
     background: none;
     border: none;
-    margin-right: 10px;
 }
 
 #stt-button i {

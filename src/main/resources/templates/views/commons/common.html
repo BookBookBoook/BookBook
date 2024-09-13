@@ -34,6 +34,9 @@
 								title="통합검색어 입력" placeholder="왜 세계는 10대의 SNS를 금지하나"
 								aria-label="검색어 입력">
 						</div>
+						<button type="button" class="head-btn" id="cameraButton">
+							<i class="fa-solid fa-camera-retro"></i>
+						</button>
 						<div class="search-buttons-wrapper">
 							<button type="button" id="stt-button" aria-label="음성 검색 시작">
 								<i class="fa-solid fa-microphone"></i>
@@ -43,7 +46,7 @@
 							</button>
 						</div>
 					</form>
-				</div>	
+				</div>
 			</div>
 			<div class="header-middle-right">
 				<ul>
@@ -79,23 +82,20 @@
 			<li>신상품</li>
 			<li><a href="/event">이벤트</a></li>
 		</ul>
-	</div>	
+	</div>
 	<!-- 모달 창 (fileUploadContainer) -->
 	<div id="camera-modal" class="modal">
-	    <div id="fileUploadContainer" class="modal-register">
-	    	<div class="flex between">
-		    	<span class="img-search-text">이미지 검색</span>
-		        <span class="close">&times;</span>
-	        </div>
-	        <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
-			<label for="imageFile" class="image-search-button flex j-center">
-				<i class="fa-solid fa-camera-retro camera-icon"></i>
-				<span>파일 선택</span>
-			</label>
-	        <img id="imagePreview" alt="Image preview">
-	        <br>
-	        <button id="confirmButton">검색</button>
-	    </div>
+		<div id="fileUploadContainer" class="modal-register">
+			<div class="flex between">
+				<span class="img-search-text">이미지 검색</span> <span class="close">&times;</span>
+			</div>
+			<input type="file" id="imageFile" name="imageFile" accept="image/*"
+				required> <label for="imageFile"
+				class="image-search-button flex j-center"> <i
+				class="fa-solid fa-camera-retro camera-icon"></i> <span>파일 선택</span>
+			</label> <img id="imagePreview" alt="Image preview"> <br>
+			<button id="confirmButton">검색</button>
+		</div>
 	</div>
 </header>
 <!-- 여기까지 헤더 영역 -->
@@ -130,6 +130,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="copyright">&copy; 2024 쇼핑몰 북북. All rights reserved.</div>
+	<div class="copyright">&copy; 2024 쇼핑몰 북북. All rights ""reserved.</div>
+	<script src="/js/mainContent/search-img-btn.js"></script>
 </footer>
 </html>

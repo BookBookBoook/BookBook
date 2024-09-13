@@ -195,7 +195,7 @@ p{
     margin-top: 20px; /* 챗봇 로고와 말풍선 사이 간격 */
 	position: fixed; /* 부모 요소를 기준으로 위치를 설정 */
 	bottom: 10%;
-	right: 60px;
+	right: 83px;
 	cursor: pointer;
 	width: 70px; /* 이미지 크기 */
 	height: 70px; /* 이미지 크기 */
