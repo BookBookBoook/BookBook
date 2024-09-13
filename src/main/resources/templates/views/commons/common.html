@@ -2,56 +2,48 @@
 
 <header th:fragment="top">
 	<div id="header-box">
-
 		<div class="header-top">
 			<ul>
-				<li sec:authorize="isAnonymous()"><a href="/signup">회원가입</a></li>
-				<li sec:authorize="isAnonymous()"><a href="/login">로그인</a></li>
-				<li sec:authorize="isAuthenticated()" class="user-info"><span
-					th:text="${#authentication.principal.name}"></span> <span
-					th:text="${#authentication.principal.email}"></span></li>
-				<li sec:authorize="isAuthenticated()" class="logout-form">
-					<form action="/logout" method="post">
-						<input type="hidden"
-							th:name="${_csrf != null ? _csrf.parameterName : 'csrf'}"
-							th:value="${_csrf != null ? _csrf.token : ''}" />
-						<button type="submit">로그아웃</button>
-					</form>
-				</li>
+				<li><a href="/signup">회원가입</a></li>
+				<li><a href="/login">로그인</a></li>
 				<li><a href="/mypage/orders">주문배송</a></li>
 				<li><a href="/mypage/questions">고객센터</a></li>
 			</ul>
 		</div>
-	</div>
-	<div class="containers">
-		<div class="flex a-center">
-			<a href="/"><img src="/img/Untitled_removebg_preview.png"
-				class="logo" alt="로고"></a>
-			<div class="search-container">
-
-				<form th:action="@{/search}" method="get" id="searchForm">
-					<select name="searchType" title="검색유형선택">
-						<option>통합검색</option>
-						<option>도서</option>
-						<option>교보문고</option>
-						<option>이벤트</option>
-					</select> 
-					<div class="search-input-wrapper">
-			          <input type="text" name="query" title="통합검색어 입력" placeholder="왜 세계는 10대의 SNS를 금지하나" id="queryInput" autocomplete="off">
-			          <div class="recent-searches" th:unless="${#lists.isEmpty(searchHistorys)}">
-			          	<p class="recent-text">최근 검색어</p>
-			            <ul>
-			              <li th:each=" searchHistory : ${searchHistorys}" th:text="${searchHistory.searchQuery}">검색어</li>
-			            </ul>
-			          </div>
-			        </div>
-					<button type="button" class="head-btn" id="cameraButton">
-						<i class="fa-solid fa-camera-retro"></i>
-					</button>
-					<button type="submit">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
-				</form>
+		<div class="containers">
+			<div class="flex a-center">
+				<a href="/"><img src="/img/Untitled_removebg_preview.png"
+					class="logo" alt="로고"></a>
+				<div class="search-container">
+					<form th:action="@{/search}" method="get" role="search"
+						aria-label="사이트 검색">
+						<div class="search-tull">
+							<div class="section">
+								<label for="search-type" class="visually-hidden">검색 유형
+									선택</label> <select id="search-type" name="searchType" title="검색유형선택">
+									<option value="all">통합검색</option>
+									<option value="bestseller">베스트셀러</option>
+									<option value="kyobo">교보문고</option>
+									<option value="event">이벤트</option>
+								</select>
+							</div>
+						</div>
+						<div class="search-input-wrapper">
+							<label for="search-query" class="visually-hidden">검색어 입력</label>
+							<input type="text" id="search-query" name="query"
+								title="통합검색어 입력" placeholder="왜 세계는 10대의 SNS를 금지하나"
+								aria-label="검색어 입력">
+						</div>
+						<div class="search-buttons-wrapper">
+							<button type="button" id="stt-button" aria-label="음성 검색 시작">
+								<i class="fa-solid fa-microphone"></i>
+							</button>
+							<button type="submit" aria-label="검색">
+								<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+							</button>
+						</div>
+					</form>
+				</div>	
 			</div>
 			<div class="header-middle-right">
 				<ul>
@@ -83,12 +75,11 @@
 			</div>
 		</div>
 		<ul>
-			<li><a href="/bookList">도서</a></li>
-			<li><a href="/newbookList">신상품</a></li>
+			<li><a href="/bookList">베스트</a></li>
+			<li>신상품</li>
 			<li><a href="/event">이벤트</a></li>
 		</ul>
-	</div>
-	
+	</div>	
 	<!-- 모달 창 (fileUploadContainer) -->
 	<div id="camera-modal" class="modal">
 	    <div id="fileUploadContainer" class="modal-register">
@@ -106,7 +97,6 @@
 	        <button id="confirmButton">검색</button>
 	    </div>
 	</div>
-	
 </header>
 <!-- 여기까지 헤더 영역 -->
 
@@ -141,6 +131,5 @@
 		</div>
 	</div>
 	<div class="copyright">&copy; 2024 쇼핑몰 북북. All rights reserved.</div>
-	<script src="/js/mainContent/search-img-btn.js"></script>
 </footer>
 </html>

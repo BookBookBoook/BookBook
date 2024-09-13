@@ -1,5 +1,6 @@
 package com.project.bookbook.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.BookService;
 import com.project.bookbook.service.ReviewService;
 import com.project.bookbook.service.UserCouponService;
+import com.project.bookbook.service.impl.SpeechToTextService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +42,19 @@ public class IndexController {
 	private final BookService bookservice;
 	private final ReviewService reviewService;
 	private final UserCouponService userCouponService;
-
+	private final SpeechToTextService speechToTextService;
+	
+	//음성인식
+	@PostMapping("/api/speech-to-text")
+    public ResponseEntity<String> convertSpeechToText(@RequestBody byte[] audioData) throws Exception {
+        try {
+            String text = speechToTextService.convertSpeechToText(audioData);
+            return ResponseEntity.ok(text);
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body("음성 변환 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+	
 	// 메인페이지 이동
 	@GetMapping
 	public String main(Model model) {
