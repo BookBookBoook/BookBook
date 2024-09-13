@@ -2,7 +2,7 @@
 .recent-books {
 	position: fixed;
     bottom: 180px;
-    right: 37.5px;
+    right: 60px;
     z-index: 1;
     background-color: white;
     border: 1px solid #ddd;
