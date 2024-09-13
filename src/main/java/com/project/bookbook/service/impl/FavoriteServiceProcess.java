@@ -3,6 +3,7 @@ package com.project.bookbook.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import com.project.bookbook.domain.dto.FavoriteListDTO;
 import com.project.bookbook.mapper.FavoriteMapper;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.FavoriteService;
+import com.project.bookbook.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,12 +21,25 @@ import lombok.RequiredArgsConstructor;
 public class FavoriteServiceProcess implements FavoriteService{
 	
 	private final FavoriteMapper favoriteMapper;
+	private final MypageReviewProcess reviewService;
 	
 	@Override
 	public void findByUser(Model model, CustomUserDetails user) {
 		long userId = user.getUserId();
 		List<FavoriteListDTO> favorites = favoriteMapper.findByUser(userId);
 		model.addAttribute("favorites", favorites);
+		
+		Random ran = new Random();
+		if(favorites.size() > 0) {
+			int randomInt = ran.nextInt(favorites.size());
+			long randomBookNum = favorites.get(randomInt).getBookNum();
+			
+			String summaryReview = reviewService.getReviewsSummaryAI(randomBookNum);
+			if(summaryReview != null) {
+				model.addAttribute("randomBook",favorites.get(randomInt));
+				model.addAttribute("summaryReview", summaryReview);
+			}
+		}
 		
 	}
 

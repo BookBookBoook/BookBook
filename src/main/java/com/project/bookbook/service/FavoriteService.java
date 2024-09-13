@@ -10,6 +10,4 @@ public interface FavoriteService {
 
 	void deleteProcess(long bookNum, CustomUserDetails user);
 
-	
-
 }

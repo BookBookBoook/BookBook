@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 
 import com.project.bookbook.domain.dto.bot.AnswerDTO;
 import com.project.bookbook.domain.dto.bot.QuestionDTO;
+import com.project.bookbook.service.OpenaiService;
 import com.project.bookbook.service.impl.ChatbotService;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class WebSocketController {
 
     private final ChatbotService chatbotService;
+    private final OpenaiService openaiService;
     
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -34,5 +36,15 @@ public class WebSocketController {
 		
 		System.out.println("Analysis result: " + responseMessage);
 		messagingTemplate.convertAndSend("/topic/bot/"+key, responseMessage);;
+    }
+    @MessageMapping("/bot/openai")
+    public void openai(QuestionDTO questionDTO) {
+    	
+    	System.out.println(">>>줄거리 검색 :"+questionDTO);
+    	long key = questionDTO.getKey();
+    	String responseMessage = openaiService.aiAnswerProcess(questionDTO);
+    	
+    	messagingTemplate.convertAndSend("/topic/bot/"+key, responseMessage);
+    	
     }
 }

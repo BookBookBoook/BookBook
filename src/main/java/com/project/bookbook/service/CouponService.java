@@ -20,4 +20,6 @@ public interface CouponService {
 
 	void deleteUserCoupon(long couponNum, CustomUserDetails user);
 
+	void addCouponProcess(String isbn, CustomUserDetails user);
+
 }

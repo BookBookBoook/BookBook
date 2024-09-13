@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.FavoriteService;
+import com.project.bookbook.service.HistoryService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +20,18 @@ import lombok.RequiredArgsConstructor;
 public class GlobalControllerAdvice {
 
     private final FavoriteService favoriteService;
+    private final HistoryService historyService;
     
     @ModelAttribute
     public void addAttributes(Model model, @AuthenticationPrincipal CustomUserDetails user, HttpServletRequest request) {
         String requestUri = request.getRequestURI();
         if (requestUri.startsWith("/mypage/") && user != null) {
             favoriteService.findByUser(model, user); // 찜 개수
+        }
+        
+        if(user != null) {
+        	historyService.findAllProcess(user, model);
+        	historyService.findQueryByUserId(user, model);
         }
     }
 }

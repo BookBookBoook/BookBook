@@ -43,7 +43,7 @@
 							</button>
 						</div>
 					</form>
-				</div>
+				</div>	
 			</div>
 			<div class="header-middle-right">
 				<ul>
@@ -79,6 +79,23 @@
 			<li>신상품</li>
 			<li><a href="/event">이벤트</a></li>
 		</ul>
+	</div>	
+	<!-- 모달 창 (fileUploadContainer) -->
+	<div id="camera-modal" class="modal">
+	    <div id="fileUploadContainer" class="modal-register">
+	    	<div class="flex between">
+		    	<span class="img-search-text">이미지 검색</span>
+		        <span class="close">&times;</span>
+	        </div>
+	        <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+			<label for="imageFile" class="image-search-button flex j-center">
+				<i class="fa-solid fa-camera-retro camera-icon"></i>
+				<span>파일 선택</span>
+			</label>
+	        <img id="imagePreview" alt="Image preview">
+	        <br>
+	        <button id="confirmButton">검색</button>
+	    </div>
 	</div>
 </header>
 <!-- 여기까지 헤더 영역 -->

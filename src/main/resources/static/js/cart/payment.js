@@ -4,6 +4,20 @@ let buyerName;
 let amount;
 let couponNum;
 let couponRate;
+let originalAmount;
+
+const amountManager = (function() {
+    let currentAmount = 0;
+
+    return {
+        updateAmount: function(newAmount) {
+            currentAmount = newAmount;
+        },
+        getCurrentAmount: function() {
+            return currentAmount;
+        }
+    };
+})();
 
 
 //쿠폰 모달창
@@ -28,10 +42,16 @@ function selectCoupon() {
         //쿠폰 적용 알림 부분
         document.getElementById('selectedCoupon').innerText = `${selectedCoupon.value} 쿠폰 적용되었습니다.`;
         //전체 금액도 변경
-        let originalAmount = document.querySelector(".final-amount").textContent;
+        originalAmount = document.querySelector(".final-amount").textContent;
         const formatOriginAmount = parseInt(originalAmount.replace(/[^0-9]/g, ''));
         document.querySelector(".final-amount").textContent = 
         	new Intl.NumberFormat('ko-KR').format(formatOriginAmount - couponRate) + " 원";
+        	
+        const newAmount = formatOriginAmount - couponRate;
+	    document.querySelector(".final-amount").textContent =
+	        new Intl.NumberFormat('ko-KR').format(newAmount) + " 원";
+	
+	    amountManager.updateAmount(newAmount);
 
         closeModal();
         
@@ -97,7 +117,7 @@ function requestPay() {
     merchant_uid: merchantUid, //고객사 고유 주문 번호
     name: "도서", //주문명
     amount: 100,
-    //amount: amount, //금액
+    //amount: amountManager.getCurrentAmount(), //금액
     buyer_email: buyerEmail,
     popup: true, //결제창 팝업 여부
     buyer_name: buyerName,

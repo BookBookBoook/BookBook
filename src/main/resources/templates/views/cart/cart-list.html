@@ -42,6 +42,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
                          totalAmount=${totalAmount + itemAmount}"
                         th:data-cart-detail-num="${cartDetail.cartDetailNum}">
 	                    <td class="product-info book-info-text">
+	                    	<input type="hidden" th:value="${cartDetail.discount}" id="one-book-price">
 	                        <img th:src="${cartDetail.bookImg}" class="book-cover-img">
 	                        <div class="book-info">
 	                            <p th:text="${cartDetail.bookName}">해리포터와 마법사의 돌 1</p>
@@ -91,7 +92,6 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 			    <hr>
 			    <p>최종 결제 금액 <span class="final-amount">0 원</span></p>
 			    <button class="side-btn" onclick="window.location.href='/';">쇼핑하러가기</button>
-            	<button class="side-btn" onclick="window.location.href='/payment';">선택상품 구매</button>
             	<button class="side-btn btn-active" onclick="paymentAll()">전체상품 구매</button>
 			</div>
 	    </div>

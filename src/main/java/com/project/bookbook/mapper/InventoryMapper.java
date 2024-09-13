@@ -17,4 +17,7 @@ public interface InventoryMapper {
 
 	@Delete("delete from book where book_num = #{bookNum};")
 	void deleteBook(@Param("bookNum") long bookNum);
+
+	@Select("select * from book order by book_num desc")
+	List<InventoryDTO> getInventoryData();
 }

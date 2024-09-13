@@ -1,5 +1,8 @@
 package com.project.bookbook.controller;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,13 +20,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.bookbook.domain.dto.QNACreateDTO;
 import com.project.bookbook.domain.dto.accountUpdateDTO;
+import com.project.bookbook.domain.dto.mypage.LibraryApiResponseDTO;
+import com.project.bookbook.domain.dto.mypage.selectRecommendDTO;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CouponService;
 import com.project.bookbook.service.FavoriteService;
+import com.project.bookbook.service.HistoryService;
 import com.project.bookbook.service.MypageUserService;
 import com.project.bookbook.service.QNAService;
+import com.project.bookbook.service.RecommendService;
+import com.project.bookbook.service.impl.MypageReviewProcess;
 
-
+import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 @RequiredArgsConstructor
 public class MypageController {
@@ -33,6 +41,9 @@ public class MypageController {
 	private final CouponService couponService;
 	private final PasswordEncoder passwordEncoder;
 	private final FavoriteService favoriteService;
+	private final RecommendService recommendService;
+	private final MypageReviewProcess reviewService;
+	private final HistoryService historyService;
 	
 	//회원정보
 	@GetMapping("/mypage/account")
@@ -88,9 +99,10 @@ public class MypageController {
 	}
 	
 	@DeleteMapping("/mypage/questions/{qnaNum}")
+	@ResponseBody
 	public String deleteQna(@PathVariable("qnaNum") long qnaNum) {
 		qnaService.deleteProcess(qnaNum);
-		return "redirect:/mypage/questions";
+		return "";
 	}
 	
 	
@@ -145,5 +157,47 @@ public class MypageController {
 		favoriteService.deleteProcess(bookNum, user);
 		return "redirect:/mypage/favorites";
 	}
-
+	
+	@PostMapping("/mypage/favorites")
+	public String couponAdd(@RequestParam(name="isbn") String isbn, @AuthenticationPrincipal CustomUserDetails user) {
+		couponService.addCouponProcess(isbn, user);
+		return "redirect:/mypage/coupons";
+	}
+	
+	//도서 추천
+	@GetMapping("/mypage/recommends")
+	public String recommend(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		recommendService.userRecommend(user,model);
+		return "views/mypage/recommend";
+	}
+	
+	@PostMapping("/mypage/recommends")
+	@ResponseBody
+	public ResponseEntity<LibraryApiResponseDTO> recommends(@RequestBody selectRecommendDTO dto) {
+		return ResponseEntity
+		        .ok()
+		        .body(recommendService.userSelectRecommend(dto));
+	}
+	
+	//나의 리뷰
+	@GetMapping("/mypage/reviews")
+	public String review(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		reviewService.findReviewByUserId(user, model);
+		return "views/mypage/review";
+	}
+	
+	//최근 본 도서
+	@GetMapping("/mypage/history")
+	public String history(@AuthenticationPrincipal CustomUserDetails user, Model model) {
+		//historyService.findAllProcess(user, model); >> GlobalControllerAdvice에서 함
+		recommendService.recommendByRecentBook(user, model);
+		return "views/mypage/book-history";
+	}
+	
+	@DeleteMapping("/mypage/history")
+	public String historyDelete(@AuthenticationPrincipal CustomUserDetails user) {
+		historyService.deleteProcess(user);
+		return "redirect:/mypage/history";
+	}
+	
 }

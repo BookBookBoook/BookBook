@@ -4,42 +4,9 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
 	<link rel="stylesheet" href="/css/mypage/sidebar.css">
 	<link rel="stylesheet" href="/css/mypage/order.css">
+	<link rel="stylesheet" href="/css/mainContent/review.css" />
 	<script src="/js/mypage/shipment.js"></script>
-	<script>
-	document.addEventListener("DOMContentLoaded", function() {
-	    const searchForm = document.getElementById("search-form2");
-	    const searchInput = document.getElementById("search");
-	    const orderList = document.querySelector(".order-list table tbody");
-
-	    if (!searchForm || !searchInput || !orderList) {
-	        console.error("필요한 DOM 요소를 찾을 수 없습니다.");
-	        return;
-	    }
-
-	    searchForm.addEventListener("submit", function(event) {
-	        event.preventDefault();
-	        const query = searchInput.value.toLowerCase();
-	        filterTable(query);
-	    });
-
-	    function filterTable(query) {
-	        const rows = orderList.querySelectorAll("tr");
-
-	        rows.forEach(row => {
-	            const bookName = row.querySelector(".order-info div")?.textContent.toLowerCase() || "";
-	            const orderDate = row.querySelector("td:first-child")?.textContent.toLowerCase() || "";
-	            const orderStatus = row.querySelector(".order-actions div")?.textContent.toLowerCase() || "";
-
-	            const shouldDisplay = 
-	                bookName.includes(query) || 
-	                orderDate.includes(query) || 
-	                orderStatus.includes(query);
-
-	            row.style.display = shouldDisplay ? "" : "none";
-	        });
-	    }
-	});
-	</script>
+	<script src="/js/mypage/order.js"></script>
 </head>
 <main>
 	<div class="flex">
@@ -100,7 +67,7 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	                                </div>
 	                                <div class="order-actions" th:if="${userOrder.orderStatus == 3}">
 	                                	<div>배송 완료</div>
-	                                    <button class="review">리뷰 작성</button>
+	                                    <button class="review" id="writeReviewBtn">리뷰 작성</button>
 	                                    <button class="delete">내역 삭제</button>
 	                                </div>
 	                                <div class="order-actions" th:if="${userOrder.orderStatus == 4}">
@@ -146,5 +113,28 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 	        </div>
         </div>
     </div>
+    
+    <!-- 리뷰 작성 모달 -->
+	<div id="reviewModal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<span class="close2 close">&times;</span>
+			<h2>리뷰 작성</h2>
+			<form id="reviewForm" method="post">
+				<!--<input type="hidden" id="bookIsbn" name="isbn" th:value="${book.isbn}">-->
+				<div class="rating">
+					<input type="radio" id="star5" name="rate" value="5" /><label
+						for="star5">☆</label> <input type="radio" id="star4" name="rate"
+						value="4" /><label for="star4">☆</label> <input type="radio"
+						id="star3" name="rate" value="3" /><label for="star3">☆</label> <input
+						type="radio" id="star2" name="rate" value="2" /><label for="star2">☆</label>
+					<input type="radio" id="star1" name="rate" value="1" /><label
+						for="star1">☆</label>
+				</div>
+				<textarea id="reviewContent" name="reviewContent"
+					placeholder="리뷰 내용을 입력해주세요" required></textarea>
+				<button type="submit" class="btn save">제출</button>
+			</form>
+		</div>
+	</div>
 </main>
 </html>

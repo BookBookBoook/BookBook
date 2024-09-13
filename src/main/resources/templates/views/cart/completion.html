@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 <head>
-<link rel="stylesheet" href="/css/cart/cart-list.css">
-<link rel="stylesheet" href="/css/cart/completion.css">
+	<link rel="stylesheet" href="/css/cart/cart-list.css">
+	<link rel="stylesheet" href="/css/cart/completion.css">
+	<link rel="stylesheet" href="/css/mainContent/main_content.css"/>
+	<script src="/js/mainContent/bannerCartMore.js"></script>
 </head>
 <main>
 	<div>
@@ -35,64 +37,25 @@
 				<button class="button secondary-button"
 					th:onclick="|window.location.href='/mypage/orders/detail/${merchantUid}';|">주문상세보기</button>
 			</div>
-
-			<!-- <table class="left-section">
-				<thead>
-					<tr>
-						<th>제품정보</th>
-						<th>수량</th>
-						<th>결제금액</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="product-info">
-							<img src="/img/book-cover.png" class="book-cover-img">
-							<div class="book-info">
-								<p>해리포터와 마법사의 돌 1</p>
-								<p>J.K 롤링 저 / 강동혁 역</p>
-							</div>
-						</td>
-						<td class="quantity">1개</td>
-						<td class="price">17,000원</td>
-					</tr>
-					<tr>
-						<td class="product-info">
-							<img src="/img/book-cover.png" class="book-cover-img">
-							<div class="book-info">
-								<p>해리포터와 마법사의 돌 2</p>
-								<p>J.K 롤링 저 / 강동혁 역</p>
-							</div>
-						</td>
-						<td class="quantity">1개</td>
-						<td class="price">17,000원</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<div class="summary-container">
-				<div class="summary-left">
-					<p>총 주문금액</p>
-				</div>
-				<div class="summary-right">
-					<div class="summary-details">
-						<p>
-							<span>상품금액</span> <span class="amount">36,000원</span>
-						</p>
-						<p>
-							<span>할인금액</span> <span class="amount">-2,000원</span>
-						</p>
-						<p>
-							<span>배송비</span> <span class="amount">3,000원</span>
-						</p>
-					</div>
-					<div class="final-summary">
-						<p>
-							<span>최종결제금액</span> <span class="final-amount">37,000원</span>
-						</p>
-					</div>
-				</div>
-			</div> -->
+			
+			<!-- 도서 추천 슬라이더  -->
+			<div class="book-slider-container" th:if="${#lists.size(books) >= 2}">
+			    <a class="flex j-center">
+			        <span class="text-explanation" th:text="|✔ ${#authentication.principal.name}님께서 방금 구매하신 ${query} 작가의 다른 작품도 살펴보세요!|"></span>
+			    </a>
+			    <div class="book-slider" th:if="${not #lists.isEmpty(books)}">
+			        <div class="book-slide" >
+			            <span class="book-item" 
+			            		th:each="i : ${#numbers.sequence(0, #lists.size(books) > 4 ? 3 : #lists.size(books) - 1)}"
+            					th:with="book=${books[i]}">
+			                <a th:href="@{|/detail/${book.isbn}|}"><img th:src="${book.image}" th:alt="${book.title}"></a>
+			                <a class="book-title" th:href="@{|/detail/${book.isbn}|}" th:text="${book.title}" th:title="${book.title}"></a>
+			                <span class="book-author" th:text="${book.author}"></span>
+			                <span class="book-price" th:text="|${#numbers.formatInteger(book.discount,3,'COMMA')} 원|"></span>
+			            </span>
+			        </div>
+			    </div>
+			</div>
 			
 		</div>
 	</div>

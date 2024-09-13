@@ -42,10 +42,10 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>날짜</th>
 		                        <th>상태</th>
 		                    </tr>
-		                    <tr th:each="dto : ${list}">
-		                        <td th:if="${dto.status==0}" th:text="${dto.title}" th:href="|/mypage/questions/${dto.qnaNum}|">제목</td>
-		                        <td th:if="${dto.status==0}" th:text="${dto.date.toLocalDate()}">날짜</td>
-		                        <td th:if="${dto.status==0}" class="status">답변대기</td>
+		                    <tr th:if="${dto.status==0}" th:each="dto : ${list}">
+		                        <td><a th:text="${dto.title}" th:href="|/mypage/questions/${dto.qnaNum}|"></a></td>
+		                        <td th:text="${dto.date.toLocalDate()}">날짜</td>
+		                        <td class="status">답변대기</td>
 		                    </tr>
 		                </table>
 		            </div>
@@ -56,10 +56,10 @@ th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
 		                        <th>날짜</th>
 		                        <th>상태</th>
 		                    </tr>
-		                    <tr th:each="dto : ${list}">
-		                        <td th:if="${dto.status==1}" th:text="${dto.title}" th:href="|/mypage/questions/${dto.qnaNum}|">제목</td>
-		                        <td th:if="${dto.status==1}" th:text="${dto.date.toLocalDate()}">날짜</td>
-		                        <td th:if="${dto.status==1}" class="status-finish">답변완료</td>
+		                    <tr th:if="${dto.status==1}" th:each="dto : ${list}">
+		                        <td><a th:text="${dto.title}" th:href="|/mypage/questions/${dto.qnaNum}|"></a></td>
+		                        <td th:text="${dto.date.toLocalDate()}">날짜</td>
+		                        <td class="status-finish">답변완료</td>
 		                    </tr>
 		                </table>
 		            </div>

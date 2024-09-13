@@ -70,7 +70,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 	        }
 	        throw new OAuth2AuthenticationException("Unsupported registration ID");
 	    }
-
+	    
 	    private UserEntity createSocialUser(String email, String name) {
 	        UserEntity entity = UserEntity.builder()
 	                .email(email)

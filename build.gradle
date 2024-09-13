@@ -47,14 +47,21 @@ ext {
 }
 
 dependencies {
+
 	implementation 'com.google.cloud:google-cloud-speech:2.6.0'
+
+	// Apache POI 의존성
+  implementation 'org.apache.poi:poi-ooxml:5.2.3'
+  implementation 'org.apache.poi:poi:5.2.3'
 	implementation 'com.google.cloud:google-cloud-vision:3.45.0'
 	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-SNAPSHOT'
+	implementation 'com.google.analytics:google-analytics-admin:0.57.0'
 
 	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.1'
+  implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.1'
 	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3:3.1.1'
 	
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.fasterxml.jackson.core:jackson-databind'

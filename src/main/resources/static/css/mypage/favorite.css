@@ -159,3 +159,77 @@
 	font-size: 16px;
     margin-top: 60px;
 }
+
+
+/*도서 리뷰*/
+.book-list {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.book-items {
+	text-align: center;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.randomBook{
+	width: 180px;
+}
+
+.book-items img {
+	width: 180px;
+    height: 260px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	margin-bottom: 10px;
+    display: block;
+}
+
+.book-items p, .book-items a {
+	margin: 10px 0 5px;
+	font-size: 15px;
+	color: #555555;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.book-items a{
+	height: 45px;
+	-webkit-line-clamp: 2;
+}
+
+.book-items p {
+	-webkit-line-clamp: 1;
+}
+
+.book-items .author {
+	font-size: 12px;
+	color: #888888;
+}
+
+.review-container{
+	border: 1px solid var(--grey);
+    border-radius: 5px;
+    margin: 10px 0;
+    width: 500px;
+    max-height: 400px;
+}
+.book-items, .review-container{
+	padding: 30px;
+}
+
+.coupon-button{
+	border: 1px solid var(--grey);
+    background-color: white;
+    color: var(--black);
+    padding: 10px 20px;
+    cursor: pointer;
+    display: block;
+    margin-top: 20px;
+}

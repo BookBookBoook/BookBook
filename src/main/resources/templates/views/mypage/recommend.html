@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+	<link rel="stylesheet" href="/css/mypage/sidebar.css">
+	<link rel="stylesheet" href="/css/mypage/recommend.css">
+</head>
+<main>
+	<div class="flex">
+        <th:block  th:insert="~{views/mypage/sidebar}"/>
+        <div class="main-content">
+            <div class="container-main">
+		        <div class="head">
+		            <h1>도서 추천</h1>
+		        </div>
+		        <div>
+		        	<section class="recommendations-container">
+				        <h2 class="recommend-text">요즘 <span class="highlight" th:text="|${ageGroup}대, ${genderName}|"> 20대, 여성 </span>이 많이 보는 책을 확인해 보세요.</h2>
+				        <div class="book-list">
+						    <div class="book-item" th:each="book : ${userRecommendBooks.response.docs}">
+						        <img th:src="${book.doc.bookImageUrl}" alt="Book Cover">
+						        <a th:href="|/detail/${book.doc.isbn13}|" th:text="${book.doc.bookname}">책 제목</a>
+						        <p class="author" th:text="${book.doc.authors}">저자</p>
+						    </div>
+						</div>
+				        <!-- <button class="refresh-btn">✔ 새로운 추천 보기</button> -->
+				    </section>
+				    
+				    <section class="recommendations-container">
+				        <h2 class="recommend-text margin-bottom">맞춤형 선택 책 추천을 받아보세요.</h2>
+				        <form id="selectionForm" class="selection-form">
+				            <select id="ageGroup" name="ageGroup">
+				                <option value="-1">연령대 선택</option>
+				                <option value="0">영유아(0~5세)</option>
+				                <option value="6">유아(6~7세)</option>
+				                <option value="8">초등(8~13세)</option>
+				                <option value="14">청소년(14~19세)</option>
+				                <option value="20">20대</option>
+				                <option value="30">30대</option>
+				                <option value="40">40대</option>
+				                <option value="50">50대</option>
+				                <option value="60">60대 이상</option>
+				            </select>
+				            <select id="gender" name="gender">
+				                <option value="-1">성별 선택</option>
+				                <option value="0">남성</option>
+				                <option value="1">여성</option>
+				            </select>
+				            <select id="kind" name="kind">
+				                <option value="-1">분류 선택</option>
+				                <option value="0">총류</option>
+				                <option value="1">철학</option>
+				                <option value="2">종교</option>
+				                <option value="3">사회과학</option>
+				                <option value="4">자연과학</option>
+				                <option value="5">기술과학</option>
+				                <option value="6">예술</option>
+				                <option value="7">언어</option>
+				                <option value="8">문학</option>
+				                <option value="9">역사</option>
+				            </select>
+				            <button type="submit" class="submit-button">추천 받기</button>
+				        </form>
+				        <div class="book-list" id="bookGrid">
+				            <!-- 책 목록은 여기에 동적으로 추가됩니다 -->
+				        </div>
+				    </section>
+    
+		        </div>
+		    </div>
+        </div>
+    </div>
+    <script src="/js/mypage/recommend.js"></script>
+</main>
+</html>

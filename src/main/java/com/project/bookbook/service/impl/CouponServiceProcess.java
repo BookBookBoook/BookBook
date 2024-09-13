@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
@@ -12,8 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.project.bookbook.domain.dto.CouponDTO;
 import com.project.bookbook.domain.dto.CouponListDTO;
+import com.project.bookbook.domain.entity.BookEntity;
 import com.project.bookbook.domain.entity.CouponEntity;
+import com.project.bookbook.domain.repository.BookRepository;
 import com.project.bookbook.mapper.CouponMapper;
 import com.project.bookbook.security.CustomUserDetails;
 import com.project.bookbook.service.CouponService;
@@ -26,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class CouponServiceProcess implements CouponService{
 	
 	private final CouponMapper couponMapper;
+	private final BookRepository bookRepository;
 
 	@Override
 	public void findProcess(Model model, CustomUserDetails user) {
@@ -102,5 +107,49 @@ public class CouponServiceProcess implements CouponService{
 		couponMapper.deleteByCouponNumAndUserId(params);
 		
 	}
+	
+	
+	//마이페이지 '나의 취향'에서 쿠폰 추가
+	@Override
+	public void addCouponProcess(String isbn, CustomUserDetails user) {
+		
+		BookEntity book = bookRepository.findByIsbn(isbn).orElseThrow();
+		String bookName = book.getBookName();
+		
+		int[] discountExample = {500, 1000, 2000, 3000};
+		Random ran = new Random();
+		ran.nextInt(discountExample.length);
+		
+		int discount = discountExample[ran.nextInt(discountExample.length)];
+		LocalDateTime now = LocalDateTime.now();
+		long couponNum = generateRandomId();
+		
+		CouponDTO couponDTO = CouponDTO.builder()
+				.couponNum(couponNum)
+				.couponName(discount+"원 할인")
+				.couponRate(discount)
+				.couponDetail(bookName+" 포함 구매 시 "+discount+"원 할인쿠폰")
+				.startDate(now)
+				.endDate(now.plusMonths(1))
+				.build();
+		
+		couponMapper.saveCoupon(couponDTO);
+		
+		long userId = user.getUserId();
+		Map<String, Long> params = new HashMap<>();
+		params.put("couponNum", couponNum);
+		params.put("userId", userId);
+		couponMapper.save(params);
+		
+	}
+	
+	
+	public long generateRandomId() {
+        Random random = new Random();
+        long min = 100_000_000_000L; // 12자리 숫자의 최소값
+        long max = 999_999_999_999L; // 12자리 숫자의 최대값
+        
+        return min + ((long) (random.nextDouble() * (max - min)));
+    }
 
 }

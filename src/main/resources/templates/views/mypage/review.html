@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{views/commons/layout::layout(~{::head}, ~{::main})}">
+<head>
+	<link rel="stylesheet" href="/css/mypage/sidebar.css">
+	<link rel="stylesheet" href="/css/mypage/review.css">
+</head>
+<main>
+	<div class="flex">
+        <th:block  th:insert="~{views/mypage/sidebar}"/>
+        <div class="main-content">
+            <div class="container-main">
+		        <div class="head">
+		            <h1>나의 리뷰</h1>
+		        </div>
+		        
+		        <div class="review-container">
+	        		<div class="keyword-container">
+			        	<div class="keyword-cloud">
+			        		<h2>✔ 나의 관심 키워드</h2>
+			        		<p class="keyword-text">관심 키워드를 선택하시면 해당 키워드 검색 페이지로 넘어갑니다.</p>
+			        		<form class="keywords" action="/search" method="get">
+			        			<button class="keyword" name="query" th:each="keyword : ${userKeyWords}" th:text="|# ${keyword}|" th:value="${keyword}"></button>
+			        		</form>
+			        	</div>
+	        		</div>
+		        	<div class="review" th:each="review : ${userReviews}">
+			            <div class="book-cover">
+			                <img th:src="${review.bookImg}">
+			            </div>
+			            <div class="review-content">
+			                <a class="book-title" th:text="${review.bookName}" th:href="|/detail/${review.isbn}|">해리포터와 마법사의 돌</a>
+			                <div class="author" th:text="${review.author}" >J.K. 롤링</div>
+			                <p class="review-text" th:text="${review.reviewContent}">
+			                    어린 시절 처음 읽었을 때의 그 마법 같은 느낌을 다시 한 번 느낄 수 있었습니다. 
+			                    호그와트의 세계는 여전히 매력적이고, 해리와 친구들의 모험은 흥미진진합니다. 
+			                    특히 이번에 다시 읽으면서 캐릭터들의 깊이 있는 묘사에 감탄했습니다.
+			                </p>
+			                <div class="review-meta">
+			                    <span class="rating">
+				                    <span th:each="star : ${#numbers.sequence(1, 5)}">
+								        <span th:text="${star <= review.rate} ? '★' : '☆'"></span>
+								    </span>
+								    <span th:text="| ${review.rate}.0|"></span>
+							    </span>
+			                    <span class="date" th:text="${review.reviewDate.toLocalDate()}">2024-03-15</span>
+			                </div>
+			            </div>
+			        </div>
+					
+		        </div>
+		    </div>
+        </div>
+    </div>
+</main>
+</html>
